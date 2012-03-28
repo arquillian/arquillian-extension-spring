@@ -1,18 +1,18 @@
 package org.jboss.arquillian.spring.testsuite.service.impl;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.spring.testsuite.Employee;
 import org.jboss.arquillian.spring.testsuite.repository.EmployeeRepository;
 import org.jboss.arquillian.spring.testsuite.repository.impl.DefaultEmployeeRepository;
 import org.jboss.arquillian.spring.testsuite.repository.impl.NullEmployeeRepository;
 import org.jboss.arquillian.spring.testsuite.service.EmployeeService;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.inject.Inject;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -34,7 +34,7 @@ public class DefaultEmployeeServiceTestCase {
                         "applicationContext.xml");
     }
 
-    @Inject
+    @Autowired
     private EmployeeService employeeService;
 
     @Test

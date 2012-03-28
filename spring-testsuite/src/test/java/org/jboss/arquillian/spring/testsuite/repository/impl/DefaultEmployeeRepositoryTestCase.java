@@ -1,9 +1,9 @@
 package org.jboss.arquillian.spring.testsuite.repository.impl;
 
-import org.jboss.arquillian.spring.testsuite.Employee;
-import org.jboss.arquillian.spring.testsuite.repository.EmployeeRepository;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.spring.testsuite.Employee;
+import org.jboss.arquillian.spring.testsuite.repository.EmployeeRepository;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
