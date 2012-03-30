@@ -16,6 +16,8 @@
  */
 package org.jboss.arquillian.testenricher.spring;
 
+import org.springframework.context.ApplicationContext;
+
 /**
  * Aggreagates all consts used by this extension.
  *
@@ -37,7 +39,13 @@ public final class SpringEnricherConsts {
 
     public static final String APPLICATION_CONTEXT = "org.springframework.context.ApplicationContext";
 
+    public static final String DEFAULT_LOCATION = "classpath:applicationContext.xml";
+
     public static final String SPRING_ARTIFACT_NAME = "org.springframework:spring-context";
 
     public static final String SPRING_ARTIFACT_VERSION = "3.1.1.RELEASE";
+
+    public static final String CGLIB_ARTIFACT_NAME = "cglib:cglib";
+
+    public static final String CGLIB_ARTIFACT_VERSION = "2.2.2";
 }

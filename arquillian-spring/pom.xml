@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>org.jboss.arquillian.spring</groupId>
+        <artifactId>arquillian-spring-parent</artifactId>
+        <version>1.0.0.Final-SNAPSHOT</version>
+    </parent>
+
+    <!-- Model Version -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Artifact Configuration -->
+    <groupId>org.jboss.arquillian.spring</groupId>
+    <artifactId>arquillian-spring</artifactId>
+    <name>Arquillian Spring Support</name>
+    <description>Spring Support for the Arquillian Project</description>
+
+    <!-- Properties -->
+    <properties>
+
+        <!-- Versioning -->
+
+    </properties>
+
+
+    <!-- Dependencies -->
+    <dependencies>
+
+    </dependencies>
+
+</project>

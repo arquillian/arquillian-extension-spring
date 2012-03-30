@@ -44,9 +44,11 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
         if (isEnterpriseArchive(testDeployment.getApplicationArchive()) ||
                 isWebArchive(testDeployment.getApplicationArchive())) {
             addSpringLibraries(testDeployment.getApplicationArchive());
+            addCglib(testDeployment.getApplicationArchive());
         } else if (isEnterpriseArchive(protocolArchive) || isWebArchive(protocolArchive)) {
             // otherwise try to add the required dependencies into the protocol archive
             addSpringLibraries(protocolArchive);
+            addCglib(protocolArchive);
         }
     }
 
@@ -73,13 +75,32 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * Adds the spring dependencies into the passed archive
+     * Adds the spring dependencies into the passed archive.
      *
      * @param archive the archive
      */
     private void addSpringLibraries(Archive<?> archive) {
 
         File[] springLibraries = resolveSpringDependencies();
+
+        if (archive instanceof EnterpriseArchive) {
+            ((EnterpriseArchive) archive).addAsModules(springLibraries);
+        } else if (archive instanceof WebArchive) {
+            ((WebArchive) archive).addAsLibraries(springLibraries);
+        } else {
+            throw new RuntimeException("Unsupported archive format[" + archive.getClass().getSimpleName()
+                    + ", " + archive.getName() + "] for Spring application. Please use WAR or EAR.");
+        }
+    }
+
+    /**
+     * Adds cglib dependencies into the passed archive.
+     *
+     * @param archive the archive
+     */
+    private void addCglib(Archive<?> archive) {
+
+        File[] springLibraries = resolveCglibLibraries();
 
         if (archive instanceof EnterpriseArchive) {
             ((EnterpriseArchive) archive).addAsModules(springLibraries);
@@ -99,6 +120,16 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     private File[] resolveSpringDependencies() {
 
         return resolveArtifact(SpringEnricherConsts.SPRING_ARTIFACT_NAME, SpringEnricherConsts.SPRING_ARTIFACT_VERSION);
+    }
+
+    /**
+     * Resolves cglib dependencies using maven.
+     *
+     * @return cglib dependencies
+     */
+    private File[] resolveCglibLibraries() {
+
+        return resolveArtifact(SpringEnricherConsts.CGLIB_ARTIFACT_NAME, SpringEnricherConsts.CGLIB_ARTIFACT_VERSION);
     }
 
     /**

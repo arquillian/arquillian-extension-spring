@@ -12,7 +12,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Artifact Configuration -->
-    <groupId>org.jboss.arquillian.container-spring</groupId>
+    <groupId>org.jboss.arquillian.spring</groupId>
     <artifactId>spring-testsuite</artifactId>
     <name>Arquillian Spring Test Suite</name>
     <description>Spring Test Suite for the Arquillian Project</description>
@@ -52,7 +52,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jboss.arquillian.container-spring</groupId>
+            <groupId>org.jboss.arquillian.spring</groupId>
             <artifactId>arquillian-testenricher-spring</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
@@ -66,6 +66,11 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
         </dependency>
     </dependencies>
 

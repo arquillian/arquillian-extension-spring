@@ -16,6 +16,7 @@
     <modules>
         <module>arquillian-testenricher-spring</module>
         <module>spring-testsuite</module>
+        <module>arquillian-spring</module>
     </modules>
 
     <properties>
@@ -39,6 +40,7 @@
         <version.testng_testng>5.14.6</version.testng_testng>
 
         <version.spring_framework>3.1.1.RELEASE</version.spring_framework>
+        <version.cglib>2.2.2</version.cglib>
     </properties>
 
     <!-- Issues -->
@@ -143,6 +145,12 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
                 <version>${version.spring_framework}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>${version.cglib}</version>
             </dependency>
 
         </dependencies>
