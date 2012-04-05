@@ -14,9 +14,9 @@
     <version>1.0.0.Final-SNAPSHOT</version>
 
     <modules>
-        <module>arquillian-testenricher-spring</module>
-        <module>spring-testsuite</module>
         <module>arquillian-spring</module>
+        <module>arquillian-testenricher-spring</module>
+        <module>arquillian-spring-testsuite</module>
     </modules>
 
     <properties>
@@ -221,6 +221,5 @@
             <url>http://repo.springsource.org/release</url>
         </repository>
     </repositories>
-
 
 </project>
