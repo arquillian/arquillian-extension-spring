@@ -18,7 +18,7 @@ package org.jboss.arquillian.spring.container;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.spring.SpringEnricherConsts;
+import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -27,7 +27,7 @@ import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
 /**
- * Spring test enricher, injects spring dependencies.
+ * Spring test enricher, injects spring beans.
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -51,7 +51,7 @@ public class SpringInjectionEnricher implements TestEnricher {
     @Override
     public void enrich(Object testCase) {
 
-        if (SecurityActions.isClassPresent(SpringEnricherConsts.APPLICATION_CONTEXT)) {
+        if (SecurityActions.isClassPresent(SpringExtensionConsts.APPLICATION_CONTEXT)) {
             injectClass(testCase);
         }
     }

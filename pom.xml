@@ -41,6 +41,7 @@
         <version.mockito_all>1.8.3</version.mockito_all>
         <version.testng_testng>5.14.6</version.testng_testng>
 
+        <!-- Spring Framework dependencies -->
         <version.spring_framework>3.1.1.RELEASE</version.spring_framework>
         <version.cglib>2.2.2</version.cglib>
     </properties>

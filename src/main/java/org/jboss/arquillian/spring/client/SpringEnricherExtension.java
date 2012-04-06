@@ -19,7 +19,7 @@ package org.jboss.arquillian.spring.client;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
 import org.jboss.arquillian.core.spi.LoadableExtension;
-import org.jboss.arquillian.spring.SpringEnricherConsts;
+import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
 import org.jboss.arquillian.test.spi.TestEnricher;
 
@@ -38,7 +38,7 @@ public class SpringEnricherExtension implements LoadableExtension {
     public void register(ExtensionBuilder builder) {
 
         // only load if Spring Application Context is in ClassPath
-        if (Validate.classExists(SpringEnricherConsts.APPLICATION_CONTEXT)) {
+        if (Validate.classExists(SpringExtensionConsts.APPLICATION_CONTEXT)) {
             builder.service(AuxiliaryArchiveAppender.class, SpringEnricherArchiveAppender.class)
                     .service(ProtocolArchiveProcessor.class, SpringProtocolArchiveProcessor.class);
 

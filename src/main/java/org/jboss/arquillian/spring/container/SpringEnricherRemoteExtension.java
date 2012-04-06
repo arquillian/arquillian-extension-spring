@@ -17,11 +17,11 @@
 package org.jboss.arquillian.spring.container;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.spring.SpringEnricherConsts;
+import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.test.spi.TestEnricher;
 
 /**
- * SpringEnricherRemoteExtension
+ * A remote extension that configures Spring extension.
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -35,7 +35,7 @@ public class SpringEnricherRemoteExtension implements RemoteLoadableExtension {
     public void register(ExtensionBuilder builder) {
 
         // only load if Spring Application Context is in ClassPath
-        if (Validate.classExists(SpringEnricherConsts.APPLICATION_CONTEXT)) {
+        if (Validate.classExists(SpringExtensionConsts.APPLICATION_CONTEXT)) {
             builder.service(TestEnricher.class, SpringInjectionEnricher.class)
                     .observer(ApplicationContextProducer.class);
         }

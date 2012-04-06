@@ -18,7 +18,7 @@ package org.jboss.arquillian.spring.client;
 
 import org.jboss.arquillian.container.test.spi.TestDeployment;
 import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
-import org.jboss.arquillian.spring.SpringEnricherConsts;
+import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -119,7 +119,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
      */
     private File[] resolveSpringDependencies() {
 
-        return resolveArtifact(SpringEnricherConsts.SPRING_ARTIFACT_NAME, SpringEnricherConsts.SPRING_ARTIFACT_VERSION);
+        return resolveArtifact(SpringExtensionConsts.SPRING_ARTIFACT_NAME, SpringExtensionConsts.SPRING_ARTIFACT_VERSION);
     }
 
     /**
@@ -129,7 +129,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
      */
     private File[] resolveCglibLibraries() {
 
-        return resolveArtifact(SpringEnricherConsts.CGLIB_ARTIFACT_NAME, SpringEnricherConsts.CGLIB_ARTIFACT_VERSION);
+        return resolveArtifact(SpringExtensionConsts.CGLIB_ARTIFACT_NAME, SpringExtensionConsts.CGLIB_ARTIFACT_VERSION);
     }
 
     /**
@@ -161,7 +161,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
         MavenDependencyResolver mvnResolver = DependencyResolvers.use(MavenDependencyResolver.class);
 
         if (isMavenUsed()) {
-            mvnResolver.loadMetadataFromPom(SpringEnricherConsts.POM_XML);
+            mvnResolver.loadMetadataFromPom(SpringExtensionConsts.POM_XML);
         }
 
         return mvnResolver.artifacts(artifact)
@@ -174,6 +174,6 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
      * @return true if maven is being used in project, false otherwise
      */
     private boolean isMavenUsed() {
-        return new File(SpringEnricherConsts.POM_XML).exists();
+        return new File(SpringExtensionConsts.POM_XML).exists();
     }
 }

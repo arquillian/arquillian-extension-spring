@@ -22,28 +22,49 @@ package org.jboss.arquillian.spring;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public final class SpringEnricherConsts {
+public final class SpringExtensionConsts {
 
     /**
-     * <p>Creates new instance of {@link SpringEnricherConsts}.</p>
+     * <p>Creates new instance of {@link SpringExtensionConsts}.</p>
      *
      * <p>Private constructor prevents from instantiation outside this class.</p>
      */
-    private SpringEnricherConsts() {
+    private SpringExtensionConsts() {
         // empty constructor
     }
 
+    /**
+     * Represents the maven POM file name.
+     */
     public static final String POM_XML = "pom.xml";
 
+    /**
+     * Represents the fully qualified name to {@link org.springframework.context.ApplicationContext} class.
+     */
     public static final String APPLICATION_CONTEXT = "org.springframework.context.ApplicationContext";
 
+    /**
+     * Represents the default location where to look for Spring application context.
+     */
     public static final String DEFAULT_LOCATION = "classpath:applicationContext.xml";
 
+    /**
+     * Represents the Spring Framework maven artifact name.
+     */
     public static final String SPRING_ARTIFACT_NAME = "org.springframework:spring-context";
 
+    /**
+     * Represents the default version of the Spring Framework.
+     */
     public static final String SPRING_ARTIFACT_VERSION = "3.1.1.RELEASE";
 
+    /**
+     * Represents the CGLIB maven artifact name.
+     */
     public static final String CGLIB_ARTIFACT_NAME = "cglib:cglib";
 
+    /**
+     * Represents the default CGLIB artifact name.
+     */
     public static final String CGLIB_ARTIFACT_VERSION = "2.2.2";
 }
