@@ -38,29 +38,21 @@ public @interface SpringConfiguration {
 
     /**
      * The locations from where the xml config should be loaded.
-     *
-     * @return locations of xml configs
      */
     String[] value() default {};
 
     /**
      * The locations from where the xml config should be loaded.
-     *
-     * @return locations of xml configs
      */
     String[] locations() default {};
 
     /**
-     * The classes annotated with {@link @Configuration} to be loaded.
-     *
-     * @return classes annotated with {@link @Configuration}
+     * The classes annotated with {@link org.springframework.context.annotation.Configuration} to be loaded.
      */
     Class<?>[] classes() default {};
 
     /**
      * The packages that will scanned for {@link @Configuration} annotated classes.
-     *
-     * @return names of packages
      */
     String[] packages() default {};
 }
