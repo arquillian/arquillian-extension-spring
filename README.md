@@ -10,7 +10,8 @@ The test which requires the dependencies to be injected through Spring should be
 The annotations provides the information where to look for the spring configuration
 
 ### XML configuration
-''
+
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -21,10 +22,10 @@ The annotations provides the information where to look for the spring configurat
     <context:component-scan base-package="org.jboss.arquillian.spring.testsuite.beans.service.impl"/>
 
 </beans>
-''
+```
 
 Test
-''
+```
 @RunWith(Arquillian.class)
 @SpringConfiguration({""applicationContext.xml""})
 public class DefaultEmployeeRepositoryTestCase {
@@ -51,11 +52,11 @@ public class DefaultEmployeeRepositoryTestCase {
         assertEquals("Two employees were expected.", 2, result.size());
     }
 }
-''
+```
 
 ### Java-based configuration
 
-''
+```
 @Configuration
 public class AppConfig {
 
@@ -71,10 +72,10 @@ public class AppConfig {
         return new DefaultEmployeeService();
     }
 }
-''
+```
 
 Test
-''
+```
 @RunWith(Arquillian.class)
 @SpringConfiguration(classes = {AppConfig.class})
 public class AnnotatedConfigurationTestCase {
@@ -100,7 +101,7 @@ public class AnnotatedConfigurationTestCase {
         assertEquals("Two employees were expected.", 2, result.size());
     }
 }
-''
+```
 
 ## TODO
 ------------------------------
