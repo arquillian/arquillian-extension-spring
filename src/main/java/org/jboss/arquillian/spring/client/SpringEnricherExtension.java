@@ -37,7 +37,7 @@ public class SpringEnricherExtension implements LoadableExtension {
     @Override
     public void register(ExtensionBuilder builder) {
 
-        // only load if Spring Application Context is in ClassPath
+        // load the extension only if Spring Application Context is in Classpath
         if (Validate.classExists(SpringExtensionConsts.APPLICATION_CONTEXT)) {
             builder.service(AuxiliaryArchiveAppender.class, SpringEnricherArchiveAppender.class)
                     .service(ProtocolArchiveProcessor.class, SpringProtocolArchiveProcessor.class);

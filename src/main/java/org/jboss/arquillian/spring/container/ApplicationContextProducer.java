@@ -22,11 +22,13 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
+import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.ContextLoader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,8 +61,15 @@ public class ApplicationContextProducer {
      */
     public void initApplicationContext(@Observes BeforeClass beforeClass) {
 
+        ApplicationContext applicationContext;
+
         if (isSpringTest(beforeClass.getTestClass())) {
-            ApplicationContext applicationContext = createApplicationContext(beforeClass.getTestClass());
+
+            if (isWebTest(beforeClass.getTestClass())) {
+                applicationContext = ContextLoader.getCurrentWebApplicationContext();
+            } else {
+                applicationContext = createApplicationContext(beforeClass.getTestClass());
+            }
 
             // sets the application context to be shared among all tests
             if (applicationContext != null) {
@@ -76,14 +85,26 @@ public class ApplicationContextProducer {
     }
 
     /**
-     * Returns whether the given class is annotated with {@link SpringConfiguration} class and requires bean injection.
+     * Returns whether the given test runs in web application.
      *
      * @param testClass the test class
      *
-     * @return true if the test class is annotated with {@link SpringConfiguration}, false otherwise
+     * @return true if the given test runs in web application, false otherwise
+     */
+    private boolean isWebTest(TestClass testClass) {
+        return testClass.isAnnotationPresent(SpringWebConfiguration.class);
+    }
+
+    /**
+     * Returns whether the given test is spring test and requires bean injection.
+     *
+     * @param testClass the test class
+     *
+     * @return true if the test class is spring test, false otherwise
      */
     private boolean isSpringTest(TestClass testClass) {
-        return testClass.isAnnotationPresent(SpringConfiguration.class);
+        return testClass.isAnnotationPresent(SpringConfiguration.class)
+                || testClass.isAnnotationPresent(SpringWebConfiguration.class);
     }
 
     /**
