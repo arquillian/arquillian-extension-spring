@@ -59,17 +59,31 @@ public class ApplicationContextProducer {
      */
     public void initApplicationContext(@Observes BeforeClass beforeClass) {
 
-        ApplicationContext applicationContext = createApplicationContext(beforeClass.getTestClass());
+        if (isSpringTest(beforeClass.getTestClass())) {
+            ApplicationContext applicationContext = createApplicationContext(beforeClass.getTestClass());
 
-        // sets the application context to be shared among all tests
-        if (applicationContext != null) {
-            applicationContextProducer.set(applicationContext);
+            // sets the application context to be shared among all tests
+            if (applicationContext != null) {
+                applicationContextProducer.set(applicationContext);
 
-            log.fine("Successfully created application context");
-        } else {
+                log.fine("Successfully created application context for test class: "
+                        + beforeClass.getTestClass().getName());
+            } else {
 
-            log.warning("The application context could not be created");
+                log.warning("The application context could not be created");
+            }
         }
+    }
+
+    /**
+     * Returns whether the given class is annotated with {@link SpringConfiguration} class and requires bean injection.
+     *
+     * @param testClass the test class
+     *
+     * @return true if the test class is annotated with {@link SpringConfiguration}, false otherwise
+     */
+    private boolean isSpringTest(TestClass testClass) {
+        return testClass.isAnnotationPresent(SpringConfiguration.class);
     }
 
     /**

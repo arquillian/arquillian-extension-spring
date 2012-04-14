@@ -19,6 +19,7 @@ package org.jboss.arquillian.spring.container;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
+import org.jboss.arquillian.spring.annotations.SpringConfiguration;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -51,7 +52,8 @@ public class SpringInjectionEnricher implements TestEnricher {
     @Override
     public void enrich(Object testCase) {
 
-        if (SecurityActions.isClassPresent(SpringExtensionConsts.APPLICATION_CONTEXT)) {
+        if (SecurityActions.isClassPresent(SpringExtensionConsts.APPLICATION_CONTEXT)
+                && isSpringTest(testCase)) {
             injectClass(testCase);
         }
     }
@@ -63,6 +65,18 @@ public class SpringInjectionEnricher implements TestEnricher {
     public Object[] resolve(Method method) {
 
         return new Object[method.getParameterTypes().length];
+    }
+
+    /**
+     * Returns whether the given class is annotated with {@link SpringConfiguration} class and requires bean injection.
+     *
+     * @param testCase the test case
+     *
+     * @return true if the test class is annotated with {@link SpringConfiguration}, false otherwise
+     */
+    private boolean isSpringTest(Object testCase) {
+
+        return testCase.getClass().isAnnotationPresent(SpringConfiguration.class);
     }
 
     /**
