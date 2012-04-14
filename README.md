@@ -28,7 +28,7 @@ Test example
 
 ```
 @RunWith(Arquillian.class)
-@SpringConfiguration({""applicationContext.xml""})
+@SpringConfiguration({"applicationContext.xml"})
 public class DefaultEmployeeRepositoryTestCase {
 
     @Deployment
