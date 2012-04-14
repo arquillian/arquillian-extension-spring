@@ -24,7 +24,8 @@ The annotations provides the information where to look for the spring configurat
 </beans>
 ```
 
-Test
+Test example
+
 ```
 @RunWith(Arquillian.class)
 @SpringConfiguration({""applicationContext.xml""})
@@ -74,7 +75,8 @@ public class AppConfig {
 }
 ```
 
-Test
+Test example
+
 ```
 @RunWith(Arquillian.class)
 @SpringConfiguration(classes = {AppConfig.class})
@@ -104,7 +106,7 @@ public class AnnotatedConfigurationTestCase {
 ```
 
 ## TODO
-------------------------------
+
 * Unit tests
 * Configuration the extension through arquillian.xml for specifying the Spring artifact version.
 * Embeeded container support through ShrinkWrap class loader
