@@ -3,6 +3,7 @@
 * Configuration from both XML and Java-based config
 * Support for both Spring(@Autowired, @Qualifier, @Required) and JSR-330(@Inject, @Name) annotations
 * Bean initialization support (@PostConstruct)
+* Auto packaging the spring-context artifact.
 
 ## Code Example
 
