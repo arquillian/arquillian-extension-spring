@@ -188,7 +188,7 @@ In this example the Spring context is configured through a xml file.
 
 *Test*
 
-It is possible in inject into the test fully configured Spring MVC controller and run on it simple tests in
+It is possible to inject into the test fully configured Spring MVC controller and run on it simple tests in
 the container.
 
 ```java
