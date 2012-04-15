@@ -109,6 +109,5 @@ public class AnnotatedConfigurationTestCase {
 ## TODO
 
 * Unit tests
-* Configuring the extension through arquillian.xml for specifying the Spring artifact version.
-* Embeeded container support through ShrinkWrap class loader
+* Configuring the extension through arquillian.xml for specifying the Spring artifact version
 * Arquillian Persistance Extension integration - wrapper for Spring transaction manager

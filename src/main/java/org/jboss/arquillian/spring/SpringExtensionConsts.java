@@ -54,6 +54,11 @@ public final class SpringExtensionConsts {
     public static final String SPRING_ARTIFACT_NAME = "org.springframework:spring-context";
 
     /**
+     * Representst the Spring Framework Web maven artifact name.
+     */
+    public static final String SPRING_ARTIFACT_WEB = "org.springframework:spring-web";
+
+    /**
      * Represents the default version of the Spring Framework.
      */
     public static final String SPRING_ARTIFACT_VERSION = "3.1.1.RELEASE";

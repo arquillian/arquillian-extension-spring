@@ -44,10 +44,12 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
         if (isEnterpriseArchive(testDeployment.getApplicationArchive()) ||
                 isWebArchive(testDeployment.getApplicationArchive())) {
             addSpringLibraries(testDeployment.getApplicationArchive());
+            addSpringWebLibraries(testDeployment.getApplicationArchive());
             addCglib(testDeployment.getApplicationArchive());
         } else if (isEnterpriseArchive(protocolArchive) || isWebArchive(protocolArchive)) {
             // otherwise try to add the required dependencies into the protocol archive
             addSpringLibraries(protocolArchive);
+            addSpringWebLibraries(protocolArchive);
             addCglib(protocolArchive);
         }
     }
@@ -93,6 +95,20 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
         }
     }
 
+    private void addSpringWebLibraries(Archive<?> archive) {
+
+        File[] springLibraries = resolveSpringWebDependencies();
+
+        if (archive instanceof EnterpriseArchive) {
+            ((EnterpriseArchive) archive).addAsModules(springLibraries);
+        } else if (archive instanceof WebArchive) {
+            ((WebArchive) archive).addAsLibraries(springLibraries);
+        } else {
+            throw new RuntimeException("Unsupported archive format[" + archive.getClass().getSimpleName()
+                    + ", " + archive.getName() + "] for Spring application. Please use WAR or EAR.");
+        }
+    }
+
     /**
      * Adds cglib dependencies into the passed archive.
      *
@@ -120,6 +136,16 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     private File[] resolveSpringDependencies() {
 
         return resolveArtifact(SpringExtensionConsts.SPRING_ARTIFACT_NAME, SpringExtensionConsts.SPRING_ARTIFACT_VERSION);
+    }
+
+    /**
+     * Resolves the spring dependencies using maven.
+     *
+     * @return the spring dependencies
+     */
+    private File[] resolveSpringWebDependencies() {
+
+        return resolveArtifact(SpringExtensionConsts.SPRING_ARTIFACT_WEB, SpringExtensionConsts.SPRING_ARTIFACT_VERSION);
     }
 
     /**
