@@ -110,7 +110,7 @@ public class AnnotatedConfigurationTestCase {
 ### Testing web apps
 
 The above examples allowed testing seperate classes injected through Spring without configuring entire web application,
-fallowing example demonstrates how test to a simple MVC application instead.
+fallowing example demonstrates how to test a simple MVC application instead.
 
 *Simple annotated controller*
 
