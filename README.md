@@ -109,7 +109,7 @@ public class AnnotatedConfigurationTestCase {
 
 ### Testing web app
 The above examples allowed testing seperate classes injected through Spring without configuring entire web application,
-fallowing example demonstrates how test a simple MVC example instead:
+fallowing example demonstrates how test a simple MVC example instead.
 
 Simple annotated controller
 ```
@@ -161,6 +161,7 @@ Web.xml
 
 </web-app>
 ```
+
 Note: The ContextLoaderListener is required here, mostly because each dispatcher servlet has it own application context
 that is inaccessible from outside.
 
