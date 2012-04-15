@@ -108,10 +108,12 @@ public class AnnotatedConfigurationTestCase {
 ```
 
 ### Testing web app
+
 The above examples allowed testing seperate classes injected through Spring without configuring entire web application,
 fallowing example demonstrates how test a simple MVC example instead.
 
 Simple annotated controller
+
 ```
 @Controller
 public class EmployeeController {
@@ -130,6 +132,7 @@ public class EmployeeController {
 ```
 
 Web.xml
+
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
@@ -166,6 +169,7 @@ Note: The ContextLoaderListener is required here, mostly because each dispatcher
 that is inaccessible from outside.
 
 Configuration files
+
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
