@@ -13,7 +13,7 @@ The annotations provides the information where to look for the spring configurat
 
 ### XML configuration
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -28,7 +28,7 @@ The annotations provides the information where to look for the spring configurat
 
 Test example
 
-```
+```java
 @RunWith(Arquillian.class)
 @SpringConfiguration({"applicationContext.xml"})
 public class DefaultEmployeeRepositoryTestCase {
@@ -59,7 +59,7 @@ public class DefaultEmployeeRepositoryTestCase {
 
 ### Java-based configuration
 
-```
+```java
 @Configuration
 public class AppConfig {
 
@@ -79,7 +79,7 @@ public class AppConfig {
 
 Test example
 
-```
+```java
 @RunWith(Arquillian.class)
 @SpringConfiguration(classes = {AppConfig.class})
 public class AnnotatedConfigurationTestCase {
@@ -114,7 +114,7 @@ fallowing example demonstrates how test a simple MVC example instead.
 
 Simple annotated controller
 
-```
+```java
 @Controller
 public class EmployeeController {
 
@@ -133,7 +133,7 @@ public class EmployeeController {
 
 Web.xml
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -170,7 +170,7 @@ that is inaccessible from outside.
 
 Configuration files
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -188,7 +188,7 @@ Test
 
 The test allows to lookup fully configured controller in the container and invoke it's methods.
 
-```
+```java
 @RunWith(Arquillian.class)
 @SpringWebConfiguration
 public class EmployeeControlerTestCase {
