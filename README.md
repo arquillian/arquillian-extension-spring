@@ -169,6 +169,7 @@ Note: The ContextLoaderListener is required here, mostly because each dispatcher
 that is inaccessible from outside.
 
 *Configuration files*
+
 In this example the Spring context is configured through a xml file.
 
 ```xml
