@@ -1,7 +1,7 @@
 # Arquillian Spring integration, embedded container and enrichers
 * Injection of Spring beans into test classes
 * Configuration from both XML and Java-based config
-* Injecting beans configured in web app (in ContextListener or ContextServlet) through @SpringWebConfiguration
+* Injecting beans configured in web application (in ContextListener or ContextServlet) for test annotated with @SpringWebConfiguration
 * Support for both Spring(@Autowired, @Qualifier, @Required) and JSR-330(@Inject, @Named) annotations
 * Bean initialization support (@PostConstruct)
 * Auto packaging the spring-context artifact.
@@ -26,7 +26,7 @@ The annotations provides the information where to look for the spring configurat
 </beans>
 ```
 
-Test example
+*Test example*
 
 ```java
 @RunWith(Arquillian.class)
@@ -77,7 +77,7 @@ public class AppConfig {
 }
 ```
 
-Test example
+*Test example*
 
 ```java
 @RunWith(Arquillian.class)
@@ -107,12 +107,12 @@ public class AnnotatedConfigurationTestCase {
 }
 ```
 
-### Testing web app
+### Testing web apps
 
 The above examples allowed testing seperate classes injected through Spring without configuring entire web application,
-fallowing example demonstrates how test a simple MVC example instead.
+fallowing example demonstrates how test to a simple MVC application instead.
 
-Simple annotated controller
+*Simple annotated controller*
 
 ```java
 @Controller
@@ -131,7 +131,7 @@ public class EmployeeController {
 }
 ```
 
-Web.xml
+*Web.xml*
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -168,7 +168,8 @@ Web.xml
 Note: The ContextLoaderListener is required here, mostly because each dispatcher servlet has it own application context
 that is inaccessible from outside.
 
-Configuration files
+*Configuration files*
+In this example the Spring context is configured through a xml file.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -184,9 +185,10 @@ Configuration files
 </beans>
 ```
 
-Test
+*Test*
 
-The test allows to lookup fully configured controller in the container and invoke it's methods.
+It is possible in inject into the test fully configured Spring MVC controller and run on it simple tests in
+the container.
 
 ```java
 @RunWith(Arquillian.class)
