@@ -35,4 +35,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target(TYPE)
 @Inherited
 public @interface SpringWebConfiguration {
+
+    /**
+     * <p>Represents the name of the servlet which the {@link org.springframework.context.ApplicationContext} will be
+     * used.</p>
+     *
+     * <p>Not specifying the servlet name will cause the extension to use the Root Web Application Context.</p>
+     */
+    String servletName() default "";
 }

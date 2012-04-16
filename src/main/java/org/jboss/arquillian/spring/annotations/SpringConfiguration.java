@@ -37,22 +37,28 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface SpringConfiguration {
 
     /**
-     * The locations from where the xml config should be loaded.
+     * <p>The locations from where the xml config should be loaded.</p>
+     *
+     * <p>If no location is specified the test extension will try to load the configuration from
+     * applicationContext.xml</p>
      */
     String[] value() default {};
 
     /**
-     * The locations from where the xml config should be loaded.
+     * <p>The locations from where the xml config should be loaded.</p>
+     *
+     * <p>If no location is specified the test extension will try to load the configuration from
+     * applicationContext.xml</p>
      */
     String[] locations() default {};
 
     /**
-     * The classes annotated with {@link org.springframework.context.annotation.Configuration} to be loaded.
+     * <p>The classes annotated with {@link org.springframework.context.annotation.Configuration} to be loaded.</p>
      */
     Class<?>[] classes() default {};
 
     /**
-     * The packages that will scanned for {@link @Configuration} annotated classes.
+     * <p>The packages that will scanned for {@link @Configuration} annotated classes.</p>
      */
     String[] packages() default {};
 }

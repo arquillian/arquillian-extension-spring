@@ -29,7 +29,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.ServletContext;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Logger;
@@ -66,7 +69,7 @@ public class ApplicationContextProducer {
         if (isSpringTest(beforeClass.getTestClass())) {
 
             if (isWebTest(beforeClass.getTestClass())) {
-                applicationContext = ContextLoader.getCurrentWebApplicationContext();
+                applicationContext = getWebApplicationContext(beforeClass.getTestClass());
             } else {
                 applicationContext = createApplicationContext(beforeClass.getTestClass());
             }
@@ -108,6 +111,45 @@ public class ApplicationContextProducer {
     }
 
     /**
+     * Retrieves the web application context for the given test.
+     *
+     * @param testClass the test class
+     *
+     * @return {@link ApplicationContext} retrieves from web application
+     */
+    private ApplicationContext getWebApplicationContext(TestClass testClass) {
+
+        SpringWebConfiguration springWebConfiguration;
+        WebApplicationContext rootContext;
+        ApplicationContext applicationContext;
+
+        rootContext = ContextLoader.getCurrentWebApplicationContext();
+
+        if (rootContext == null) {
+
+            throw new RuntimeException("The Spring Root Web Application Context could not be found.");
+        }
+
+        springWebConfiguration = testClass.getAnnotation(SpringWebConfiguration.class);
+
+        if (!isEmpty(springWebConfiguration.servletName())) {
+
+            applicationContext = getServletApplicationContext(rootContext, springWebConfiguration.servletName());
+
+            if (applicationContext == null) {
+
+                throw new RuntimeException("Could not find the application context for servlet: " +
+                        springWebConfiguration.servletName());
+            }
+        } else {
+            // uses the root context as the main application context
+            applicationContext = rootContext;
+        }
+
+        return applicationContext;
+    }
+
+    /**
      * Creates the application context.
      *
      * @param testClass the test class
@@ -116,24 +158,32 @@ public class ApplicationContextProducer {
      */
     private ApplicationContext createApplicationContext(TestClass testClass) {
 
-        if (testClass.isAnnotationPresent(SpringConfiguration.class)) {
-            SpringConfiguration springConfiguration = testClass.getAnnotation(SpringConfiguration.class);
+        SpringConfiguration springConfiguration = testClass.getAnnotation(SpringConfiguration.class);
 
-            String[] packages = springConfiguration.packages();
-            Class<?>[] classes = springConfiguration.classes();
-            if (packages.length > 0 || classes.length > 0) {
+        String[] packages = springConfiguration.packages();
+        Class<?>[] classes = springConfiguration.classes();
+        if (packages.length > 0 || classes.length > 0) {
 
-                return createConfigApplicationContext(classes, packages);
-            }
+            return createConfigApplicationContext(classes, packages);
+        }
 
-            String[] configLocations = getConfigLocations(springConfiguration);
-            if (configLocations.length > 0) {
+        String[] configLocations = getConfigLocations(springConfiguration);
+        if (configLocations.length > 0) {
 
-                return new ClassPathXmlApplicationContext(configLocations);
-            }
+            return new ClassPathXmlApplicationContext(configLocations);
         }
 
         return new ClassPathXmlApplicationContext(SpringExtensionConsts.DEFAULT_LOCATION);
+    }
+
+    private ApplicationContext getServletApplicationContext(WebApplicationContext rootContext, String servletName) {
+
+        // retrieves the servlet context from web application context
+        ServletContext servletContext = rootContext.getServletContext();
+
+        // retrieves the application context for the given servlet using it's name
+        return (ApplicationContext) servletContext.getAttribute(MessageFormat.format(
+                "org.springframework.web.servlet.FrameworkServlet.CONTEXT.{0}", servletName));
     }
 
     /**
@@ -180,5 +230,17 @@ public class ApplicationContextProducer {
         }
 
         return mergedLocations.toArray(new String[mergedLocations.size()]);
+    }
+
+    /**
+     * Whether the passed string is null or empty string (after trimming).
+     *
+     * @param value the string to validate
+     *
+     * @return true if the passed is null or empty, false otherwise
+     */
+    private static boolean isEmpty(String value) {
+
+        return value == null || value.trim().length() == 0;
     }
 }
