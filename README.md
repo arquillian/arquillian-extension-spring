@@ -1,7 +1,7 @@
 # Arquillian Spring integration, embedded container and enrichers
 * Injection of Spring beans into test classes
 * Configuration from both XML and Java-based config
-* Injecting beans configured in web application (in ContextListener or ContextServlet) for test annotated with @SpringWebConfiguration
+* Injecting beans configured in web application (i.e. DispatcherServlet) for test annotated with @SpringWebConfiguration
 * Support for both Spring(@Autowired, @Qualifier, @Required) and JSR-330(@Inject, @Named) annotations
 * Bean initialization support (@PostConstruct)
 * Auto packaging the spring-context artifact.
@@ -144,13 +144,6 @@ public class EmployeeController {
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>
-            /WEB-INF/applicationContext.xml
-        </param-value>
-    </context-param>
-
     <servlet>
         <servlet-name>employee</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -166,7 +159,8 @@ public class EmployeeController {
 ```
 
 Note: The ContextLoaderListener is required here, mostly because each dispatcher servlet has it own application context
-that is inaccessible from outside.
+that is inaccessible from outside. To came over this limitation, the extensions requires that the web application will
+created Root Web Application Context by defining ContextLoaderListener or ContextLoaderServlet.
 
 *Configuration files*
 
@@ -193,10 +187,11 @@ the container.
 
 ```java
 @RunWith(Arquillian.class)
-@SpringWebConfiguration
+@SpringWebConfiguration(servletName = "employee")
 public class EmployeeControlerTestCase {
 
     @Deployment
+    @OverProtocol("Servlet 3.0")
     public static WebArchive createTestArchive() {
         return ShrinkWrap.create(WebArchive.class, "spring-test.war")
                 .addClasses(Employee.class,
@@ -213,9 +208,15 @@ public class EmployeeControlerTestCase {
                         "applicationContext.xml");
     }
 
+    /**
+     * The injected {@link EmployeeController}.
+     */
     @Autowired
     private EmployeeController employeeController;
 
+    /**
+     * {@link EmployeeController#getEmployees(org.springframework.ui.Model)}
+     */
     @Test
     public void testGetEmployees() {
 
@@ -232,7 +233,7 @@ public class EmployeeControlerTestCase {
 
         verify(model).addAttribute(eq("employees"), argument.capture());
         assertEquals("The controller returned invalid view name, 'employeeList' was expected.", "employeeList", result);
-        assertEquals("Two employees should be returned from model.", 2, argument.getValue().size());
+        assertEquals("Two employees should be returned from view.", 2, argument.getValue().size());
     }
 }
 ```
