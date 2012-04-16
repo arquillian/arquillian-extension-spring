@@ -166,16 +166,28 @@ created Root Web Application Context by defining ContextLoaderListener or Contex
 
 In this example the Spring context is configured through a xml file.
 
+employee-servlet.xml
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd http://www.springframework.org/schema/tool http://www.springframework.org/schema/tool/spring-tool-3.1.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
     <context:component-scan base-package="org.jboss.arquillian.spring.testsuite.beans.repository.impl"/>
     <context:component-scan base-package="org.jboss.arquillian.spring.testsuite.beans.service.impl"/>
     <context:component-scan base-package="org.jboss.arquillian.spring.testsuite.beans.controller"/>
+
+    <mvc:annotation-driven />
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
 
 </beans>
 ```
