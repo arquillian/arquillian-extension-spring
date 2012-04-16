@@ -159,8 +159,8 @@ public class EmployeeController {
 ```
 
 Note: The ContextLoaderListener is required here, mostly because each dispatcher servlet has it own application context
-that is inaccessible from outside. To came over this limitation, the extensions requires that the web application will
-created Root Web Application Context by defining ContextLoaderListener or ContextLoaderServlet.
+that is inaccessible from outside. To overcome this limitation the extensions requires that the web application will
+create Root Web Application Context by defining ContextLoaderListener or ContextLoaderServlet in it's web.xml.
 
 *Configuration files*
 
