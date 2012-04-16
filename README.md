@@ -1,7 +1,7 @@
 # Arquillian Spring integration, embedded container and enrichers
 * Injection of Spring beans into test classes
 * Configuration from both XML and Java-based config
-* Injecting beans configured in web application (i.e. DispatcherServlet) for test annotated with @SpringWebConfiguration
+* Injecting beans configured in web application (i.e. DispatcherServlet) for tests annotated with @SpringWebConfiguration
 * Support for both Spring(@Autowired, @Qualifier, @Required) and JSR-330(@Inject, @Named) annotations
 * Bean initialization support (@PostConstruct)
 * Auto packaging the spring-context artifact.
