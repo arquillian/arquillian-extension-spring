@@ -39,6 +39,13 @@ public final class SpringExtensionConsts {
     public static final String POM_XML = "pom.xml";
 
     /**
+     * <p>Represents the template name used for retrieving the application context for the given servlet by it's
+     * name.</p>
+     */
+    public static final String SERVLET_APPLICATION_CONTEXT =
+            "org.springframework.web.servlet.FrameworkServlet.CONTEXT.{0}";
+
+    /**
      * <p>Represents the fully qualified name to {@link org.springframework.context.ApplicationContext} class.</p>
      */
     public static final String APPLICATION_CONTEXT = "org.springframework.context.ApplicationContext";

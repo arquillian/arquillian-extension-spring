@@ -18,6 +18,7 @@ package org.jboss.arquillian.spring.client;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.CachedAuxilliaryArchiveAppender;
+import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
 import org.jboss.arquillian.spring.container.SpringEnricherRemoteExtension;
 import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
@@ -39,9 +40,9 @@ public class SpringEnricherArchiveAppender extends CachedAuxilliaryArchiveAppend
     @Override
     protected Archive<?> buildArchive() {
         return ShrinkWrap.create(JavaArchive.class, "arquillian-testenricher-spring.jar")
-                .addPackage(SpringInjectionEnricher.class.getPackage())
-                .addPackage(SpringEnricherRemoteExtension.class.getPackage())
                 .addPackage(SpringConfiguration.class.getPackage())
+                .addPackage(SpringInjectionEnricher.class.getPackage())
+                .addClass(SpringExtensionConsts.class)
                 .addAsServiceProvider(RemoteLoadableExtension.class, SpringEnricherRemoteExtension.class);
     }
 }

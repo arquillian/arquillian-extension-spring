@@ -191,7 +191,7 @@ public class ApplicationContextProducer {
 
         // retrieves the application context for the given servlet using it's name
         return (ApplicationContext) servletContext.getAttribute(MessageFormat.format(
-                "org.springframework.web.servlet.FrameworkServlet.CONTEXT.{0}", servletName));
+                SpringExtensionConsts.SERVLET_APPLICATION_CONTEXT, servletName));
     }
 
     /**
