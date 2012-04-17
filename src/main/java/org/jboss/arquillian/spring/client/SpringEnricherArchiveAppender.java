@@ -26,7 +26,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 /**
- * Spring Enricher Archive Appender. Adds all the required classes by this extension into a test archive.
+ * <p>Spring Enricher Archive Appender. Adds all the required classes by this extension into a test archive.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $

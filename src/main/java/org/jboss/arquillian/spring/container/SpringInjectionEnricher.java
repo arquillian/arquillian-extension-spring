@@ -29,7 +29,7 @@ import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
 /**
- * Spring test enricher, injects spring beans.
+ * <p>Spring test enricher, injects spring beans.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -37,12 +37,12 @@ import java.util.logging.Logger;
 public class SpringInjectionEnricher implements TestEnricher {
 
     /**
-     * Logger used by this class.
+     * <p>Logger used by this class.</p>
      */
     private static final Logger log = Logger.getLogger(SpringInjectionEnricher.class.getName());
 
     /**
-     * Instance of Spring {@link ApplicationContext}.
+     * <p>Instance of Spring {@link ApplicationContext}.</p>
      */
     @Inject
     private Instance<ApplicationContext> applicationContext;
@@ -69,7 +69,10 @@ public class SpringInjectionEnricher implements TestEnricher {
     }
 
     /**
-     * Returns whether the given class is annotated with {@link SpringConfiguration} class and requires bean injection.
+     * <p>Returns whether the given test case is Spring test and requires bean injection.</p>
+     *
+     * <p>The default implementation simply checks if the given class is annotated with {@link SpringConfiguration} or
+     * {@link SpringWebConfiguration}.</p>
      *
      * @param testCase the test case
      *
@@ -82,7 +85,7 @@ public class SpringInjectionEnricher implements TestEnricher {
     }
 
     /**
-     * Injects the tests case.
+     * <p>Injects beans into the tests case.</p>
      *
      * @param testCase the test case
      */
@@ -97,20 +100,23 @@ public class SpringInjectionEnricher implements TestEnricher {
     }
 
     /**
-     * Injects dependencies into the test bean.
+     * <p>Injects dependencies into the test case.</p>
      *
      * @param applicationContext the {@link ApplicationContext}
      * @param testCase           the test case for which the beans will be injected
      */
     private void injectDependencies(ApplicationContext applicationContext, Object testCase) {
 
+        // retrieves the bean factory
         AutowireCapableBeanFactory beanFactory = applicationContext.getAutowireCapableBeanFactory();
+        // injects all the members
         beanFactory.autowireBeanProperties(testCase, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
+        // initialize the bean
         beanFactory.initializeBean(testCase, testCase.getClass().getName());
     }
 
     /**
-     * Retrieves the {@link ApplicationContext}.
+     * <p>Retrieves the {@link ApplicationContext}.</p>
      *
      * @return the {@link ApplicationContext}
      */

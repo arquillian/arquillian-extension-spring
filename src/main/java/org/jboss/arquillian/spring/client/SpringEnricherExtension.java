@@ -24,7 +24,9 @@ import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
 import org.jboss.arquillian.test.spi.TestEnricher;
 
 /**
- * SpringEnricherExtension
+ * <p>The Spring Arquillian extension.</p>
+ *
+ * <p>It's responsible for bootstrapping the extension by registering service classes in Arquillian runtime.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $

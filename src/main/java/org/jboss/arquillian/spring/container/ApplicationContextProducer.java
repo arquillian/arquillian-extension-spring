@@ -38,7 +38,7 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 /**
- * A producer that creates the instance of {@link ApplicationContext}.
+ * <p>A producer that creates the instance of {@link ApplicationContext}.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -46,19 +46,19 @@ import java.util.logging.Logger;
 public class ApplicationContextProducer {
 
     /**
-     * The logger used by this class.
+     * <p>The logger used by this class.</p>
      */
     private static final Logger log = Logger.getLogger(ApplicationContextProducer.class.getName());
 
     /**
-     * Producer proxy for {@link ApplicationContext}.
+     * <p>Producer proxy for {@link ApplicationContext}.</p>
      */
     @Inject
     @ApplicationScoped
     private InstanceProducer<ApplicationContext> applicationContextProducer;
 
     /**
-     * Builds the application context before the test suite is being executed.
+     * <p>Builds the application context before the test suite is being executed.</p>
      *
      * @param beforeClass the event fired before execution of concrete class
      */
@@ -88,7 +88,7 @@ public class ApplicationContextProducer {
     }
 
     /**
-     * Returns whether the given test runs in web application.
+     * <p>Returns whether the given test runs in web application.</p>
      *
      * @param testClass the test class
      *
@@ -99,7 +99,7 @@ public class ApplicationContextProducer {
     }
 
     /**
-     * Returns whether the given test is spring test and requires bean injection.
+     * <p>Returns whether the given test is spring test and requires bean injection.</p>
      *
      * @param testClass the test class
      *
@@ -111,7 +111,7 @@ public class ApplicationContextProducer {
     }
 
     /**
-     * Retrieves the web application context for the given test.
+     * <p>Retrieves the web application context for the given test.</p>
      *
      * @param testClass the test class
      *
@@ -150,7 +150,7 @@ public class ApplicationContextProducer {
     }
 
     /**
-     * Creates the application context.
+     * <p>Creates the application context.</p>
      *
      * @param testClass the test class
      *
@@ -176,6 +176,14 @@ public class ApplicationContextProducer {
         return new ClassPathXmlApplicationContext(SpringExtensionConsts.DEFAULT_LOCATION);
     }
 
+    /**
+     * <p>Retrieves the application context for the given servlet.</p>
+     *
+     * @param rootContext the root web application context
+     * @param servletName the  servlet name
+     *
+     * @return the retrieved application context
+     */
     private ApplicationContext getServletApplicationContext(WebApplicationContext rootContext, String servletName) {
 
         // retrieves the servlet context from web application context
@@ -187,7 +195,7 @@ public class ApplicationContextProducer {
     }
 
     /**
-     * Creates instance of {@link AnnotationConfigApplicationContext} class.
+     * <p>Creates instance of {@link AnnotationConfigApplicationContext} class.</p>
      *
      * @param classes  the annotated classes to register
      * @param packages the packages containing the annotated classes
@@ -213,7 +221,7 @@ public class ApplicationContextProducer {
     }
 
     /**
-     * Retrieves the config locations from annotation.
+     * <p>Retrieves the config locations from annotation.</p>
      *
      * @param springConfiguration {@link SpringConfiguration} annotation
      *
@@ -233,7 +241,7 @@ public class ApplicationContextProducer {
     }
 
     /**
-     * Whether the passed string is null or empty string (after trimming).
+     * <p>Whether the passed string is null or empty string (after trimming).</p>
      *
      * @param value the string to validate
      *

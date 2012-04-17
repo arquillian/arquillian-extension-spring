@@ -28,7 +28,9 @@ import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 import java.io.File;
 
 /**
- * SpringProtocolArchiveProcessor
+ * <p>Archive processor adds the Spring framework dependencies into the test or archive processor.
+ * The extension by default allows to test JAR archives in the container by adding all the required
+ * dependencies into protocol WAR.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -55,7 +57,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * Returns whether the passed archive is an enterprise archive (EAR)
+     * <p>Returns whether the passed archive is an enterprise archive (EAR)</p>
      *
      * @param archive the archive
      *
@@ -66,7 +68,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * Returns whether the passed archive is an web archive (WAR)
+     * <p>Returns whether the passed archive is an web archive (WAR).</p>
      *
      * @param archive the archive
      *
@@ -77,7 +79,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * Adds the spring dependencies into the passed archive.
+     * <p>Adds the spring dependencies into the passed archive.</p>
      *
      * @param archive the archive
      */
@@ -95,6 +97,11 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
         }
     }
 
+    /**
+     * <p>Adds Spring Web dependencies into the passed archive.</p>
+     *
+     * @param archive the archive
+     */
     private void addSpringWebLibraries(Archive<?> archive) {
 
         File[] springLibraries = resolveSpringWebDependencies();
@@ -110,7 +117,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * Adds cglib dependencies into the passed archive.
+     * <p>Adds cglib dependencies into the passed archive.</p>
      *
      * @param archive the archive
      */
@@ -129,7 +136,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * Resolves the spring dependencies using maven.
+     * <p>Resolves the spring dependencies using maven.</p>
      *
      * @return the spring dependencies
      */
@@ -139,7 +146,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * Resolves the spring dependencies using maven.
+     * <p>Resolves the spring dependencies using maven.</p>
      *
      * @return the spring dependencies
      */
@@ -149,7 +156,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * Resolves cglib dependencies using maven.
+     * <p>Resolves cglib dependencies using maven.</p>
      *
      * @return cglib dependencies
      */
@@ -159,7 +166,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * Resolves the given artifact in specified version with help of maven build system.
+     * <p>Resolves the given artifact in specified version with help of maven build system.</p>
      *
      * @param artifact the artifact name
      * @param version  the artifact version
@@ -177,7 +184,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * Resolves the given artifact by it's name with help of maven build system.
+     * <p>Resolves the given artifact by it's name with help of maven build system.</p>
      *
      * @param artifact the fully qualified artifact name
      *
@@ -195,7 +202,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * Returns whether maven is being used in project.
+     * <p>Returns whether maven is being used in project.</p>
      *
      * @return true if maven is being used in project, false otherwise
      */

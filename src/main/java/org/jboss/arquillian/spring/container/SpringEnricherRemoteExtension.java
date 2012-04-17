@@ -21,7 +21,7 @@ import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.test.spi.TestEnricher;
 
 /**
- * A remote extension that configures Spring extension.
+ * <p>A remote extension that configures required services for running Spring tests.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $

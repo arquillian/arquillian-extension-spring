@@ -20,7 +20,7 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 
 /**
- * Defines a set of operations that are mend to be executed within security context.
+ * <p>Defines a set of operations that are ment to be executed within security context.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -36,6 +36,13 @@ class SecurityActions {
         // empty constructor
     }
 
+    /**
+     * <p>Returns whether given class is prevent within the class path.</p>
+     *
+     * @param name the class name
+     *
+     * @return true if the given class is present in the class path, false otheriwse
+     */
     static boolean isClassPresent(String name) {
         try {
             ClassLoader classLoader = getThreadContextClassLoader();
@@ -46,6 +53,11 @@ class SecurityActions {
         }
     }
 
+    /**
+     * <p>Retrieves current thread class loader.</p>
+     *
+     * @return the class loader
+     */
     static ClassLoader getThreadContextClassLoader() {
         return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
 
