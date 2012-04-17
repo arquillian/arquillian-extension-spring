@@ -255,8 +255,8 @@ public class EmployeeControlerTestCase {
 
 #### Java-based configuration (Servlet 3.0 only)
 
-Again, the above example can be also achieved without any piece of XML (even without a web.xml descriptor).
-All thanks to WebApplicationInitializer which allows to set up the servlets with code.
+Again, the above configuration can be also done without any piece of XML (even without a web.xml descriptor).
+All thanks to WebApplicationInitializer which allows to set up the servlets programmatically.
 
 Instead of defining web.xml it is possible to write a simple class:
 
@@ -311,6 +311,7 @@ public class WebAppConfig {
 ```
 
 *Test code*
+
 Now the test deployment doesn't require any kind of descriptors.
 
 ```java
