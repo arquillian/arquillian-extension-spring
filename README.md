@@ -227,7 +227,7 @@ public class EmployeeControlerTestCase {
     private EmployeeController employeeController;
 
     /**
-     * {@link EmployeeController#getEmployees(org.springframework.ui.Model)}
+     * Tests {@link EmployeeController#getEmployees(org.springframework.ui.Model)} method.
      */
     @Test
     public void testGetEmployees() {
@@ -245,7 +245,7 @@ public class EmployeeControlerTestCase {
 
         verify(model).addAttribute(eq("employees"), argument.capture());
         assertEquals("The controller returned invalid view name, 'employeeList' was expected.", "employeeList", result);
-        assertEquals("Two employees should be returned from view.", 2, argument.getValue().size());
+        assertEquals("Two employees should be returned from model.", 2, argument.getValue().size());
     }
 }
 ```
