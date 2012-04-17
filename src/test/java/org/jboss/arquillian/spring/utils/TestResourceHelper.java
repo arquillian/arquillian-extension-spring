@@ -34,7 +34,7 @@ public class TestResourceHelper {
     private TestResourceHelper() {
         // empty constructor
     }
-    
+
     /**
      * <p>Retrieves the resource name of the give class.</p>
      *

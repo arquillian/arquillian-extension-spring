@@ -25,8 +25,6 @@ import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
 import org.jboss.arquillian.spring.container.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.utils.TestResourceHelper;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ArchivePath;
-import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
 import org.junit.Test;

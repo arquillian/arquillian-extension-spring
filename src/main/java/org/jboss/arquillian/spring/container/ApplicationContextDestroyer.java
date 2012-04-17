@@ -21,7 +21,6 @@ import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
-import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.logging.Logger;
@@ -37,7 +36,7 @@ public class ApplicationContextDestroyer {
     /**
      * <p>The logger used by this class.</p>
      */
-    private static final Logger log = Logger.getLogger(ApplicationContextProducer.class.getName());
+    private static final Logger log = Logger.getLogger(ApplicationContextDestroyer.class.getName());
 
     /**
      * <p>Producer proxy for {@link org.springframework.context.ApplicationContext}.</p>
@@ -53,14 +52,15 @@ public class ApplicationContextDestroyer {
      */
     public void destroyApplicationContext(@Observes AfterClass afterClass) {
 
-        if(testApplicationContext.get() != null) {
+        if (testApplicationContext.get() != null) {
             TestScopeApplicationContext testContext = testApplicationContext.get();
 
-            if(testContext.isClosable()
+            if (testContext.isClosable()
                     && testContext.getApplicationContext() instanceof ConfigurableApplicationContext) {
 
                 // closes the application context freeing all resources
-                ((ConfigurableApplicationContext)testContext.getApplicationContext()).close();
+                ((ConfigurableApplicationContext) testContext.getApplicationContext()).close();
+                log.fine("Closing the application context.");
             }
         }
     }

@@ -28,12 +28,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -107,27 +104,27 @@ public class SpringProtocolArchiveProcessorTestCase {
         boolean isSpringPresent = false;
         boolean isSpringWebPresent = false;
         boolean isCglibPresent = false;
-        
+
         Map<ArchivePath, Node> contentMap = archive.getContent(new Filter<ArchivePath>() {
             public boolean include(ArchivePath object) {
                 return object.get().startsWith("/WEB-INF/lib");
             }
         });
-        
-        for(ArchivePath key : contentMap.keySet()) {
 
-            if(key.get().contains("/spring-context")) {
+        for (ArchivePath key : contentMap.keySet()) {
+
+            if (key.get().contains("/spring-context")) {
 
                 isSpringPresent = true;
-            } else if(key.get().contains("/spring-web")) {
+            } else if (key.get().contains("/spring-web")) {
 
                 isSpringWebPresent = true;
-            } else if(key.get().contains("/cglib")) {
+            } else if (key.get().contains("/cglib")) {
 
                 isCglibPresent = true;
             }
         }
-        
+
         assertTrue("Required dependencies is missing: spring-context.", isSpringPresent);
         assertTrue("Required dependencies is missing: spring-web.", isSpringWebPresent);
         assertTrue("Required dependencies is missing: cglib.", isCglibPresent);

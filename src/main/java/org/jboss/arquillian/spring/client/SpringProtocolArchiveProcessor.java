@@ -28,9 +28,8 @@ import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 import java.io.File;
 
 /**
- * <p>Archive processor adds the Spring framework dependencies into the test or archive processor.
- * The extension by default allows to test JAR archives in the container by adding all the required
- * dependencies into protocol WAR.</p>
+ * <p>Archive processor adds the Spring framework dependencies into the test or archive processor. The extension by
+ * default allows to test JAR archives in the container by adding all the required dependencies into protocol WAR.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $

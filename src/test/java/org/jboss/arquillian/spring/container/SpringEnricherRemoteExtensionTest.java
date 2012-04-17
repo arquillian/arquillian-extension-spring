@@ -16,28 +16,11 @@
  */
 package org.jboss.arquillian.spring.container;
 
-import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
-import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
 import org.jboss.arquillian.core.spi.LoadableExtension;
-import org.jboss.arquillian.spring.SpringExtensionConsts;
-import org.jboss.arquillian.spring.annotations.SpringConfiguration;
-import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
-import org.jboss.arquillian.spring.client.SpringEnricherArchiveAppender;
-import org.jboss.arquillian.spring.client.SpringEnricherExtension;
-import org.jboss.arquillian.spring.client.SpringProtocolArchiveProcessor;
 import org.jboss.arquillian.test.spi.TestEnricher;
-import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ArchivePath;
-import org.jboss.shrinkwrap.api.ArchivePaths;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

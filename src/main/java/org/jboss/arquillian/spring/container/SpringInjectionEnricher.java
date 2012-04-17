@@ -122,11 +122,11 @@ public class SpringInjectionEnricher implements TestEnricher {
      */
     private ApplicationContext getApplicationContext() {
 
-        if(testApplicationContext.get() != null) {
-            
+        if (testApplicationContext.get() != null) {
+
             return testApplicationContext.get().getApplicationContext();
         }
-        
+
         return null;
     }
 }
