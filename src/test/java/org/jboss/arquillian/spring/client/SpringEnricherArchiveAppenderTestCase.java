@@ -22,6 +22,7 @@ import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
 import org.jboss.arquillian.spring.container.ApplicationContextProducer;
 import org.jboss.arquillian.spring.container.SpringEnricherRemoteExtension;
 import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
+import org.jboss.arquillian.spring.container.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.utils.TestResourceHelper;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePath;
@@ -53,7 +54,7 @@ public class SpringEnricherArchiveAppenderTestCase {
      */
     private List<Class<?>> REQUIRED_CLASSES = Arrays.asList(SpringConfiguration.class, SpringWebConfiguration.class,
             ApplicationContextProducer.class, SpringEnricherRemoteExtension.class, SpringInjectionEnricher.class,
-            SpringExtensionConsts.class);
+            TestScopeApplicationContext.class, SpringExtensionConsts.class);
 
     /**
      * <p>Sets up the test environment.</p>

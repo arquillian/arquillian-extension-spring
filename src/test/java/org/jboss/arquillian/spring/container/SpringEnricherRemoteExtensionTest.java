@@ -78,5 +78,6 @@ public class SpringEnricherRemoteExtensionTest {
 
         verify(mockExtensionBuilder).service(TestEnricher.class, SpringInjectionEnricher.class);
         verify(mockExtensionBuilder).observer(ApplicationContextProducer.class);
+        verify(mockExtensionBuilder).observer(ApplicationContextDestroyer.class);
     }
 }

@@ -55,35 +55,33 @@ public class ApplicationContextProducer {
      */
     @Inject
     @ApplicationScoped
-    private InstanceProducer<ApplicationContext> applicationContextProducer;
+    private InstanceProducer<TestScopeApplicationContext> testApplicationContext;
 
     /**
      * <p>Builds the application context before the test suite is being executed.</p>
      *
-     * @param beforeClass the event fired before execution of concrete class
+     * @param beforeClass the event fired before execution of test case
      */
     public void initApplicationContext(@Observes BeforeClass beforeClass) {
 
         ApplicationContext applicationContext;
+        boolean closable;
 
         if (isSpringTest(beforeClass.getTestClass())) {
 
             if (isWebTest(beforeClass.getTestClass())) {
                 applicationContext = getWebApplicationContext(beforeClass.getTestClass());
+                closable = false;
             } else {
                 applicationContext = createApplicationContext(beforeClass.getTestClass());
+                closable = true;
             }
 
             // sets the application context to be shared among all tests
-            if (applicationContext != null) {
-                applicationContextProducer.set(applicationContext);
+            testApplicationContext.set(new TestScopeApplicationContext(applicationContext, closable));
 
-                log.fine("Successfully created application context for test class: "
-                        + beforeClass.getTestClass().getName());
-            } else {
-
-                log.warning("The application context could not be created");
-            }
+            log.fine("Successfully created application context for test class: "
+                    + beforeClass.getTestClass().getName());
         }
     }
 

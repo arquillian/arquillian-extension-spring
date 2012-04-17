@@ -45,7 +45,7 @@ public class SpringInjectionEnricher implements TestEnricher {
      * <p>Instance of Spring {@link ApplicationContext}.</p>
      */
     @Inject
-    private Instance<ApplicationContext> applicationContext;
+    private Instance<TestScopeApplicationContext> testApplicationContext;
 
     /**
      * {@inheritDoc}
@@ -94,7 +94,7 @@ public class SpringInjectionEnricher implements TestEnricher {
         ApplicationContext applicationContext = getApplicationContext();
 
         if (applicationContext != null) {
-            log.fine("Injecting dependencies into bean.");
+            log.fine("Injecting dependencies into test case: " + testCase.getClass().getName());
             injectDependencies(applicationContext, testCase);
         }
     }
@@ -122,6 +122,11 @@ public class SpringInjectionEnricher implements TestEnricher {
      */
     private ApplicationContext getApplicationContext() {
 
-        return applicationContext.get();
+        if(testApplicationContext.get() != null) {
+            
+            return testApplicationContext.get().getApplicationContext();
+        }
+        
+        return null;
     }
 }

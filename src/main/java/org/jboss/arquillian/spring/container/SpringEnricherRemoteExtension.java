@@ -37,7 +37,8 @@ public class SpringEnricherRemoteExtension implements RemoteLoadableExtension {
         // only load if Spring Application Context is in ClassPath
         if (Validate.classExists(SpringExtensionConsts.APPLICATION_CONTEXT)) {
             builder.service(TestEnricher.class, SpringInjectionEnricher.class)
-                    .observer(ApplicationContextProducer.class);
+                    .observer(ApplicationContextProducer.class)
+                    .observer(ApplicationContextDestroyer.class);
         }
     }
 }
