@@ -11,7 +11,9 @@
 The test which requires the dependencies to be injected through Spring should be annotated with @SpringConfiguration.
 The annotations provides the information where to look for the spring configuration
 
-### XML configuration
+### Testing Spring beans
+
+#### XML configuration
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -57,7 +59,7 @@ public class DefaultEmployeeRepositoryTestCase {
 }
 ```
 
-### Java-based configuration
+#### Java-based configuration
 
 ```java
 @Configuration
@@ -109,6 +111,7 @@ public class AnnotatedConfigurationTestCase {
 
 ### Testing web apps
 
+#### XML configuration
 The above examples allowed testing seperate classes injected through Spring without configuring entire web application,
 fallowing example demonstrates how to test a simple MVC application instead.
 
@@ -166,7 +169,7 @@ create Root Web Application Context by defining ContextLoaderListener or Context
 
 In this example the Spring context is configured through a xml file.
 
-employee-servlet.xml
+*employee-servlet.xml*
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -218,6 +221,113 @@ public class EmployeeControlerTestCase {
                         "employee-servlet.xml")
                 .addAsWebInfResource(EmployeeControlerTestCase.class.getResource("/mvc/applicationContext.xml"),
                         "applicationContext.xml");
+    }
+
+    /**
+     * The injected {@link EmployeeController}.
+     */
+    @Autowired
+    private EmployeeController employeeController;
+
+    /**
+     * Tests {@link EmployeeController#getEmployees(org.springframework.ui.Model)} method.
+     */
+    @Test
+    public void testGetEmployees() {
+
+        String result;
+        Model model;
+        ArgumentCaptor<List> argument;
+
+        assertNotNull("The controller hasn't been injected.", employeeController);
+
+        model = mock(Model.class);
+        argument = ArgumentCaptor.forClass(List.class);
+
+        result = employeeController.getEmployees(model);
+
+        verify(model).addAttribute(eq("employees"), argument.capture());
+        assertEquals("The controller returned invalid view name, 'employeeList' was expected.", "employeeList", result);
+        assertEquals("Two employees should be returned from model.", 2, argument.getValue().size());
+    }
+}
+```
+
+#### Java-based configuration (Servlet 3.0 only)
+
+Again, the above example can be also achieved without any piece of XML (even without a web.xml descriptor).
+All thanks to WebApplicationInitializer which allows to set up the servlets with code.
+
+Instead of defining web.xml it is possible to write a simple class:
+
+```java
+public class EmployeeWebInitializer implements WebApplicationInitializer {
+
+    /**
+     * {@inheritDoc}
+     */
+    public void onStartup(ServletContext servletContext) throws ServletException {
+
+        // creates the root web app context
+        AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
+        webContext.register(WebAppConfig.class);
+
+        // registers context load listener
+        servletContext.addListener(new ContextLoaderListener(new AnnotationConfigWebApplicationContext()));
+
+        // adds a dispatch servlet, the servlet will be configured from root web app context
+        ServletRegistration.Dynamic servletConfig = servletContext.addServlet("employee",
+                new DispatcherServlet(webContext));
+        servletConfig.setLoadOnStartup(1);
+        servletConfig.addMapping("*.htm");
+    }
+}
+```
+
+Only what is left to do is define a configuration for the Spring context.
+
+```java
+@Configuration
+@EnableWebMvc
+@ComponentScan(basePackages = {
+        "org.jboss.arquillian.spring.testsuite.beans.repository.impl",
+        "org.jboss.arquillian.spring.testsuite.beans.service.impl",
+        "org.jboss.arquillian.spring.testsuite.beans.controller"})
+public class WebAppConfig {
+
+    /**
+     * <p>Retrieves instance of {@link ViewResolver}.</p>
+     *
+     * @return instance of {@link ViewResolver}
+     */
+    @Bean
+    public ViewResolver viewResolver() {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setSuffix(".jsp");
+        return resolver;
+    }
+}
+```
+
+*Test code*
+Now the test deployment doesn't require any kind of descriptors.
+
+```java
+@RunWith(Arquillian.class)
+@SpringWebConfiguration(servletName = "employee")
+public class EmployeeControllerWebInitTestCase {
+
+    @Deployment
+    @OverProtocol("Servlet 3.0")
+    public static WebArchive createTestArchive() {
+        return ShrinkWrap.create(WebArchive.class, "spring-test.war")
+                .addClasses(Employee.class,
+                        EmployeeService.class, DefaultEmployeeService.class,
+                        EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class,
+                        EmployeeController.class, WebAppConfig.class, EmployeeWebInitializer.class)
+                .addAsLibraries(springDependencies())
+                .addAsLibraries(mockitoDependencies());
     }
 
     /**
