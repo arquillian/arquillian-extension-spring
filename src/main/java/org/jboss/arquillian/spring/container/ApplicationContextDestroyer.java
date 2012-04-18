@@ -16,8 +16,7 @@
  */
 package org.jboss.arquillian.spring.container;
 
-import org.jboss.arquillian.core.api.InstanceProducer;
-import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
+import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
@@ -26,7 +25,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import java.util.logging.Logger;
 
 /**
- * <p>Closes {@link org.springframework.context.ApplicationContext} where it is not needed any more.</p>
+ * <p>Closes {@link org.springframework.context.ApplicationContext} after execution of test case.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -39,14 +38,13 @@ public class ApplicationContextDestroyer {
     private static final Logger log = Logger.getLogger(ApplicationContextDestroyer.class.getName());
 
     /**
-     * <p>Producer proxy for {@link org.springframework.context.ApplicationContext}.</p>
+     * <p>Instance of {@link org.springframework.context.ApplicationContext}.</p>
      */
     @Inject
-    @ApplicationScoped
-    private InstanceProducer<TestScopeApplicationContext> testApplicationContext;
+    private Instance<TestScopeApplicationContext> testApplicationContext;
 
     /**
-     * <p>Builds the application context before the test suite is being executed.</p>
+     * <p>Destroys the application context after execution of test case.</p>
      *
      * @param afterClass the event fired after execution of test case
      */
@@ -58,7 +56,7 @@ public class ApplicationContextDestroyer {
             if (testContext.isClosable()
                     && testContext.getApplicationContext() instanceof ConfigurableApplicationContext) {
 
-                // closes the application context freeing all resources
+                // closes the application context, freeing all resources
                 ((ConfigurableApplicationContext) testContext.getApplicationContext()).close();
                 log.fine("Closing the application context.");
             }

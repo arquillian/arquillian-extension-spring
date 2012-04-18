@@ -226,7 +226,8 @@ public class ApplicationContextProducer {
      * @return config locations
      */
     private String[] getConfigLocations(SpringConfiguration springConfiguration) {
-        ArrayList<String> mergedLocations = new ArrayList();
+        ArrayList<String> mergedLocations = new ArrayList<String>();
+
         if (springConfiguration.locations() != null) {
             mergedLocations.addAll(Arrays.asList(springConfiguration.locations()));
         }

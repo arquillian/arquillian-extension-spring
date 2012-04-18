@@ -41,6 +41,8 @@ public class TestScopeApplicationContext {
      *
      * @param applicationContext the {@link ApplicationContext}
      * @param closable           whether the application context should be closed after the tests
+     *
+     * @throws IllegalArgumentException is applicationContext is null
      */
     public TestScopeApplicationContext(ApplicationContext applicationContext, boolean closable) {
 

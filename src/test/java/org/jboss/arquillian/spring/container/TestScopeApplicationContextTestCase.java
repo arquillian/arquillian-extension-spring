@@ -16,29 +16,26 @@
  */
 package org.jboss.arquillian.spring.container;
 
-import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.spring.SpringExtensionConsts;
-import org.jboss.arquillian.test.spi.TestEnricher;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * <p>A remote extension that configures required services for running Spring tests.</p>
+ * <p>Tests {@link TestScopeApplicationContext} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
- * @version $Revision: $
  */
-public class SpringEnricherRemoteExtension implements RemoteLoadableExtension {
+public class TestScopeApplicationContextTestCase {
 
     /**
-     * {@inheritDoc}
+     * <p>Represents the instance of tested class.</p>
      */
-    @Override
-    public void register(ExtensionBuilder builder) {
+    private TestScopeApplicationContext instance;
 
-        // loads the extension only if Spring Application Context is in ClassPath
-        if (Validate.classExists(SpringExtensionConsts.APPLICATION_CONTEXT)) {
-            builder.service(TestEnricher.class, SpringInjectionEnricher.class)
-                    .observer(ApplicationContextProducer.class)
-                    .observer(ApplicationContextDestroyer.class);
-        }
+    /**
+     * <p>Tests method.</p>
+     */
+    @Test
+    public void test() {
+
     }
 }

@@ -263,12 +263,9 @@ Instead of defining web.xml it is possible to write a simple class:
 ```java
 public class EmployeeWebInitializer implements WebApplicationInitializer {
 
-    /**
-     * {@inheritDoc}
-     */
     public void onStartup(ServletContext servletContext) throws ServletException {
 
-        // creates the root web app context
+        // creates the web app context
         AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
         webContext.register(WebAppConfig.class);
 
