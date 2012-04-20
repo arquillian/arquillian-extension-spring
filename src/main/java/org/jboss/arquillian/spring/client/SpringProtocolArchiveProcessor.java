@@ -26,6 +26,8 @@ import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * <p>Archive processor adds the Spring framework dependencies into the test or archive processor. The extension by
@@ -44,14 +46,12 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
         // if the application archive is an war or ear then add the spring dependencies into it
         if (isEnterpriseArchive(testDeployment.getApplicationArchive()) ||
                 isWebArchive(testDeployment.getApplicationArchive())) {
-            addSpringLibraries(testDeployment.getApplicationArchive());
-            addSpringWebLibraries(testDeployment.getApplicationArchive());
-            addCglib(testDeployment.getApplicationArchive());
+
+            addDependencies(testDeployment.getApplicationArchive());
         } else if (isEnterpriseArchive(protocolArchive) || isWebArchive(protocolArchive)) {
             // otherwise try to add the required dependencies into the protocol archive
-            addSpringLibraries(protocolArchive);
-            addSpringWebLibraries(protocolArchive);
-            addCglib(protocolArchive);
+
+            addDependencies(protocolArchive);
         }
     }
 
@@ -78,90 +78,69 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * <p>Adds the spring dependencies into the passed archive.</p>
+     * <p>Adds the dependencies into the given archive.</p>
      *
-     * @param archive the archive
+     * @param archive the archive to which the dependencies will be added
      */
-    private void addSpringLibraries(Archive<?> archive) {
+    private void addDependencies(Archive<?> archive) {
 
-        File[] springLibraries = resolveSpringDependencies();
+        File[] dependencies = resolveExtensionDependencies();
 
         if (archive instanceof EnterpriseArchive) {
-            ((EnterpriseArchive) archive).addAsModules(springLibraries);
+            ((EnterpriseArchive) archive).addAsModules(dependencies);
         } else if (archive instanceof WebArchive) {
-            ((WebArchive) archive).addAsLibraries(springLibraries);
+            ((WebArchive) archive).addAsLibraries(dependencies);
         } else {
             throw new RuntimeException("Unsupported archive format[" + archive.getClass().getSimpleName()
-                    + ", " + archive.getName() + "] for Spring application. Please use WAR or EAR.");
+                    + ", " + archive.getName() + "] for Spring testing. Please use WAR or EAR.");
         }
     }
 
     /**
-     * <p>Adds Spring Web dependencies into the passed archive.</p>
+     * <p>Resolves all dependencies required for the extension.</p>
      *
-     * @param archive the archive
+     * @return resolved dependencies
      */
-    private void addSpringWebLibraries(Archive<?> archive) {
+    private File[] resolveExtensionDependencies() {
 
-        File[] springLibraries = resolveSpringWebDependencies();
+        // TODO retrieve the version from configuration
+        ArrayList<File> dependencies = new ArrayList<File>();
 
-        if (archive instanceof EnterpriseArchive) {
-            ((EnterpriseArchive) archive).addAsModules(springLibraries);
-        } else if (archive instanceof WebArchive) {
-            ((WebArchive) archive).addAsLibraries(springLibraries);
+        // adds the spring dependencies
+        dependencies.addAll(Arrays.asList(resolveArtifact(SpringExtensionConsts.SPRING_ARTIFACT_NAME,
+                SpringExtensionConsts.SPRING_ARTIFACT_VERSION, SpringExtensionConsts.SPRING_ARTIFACT_VERSION)));
+
+        // adds spring web
+        dependencies.addAll(Arrays.asList(resolveArtifact(SpringExtensionConsts.SPRING_ARTIFACT_WEB_NAME,
+                SpringExtensionConsts.SPRING_ARTIFACT_VERSION, SpringExtensionConsts.SPRING_ARTIFACT_VERSION)));
+
+        // adds the cglib
+        dependencies.addAll(Arrays.asList(resolveArtifact(SpringExtensionConsts.CGLIB_ARTIFACT_NAME,
+                SpringExtensionConsts.CGLIB_ARTIFACT_VERSION, SpringExtensionConsts.CGLIB_ARTIFACT_VERSION)));
+
+        return dependencies.toArray(new File[dependencies.size()]);
+    }
+
+    /**
+     * Resolves the artifact using the given version, if the version hasn't been specified than the default artifact
+     * version will be used.
+     *
+     * @param artifact       the artifact name
+     * @param version        the artifact version
+     * @param defaultVersion the default artifact version to be used
+     *
+     * @return the resolved artifacts
+     */
+    private File[] resolveArtifact(String artifact, String version, String defaultVersion) {
+        String artifactVersion;
+
+        if (version == null || version.length() == 0) {
+            artifactVersion = defaultVersion;
         } else {
-            throw new RuntimeException("Unsupported archive format[" + archive.getClass().getSimpleName()
-                    + ", " + archive.getName() + "] for Spring application. Please use WAR or EAR.");
+            artifactVersion = version;
         }
-    }
 
-    /**
-     * <p>Adds cglib dependencies into the passed archive.</p>
-     *
-     * @param archive the archive
-     */
-    private void addCglib(Archive<?> archive) {
-
-        File[] springLibraries = resolveCglibLibraries();
-
-        if (archive instanceof EnterpriseArchive) {
-            ((EnterpriseArchive) archive).addAsModules(springLibraries);
-        } else if (archive instanceof WebArchive) {
-            ((WebArchive) archive).addAsLibraries(springLibraries);
-        } else {
-            throw new RuntimeException("Unsupported archive format[" + archive.getClass().getSimpleName()
-                    + ", " + archive.getName() + "] for Spring application. Please use WAR or EAR.");
-        }
-    }
-
-    /**
-     * <p>Resolves the spring dependencies using maven.</p>
-     *
-     * @return the spring dependencies
-     */
-    private File[] resolveSpringDependencies() {
-
-        return resolveArtifact(SpringExtensionConsts.SPRING_ARTIFACT_NAME, SpringExtensionConsts.SPRING_ARTIFACT_VERSION);
-    }
-
-    /**
-     * <p>Resolves the spring dependencies using maven.</p>
-     *
-     * @return the spring dependencies
-     */
-    private File[] resolveSpringWebDependencies() {
-
-        return resolveArtifact(SpringExtensionConsts.SPRING_ARTIFACT_WEB, SpringExtensionConsts.SPRING_ARTIFACT_VERSION);
-    }
-
-    /**
-     * <p>Resolves cglib dependencies using maven.</p>
-     *
-     * @return cglib dependencies
-     */
-    private File[] resolveCglibLibraries() {
-
-        return resolveArtifact(SpringExtensionConsts.CGLIB_ARTIFACT_NAME, SpringExtensionConsts.CGLIB_ARTIFACT_VERSION);
+        return resolveArtifact(artifact, artifactVersion);
     }
 
     /**
