@@ -14,23 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.spring.container;
+package org.jboss.arquillian.spring.context;
 
-import org.jboss.arquillian.spring.context.ApplicationContextProducer;
+import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <p>Tests {@link ApplicationContextProducer} class.</p>
+ * <p>Tests {@link ApplicationContextDestroyer} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class ApplicationContextProducerTestCase {
+public class ApplicationContextDestroyerTestCase {
 
     /**
      * <p>Represents the instance of tested class.</p>
      */
-    private ApplicationContextProducer instance;
+    private ApplicationContextDestroyer instance;
 
     /**
      * <p>Sets up the test environment.</p>
@@ -38,7 +38,7 @@ public class ApplicationContextProducerTestCase {
     @Before
     public void setUp() {
 
-        instance = new ApplicationContextProducer();
+        instance = new ApplicationContextDestroyer();
     }
 
     /**

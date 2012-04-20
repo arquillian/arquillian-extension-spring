@@ -19,6 +19,10 @@ package org.jboss.arquillian.spring.container;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Method;
+
+import static org.junit.Assert.assertNotNull;
+
 /**
  * <p>Tests {@link SpringInjectionEnricher} class.</p>
  *
@@ -41,10 +45,27 @@ public class SpringInjectionEnricherTestCase {
     }
 
     /**
-     * <p>Tests method.</p>
+     * <p>Tests {@link SpringInjectionEnricher#enrich(Object)} method.</p>
      */
     @Test
-    public void test() {
+    public void testEnrich() {
 
+        // TODO implement
+    }
+
+    /**
+     * <p>Tests {@link SpringInjectionEnricher#resolve(java.lang.reflect.Method)} method.</p>
+     * 
+     * @throws Exception if any error occurs
+     */
+    @Test
+    public void testResolve() throws Exception {
+
+        Class clazz = SpringInjectionEnricherTestCase.class;
+        Method method = clazz.getMethod("testResolve", null);
+
+        Object[] result = instance.resolve(method);
+
+        assertNotNull("Method returned null result.", result);
     }
 }
