@@ -9,7 +9,7 @@
 * Bean initialization support (@PostConstruct)
 * Auto packaging the spring-context and spring-web artifacts.
 
-## Support for Spring version
+## Support for Spring versions
 
 * Spring 3.0 and above
 
