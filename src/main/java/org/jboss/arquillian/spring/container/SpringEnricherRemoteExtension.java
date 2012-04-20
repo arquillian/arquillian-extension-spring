@@ -18,6 +18,8 @@ package org.jboss.arquillian.spring.container;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
+import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
+import org.jboss.arquillian.spring.context.ApplicationContextProducer;
 import org.jboss.arquillian.test.spi.TestEnricher;
 
 /**

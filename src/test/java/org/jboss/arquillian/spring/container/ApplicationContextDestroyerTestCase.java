@@ -16,6 +16,7 @@
  */
 package org.jboss.arquillian.spring.container;
 
+import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
 import org.junit.Before;
 import org.junit.Test;
 

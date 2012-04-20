@@ -17,6 +17,8 @@
 package org.jboss.arquillian.spring.container;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
+import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
+import org.jboss.arquillian.spring.context.ApplicationContextProducer;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.junit.Before;
 import org.junit.Test;

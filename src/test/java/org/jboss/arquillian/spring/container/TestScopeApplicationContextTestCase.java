@@ -16,7 +16,7 @@
  */
 package org.jboss.arquillian.spring.container;
 
-import org.junit.Before;
+import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
 import org.junit.Test;
 
 /**

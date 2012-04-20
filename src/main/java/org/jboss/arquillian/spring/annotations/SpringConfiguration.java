@@ -58,7 +58,8 @@ public @interface SpringConfiguration {
     Class<?>[] classes() default {};
 
     /**
-     * <p>The packages that will scanned for {@link @Configuration} annotated classes.</p>
+     * <p>The packages that will scanned for {@link org.springframework.context.annotation.Configuration} annotated
+     * classes.</p>
      */
     String[] packages() default {};
 }
