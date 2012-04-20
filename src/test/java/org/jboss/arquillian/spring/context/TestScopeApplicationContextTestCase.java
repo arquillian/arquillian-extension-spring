@@ -17,7 +17,14 @@
 package org.jboss.arquillian.spring.context;
 
 import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 /**
  * <p>Tests {@link TestScopeApplicationContext} class.</p>
@@ -32,10 +39,61 @@ public class TestScopeApplicationContextTestCase {
     private TestScopeApplicationContext instance;
 
     /**
-     * <p>Tests method.</p>
+     * <p>Represents the instance of {@link ApplicationContext}.</p>
+     */
+    private ApplicationContext applicationContext;
+
+    /**
+     * <p>Sets up the test environment.</p>
+     */
+    @Before
+    public void setUp() {
+
+        applicationContext = mock(ApplicationContext.class);
+    }
+
+    /**
+     * <p>Tests {@link TestScopeApplicationContext#
+     * TestScopeApplicationContext(org.springframework.context.ApplicationContext, boolean)} constructor.</p>
      */
     @Test
-    public void test() {
+    public void testCtor() {
 
+        instance = new TestScopeApplicationContext(applicationContext, false);
+    }
+
+    /**
+     * <p>Tests {@link TestScopeApplicationContext#
+     * TestScopeApplicationContext(org.springframework.context.ApplicationContext, boolean)} constructor when
+     * applicationContext is null.</p>
+     * 
+     * <p>{@link IllegalArgumentException} is expected.</p>
+     */
+    @Test(expected = IllegalArgumentException.class)    
+    public void testCtorNull() {
+
+        instance = new TestScopeApplicationContext(null, false);
+    }
+
+    /**
+     * <p>Tests the {@link TestScopeApplicationContext#getApplicationContext()}.</p>
+     */
+    @Test
+    public void testGetApplicationContext() {
+
+        instance = new TestScopeApplicationContext(applicationContext, false);
+    }
+
+    /**
+     * <p>Tests the {@link TestScopeApplicationContext#isClosable()}.</p>
+     */
+    @Test
+    public void testGetClosable() {
+
+        instance = new TestScopeApplicationContext(applicationContext, false);
+        assertFalse("Closable property has invalid value.", instance.isClosable());
+
+        instance = new TestScopeApplicationContext(applicationContext, true);
+        assertTrue("Closable property has invalid value.", instance.isClosable());
     }
 }

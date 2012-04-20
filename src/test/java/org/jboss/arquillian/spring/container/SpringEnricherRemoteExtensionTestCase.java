@@ -33,7 +33,7 @@ import static org.mockito.Mockito.when;
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class SpringEnricherRemoteExtensionTest {
+public class SpringEnricherRemoteExtensionTestCase {
 
     /**
      * <p>Represents the instance of tested class.</p>

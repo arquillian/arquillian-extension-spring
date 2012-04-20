@@ -42,10 +42,11 @@ public class ApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests method.</p>
+     * <p>Tests {@link ApplicationContextProducer#initApplicationContext(BeforeClass)} method.</p>
      */
     @Test
-    public void test() {
+    public void testInitApplicationContext() {
 
+        // TODO implement
     }
 }

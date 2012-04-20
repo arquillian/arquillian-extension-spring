@@ -42,10 +42,11 @@ public class ApplicationContextDestroyerTestCase {
     }
 
     /**
-     * <p>Tests method.</p>
+     * <p>Tests {@link ApplicationContextDestroyer#destroyApplicationContext(AfterClass)} method.</p>
      */
     @Test
-    public void test() {
+    public void testDestroyApplicationContext() {
 
+        // TODO implement
     }
 }
