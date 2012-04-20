@@ -1,10 +1,17 @@
-# Arquillian Spring integration, embedded container and enrichers
+# Arquillian Spring extension
+
+## Arquillian Spring test enricher
+
 * Injection of Spring beans into test classes
 * Configuration from both XML and Java-based config
 * Injecting beans configured in web application (i.e. DispatcherServlet) for tests annotated with @SpringWebConfiguration
 * Support for both Spring(@Autowired, @Qualifier, @Required) and JSR-330(@Inject, @Named) annotations
 * Bean initialization support (@PostConstruct)
-* Auto packaging the spring-context artifact.
+* Auto packaging the spring-context and spring-web artifacts.
+
+## Support for Spring version
+
+* Spring 3.0 and above
 
 ## Code Example
 
