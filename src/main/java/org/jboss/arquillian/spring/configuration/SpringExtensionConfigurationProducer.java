@@ -121,7 +121,7 @@ public class SpringExtensionConfigurationProducer {
     /**
      * <p>Retrieves the property value as string.</p>
      *
-     * @param properties the properties map
+     * @param properties   the properties map
      * @param propertyName the property name
      * @param defaultValue the default value used when property is not present
      *

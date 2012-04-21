@@ -14,39 +14,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.spring.context;
+package org.jboss.arquillian.spring.annotations;
 
-import org.jboss.arquillian.spring.context.ApplicationContextProducer;
-import org.junit.Before;
-import org.junit.Test;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * <p>Tests {@link ApplicationContextProducer} class.</p>
+ * <p>Annotation used for configuring Spring initialization for the given test.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
+ * @version $Revision: $
  */
-public class ApplicationContextProducerTestCase {
+@Documented
+@Retention(RUNTIME)
+@Target(TYPE)
+@Inherited
+@SpringTestConfiguration
+public @interface SpringAnnotatedConfiguration {
 
     /**
-     * <p>Represents the instance of tested class.</p>
+     * <p>The classes annotated with {@link org.springframework.context.annotation.Configuration} to be loaded.</p>
      */
-    private ApplicationContextProducer instance;
+    Class<?>[] classes() default {};
 
     /**
-     * <p>Sets up the test environment.</p>
+     * <p>The packages that will scanned for {@link org.springframework.context.annotation.Configuration} annotated
+     * classes.</p>
      */
-    @Before
-    public void setUp() {
-
-        instance = new ApplicationContextProducer();
-    }
-
-    /**
-     * <p>Tests {@link ApplicationContextProducer#initApplicationContext(BeforeClass)} method.</p>
-     */
-    @Test
-    public void testInitApplicationContext() {
-
-        // TODO implement
-    }
+    String[] packages() default {};
 }

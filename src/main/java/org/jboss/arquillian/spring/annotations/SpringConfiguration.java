@@ -25,7 +25,7 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * <p>Annotation used for configuring spring initialization within test.</p>
+ * <p>Annotation used for configuring Spring initialization for the given test.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -34,6 +34,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target(TYPE)
 @Inherited
+@SpringTestConfiguration
 public @interface SpringConfiguration {
 
     /**
@@ -43,23 +44,4 @@ public @interface SpringConfiguration {
      * applicationContext.xml</p>
      */
     String[] value() default {};
-
-    /**
-     * <p>The locations from where the xml config should be loaded.</p>
-     *
-     * <p>If no location is specified the test extension will try to load the configuration from
-     * applicationContext.xml</p>
-     */
-    String[] locations() default {};
-
-    /**
-     * <p>The classes annotated with {@link org.springframework.context.annotation.Configuration} to be loaded.</p>
-     */
-    Class<?>[] classes() default {};
-
-    /**
-     * <p>The packages that will scanned for {@link org.springframework.context.annotation.Configuration} annotated
-     * classes.</p>
-     */
-    String[] packages() default {};
 }

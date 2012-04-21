@@ -14,18 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.spring.container;
+package org.jboss.arquillian.spring.testenricher;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
+import org.jboss.arquillian.spring.annotations.SpringTestConfiguration;
 import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
 import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
@@ -55,7 +57,7 @@ public class SpringInjectionEnricher implements TestEnricher {
     public void enrich(Object testCase) {
 
         if (SecurityActions.isClassPresent(SpringExtensionConsts.APPLICATION_CONTEXT)
-                && isSpringTest(testCase)) {
+                && isSupported(testCase)) {
             injectClass(testCase);
         }
     }
@@ -70,7 +72,7 @@ public class SpringInjectionEnricher implements TestEnricher {
     }
 
     /**
-     * <p>Returns whether the given test case is Spring test and requires bean injection.</p>
+     * <p>Returns whether the given test is supported and requires bean injection.</p>
      *
      * <p>The default implementation simply checks if the given class is annotated with {@link SpringConfiguration} or
      * {@link SpringWebConfiguration}.</p>
@@ -79,10 +81,9 @@ public class SpringInjectionEnricher implements TestEnricher {
      *
      * @return true if the test class is annotated with {@link SpringConfiguration}, false otherwise
      */
-    private boolean isSpringTest(Object testCase) {
+    private boolean isSupported(Object testCase) {
 
-        return testCase.getClass().isAnnotationPresent(SpringConfiguration.class)
-                || testCase.getClass().isAnnotationPresent(SpringWebConfiguration.class);
+        return isAnnotationTypePresent(testCase, SpringTestConfiguration.class);
     }
 
     /**
@@ -97,6 +98,10 @@ public class SpringInjectionEnricher implements TestEnricher {
         if (applicationContext != null) {
             log.fine("Injecting dependencies into test case: " + testCase.getClass().getName());
             injectDependencies(applicationContext, testCase);
+        } else {
+
+            log.warning("The application context for the test: " + testCase.getClass().getName()
+                    + " hasn't been created");
         }
     }
 
@@ -129,5 +134,25 @@ public class SpringInjectionEnricher implements TestEnricher {
         }
 
         return null;
+    }
+
+    /**
+     * <p>Returns whether the given object has annotation that itself is annotated with given annotation type.</p>
+     *
+     * @param obj             the instance
+     * @param annotationClass the annotation class
+     *
+     * @return true if the given object is annotated with specific annotation
+     */
+    private boolean isAnnotationTypePresent(Object obj, Class<? extends Annotation> annotationClass) {
+
+        for (Annotation annotation : obj.getClass().getAnnotations()) {
+
+            if (annotation.annotationType().isAnnotationPresent(annotationClass)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

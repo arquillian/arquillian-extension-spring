@@ -19,10 +19,12 @@ package org.jboss.arquillian.spring.client;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
 import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
-import org.jboss.arquillian.spring.context.ApplicationContextProducer;
 import org.jboss.arquillian.spring.container.SpringEnricherRemoteExtension;
-import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
+import org.jboss.arquillian.spring.context.AnnotatedApplicationContextProducer;
 import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
+import org.jboss.arquillian.spring.context.WebApplicationContextProducer;
+import org.jboss.arquillian.spring.context.XmlApplicationContextProducer;
+import org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher;
 import org.jboss.arquillian.spring.utils.TestResourceHelper;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -51,7 +53,8 @@ public class SpringEnricherArchiveAppenderTestCase {
      * <p>Represents the list of required classes.</p>
      */
     private List<Class<?>> REQUIRED_CLASSES = Arrays.asList(SpringConfiguration.class, SpringWebConfiguration.class,
-            ApplicationContextProducer.class, SpringEnricherRemoteExtension.class, SpringInjectionEnricher.class,
+            XmlApplicationContextProducer.class, AnnotatedApplicationContextProducer.class,
+            WebApplicationContextProducer.class, SpringEnricherRemoteExtension.class, SpringInjectionEnricher.class,
             TestScopeApplicationContext.class, SpringExtensionConsts.class);
 
     /**

@@ -16,12 +16,10 @@
  */
 package org.jboss.arquillian.spring.context;
 
-import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -53,8 +51,8 @@ public class TestScopeApplicationContextTestCase {
     }
 
     /**
-     * <p>Tests {@link TestScopeApplicationContext#
-     * TestScopeApplicationContext(org.springframework.context.ApplicationContext, boolean)} constructor.</p>
+     * <p>Tests {@link TestScopeApplicationContext# TestScopeApplicationContext(org.springframework.context.ApplicationContext,
+     * boolean)} constructor.</p>
      */
     @Test
     public void testCtor() {
@@ -63,13 +61,12 @@ public class TestScopeApplicationContextTestCase {
     }
 
     /**
-     * <p>Tests {@link TestScopeApplicationContext#
-     * TestScopeApplicationContext(org.springframework.context.ApplicationContext, boolean)} constructor when
-     * applicationContext is null.</p>
-     * 
+     * <p>Tests {@link TestScopeApplicationContext# TestScopeApplicationContext(org.springframework.context.ApplicationContext,
+     * boolean)} constructor when applicationContext is null.</p>
+     *
      * <p>{@link IllegalArgumentException} is expected.</p>
      */
-    @Test(expected = IllegalArgumentException.class)    
+    @Test(expected = IllegalArgumentException.class)
     public void testCtorNull() {
 
         instance = new TestScopeApplicationContext(null, false);

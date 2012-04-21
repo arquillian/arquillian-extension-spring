@@ -145,10 +145,10 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     private File[] resolveArtifact(String artifact, String version, String defaultVersion) {
         String artifactVersion;
 
-        if (version == null || version.length() == 0) {
-            artifactVersion = defaultVersion;
-        } else {
+        if (version != null && version.length() > 0) {
             artifactVersion = version;
+        } else {
+            artifactVersion = defaultVersion;
         }
 
         return resolveArtifact(artifact, artifactVersion);

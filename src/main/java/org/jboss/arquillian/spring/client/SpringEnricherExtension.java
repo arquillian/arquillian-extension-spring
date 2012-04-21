@@ -21,7 +21,7 @@ import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchive
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfigurationProducer;
-import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
+import org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher;
 import org.jboss.arquillian.test.spi.TestEnricher;
 
 /**

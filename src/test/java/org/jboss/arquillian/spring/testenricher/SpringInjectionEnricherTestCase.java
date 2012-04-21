@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.spring.container;
+package org.jboss.arquillian.spring.testenricher;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +45,7 @@ public class SpringInjectionEnricherTestCase {
     }
 
     /**
-     * <p>Tests {@link SpringInjectionEnricher#enrich(Object)} method.</p>
+     * <p>Tests {@link org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher#enrich(Object)} method.</p>
      */
     @Test
     public void testEnrich() {
@@ -54,8 +54,9 @@ public class SpringInjectionEnricherTestCase {
     }
 
     /**
-     * <p>Tests {@link SpringInjectionEnricher#resolve(java.lang.reflect.Method)} method.</p>
-     * 
+     * <p>Tests {@link org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher#resolve(java.lang.reflect.Method)}
+     * method.</p>
+     *
      * @throws Exception if any error occurs
      */
     @Test
