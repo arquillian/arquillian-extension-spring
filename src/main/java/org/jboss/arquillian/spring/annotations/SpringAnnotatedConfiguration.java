@@ -25,7 +25,7 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * <p>Annotation used for configuring Spring initialization for the given test.</p>
+ * <p>Annotation used for configuring Spring application context for the given test using java-based config.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -34,7 +34,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target(TYPE)
 @Inherited
-@SpringTestConfiguration
 public @interface SpringAnnotatedConfiguration {
 
     /**

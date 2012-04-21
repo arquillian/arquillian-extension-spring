@@ -27,7 +27,11 @@ import javax.servlet.ServletContext;
 import java.text.MessageFormat;
 
 /**
- *
+ * <p>The instance of {@link AbstractApplicationContextProducer} that access the {@link WebApplicationContext}
+ * instance.</p>
+ * 
+ * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
+ * @version $Revision: $
  */
 public class WebApplicationContextProducer extends AbstractApplicationContextProducer {
 

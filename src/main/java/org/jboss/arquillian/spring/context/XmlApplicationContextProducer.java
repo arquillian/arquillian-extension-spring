@@ -23,7 +23,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
+ * <p>The {@link AbstractApplicationContextProducer} that creates the {@link ClassPathXmlApplicationContext}
+ * instance using xml files.</p>
  *
+ * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
+ * @version $Revision: $
  */
 public class XmlApplicationContextProducer extends AbstractApplicationContextProducer {
 

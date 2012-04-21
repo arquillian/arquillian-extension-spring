@@ -22,7 +22,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
+ * <p>The {@link AbstractApplicationContextProducer} that creates the {@link AnnotationConfigApplicationContext}
+ * instance.</p>
  *
+ * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
+ * @version $Revision: $
  */
 public class AnnotatedApplicationContextProducer extends AbstractApplicationContextProducer {
 
