@@ -20,6 +20,7 @@ import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.CachedAuxilliaryArchiveAppender;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
 import org.jboss.arquillian.spring.container.SpringEnricherRemoteExtension;
 import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
 import org.jboss.arquillian.spring.context.TestScopeApplicationContext;

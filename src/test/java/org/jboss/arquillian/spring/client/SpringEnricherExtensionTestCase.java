@@ -19,6 +19,8 @@ package org.jboss.arquillian.spring.client;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
 import org.jboss.arquillian.core.spi.LoadableExtension;
+import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringExtensionConfigurationProducer;
 import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.junit.Before;
@@ -58,11 +60,13 @@ public class SpringEnricherExtensionTestCase {
 
         LoadableExtension.ExtensionBuilder mockExtensionBuilder = mock(LoadableExtension.ExtensionBuilder.class);
         when(mockExtensionBuilder.service(any(Class.class), any(Class.class))).thenReturn(mockExtensionBuilder);
+        when(mockExtensionBuilder.observer(any(Class.class))).thenReturn(mockExtensionBuilder);
 
         instance.register(mockExtensionBuilder);
 
         verify(mockExtensionBuilder).service(AuxiliaryArchiveAppender.class, SpringEnricherArchiveAppender.class);
         verify(mockExtensionBuilder).service(ProtocolArchiveProcessor.class, SpringProtocolArchiveProcessor.class);
         verify(mockExtensionBuilder).service(TestEnricher.class, SpringInjectionEnricher.class);
+        verify(mockExtensionBuilder).observer(SpringExtensionConfigurationProducer.class);
     }
 }

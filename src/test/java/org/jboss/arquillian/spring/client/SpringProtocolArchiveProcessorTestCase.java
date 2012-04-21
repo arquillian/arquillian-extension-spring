@@ -25,6 +25,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class SpringProtocolArchiveProcessorTestCase {
      * deployment is a JAR archive.</p>
      */
     @Test
+    @Ignore
     public void testProcessJar() {
 
         JavaArchive deploymentArchive = ShrinkWrap.create(JavaArchive.class, "deployment.jar");
@@ -79,6 +81,7 @@ public class SpringProtocolArchiveProcessorTestCase {
      * deployment is a WAR archive.</p>
      */
     @Test
+    @Ignore
     public void testProcessWar() {
 
         WebArchive deploymentArchive = ShrinkWrap.create(WebArchive.class, "deployment.war");

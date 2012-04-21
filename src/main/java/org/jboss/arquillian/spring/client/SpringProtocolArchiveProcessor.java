@@ -18,7 +18,10 @@ package org.jboss.arquillian.spring.client;
 
 import org.jboss.arquillian.container.test.spi.TestDeployment;
 import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
+import org.jboss.arquillian.core.api.Instance;
+import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
+import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -39,19 +42,28 @@ import java.util.Arrays;
 public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor {
 
     /**
+     * <p>Represents the instance of {@link SpringExtensionConfiguration}.</p>
+     */
+    @Inject
+    private Instance<SpringExtensionConfiguration> configuration;
+
+    /**
      * {@inheritDoc}
      */
     public void process(TestDeployment testDeployment, Archive<?> protocolArchive) {
 
-        // if the application archive is an war or ear then add the spring dependencies into it
-        if (isEnterpriseArchive(testDeployment.getApplicationArchive()) ||
-                isWebArchive(testDeployment.getApplicationArchive())) {
+        // auto packages the spring dependencies
+        if (getConfiguration().isAutoPackaging()) {
+            // if the application archive is an war or ear then add the spring dependencies into it
+            if (isEnterpriseArchive(testDeployment.getApplicationArchive()) ||
+                    isWebArchive(testDeployment.getApplicationArchive())) {
 
-            addDependencies(testDeployment.getApplicationArchive());
-        } else if (isEnterpriseArchive(protocolArchive) || isWebArchive(protocolArchive)) {
-            // otherwise try to add the required dependencies into the protocol archive
+                addDependencies(testDeployment.getApplicationArchive());
+            } else if (isEnterpriseArchive(protocolArchive) || isWebArchive(protocolArchive)) {
+                // otherwise try to add the required dependencies into the protocol archive
 
-            addDependencies(protocolArchive);
+                addDependencies(protocolArchive);
+            }
         }
     }
 
@@ -86,9 +98,9 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
 
         File[] dependencies = resolveExtensionDependencies();
 
-        if (archive instanceof EnterpriseArchive) {
+        if (isEnterpriseArchive(archive)) {
             ((EnterpriseArchive) archive).addAsModules(dependencies);
-        } else if (archive instanceof WebArchive) {
+        } else if (isWebArchive(archive)) {
             ((WebArchive) archive).addAsLibraries(dependencies);
         } else {
             throw new RuntimeException("Unsupported archive format[" + archive.getClass().getSimpleName()
@@ -103,20 +115,19 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
      */
     private File[] resolveExtensionDependencies() {
 
-        // TODO retrieve the version from configuration
         ArrayList<File> dependencies = new ArrayList<File>();
 
         // adds the spring dependencies
         dependencies.addAll(Arrays.asList(resolveArtifact(SpringExtensionConsts.SPRING_ARTIFACT_NAME,
-                SpringExtensionConsts.SPRING_ARTIFACT_VERSION, SpringExtensionConsts.SPRING_ARTIFACT_VERSION)));
+                getConfiguration().getSpringVersion(), SpringExtensionConsts.SPRING_ARTIFACT_VERSION)));
 
         // adds spring web
         dependencies.addAll(Arrays.asList(resolveArtifact(SpringExtensionConsts.SPRING_ARTIFACT_WEB_NAME,
-                SpringExtensionConsts.SPRING_ARTIFACT_VERSION, SpringExtensionConsts.SPRING_ARTIFACT_VERSION)));
+                getConfiguration().getSpringVersion(), SpringExtensionConsts.SPRING_ARTIFACT_VERSION)));
 
         // adds the cglib
         dependencies.addAll(Arrays.asList(resolveArtifact(SpringExtensionConsts.CGLIB_ARTIFACT_NAME,
-                SpringExtensionConsts.CGLIB_ARTIFACT_VERSION, SpringExtensionConsts.CGLIB_ARTIFACT_VERSION)));
+                getConfiguration().getCglibVersion(), SpringExtensionConsts.CGLIB_ARTIFACT_VERSION)));
 
         return dependencies.toArray(new File[dependencies.size()]);
     }
@@ -154,9 +165,9 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     private File[] resolveArtifact(String artifact, String version) {
         File[] artifacts = null;
         try {
-            artifacts = resolveArtifact(artifact);
-        } catch (Exception e) {
             artifacts = resolveArtifact(artifact + ":" + version);
+        } catch (Exception e) {
+            // TODO ignores exception
         }
         return artifacts;
     }
@@ -186,5 +197,10 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
      */
     private boolean isMavenUsed() {
         return new File(SpringExtensionConsts.POM_XML).exists();
+    }
+
+    private SpringExtensionConfiguration getConfiguration() {
+
+        return configuration.get();
     }
 }
