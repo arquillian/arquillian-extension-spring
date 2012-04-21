@@ -165,9 +165,9 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     private File[] resolveArtifact(String artifact, String version) {
         File[] artifacts = null;
         try {
-            artifacts = resolveArtifact(artifact + ":" + version);
+            artifacts = resolveArtifact(artifact);
         } catch (Exception e) {
-            // TODO ignores exception
+            artifacts = resolveArtifact(artifact + ":" + version);
         }
         return artifacts;
     }
