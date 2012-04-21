@@ -53,7 +53,7 @@ public class SpringInjectionEnricher implements TestEnricher {
     public void enrich(Object testCase) {
 
         if (SecurityActions.isClassPresent(SpringExtensionConsts.APPLICATION_CONTEXT)
-                && applicationContextExists()) {
+                && getApplicationContextExists()) {
             injectClass(testCase);
         }
     }
@@ -118,7 +118,7 @@ public class SpringInjectionEnricher implements TestEnricher {
      *
      * @return true if the application context exists, false otherwise
      */
-    private boolean applicationContextExists() {
+    private boolean getApplicationContextExists() {
 
         return testApplicationContext.get() != null;
     }
