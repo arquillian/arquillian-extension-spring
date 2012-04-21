@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <!-- Parent -->
   <parent>
@@ -13,13 +13,20 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.jboss.arquillian.extension</groupId>
-  <artifactId>arquillian-spring</artifactId>
+  <artifactId>arquillian-spring-parent</artifactId>
   <version>1.0.0.Final-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
-  <name>Arquillian Spring Framework Extension</name>
+  <name>Arquillian Spring Framework Extension Parent</name>
   <url>http://www.jboss.org</url>
-  <description>Spring Framework extension for Arquillian</description>
+  <description>Parent for Spring Framework extension for Arquillian</description>
+
+  <!-- Modules -->
+  <modules>
+        <module>arquillian-spring-common</module>
+        <module>arquillian-spring-2.5</module>
+        <module>arquillian-spring-3</module>
+  </modules>
 
   <!-- Properties -->
   <properties>
@@ -41,6 +48,9 @@
         <version.testng_testng>5.14.6</version.testng_testng>
 
         <!-- Spring Framework dependencies -->
+        <version.spring_framework_2_5>2.5.6</version.spring_framework_2_5>
+        <version.spring_framework_3>3.1.1.RELEASE</version.spring_framework_3>
+
         <version.spring_framework>3.1.1.RELEASE</version.spring_framework>
         <version.cglib>2.2.2</version.cglib>
     </properties>
@@ -61,6 +71,16 @@
                 <artifactId>javax.inject</artifactId>
                 <version>${version.javax.inject_javax.inject}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.test</groupId>
+                <artifactId>arquillian-test-spi</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.container</groupId>
+                <artifactId>arquillian-container-test-spi</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.shrinkwrap</groupId>
@@ -132,21 +152,15 @@
             </dependency>
 
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${version.spring_framework}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>${version.spring_framework}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>cglib</groupId>
                 <artifactId>cglib</artifactId>
                 <version>${version.cglib}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.javaee</groupId>
+                <artifactId>jboss-servlet-api</artifactId>
+                <version>2.5.0.GA</version>
             </dependency>
 
             <dependency>
@@ -158,71 +172,6 @@
 
         </dependencies>
     </dependencyManagement>
-
-    <!-- Dependencies -->
-    <dependencies>
-
-        <!-- org.jboss.arquillian -->
-        <dependency>
-            <groupId>org.jboss.arquillian.test</groupId>
-            <artifactId>arquillian-test-spi</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-container-test-spi</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.shrinkwrap</groupId>
-            <artifactId>shrinkwrap-impl-base</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.shrinkwrap.resolver</groupId>
-            <artifactId>shrinkwrap-resolver-api-maven</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.shrinkwrap.resolver</groupId>
-            <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-javaee-6.0</artifactId>
-            <type>pom</type>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
@@ -283,6 +232,13 @@
     </build>
 
     <repositories>
+
+        <repository>
+            <id>JBoss Repository</id>
+            <name>JBoss Repository</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+        </repository>
+
         <repository>
             <id>SpringSource Repository</id>
             <name>SpringSource Repository</name>
