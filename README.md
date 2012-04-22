@@ -303,7 +303,7 @@ public class EmployeeWebInitializer implements WebApplicationInitializer {
         // registers context load listener
         servletContext.addListener(new ContextLoaderListener(new AnnotationConfigWebApplicationContext()));
 
-        // adds a dispatch servlet, the servlet will be configured from root web app context
+        // adds a dispatch servlet, the servlet will be configured from the created application context
         ServletRegistration.Dynamic servletConfig = servletContext.addServlet("employee",
                 new DispatcherServlet(webContext));
         servletConfig.setLoadOnStartup(1);
