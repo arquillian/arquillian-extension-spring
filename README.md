@@ -33,7 +33,7 @@ annotated with one of the fallowing:
 ``@SpringConfiguration`` - for xml configuration, ``@SpringAnnotatedConfiguration`` - for Java base configuration
 and ``@SpringWebConfiguration`` - for web applications.
 The annotation will instruct the test enricher how to initialize the application context, the first two will cause that
-for each test new application context will be created. @SpringWebConfiguration is used for retrieving the context of
+for each test case new application context will be created. @SpringWebConfiguration is used for retrieving the context of
 specific Spring FrameworkServlet (e.g. DispatcherServlet) or the root web application context in general.
 
 Note: The annotations may not be mixed with each other, each test will use only one application context.
