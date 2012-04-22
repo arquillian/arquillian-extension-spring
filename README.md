@@ -30,7 +30,7 @@ Note: For testing Spring 2.5 applications please use arquillian-spring-2.5 inste
 
 Each Arquillian test which relies on Spring framework and requires dependency injection of configured beans has to be
 annotated with one of the fallowing:
-``@SpringConfiguration`` - for xml configuration, ``@SpringAnnotatedConfiguration`` - for Java base configuration
+``@SpringConfiguration`` - for xml configuration, ``@SpringAnnotatedConfiguration`` - for Java-based configuration
 and ``@SpringWebConfiguration`` - for web applications.
 The annotation will instruct the test enricher how to initialize the application context, the first two will cause that
 for each test case new application context will be created. @SpringWebConfiguration is used for retrieving the context of
