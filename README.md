@@ -38,6 +38,36 @@ specific Spring FrameworkServlet (e.g. DispatcherServlet) or the root web applic
 
 Note: The annotations may not be mixed with each other, each test will use only one application context.
 
+## Configuration
+It's posible to modify the default behaviour of the extension and set the fallowing settings through arquillian.xml.
+
+* If the extension should add the spring dependencies by default for each deployment.
+* The version of the maven artifact of the Spring Context and Spring Web to be used.
+* The version of the CGLIB.
+
+Example:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://jboss.org/schema/arquillian"
+            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <extension qualifier="spring">
+
+        <!-- The version of Spring artifact, will be used for auto package the spring-context and spring-web,
+         default is 3.1.1.RELEASE -->
+        <property name="springVersion">3.0.0.RELEASE</property>
+
+        <!-- The version of CGLIB artifact, required by Java-based config, default is 2.2.2 -->
+        <property name="cglibVersion">2.2</property>
+
+        <!-- Whether to auto package the dependencies, default is true -->
+        <property name="autoPackage">true</property>
+    </extension>
+</arquillian>
+```
+
 ## Code Example
 
 The test which requires the dependencies to be injected through Spring should be annotated with @SpringConfiguration.
