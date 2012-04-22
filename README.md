@@ -4,7 +4,7 @@
 
 * Injection of Spring beans into test classes
 * Configuration from both XML and Java-based config
-* Injecting beans configured in web application (i.e. DispatcherServlet) for tests annotated with @SpringWebConfiguration
+* Injecting beans configured in web application (e.g. DispatcherServlet) for tests annotated with @SpringWebConfiguration
 * Support for both Spring(@Autowired, @Qualifier, @Required) and JSR-330(@Inject, @Named) annotations
 * Bean initialization support (@PostConstruct)
 * Auto packaging the spring-context and spring-web artifacts.
@@ -12,6 +12,30 @@
 ## Support for Spring versions
 
 * Spring 3.0 and above
+* Spring 2.5.x
+
+## Test setup
+Enabling the extension is as simple as adding the fallowing dependency into the project POM.
+
+```
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-spring-3</artifactId>
+            <version>${arquillian.spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+```
+
+Note: For testing Spring 2.5 applications please use arquillian-spring-2.5 instead.
+
+Each Arquillian test which rely on Spring framework and requires dependency injection of configured beans has to be
+annotated with one of the fallowing: ``@SpringConfiguration`` - for xml configuration, ``@SpringAnnotatedConfiguration``
+ - for Java base configuration  and ``@SpringWebConfiguration`` - for web applications..
+The annotation will instruct the test enricher how to initialize the application context, the first two will cause that
+for each test new application context will be created. @SpringWebConfiguration is used for retrieving the context of
+specific Spring FrameworkServlet (e.g. DispatcherServlet) or the root web application context in general.
+
+Note: The annotations may not be mixed with each other, each test will use only one application context.
 
 ## Code Example
 
@@ -90,7 +114,7 @@ public class AppConfig {
 
 ```java
 @RunWith(Arquillian.class)
-@SpringConfiguration(classes = {AppConfig.class})
+@SpringAnnotatedConfiguration(classes = {AppConfig.class})
 public class AnnotatedConfigurationTestCase {
 
     @Deployment
@@ -368,5 +392,5 @@ public class EmployeeControllerWebInitTestCase {
 ## TODO
 
 * Unit tests
-* Configuring the extension through arquillian.xml for specifying the Spring artifact version
+* Showcase and working examples
 * Arquillian Persistance Extension integration - wrapper for Spring transaction manager
