@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://jboss.org/schema/arquillian"
+            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <extension qualifier="spring">
+
+        <!-- The version of Spring artifact, will be used for auto package the spring-context and spring-web,
+         default is 3.1.1.RELEASE -->
+        <property name="springVersion">3.1.1.RELEASE</property>
+
+        <!-- The version of CGLIB artifact, required by Java-based config, default is 2.2.2 -->
+        <property name="cglibVersion">2.2.2</property>
+
+        <!-- Whether to auto package the dependencies, default is true -->
+        <property name="autoPackage">true</property>
+    </extension>
+</arquillian>
