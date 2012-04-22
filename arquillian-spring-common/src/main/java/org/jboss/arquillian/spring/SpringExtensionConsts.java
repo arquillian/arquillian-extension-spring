@@ -79,4 +79,24 @@ public final class SpringExtensionConsts {
      * <p>Represents the default CGLIB artifact name.</p>
      */
     public static final String CGLIB_ARTIFACT_VERSION = "2.2.2";
+
+    /**
+     * <p>Represents the extension configuration prefix.</p>
+     */
+    public static final String EXTESION_CONFIGURATION_PREFIX = "spring";
+
+    /**
+     * <p>Represents the extension configuration property name.</p>
+     */
+    public static final String CONFIGURATION_AUTO_PACKAGE = "autoPackage";
+
+    /**
+     * <p>Represents the extension configuration property name.</p>
+     */
+    public static final String CONFIGURATION_SPRING_VERSION = "springVersion";
+
+    /**
+     * <p>Represents the extension configuration property name.</p>
+     */
+    public static final String CONFIGURATION_CGLIB_VERSION = "cglibVersion";
 }

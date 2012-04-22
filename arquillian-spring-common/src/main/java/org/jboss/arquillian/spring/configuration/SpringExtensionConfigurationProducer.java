@@ -23,6 +23,7 @@ import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
+import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 
 import java.util.Collections;
@@ -74,9 +75,12 @@ public class SpringExtensionConfigurationProducer {
         Map<String, String> properties = getExtensionProperties(descriptor.get());
 
         SpringExtensionConfiguration result = new SpringExtensionConfiguration();
-        result.setAutoPackaging(getBooleanProperty(properties, "autoPackage", true));
-        result.setSpringVersion(getStringProperty(properties, "springVersion", null));
-        result.setCglibVersion(getStringProperty(properties, "cglibVersion", null));
+        result.setAutoPackaging(getBooleanProperty(properties,
+                SpringExtensionConsts.CONFIGURATION_AUTO_PACKAGE, true));
+        result.setSpringVersion(getStringProperty(properties,
+                SpringExtensionConsts.CONFIGURATION_SPRING_VERSION, null));
+        result.setCglibVersion(getStringProperty(properties,
+                SpringExtensionConsts.CONFIGURATION_CGLIB_VERSION, null));
 
         return result;
     }
@@ -91,7 +95,7 @@ public class SpringExtensionConfigurationProducer {
     private Map<String, String> getExtensionProperties(ArquillianDescriptor desc) {
         for (ExtensionDef extensionDef : desc.getExtensions()) {
 
-            if ("org/jboss/arquillian/spring/spring".equals(extensionDef.getExtensionName())) {
+            if (SpringExtensionConsts.EXTESION_CONFIGURATION_PREFIX.equals(extensionDef.getExtensionName())) {
 
                 return extensionDef.getExtensionProperties();
             }
