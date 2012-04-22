@@ -29,8 +29,8 @@ Enabling the extension is as simple as adding the fallowing dependency into the 
 Note: For testing Spring 2.5 applications please use arquillian-spring-2.5 instead.
 
 Each Arquillian test which rely on Spring framework and requires dependency injection of configured beans has to be
-annotated with one of the fallowing: ``@SpringConfiguration`` - for xml configuration, ``@SpringAnnotatedConfiguration``
- - for Java base configuration  and ``@SpringWebConfiguration`` - for web applications..
+annotated with one of the fallowing: ``@SpringConfiguration`` - for xml configuration,
+``@SpringAnnotatedConfiguration`` - for Java base configuration  and ``@SpringWebConfiguration`` - for web applications.
 The annotation will instruct the test enricher how to initialize the application context, the first two will cause that
 for each test new application context will be created. @SpringWebConfiguration is used for retrieving the context of
 specific Spring FrameworkServlet (e.g. DispatcherServlet) or the root web application context in general.
