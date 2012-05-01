@@ -76,6 +76,16 @@ public final class SpringExtensionConsts {
     public static final String CONFIGURATION_CGLIB_VERSION = "cglibVersion";
 
     /**
+     * <p>Represents the extension configuration property name.</p>
+     */
+    public static final String CONFIGURATION_INCLUDE_SNOWDROP = "includeSnowdrop";
+
+    /**
+     * <p>Represents the extension configuration property name.</p>
+     */
+    public static final String CONFIGURATION_SNOWDROP_VERSION = "snowdropVersion";
+
+    /**
      * <p>Represents the default precedence of observer class.</p>
      */
     public static final int INIT_PRECEDENCE = 2;

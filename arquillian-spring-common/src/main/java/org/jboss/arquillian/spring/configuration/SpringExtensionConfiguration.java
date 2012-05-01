@@ -37,6 +37,16 @@ public class SpringExtensionConfiguration {
     private String cglibVersion;
 
     /**
+     * <p>Represents the Snwodrop version.</p>
+     */
+    private String snowdropVersion;
+
+    /**
+     * <p>Represents whether to include the Snowdrop.</p>
+     */
+    private boolean includeSnowdrop;
+
+    /**
      * <p>Represents whether to auto package the dependencies.</p>
      *
      * <p>Default is {@code true}.</p>
@@ -84,6 +94,42 @@ public class SpringExtensionConfiguration {
      */
     public void setCglibVersion(String cglibVersion) {
         this.cglibVersion = cglibVersion;
+    }
+
+    /**
+     * <p>Retrieves the snowdrop version.</p>
+     *
+     * @return the snowdrop version
+     */
+    public String getSnowdropVersion() {
+        return snowdropVersion;
+    }
+
+    /**
+     * <p>Sets the snowdrop version.</p>
+     *
+     * @param snowdropVersion the snowdrop version
+     */
+    public void setSnowdropVersion(String snowdropVersion) {
+        this.snowdropVersion = snowdropVersion;
+    }
+
+    /**
+     * <p>Retrieves whether to include snowdrop.</p>
+     *
+     * @return whether to include snowdrop
+     */
+    public boolean isIncludeSnowdrop() {
+        return includeSnowdrop;
+    }
+
+    /**
+     * <p>Sets whether to include snowdrop.</p>
+     *
+     * @param includeSnowdrop whether to include snowdrop
+     */
+    public void setIncludeSnowdrop(boolean includeSnowdrop) {
+        this.includeSnowdrop = includeSnowdrop;
     }
 
     /**

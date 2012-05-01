@@ -16,6 +16,8 @@
  */
 package org.jboss.arquillian.spring.annotations;
 
+import org.springframework.context.ApplicationContext;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
@@ -46,4 +48,10 @@ public @interface SpringAnnotatedConfiguration {
      * classes.</p>
      */
     String[] packages() default {};
+
+
+    /**
+     * <p>The custom context class to be used when instantiating the application context.</p>
+     */
+    Class<? extends ApplicationContext> contextClass();
 }

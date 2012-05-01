@@ -47,4 +47,14 @@ public class Spring25ExtensionConsts {
      * <p>Represents the default version of the Spring Framework.</p>
      */
     public static final String SPRING_ARTIFACT_VERSION = "2.5.6";
+
+    /**
+     * <p>Represents the Snowdrop maven artifact name.</p>
+     */
+    public static final String SNOWDROP_ARTIFACT_NAME = "org.jboss.snowdrop:snowdrop-vfs";
+
+    /**
+     * <p>Represents the default version of the Snowdrop.</p>
+     */
+    public static final String SNOWDROP_ARTIFACT_VERSION = "2.5.6";
 }

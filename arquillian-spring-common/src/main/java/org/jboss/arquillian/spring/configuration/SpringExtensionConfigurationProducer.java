@@ -81,6 +81,10 @@ public class SpringExtensionConfigurationProducer {
                 SpringExtensionConsts.CONFIGURATION_SPRING_VERSION, null));
         result.setCglibVersion(getStringProperty(properties,
                 SpringExtensionConsts.CONFIGURATION_CGLIB_VERSION, null));
+        result.setIncludeSnowdrop(getBooleanProperty(properties,
+                SpringExtensionConsts.CONFIGURATION_INCLUDE_SNOWDROP, false));
+        result.setSnowdropVersion(getStringProperty(properties,
+                SpringExtensionConsts.CONFIGURATION_SNOWDROP_VERSION, null));
 
         return result;
     }

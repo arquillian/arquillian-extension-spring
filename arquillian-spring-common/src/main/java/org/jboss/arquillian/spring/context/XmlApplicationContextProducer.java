@@ -22,6 +22,9 @@ import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * <p>The {@link AbstractApplicationContextProducer} that creates the {@link org.springframework.context.support.ClassPathXmlApplicationContext}
  * instance using xml files.</p>
@@ -59,11 +62,49 @@ public class XmlApplicationContextProducer extends AbstractApplicationContextPro
 
         SpringConfiguration springConfiguration = testClass.getAnnotation(SpringConfiguration.class);
 
+        String[] locations = new String[]{SpringExtensionConsts.DEFAULT_LOCATION};
         if (springConfiguration.value().length > 0) {
 
-            return new ClassPathXmlApplicationContext(springConfiguration.value());
+            locations = springConfiguration.value();
         }
 
-        return new ClassPathXmlApplicationContext(SpringExtensionConsts.DEFAULT_LOCATION);
+        Class<? extends ApplicationContext> applicationContextClass = ClassPathXmlApplicationContext.class;
+        if (springConfiguration.contextClass() != ClassPathXmlApplicationContext.class) {
+
+            applicationContextClass = springConfiguration.contextClass();
+        }
+
+        return createInstance(applicationContextClass, locations);
+    }
+
+    /**
+     * <p>Creates new instance of {@link ApplicationContext}.</p>
+     *
+     * @param applicationContextClass the class of application context
+     * @param locations               the locations from which load the configuration files
+     *
+     * @return the created {@link ApplicationContext} instance
+     */
+    private <T extends ApplicationContext> ApplicationContext createInstance(Class<T> applicationContextClass,
+                                                                             String[] locations) {
+
+        try {
+            Constructor<T> ctor = applicationContextClass.getConstructor(String[].class);
+
+            return (T) ctor.newInstance(new Object[] {locations});
+        } catch (NoSuchMethodException e) {
+
+            throw new RuntimeException("Could not create instance of " + applicationContextClass.getName()
+                    + ", no appropriate constructor found.", e);
+        } catch (InvocationTargetException e) {
+
+            throw new RuntimeException("Could not create instance of " + applicationContextClass.getName(), e);
+        } catch (InstantiationException e) {
+
+            throw new RuntimeException("Could not create instance of " + applicationContextClass.getName(), e);
+        } catch (IllegalAccessException e) {
+
+            throw new RuntimeException("Could not create instance of " + applicationContextClass.getName(), e);
+        }
     }
 }

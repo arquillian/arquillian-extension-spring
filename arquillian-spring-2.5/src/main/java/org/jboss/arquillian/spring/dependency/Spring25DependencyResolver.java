@@ -20,7 +20,6 @@ import org.jboss.arquillian.spring.Spring25ExtensionConsts;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * <p>The dependency resolver.</p>
@@ -56,6 +55,11 @@ public class Spring25DependencyResolver extends AbstractDependencyResolver {
         mavenDependencyBuilder.addDependency(Spring25ExtensionConsts.SPRING_ARTIFACT_WEB_NAME,
                 getConfiguration().getSpringVersion(), Spring25ExtensionConsts.SPRING_ARTIFACT_VERSION);
 
+        if (getConfiguration().isIncludeSnowdrop()) {
+            // adds the snowdrop for testing within jboss
+            mavenDependencyBuilder.addDependency(Spring25ExtensionConsts.SNOWDROP_ARTIFACT_NAME,
+                    getConfiguration().getSnowdropVersion(), Spring25ExtensionConsts.SNOWDROP_ARTIFACT_VERSION);
+        }
 
         // returns the resolved files
         return mavenDependencyBuilder.getDependencies();
