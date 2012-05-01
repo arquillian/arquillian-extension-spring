@@ -14,39 +14,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.spring.context;
-
-import org.junit.Before;
-import org.junit.Test;
+package org.jboss.arquillian.spring;
 
 /**
- * <p>Tests {@link org.jboss.arquillian.spring.context.ApplicationContextDestroyer} class.</p>
+ * <p>Defines consts used by this extension.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
+ * @version $Revision: $
  */
-public class ApplicationContextDestroyerTestCase {
+public class Spring25ExtensionConsts {
 
     /**
-     * <p>Represents the instance of tested class.</p>
+     * <p>Creates new instance of {@link Spring25ExtensionConsts}.</p>
+     *
+     * <p>Private constructor prevents from instantiation outside of this class.</p>
      */
-    private ApplicationContextDestroyer instance;
-
-    /**
-     * <p>Sets up the test environment.</p>
-     */
-    @Before
-    public void setUp() {
-
-        instance = new ApplicationContextDestroyer();
+    private Spring25ExtensionConsts() {
+        // empty constructor
     }
 
     /**
-     * <p>Tests {@link org.jboss.arquillian.spring.context.ApplicationContextDestroyer#destroyApplicationContext(AfterClass)}
-     * method.</p>
+     * <p>Represents the Spring Framework maven artifact name.</p>
      */
-    @Test
-    public void testDestroyApplicationContext() {
+    public static final String SPRING_ARTIFACT_NAME = "org.springframework:spring-context";
 
-        // TODO implement
-    }
+    /**
+     * <p>Represents the Spring Framework Web maven artifact name.</p>
+     */
+    public static final String SPRING_ARTIFACT_WEB_NAME = "org.springframework:spring-web";
+
+    /**
+     * <p>Represents the default version of the Spring Framework.</p>
+     */
+    public static final String SPRING_ARTIFACT_VERSION = "2.5.6";
 }

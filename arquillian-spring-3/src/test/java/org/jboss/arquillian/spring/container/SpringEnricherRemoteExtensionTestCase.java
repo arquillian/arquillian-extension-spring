@@ -53,7 +53,8 @@ public class SpringEnricherRemoteExtensionTestCase {
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.container.SpringEnricherRemoteExtension#register(org.jboss.arquillian.core.spi.LoadableExtension.ExtensionBuilder)} method.</p>
+     * <p>Tests the {@link org.jboss.arquillian.spring.container.SpringEnricherRemoteExtension#register(org.jboss.arquillian.core.spi.LoadableExtension.ExtensionBuilder)}
+     * method.</p>
      */
     @Test
     public void testRegister() {

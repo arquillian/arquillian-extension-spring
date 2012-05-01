@@ -42,21 +42,21 @@ public class SpringExtensionConfigurationProducer {
      */
     @Inject
     @ApplicationScoped
-    Instance<ArquillianDescriptor> descriptor;
+    private Instance<ArquillianDescriptor> descriptor;
 
     /**
      * <p>Represents the configuration for this extension.</p>
      */
     @Inject
     @ApplicationScoped
-    InstanceProducer<SpringExtensionConfiguration> extensionConfiguration;
+    private InstanceProducer<SpringExtensionConfiguration> extensionConfiguration;
 
     /**
      * <p>Creates the Spring extension configuration before the test suite is being run.</p>
      *
      * @param beforeSuiteEvent the event fired before execution of the test suite
      */
-    public void configure(@Observes BeforeSuite beforeSuiteEvent) {
+    public void configure(@Observes(precedence = SpringExtensionConsts.INIT_PRECEDENCE) BeforeSuite beforeSuiteEvent) {
 
         SpringExtensionConfiguration config = getConfiguration(descriptor);
 

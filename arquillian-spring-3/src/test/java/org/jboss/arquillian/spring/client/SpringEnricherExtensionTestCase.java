@@ -20,6 +20,8 @@ import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiv
 import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfigurationProducer;
+import org.jboss.arquillian.spring.dependency.Spring3DependencyResolver;
+import org.jboss.arquillian.spring.dependency.Spring3DependencyResolverProducer;
 import org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.junit.Before;
@@ -52,7 +54,8 @@ public class SpringEnricherExtensionTestCase {
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.client.SpringEnricherExtension#register(org.jboss.arquillian.core.spi.LoadableExtension.ExtensionBuilder)} method.</p>
+     * <p>Tests the {@link org.jboss.arquillian.spring.client.SpringEnricherExtension#register(org.jboss.arquillian.core.spi.LoadableExtension.ExtensionBuilder)}
+     * method.</p>
      */
     @Test
     public void testRegister() {
@@ -67,5 +70,6 @@ public class SpringEnricherExtensionTestCase {
         verify(mockExtensionBuilder).service(ProtocolArchiveProcessor.class, SpringProtocolArchiveProcessor.class);
         verify(mockExtensionBuilder).service(TestEnricher.class, SpringInjectionEnricher.class);
         verify(mockExtensionBuilder).observer(SpringExtensionConfigurationProducer.class);
+        verify(mockExtensionBuilder).observer(Spring3DependencyResolverProducer.class);
     }
 }

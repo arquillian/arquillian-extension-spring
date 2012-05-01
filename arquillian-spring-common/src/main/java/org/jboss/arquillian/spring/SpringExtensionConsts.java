@@ -56,31 +56,6 @@ public final class SpringExtensionConsts {
     public static final String DEFAULT_LOCATION = "classpath:applicationContext.xml";
 
     /**
-     * <p>Represents the Spring Framework maven artifact name.</p>
-     */
-    public static final String SPRING_ARTIFACT_NAME = "org.springframework:spring-context";
-
-    /**
-     * <p>Represents the Spring Framework Web maven artifact name.</p>
-     */
-    public static final String SPRING_ARTIFACT_WEB_NAME = "org.springframework:spring-web";
-
-    /**
-     * <p>Represents the default version of the Spring Framework.</p>
-     */
-    public static final String SPRING_ARTIFACT_VERSION = "3.1.1.RELEASE";
-
-    /**
-     * <p>Represents the CGLIB maven artifact name.</p>
-     */
-    public static final String CGLIB_ARTIFACT_NAME = "cglib:cglib";
-
-    /**
-     * <p>Represents the default CGLIB artifact name.</p>
-     */
-    public static final String CGLIB_ARTIFACT_VERSION = "2.2.2";
-
-    /**
      * <p>Represents the extension configuration prefix.</p>
      */
     public static final String EXTESION_CONFIGURATION_PREFIX = "spring";
@@ -99,4 +74,14 @@ public final class SpringExtensionConsts {
      * <p>Represents the extension configuration property name.</p>
      */
     public static final String CONFIGURATION_CGLIB_VERSION = "cglibVersion";
+
+    /**
+     * <p>Represents the default precedence of observer class.</p>
+     */
+    public static final int INIT_PRECEDENCE = 2;
+
+    /**
+     * <p>Represents the default precedence of observer class.</p>
+     */
+    public static final int DEFAULT_PRECEDENCE = 1;
 }

@@ -18,10 +18,24 @@ package org.jboss.arquillian.spring.client;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.CachedAuxilliaryArchiveAppender;
+import org.jboss.arquillian.spring.Spring25ExtensionConsts;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
+import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringExtensionConfigurationProducer;
 import org.jboss.arquillian.spring.container.SpringEnricherRemoteExtension;
+import org.jboss.arquillian.spring.context.AbstractApplicationContextProducer;
+import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
 import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
+import org.jboss.arquillian.spring.context.WebApplicationContextProducer;
+import org.jboss.arquillian.spring.context.XmlApplicationContextProducer;
+import org.jboss.arquillian.spring.dependency.AbstractDependencyResolver;
+import org.jboss.arquillian.spring.dependency.AbstractDependencyResolverProducer;
+import org.jboss.arquillian.spring.dependency.MavenDependencyBuilder;
+import org.jboss.arquillian.spring.dependency.Spring25DependencyResolver;
+import org.jboss.arquillian.spring.dependency.Spring25DependencyResolverProducer;
+import org.jboss.arquillian.spring.testenricher.SecurityActions;
 import org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -41,11 +55,13 @@ public class SpringEnricherArchiveAppender extends CachedAuxilliaryArchiveAppend
     @Override
     protected Archive<?> buildArchive() {
         return ShrinkWrap.create(JavaArchive.class, "arquillian-testenricher-spring.jar")
-                .addPackage(SpringConfiguration.class.getPackage())
-                .addPackage(SpringEnricherRemoteExtension.class.getPackage())
-                .addPackage(SpringInjectionEnricher.class.getPackage())
-                .addPackage(TestScopeApplicationContext.class.getPackage())
-                .addClass(SpringExtensionConsts.class)
+                .addClasses(SpringConfiguration.class, SpringWebConfiguration.class)
+                .addClasses(AbstractApplicationContextProducer.class, ApplicationContextDestroyer.class,
+                        TestScopeApplicationContext.class, XmlApplicationContextProducer.class,
+                        WebApplicationContextProducer.class)
+                .addClasses(SpringInjectionEnricher.class, SecurityActions.class)
+                .addClasses(SpringEnricherRemoteExtension.class)
+                .addClasses(SpringExtensionConsts.class)
                 .addAsServiceProvider(RemoteLoadableExtension.class, SpringEnricherRemoteExtension.class);
     }
 }

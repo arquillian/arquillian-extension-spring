@@ -20,12 +20,12 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 
 /**
- * <p>Defines a set of operations that are ment to be executed within security context.</p>
+ * <p>Defines a set of operations that are meant to be executed within security context.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-class SecurityActions {
+public class SecurityActions {
 
     /**
      * <p>Creates new instance of {@link SecurityActions}.</p>
@@ -58,7 +58,7 @@ class SecurityActions {
      *
      * @return the class loader
      */
-    static ClassLoader getThreadContextClassLoader() {
+    public static ClassLoader getThreadContextClassLoader() {
         return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
 
             public ClassLoader run() {

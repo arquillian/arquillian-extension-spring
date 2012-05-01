@@ -22,6 +22,7 @@ import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
+import org.jboss.arquillian.spring.dependency.AbstractDependencyResolver;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -29,8 +30,6 @@ import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * <p>Archive processor adds the Spring framework dependencies into the test or archive processor. The extension by
@@ -46,6 +45,12 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
      */
     @Inject
     private Instance<SpringExtensionConfiguration> configuration;
+
+    /**
+     * <p>Represents the instance of {@link AbstractDependencyResolver}.</p>
+     */
+    @Inject
+    private Instance<AbstractDependencyResolver> dependencyResolver;
 
     /**
      * {@inheritDoc}
@@ -96,7 +101,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
      */
     private void addDependencies(Archive<?> archive) {
 
-        File[] dependencies = resolveExtensionDependencies();
+        File[] dependencies = getDependencies();
 
         if (isEnterpriseArchive(archive)) {
             ((EnterpriseArchive) archive).addAsModules(dependencies);
@@ -109,88 +114,6 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * <p>Resolves all dependencies required for the extension.</p>
-     *
-     * @return resolved dependencies
-     */
-    private File[] resolveExtensionDependencies() {
-
-        ArrayList<File> dependencies = new ArrayList<File>();
-
-        // adds the spring dependencies
-        dependencies.addAll(Arrays.asList(resolveArtifact(SpringExtensionConsts.SPRING_ARTIFACT_NAME,
-                getConfiguration().getSpringVersion(), SpringExtensionConsts.SPRING_ARTIFACT_VERSION)));
-
-        // adds spring web
-        dependencies.addAll(Arrays.asList(resolveArtifact(SpringExtensionConsts.SPRING_ARTIFACT_WEB_NAME,
-                getConfiguration().getSpringVersion(), SpringExtensionConsts.SPRING_ARTIFACT_VERSION)));
-
-        // adds the cglib
-        dependencies.addAll(Arrays.asList(resolveArtifact(SpringExtensionConsts.CGLIB_ARTIFACT_NAME,
-                getConfiguration().getCglibVersion(), SpringExtensionConsts.CGLIB_ARTIFACT_VERSION)));
-
-        return dependencies.toArray(new File[dependencies.size()]);
-    }
-
-    /**
-     * Resolves the artifact using the given version, if the version hasn't been specified than the default artifact
-     * version will be used.
-     *
-     * @param artifact       the artifact name
-     * @param version        the artifact version
-     * @param defaultVersion the default artifact version to be used
-     *
-     * @return the resolved artifacts
-     */
-    private File[] resolveArtifact(String artifact, String version, String defaultVersion) {
-        String artifactVersion;
-
-        if (version != null && version.length() > 0) {
-            artifactVersion = version;
-        } else {
-            artifactVersion = defaultVersion;
-        }
-
-        return resolveArtifact(artifact, artifactVersion);
-    }
-
-    /**
-     * <p>Resolves the given artifact in specified version with help of maven build system.</p>
-     *
-     * @param artifact the artifact name
-     * @param version  the artifact version
-     *
-     * @return the resolved files
-     */
-    private File[] resolveArtifact(String artifact, String version) {
-        File[] artifacts = null;
-        try {
-            artifacts = resolveArtifact(artifact);
-        } catch (Exception e) {
-            artifacts = resolveArtifact(artifact + ":" + version);
-        }
-        return artifacts;
-    }
-
-    /**
-     * <p>Resolves the given artifact by it's name with help of maven build system.</p>
-     *
-     * @param artifact the fully qualified artifact name
-     *
-     * @return the resolved files
-     */
-    private File[] resolveArtifact(String artifact) {
-        MavenDependencyResolver mvnResolver = DependencyResolvers.use(MavenDependencyResolver.class);
-
-        if (isMavenUsed()) {
-            mvnResolver.loadMetadataFromPom(SpringExtensionConsts.POM_XML);
-        }
-
-        return mvnResolver.artifacts(artifact)
-                .resolveAsFiles();
-    }
-
-    /**
      * <p>Returns whether maven is being used in project.</p>
      *
      * @return true if maven is being used in project, false otherwise
@@ -199,8 +122,22 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
         return new File(SpringExtensionConsts.POM_XML).exists();
     }
 
-    private SpringExtensionConfiguration getConfiguration() {
+    /**
+     * <p>Retrieves the extension configuration</p>
+     *
+     * @return the extension configuration
+     */
+    public SpringExtensionConfiguration getConfiguration() {
+        return configuration != null ? configuration.get() : null;
+    }
 
-        return configuration.get();
+    /**
+     * <p>Retrieves the dependencies.</p>
+     *
+     * @return the dependencies
+     */
+    public File[] getDependencies() {
+
+        return dependencyResolver.get() != null ? dependencyResolver.get().resolveDependencies() : null;
     }
 }

@@ -61,8 +61,9 @@ public class TestScopeApplicationContextTestCase {
     }
 
     /**
-     * <p>Tests {@link org.jboss.arquillian.spring.context.TestScopeApplicationContext# TestScopeApplicationContext(org.springframework.context.ApplicationContext,
-     * boolean)} constructor when applicationContext is null.</p>
+     * <p>Tests {@link org.jboss.arquillian.spring.context.TestScopeApplicationContext#
+     * TestScopeApplicationContext(org.springframework.context.ApplicationContext, boolean)} constructor when
+     * applicationContext is null.</p>
      *
      * <p>{@link IllegalArgumentException} is expected.</p>
      */

@@ -56,8 +56,8 @@ public class SpringProtocolArchiveProcessorTestCase {
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.client.SpringProtocolArchiveProcessor#process(TestDeployment, Archive)} method when the test
-     * deployment is a JAR archive.</p>
+     * <p>Tests the {@link org.jboss.arquillian.spring.client.SpringProtocolArchiveProcessor#process(TestDeployment,
+     * Archive)} method when the test deployment is a JAR archive.</p>
      */
     @Test
     @Ignore
@@ -77,8 +77,8 @@ public class SpringProtocolArchiveProcessorTestCase {
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.client.SpringProtocolArchiveProcessor#process(TestDeployment, Archive)} method when the test
-     * deployment is a WAR archive.</p>
+     * <p>Tests the {@link org.jboss.arquillian.spring.client.SpringProtocolArchiveProcessor#process(TestDeployment,
+     * Archive)} method when the test deployment is a WAR archive.</p>
      */
     @Test
     @Ignore

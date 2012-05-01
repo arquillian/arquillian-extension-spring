@@ -21,6 +21,8 @@ import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchive
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfigurationProducer;
+import org.jboss.arquillian.spring.dependency.Spring3DependencyResolver;
+import org.jboss.arquillian.spring.dependency.Spring3DependencyResolverProducer;
 import org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher;
 import org.jboss.arquillian.test.spi.TestEnricher;
 
@@ -45,7 +47,8 @@ public class SpringEnricherExtension implements LoadableExtension {
             builder.service(AuxiliaryArchiveAppender.class, SpringEnricherArchiveAppender.class)
                     .service(ProtocolArchiveProcessor.class, SpringProtocolArchiveProcessor.class)
                     .service(TestEnricher.class, SpringInjectionEnricher.class)
-                    .observer(SpringExtensionConfigurationProducer.class);
+                    .observer(SpringExtensionConfigurationProducer.class)
+                    .observer(Spring3DependencyResolverProducer.class);
         }
     }
 }

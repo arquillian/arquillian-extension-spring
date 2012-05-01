@@ -34,6 +34,9 @@
         <maven.compiler.argument.target>1.5</maven.compiler.argument.target>
         <maven.compiler.argument.source>1.5</maven.compiler.argument.source>
 
+        <!-- Arquillian version -->
+        <version.arquillian>1.0.0.Final</version.arquillian>
+
         <!-- External Deps -->
         <version.shrinkwrap_shrinkwrap>1.0.0-cr-1</version.shrinkwrap_shrinkwrap>
         <version.shrinkwrap_resolver>1.0.0-beta-5</version.shrinkwrap_resolver>
@@ -51,7 +54,6 @@
         <version.spring_framework_2_5>2.5.6</version.spring_framework_2_5>
         <version.spring_framework_3>3.1.1.RELEASE</version.spring_framework_3>
 
-        <version.spring_framework>3.1.1.RELEASE</version.spring_framework>
         <version.cglib>2.2.2</version.cglib>
     </properties>
 
@@ -75,12 +77,12 @@
             <dependency>
                 <groupId>org.jboss.arquillian.test</groupId>
                 <artifactId>arquillian-test-spi</artifactId>
-                <version>${project.version}</version>
+                <version>${version.arquillian}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian.container</groupId>
                 <artifactId>arquillian-container-test-spi</artifactId>
-                <version>${project.version}</version>
+                <version>${version.arquillian}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.shrinkwrap</groupId>
@@ -243,6 +245,21 @@
             <id>SpringSource Repository</id>
             <name>SpringSource Repository</name>
             <url>http://repo.springsource.org/release</url>
+        </repository>
+
+        <repository>
+            <id>JBoss Deprecated Repository</id>
+            <name>JBoss Deprecated Maven Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/deprecated/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
         </repository>
     </repositories>
 
