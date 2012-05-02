@@ -22,7 +22,7 @@ package org.jboss.arquillian.spring;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class Spring25ExtensionConsts {
+public final class Spring25ExtensionConsts {
 
     /**
      * <p>Creates new instance of {@link Spring25ExtensionConsts}.</p>

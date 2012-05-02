@@ -24,7 +24,7 @@ import org.jboss.shrinkwrap.api.ArchivePaths;
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class TestResourceHelper {
+public final class TestResourceHelper {
 
     /**
      * <p>Creates new instance of {@link TestResourceHelper} class.</p>

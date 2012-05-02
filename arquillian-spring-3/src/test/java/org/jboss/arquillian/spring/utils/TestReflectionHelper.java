@@ -23,7 +23,7 @@ import java.lang.reflect.Field;
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class TestReflectionHelper {
+public final class TestReflectionHelper {
 
     /**
      * <p>Creates new instance of {@link TestReflectionHelper} class.</p>

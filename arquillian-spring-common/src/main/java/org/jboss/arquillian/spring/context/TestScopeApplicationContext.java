@@ -39,7 +39,7 @@ public class TestScopeApplicationContext {
     /**
      * <p>Creates new instance of {@link TestScopeApplicationContext} class with given application context.</p>
      *
-     * @param applicationContext the {@link org.springframework.context.ApplicationContext}
+     * @param applicationContext the {@link ApplicationContext}
      * @param closable           whether the application context should be closed after the tests
      *
      * @throws IllegalArgumentException is applicationContext is null

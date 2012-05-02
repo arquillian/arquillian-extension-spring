@@ -25,7 +25,7 @@ import java.security.PrivilegedAction;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class SecurityActions {
+public final class SecurityActions {
 
     /**
      * <p>Creates new instance of {@link SecurityActions}.</p>
@@ -58,7 +58,7 @@ public class SecurityActions {
      *
      * @return the class loader
      */
-    public static ClassLoader getThreadContextClassLoader() {
+    private static ClassLoader getThreadContextClassLoader() {
         return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
 
             public ClassLoader run() {

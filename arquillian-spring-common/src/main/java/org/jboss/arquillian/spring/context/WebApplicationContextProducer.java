@@ -57,7 +57,7 @@ public class WebApplicationContextProducer extends AbstractApplicationContextPro
      *
      * @param testClass the test class
      *
-     * @return {@link org.springframework.context.ApplicationContext} retrieves from web application
+     * @return {@link ApplicationContext} retrieves from web application
      */
     private ApplicationContext getWebApplicationContext(TestClass testClass) {
 
@@ -121,5 +121,4 @@ public class WebApplicationContextProducer extends AbstractApplicationContextPro
 
         return value == null || value.trim().length() == 0;
     }
-
 }
