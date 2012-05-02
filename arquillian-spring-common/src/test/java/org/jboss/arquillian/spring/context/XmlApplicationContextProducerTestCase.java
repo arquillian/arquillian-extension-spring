@@ -16,37 +16,12 @@
  */
 package org.jboss.arquillian.spring.context;
 
-import org.junit.Before;
-import org.junit.Test;
-
 /**
- * <p>Tests {@link org.jboss.arquillian.spring.context.ApplicationContextDestroyer} class.</p>
+ * <p>Tests {@link XmlApplicationContextProducer} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class ApplicationContextDestroyerTestCase {
-
-    /**
-     * <p>Represents the instance of tested class.</p>
-     */
-    private ApplicationContextDestroyer instance;
-
-    /**
-     * <p>Sets up the test environment.</p>
-     */
-    @Before
-    public void setUp() {
-
-        instance = new ApplicationContextDestroyer();
-    }
-
-    /**
-     * <p>Tests {@link ApplicationContextDestroyer#destroyApplicationContext(AfterClass)}
-     * method.</p>
-     */
-    @Test
-    public void testDestroyApplicationContext() {
-
-        // TODO implement
-    }
+public class XmlApplicationContextProducerTestCase {
 }
+
+

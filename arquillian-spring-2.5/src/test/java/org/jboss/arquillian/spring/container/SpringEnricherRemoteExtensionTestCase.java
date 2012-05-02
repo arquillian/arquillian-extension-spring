@@ -31,7 +31,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * <p>Tests {@link org.jboss.arquillian.spring.container.SpringEnricherRemoteExtension} class.</p>
+ * <p>Tests {@link SpringEnricherRemoteExtension} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
