@@ -70,13 +70,13 @@ public class AnnotatedApplicationContextProducer extends AbstractApplicationCont
     }
 
     /**
-     * <p>Creates instance of {@link org.springframework.context.annotation.AnnotationConfigApplicationContext}
+     * <p>Creates instance of {@link AnnotationConfigApplicationContext}
      * class.</p>
      *
      * @param classes  the annotated classes to register
      * @param packages the packages containing the annotated classes
      *
-     * @return the created instance of {@link org.springframework.context.annotation.AnnotationConfigApplicationContext}
+     * @return the created instance of {@link AnnotationConfigApplicationContext}
      */
     private ApplicationContext createAnnotatedApplicationContext(Class<?>[] classes, String[] packages) {
 

@@ -53,5 +53,5 @@ public @interface SpringAnnotatedConfiguration {
     /**
      * <p>The custom context class to be used when instantiating the application context.</p>
      */
-    Class<? extends ApplicationContext> contextClass();
+    Class<? extends ApplicationContext> contextClass() default ApplicationContext.class;
 }

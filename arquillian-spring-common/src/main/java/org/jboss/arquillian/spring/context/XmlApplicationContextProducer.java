@@ -69,7 +69,7 @@ public class XmlApplicationContextProducer extends AbstractApplicationContextPro
         }
 
         Class<? extends ApplicationContext> applicationContextClass = ClassPathXmlApplicationContext.class;
-        if (springConfiguration.contextClass() != ClassPathXmlApplicationContext.class) {
+        if (springConfiguration.contextClass() != ApplicationContext.class) {
 
             applicationContextClass = springConfiguration.contextClass();
         }

@@ -50,5 +50,5 @@ public @interface SpringConfiguration {
     /**
      * <p>The custom context class to be used when instantiating the application context.</p>
      */
-    Class<? extends ApplicationContext> contextClass() default ClassPathXmlApplicationContext.class;
+    Class<? extends ApplicationContext> contextClass() default ApplicationContext.class;
 }
