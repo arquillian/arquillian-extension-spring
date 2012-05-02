@@ -56,5 +56,5 @@ public final class Spring25ExtensionConsts {
     /**
      * <p>Represents the default version of the Snowdrop.</p>
      */
-    public static final String SNOWDROP_ARTIFACT_VERSION = "2.5.6";
+    public static final String SNOWDROP_ARTIFACT_VERSION = "2.0.3.Final";
 }
