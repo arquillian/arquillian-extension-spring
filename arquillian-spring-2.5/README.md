@@ -30,7 +30,7 @@ Example
 
 ## Running the test in JBoss AS
 
-In other to successfully run the Spring 2.5.x in JBoss the tests should relay on Snowdrop application context
+In other to successfully run the Spring 2.5.x in JBoss the tests should rely on Snowdrop application context
 instead of Spring's. This can be done by specifying for each test custom context class.
 
 ```
