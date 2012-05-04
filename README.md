@@ -102,8 +102,7 @@ public class DefaultEmployeeRepositoryTestCase {
         return ShrinkWrap.create(JavaArchive.class, "spring-test.jar")
                 .addClasses(Employee.class,
                         EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class)
-                .addAsResource(DefaultEmployeeRepositoryTestCase.class.getResource("/applicationContext.xml"),
-                        "applicationContext.xml");
+                .addAsResource("applicationContext.xml");
     }
 
     @Autowired
@@ -277,12 +276,9 @@ public class EmployeeControlerTestCase {
                         EmployeeController.class)
                 .addAsLibraries(springDependencies())
                 .addAsLibraries(mockitoDependencies())
-                .addAsWebInfResource(EmployeeControlerTestCase.class.getResource("/mvc/web.xml"),
-                        "web.xml")
-                .addAsWebInfResource(EmployeeControlerTestCase.class.getResource("/mvc/employee-servlet.xml"),
-                        "employee-servlet.xml")
-                .addAsWebInfResource(EmployeeControlerTestCase.class.getResource("/mvc/applicationContext.xml"),
-                        "applicationContext.xml");
+                .addAsWebInfResource("mvc/web.xml", "web.xml")
+                .addAsWebInfResource("mvc/employee-servlet.xml", "employee-servlet.xml")
+                .addAsWebInfResource("mvc/applicationContext.xml", "applicationContext.xml");
     }
 
     /**
