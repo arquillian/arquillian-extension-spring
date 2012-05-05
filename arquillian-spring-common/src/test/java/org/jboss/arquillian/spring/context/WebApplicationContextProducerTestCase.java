@@ -16,10 +16,53 @@
  */
 package org.jboss.arquillian.spring.context;
 
+import org.jboss.arquillian.spring.model.PlainClass;
+import org.jboss.arquillian.spring.model.WebAnnotatedClass;
+import org.jboss.arquillian.test.spi.TestClass;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /**
  * <p>Tests {@link WebApplicationContextProducer} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
 public class WebApplicationContextProducerTestCase {
+
+    /**
+     * <p>Represents the instance of tested class.</p>
+     */
+    private WebApplicationContextProducer instance;
+
+    /**
+     * <p>Sets up the test environment.</p>
+     */
+    @Before
+    public void setUp() {
+
+        instance = new WebApplicationContextProducer();
+    }
+
+    /**
+     * <p>Tests the {@link WebApplicationContextProducer#supports(TestClass)} method.</p>
+     */
+    @Test
+    public void testSupportsFalse() {
+        TestClass testClass = new TestClass(PlainClass.class);
+
+        assertFalse("Class without annotations shouldn't be supported.", instance.supports(testClass));
+    }
+
+    /**
+     * <p>Tests the {@link WebApplicationContextProducer#supports(TestClass)} method.</p>
+     */
+    @Test
+    public void testSupportsTrue() {
+        TestClass testClass = new TestClass(WebAnnotatedClass.class);
+
+        assertTrue("Class should be supported.", instance.supports(testClass));
+    }
 }
