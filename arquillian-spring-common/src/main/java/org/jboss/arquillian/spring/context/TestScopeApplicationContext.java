@@ -55,9 +55,9 @@ public class TestScopeApplicationContext {
     }
 
     /**
-     * <p>Retrieves {@link org.springframework.context.ApplicationContext} instance.</p>
+     * <p>Retrieves {@link ApplicationContext} instance.</p>
      *
-     * @return the {@link org.springframework.context.ApplicationContext}
+     * @return the {@link ApplicationContext}
      */
     public ApplicationContext getApplicationContext() {
         return applicationContext;

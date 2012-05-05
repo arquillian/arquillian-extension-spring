@@ -56,7 +56,7 @@ public class XmlApplicationContextProducer extends AbstractApplicationContextPro
      *
      * @param testClass the test class
      *
-     * @return created {@link org.springframework.context.ApplicationContext}
+     * @return created {@link ApplicationContext}
      */
     private ApplicationContext getApplicationContext(TestClass testClass) {
 

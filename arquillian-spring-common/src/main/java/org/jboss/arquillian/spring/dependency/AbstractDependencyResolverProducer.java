@@ -64,7 +64,7 @@ public abstract class AbstractDependencyResolverProducer {
 
         AbstractDependencyResolver abstractDependencyResolver = createDependencyResolver();
 
-        if (dependencyResolver != null) {
+        if (abstractDependencyResolver != null) {
 
             dependencyResolver.set(abstractDependencyResolver);
         }
