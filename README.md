@@ -45,7 +45,7 @@ It's posible to modify the default behaviour of the extension and set the fallow
 * The version of the maven artifact for the Spring Context and Spring Web.
 * The version of the CGLIB.
 * Whether to include with each test deployment Snowdrop. Snowdrop is required to run Spring prior version 3.0.3
-  in JBoss (https://jira.springsource.org/browse/SPR-7197)
+  in JBoss AS (https://jira.springsource.org/browse/SPR-7197)
 
 Note: When using the extension with Maven the artifacts version is being read from POM file directly. Modifying the
 version in the arquillian.xml will have no effect. It's intention is to support other then Maven build systems.
