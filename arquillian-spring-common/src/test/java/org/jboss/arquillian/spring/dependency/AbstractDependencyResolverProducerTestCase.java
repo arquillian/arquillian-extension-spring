@@ -16,10 +16,82 @@
  */
 package org.jboss.arquillian.spring.dependency;
 
+import org.jboss.arquillian.core.api.Instance;
+import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
+import org.jboss.arquillian.spring.context.AbstractApplicationContextProducer;
+import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
+import org.jboss.arquillian.spring.model.PlainClass;
+import org.jboss.arquillian.spring.utils.TestReflectionHelper;
+import org.jboss.arquillian.test.spi.TestClass;
+import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
+import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
+import org.junit.Test;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
 /**
- * <p>Tests {@link org.jboss.arquillian.spring.context.XmlApplicationContextProducer} class.</p>
+ * <p>Tests {@link AbstractDependencyResolverProducer} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
 public class AbstractDependencyResolverProducerTestCase {
+
+    /**
+     * <p>Represents the instance of tested class.</p>
+     */
+    private AbstractDependencyResolverProducer instance;
+
+    /**
+     * <p>Tests the {@link AbstractDependencyResolverProducer#initDependencyResolver(BeforeSuite)}  method.</p>
+     */
+    @Test
+    public void testInitDependencyResolverNull() throws Exception {
+        BeforeSuite event = new BeforeSuite();
+
+        instance = mock(AbstractDependencyResolverProducer.class);
+
+        Instance<SpringExtensionConfiguration> mockConfigurationInstance = mock(Instance.class);
+        TestReflectionHelper.setFieldValue(instance, "configuration", mockConfigurationInstance);
+        
+        InstanceProducer<AbstractDependencyResolver> mockProducer = mock(InstanceProducer.class);
+        TestReflectionHelper.setFieldValue(instance, "dependencyResolver", mockProducer);
+
+        doCallRealMethod().when(instance).initDependencyResolver(any(BeforeSuite.class));
+        when(instance.createDependencyResolver()).thenReturn(null);
+
+        instance.initDependencyResolver(event);
+
+        verifyNoMoreInteractions(mockProducer);
+    }
+
+    /**
+     * <p>Tests the {@link AbstractDependencyResolverProducer#initDependencyResolver(BeforeSuite)}  method.</p>
+     */
+    @Test
+    public void testInitDependencyResolver() throws Exception {
+        BeforeSuite event = new BeforeSuite();
+        
+        AbstractDependencyResolver mockDependencyResolver = mock(AbstractDependencyResolver.class);
+
+        instance = mock(AbstractDependencyResolverProducer.class);
+
+        Instance<SpringExtensionConfiguration> mockConfigurationInstance = mock(Instance.class);
+        TestReflectionHelper.setFieldValue(instance, "configuration", mockConfigurationInstance);
+
+        InstanceProducer<AbstractDependencyResolver> mockProducer = mock(InstanceProducer.class);
+        TestReflectionHelper.setFieldValue(instance, "dependencyResolver", mockProducer);
+
+        doCallRealMethod().when(instance).initDependencyResolver(any(BeforeSuite.class));
+        when(instance.createDependencyResolver()).thenReturn(mockDependencyResolver);
+
+        instance.initDependencyResolver(event);
+
+        verify(mockProducer).set(mockDependencyResolver);
+    }
 }

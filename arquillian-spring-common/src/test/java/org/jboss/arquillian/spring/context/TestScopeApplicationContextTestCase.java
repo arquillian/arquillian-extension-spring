@@ -61,9 +61,8 @@ public class TestScopeApplicationContextTestCase {
     }
 
     /**
-     * <p>Tests {@link org.jboss.arquillian.spring.context.TestScopeApplicationContext#
-     * TestScopeApplicationContext(org.springframework.context.ApplicationContext, boolean)} constructor when
-     * applicationContext is null.</p>
+     * <p>Tests {@link TestScopeApplicationContext#TestScopeApplicationContext(ApplicationContext, boolean)}
+     * constructor when applicationContext is null.</p>
      *
      * <p>{@link IllegalArgumentException} is expected.</p>
      */
@@ -74,7 +73,7 @@ public class TestScopeApplicationContextTestCase {
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.context.TestScopeApplicationContext#getApplicationContext()}.</p>
+     * <p>Tests the {@link TestScopeApplicationContext#getApplicationContext()}.</p>
      */
     @Test
     public void testGetApplicationContext() {
@@ -83,7 +82,7 @@ public class TestScopeApplicationContextTestCase {
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.context.TestScopeApplicationContext#isClosable()}.</p>
+     * <p>Tests the {@link TestScopeApplicationContext#isClosable()}.</p>
      */
     @Test
     public void testGetClosable() {

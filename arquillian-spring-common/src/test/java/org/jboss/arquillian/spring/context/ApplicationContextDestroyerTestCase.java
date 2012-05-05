@@ -16,8 +16,24 @@
  */
 package org.jboss.arquillian.spring.context;
 
+import org.jboss.arquillian.core.api.Instance;
+import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.spring.model.PlainClass;
+import org.jboss.arquillian.spring.model.XmlAnnotatedClass;
+import org.jboss.arquillian.spring.utils.TestReflectionHelper;
+import org.jboss.arquillian.test.spi.event.suite.AfterClass;
+import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.springframework.context.ConfigurableApplicationContext;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * <p>Tests {@link org.jboss.arquillian.spring.context.ApplicationContextDestroyer} class.</p>
@@ -41,12 +57,44 @@ public class ApplicationContextDestroyerTestCase {
     }
 
     /**
-     * <p>Tests {@link ApplicationContextDestroyer#destroyApplicationContext(AfterClass)}
-     * method.</p>
+     * <p>Tests {@link ApplicationContextDestroyer#destroyApplicationContext(AfterClass)} method.</p>
+     * 
+     * @throws Exception if any error occurs
      */
     @Test
-    public void testDestroyApplicationContext() {
+    public void testDestroyApplicationContextFalse() throws Exception {
 
-        // TODO implement
+        AfterClass event = new AfterClass(PlainClass.class);
+
+        Instance<TestScopeApplicationContext> mockInstance = mock(Instance.class);
+        TestReflectionHelper.setFieldValue(instance, "testApplicationContext", mockInstance);
+
+        ConfigurableApplicationContext mockApplicationContext = mock(ConfigurableApplicationContext.class);
+        when(mockInstance.get()).thenReturn(new TestScopeApplicationContext(mockApplicationContext, false));
+
+        instance.destroyApplicationContext(event);
+
+        verifyNoMoreInteractions(mockApplicationContext);
+    }
+
+    /**
+     * <p>Tests {@link ApplicationContextDestroyer#destroyApplicationContext(AfterClass)} method.</p>
+     *
+     * @throws Exception if any error occurs
+     */
+    @Test
+    public void testDestroyApplicationContextTrue() throws Exception {
+
+        AfterClass event = new AfterClass(PlainClass.class);
+
+        Instance<TestScopeApplicationContext> mockInstance = mock(Instance.class);
+        TestReflectionHelper.setFieldValue(instance, "testApplicationContext", mockInstance);
+
+        ConfigurableApplicationContext mockApplicationContext = mock(ConfigurableApplicationContext.class);
+        when(mockInstance.get()).thenReturn(new TestScopeApplicationContext(mockApplicationContext, true));
+
+        instance.destroyApplicationContext(event);
+
+        verify(mockApplicationContext).close();
     }
 }

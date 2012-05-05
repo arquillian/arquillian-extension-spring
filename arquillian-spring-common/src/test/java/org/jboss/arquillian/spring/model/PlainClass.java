@@ -14,22 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.spring.configuration;
-
-import org.junit.Test;
+package org.jboss.arquillian.spring.model;
 
 /**
- * <p>Tests {@link SpringExtensionConfigurationProducer} class.</p>
  *
- * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class SpringExtensionConfigurationProducerTestCase {
-
-    /**
-     * <p>Tests method.</p>
-     */
-    @Test
-    public void test() {
-        // TODO implement
-    }
+public class PlainClass {
 }

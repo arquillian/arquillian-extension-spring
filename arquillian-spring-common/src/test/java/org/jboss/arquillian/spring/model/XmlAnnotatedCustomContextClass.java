@@ -14,22 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.spring.configuration;
+package org.jboss.arquillian.spring.model;
 
-import org.junit.Test;
+import org.jboss.arquillian.spring.annotations.SpringConfiguration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * <p>Tests {@link SpringExtensionConfigurationProducer} class.</p>
  *
- * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class SpringExtensionConfigurationProducerTestCase {
-
-    /**
-     * <p>Tests method.</p>
-     */
-    @Test
-    public void test() {
-        // TODO implement
-    }
+@SpringConfiguration(contextClass = ClassPathXmlApplicationContext.class)
+public class XmlAnnotatedCustomContextClass {
 }

@@ -63,7 +63,7 @@ public class SpringInjectionEnricherTestCase {
     public void testResolve() throws Exception {
 
         Class clazz = SpringInjectionEnricherTestCase.class;
-        Method method = clazz.getMethod("testResolve", null);
+        Method method = clazz.getMethod("testResolve", (Class[])null);
 
         Object[] result = instance.resolve(method);
 

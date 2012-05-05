@@ -43,7 +43,7 @@ public final class TestReflectionHelper {
      *
      * @throws IllegalAccessException if any error occurs when setting the field value
      */
-    public static void setField(Object obj, String fieldName, Object value) throws IllegalAccessException,
+    public static void setFieldValue(Object obj, String fieldName, Object value) throws IllegalAccessException,
             NoSuchFieldException {
 
         Field field = getField(obj, fieldName);
@@ -62,7 +62,17 @@ public final class TestReflectionHelper {
      */
     private static Field getField(Object obj, String fieldName) throws NoSuchFieldException {
 
-        Class clazz = obj.getClass();
-        return clazz.getDeclaredField(fieldName);
+        Class<?> tmpClass = obj.getClass();
+        do {
+            for (Field field : tmpClass.getDeclaredFields()) {
+                if (field.getName().equals(fieldName)) {
+
+                    return field;
+                }
+            }
+            tmpClass = tmpClass.getSuperclass();
+        } while (tmpClass != null);
+
+        throw new NoSuchFieldException("The field with name " + fieldName + " hasn't been found.");
     }
 }

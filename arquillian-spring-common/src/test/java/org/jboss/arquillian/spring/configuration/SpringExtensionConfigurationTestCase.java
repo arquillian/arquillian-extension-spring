@@ -19,7 +19,7 @@ package org.jboss.arquillian.spring.configuration;
 import org.junit.Test;
 
 /**
- * <p>Tests {@link org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration} class.</p>
+ * <p>Tests {@link SpringExtensionConfiguration} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */

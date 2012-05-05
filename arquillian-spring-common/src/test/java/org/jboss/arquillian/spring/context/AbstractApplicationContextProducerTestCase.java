@@ -16,10 +16,80 @@
  */
 package org.jboss.arquillian.spring.context;
 
+import junit.framework.TestCase;
+import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.spring.model.PlainClass;
+import org.jboss.arquillian.spring.utils.TestReflectionHelper;
+import org.jboss.arquillian.test.spi.TestClass;
+import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.MockSettings;
+import org.mockito.Mockito;
+import org.springframework.context.ApplicationContext;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
 /**
  * <p>Tests {@link AbstractApplicationContextProducer} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
 public class AbstractApplicationContextProducerTestCase {
+
+    /**
+     * <p>Represents the instance of tested class.</p>
+     */
+    private AbstractApplicationContextProducer instance;
+
+    /**
+     * <p>Tests the {@link AbstractApplicationContextProducer#initApplicationContext(BeforeClass)} method.</p>
+     */
+    @Test
+    public void testInitApplicationContextNotSupported() throws Exception {
+        BeforeClass event = new BeforeClass(PlainClass.class);
+
+        instance = mock(AbstractApplicationContextProducer.class);
+        
+        InstanceProducer<TestScopeApplicationContext> mockProducer = mock(InstanceProducer.class);
+        TestReflectionHelper.setFieldValue(instance, "testApplicationContext", mockProducer);
+
+        doCallRealMethod().when(instance).initApplicationContext(any(BeforeClass.class));
+        when(instance.supports(any(TestClass.class))).thenReturn(false);
+
+        instance.initApplicationContext(event);
+
+        verifyNoMoreInteractions(mockProducer);
+    }
+
+    /**
+     * <p>Tests the {@link AbstractApplicationContextProducer#initApplicationContext(BeforeClass)} method.</p>
+     */
+    @Test
+    public void testInitApplicationContextSupported() throws Exception {
+        BeforeClass event = new BeforeClass(PlainClass.class);
+
+        ApplicationContext mockApplicationContext = mock(ApplicationContext.class);
+        TestScopeApplicationContext testScopeApplicationContext =
+                new TestScopeApplicationContext(mockApplicationContext, false);
+        
+        instance = mock(AbstractApplicationContextProducer.class);
+
+        doCallRealMethod().when(instance).initApplicationContext(any(BeforeClass.class));
+        when(instance.supports(any(TestClass.class))).thenReturn(true);
+        when(instance.createApplicationContext(any(TestClass.class))).thenReturn(testScopeApplicationContext);
+
+        InstanceProducer<TestScopeApplicationContext> mockProducer = mock(InstanceProducer.class);
+        TestReflectionHelper.setFieldValue(instance, "testApplicationContext", mockProducer);
+
+        instance.initApplicationContext(event);
+
+        verify(mockProducer).set(testScopeApplicationContext);
+    }
 }
