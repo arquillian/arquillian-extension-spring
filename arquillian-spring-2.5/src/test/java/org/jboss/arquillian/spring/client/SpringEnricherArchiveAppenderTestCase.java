@@ -16,21 +16,13 @@
  */
 package org.jboss.arquillian.spring.client;
 
-import org.jboss.arquillian.spring.Spring25ExtensionConsts;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
 import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
-import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
-import org.jboss.arquillian.spring.configuration.SpringExtensionConfigurationProducer;
 import org.jboss.arquillian.spring.container.SpringEnricherRemoteExtension;
 import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.context.WebApplicationContextProducer;
 import org.jboss.arquillian.spring.context.XmlApplicationContextProducer;
-import org.jboss.arquillian.spring.dependency.AbstractDependencyResolver;
-import org.jboss.arquillian.spring.dependency.AbstractDependencyResolverProducer;
-import org.jboss.arquillian.spring.dependency.MavenDependencyBuilder;
-import org.jboss.arquillian.spring.dependency.Spring25DependencyResolver;
-import org.jboss.arquillian.spring.dependency.Spring25DependencyResolverProducer;
 import org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher;
 import org.jboss.arquillian.spring.utils.TestResourceHelper;
 import org.jboss.shrinkwrap.api.Archive;

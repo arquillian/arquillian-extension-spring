@@ -16,20 +16,15 @@
  */
 package org.jboss.arquillian.spring.context;
 
-import junit.framework.TestCase;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.spring.model.PlainClass;
 import org.jboss.arquillian.spring.utils.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockSettings;
-import org.mockito.Mockito;
 import org.springframework.context.ApplicationContext;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -56,7 +51,7 @@ public class AbstractApplicationContextProducerTestCase {
         BeforeClass event = new BeforeClass(PlainClass.class);
 
         instance = mock(AbstractApplicationContextProducer.class);
-        
+
         InstanceProducer<TestScopeApplicationContext> mockProducer = mock(InstanceProducer.class);
         TestReflectionHelper.setFieldValue(instance, "testApplicationContext", mockProducer);
 
@@ -78,7 +73,7 @@ public class AbstractApplicationContextProducerTestCase {
         ApplicationContext mockApplicationContext = mock(ApplicationContext.class);
         TestScopeApplicationContext testScopeApplicationContext =
                 new TestScopeApplicationContext(mockApplicationContext, false);
-        
+
         instance = mock(AbstractApplicationContextProducer.class);
 
         doCallRealMethod().when(instance).initApplicationContext(any(BeforeClass.class));

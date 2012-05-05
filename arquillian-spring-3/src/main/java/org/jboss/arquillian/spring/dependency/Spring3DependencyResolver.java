@@ -20,7 +20,6 @@ import org.jboss.arquillian.spring.Spring3ExtensionConsts;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * <p>The dependency resolver.</p>

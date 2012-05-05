@@ -77,8 +77,8 @@ public class SpringProtocolArchiveProcessorTestCase {
     }
 
     /**
-     * <p>Tests the {@link SpringProtocolArchiveProcessor#process(TestDeployment, Archive)} method when the
-     * test deployment is a WAR archive.</p>
+     * <p>Tests the {@link SpringProtocolArchiveProcessor#process(TestDeployment, Archive)} method when the test
+     * deployment is a WAR archive.</p>
      */
     @Test
     @Ignore

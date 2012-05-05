@@ -61,8 +61,8 @@ public class TestScopeApplicationContextTestCase {
     }
 
     /**
-     * <p>Tests {@link TestScopeApplicationContext#TestScopeApplicationContext(ApplicationContext, boolean)}
-     * constructor when applicationContext is null.</p>
+     * <p>Tests {@link TestScopeApplicationContext#TestScopeApplicationContext(ApplicationContext, boolean)} constructor
+     * when applicationContext is null.</p>
      *
      * <p>{@link IllegalArgumentException} is expected.</p>
      */

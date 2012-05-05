@@ -18,8 +18,8 @@ package org.jboss.arquillian.spring.context;
 
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.spring.model.PlainClass;
-import org.jboss.arquillian.spring.model.XmlAnnotatedCustomContextClass;
 import org.jboss.arquillian.spring.model.XmlAnnotatedClass;
+import org.jboss.arquillian.spring.model.XmlAnnotatedCustomContextClass;
 import org.jboss.arquillian.spring.model.XmlAnnotatedMissingResourceClass;
 import org.jboss.arquillian.spring.utils.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.TestClass;
@@ -106,7 +106,7 @@ public class XmlApplicationContextProducerTestCase {
 
     /**
      * <p>Tests the {@link XmlApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
-     * 
+     *
      * <p>{@link RuntimeException} is expected.</p>
      */
     @Test(expected = RuntimeException.class)
@@ -118,7 +118,7 @@ public class XmlApplicationContextProducerTestCase {
 
     /**
      * <p>Tests the {@link XmlApplicationContextProducer#initApplicationContext(BeforeClass)} method.</p>
-     * 
+     *
      * @throws Exception if any error occurs
      */
     @Test
@@ -160,7 +160,7 @@ public class XmlApplicationContextProducerTestCase {
      * <p>Tests the {@link XmlApplicationContextProducer#initApplicationContext(BeforeClass)} method.</p>
      *
      * <p>{@link RuntimeException} is expected.</p>
-     * 
+     *
      * @throws Exception if any error occurs
      */
     @Test(expected = RuntimeException.class)

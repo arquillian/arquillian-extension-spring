@@ -22,7 +22,6 @@ import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +65,7 @@ public class MavenDependencyBuilder {
      */
     public File[] getDependencies() {
         List<File> result = new ArrayList<File>(dependenciesMap.values());
-        
+
         return result.toArray(new File[result.size()]);
     }
 

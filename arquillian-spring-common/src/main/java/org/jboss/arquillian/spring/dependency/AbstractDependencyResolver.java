@@ -16,14 +16,7 @@
  */
 package org.jboss.arquillian.spring.dependency;
 
-import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.api.InstanceProducer;
-import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
-import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
-import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 
 import java.io.File;
 
