@@ -57,4 +57,14 @@ public final class Spring3ExtensionConsts {
      * <p>Represents the default CGLIB artifact name.</p>
      */
     public static final String CGLIB_ARTIFACT_VERSION = "2.2.2";
+
+    /**
+     * <p>Represents the Snowdrop maven artifact name.</p>
+     */
+    public static final String SNOWDROP_ARTIFACT_NAME = "org.jboss.snowdrop:snowdrop-vfs";
+
+    /**
+     * <p>Represents the default version of the Snowdrop.</p>
+     */
+    public static final String SNOWDROP_ARTIFACT_VERSION = "2.0.3.Final";
 }

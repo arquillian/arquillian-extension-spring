@@ -42,8 +42,13 @@ Note: The annotations may not be mixed with each other, each test will use only 
 It's posible to modify the default behaviour of the extension and set the fallowing settings through arquillian.xml.
 
 * If the extension should add the spring dependencies by default for each deployment.
-* The version of the maven artifact of the Spring Context and Spring Web to be used.
+* The version of the maven artifact for the Spring Context and Spring Web.
 * The version of the CGLIB.
+* Whether to include with each test deployment Snowdrop. Snowdrop is required to run Spring prior version 3.0.3
+  in JBoss (https://jira.springsource.org/browse/SPR-7197)
+
+Note: When using the extension with Maven the artifacts version is being read from POM file directly. Modifying the
+version in the arquillian.xml will have no effect. It's intention is to support other then Maven build systems.
 
 Example:
 
@@ -64,6 +69,12 @@ Example:
 
         <!-- Whether to auto package the dependencies, default is true -->
         <property name="autoPackage">true</property>
+
+        <!-- Whether to include the snowdrop in test deployment, default is false -->
+        <property name="includeSnowdrop">true</property>
+
+        <!-- The version of the Snowdrop artifact, default is 2.0.3.Final -->
+        <property name="snowdropVersion">2.0.3.Final</property>
     </extension>
 </arquillian>
 ```

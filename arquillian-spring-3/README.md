@@ -21,6 +21,12 @@ Example
 
         <!-- Whether to auto package the dependencies, default is true -->
         <property name="autoPackage">true</property>
+
+        <!-- Whether to include the snowdrop in test deployment, default is false -->
+        <property name="includeSnowdrop">true</property>
+
+        <!-- The version of the Snowdrop artifact, default is 2.0.3.Final -->
+        <property name="snowdropVersion">2.0.3.Final</property>
     </extension>
 </arquillian>
 ```

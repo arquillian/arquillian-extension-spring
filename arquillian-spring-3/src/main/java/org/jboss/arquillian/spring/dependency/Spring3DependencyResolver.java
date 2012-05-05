@@ -58,6 +58,12 @@ public class Spring3DependencyResolver extends AbstractDependencyResolver {
         mavenDependencyBuilder.addDependency(Spring3ExtensionConsts.CGLIB_ARTIFACT_NAME,
                 getConfiguration().getCglibVersion(), Spring3ExtensionConsts.CGLIB_ARTIFACT_VERSION);
 
+        if (getConfiguration().isIncludeSnowdrop()) {
+            // adds the snowdrop for testing within jboss
+            mavenDependencyBuilder.addDependency(Spring3ExtensionConsts.SNOWDROP_ARTIFACT_NAME,
+                    getConfiguration().getSnowdropVersion(), Spring3ExtensionConsts.SNOWDROP_ARTIFACT_VERSION);
+        }
+
         // returns the resolved files
         return mavenDependencyBuilder.getDependencies();
     }
