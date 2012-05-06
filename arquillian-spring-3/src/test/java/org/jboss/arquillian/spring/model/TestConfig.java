@@ -1,12 +1,12 @@
 package org.jboss.arquillian.spring.model;
 
-import org.jboss.arquillian.spring.annotations.SpringConfiguration;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * <p>Simple class used for testing the enricher.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-@SpringConfiguration("NotExistingApplicationContext.xml")
-public class XmlAnnotatedMissingResourceClass {
+@Configuration
+public class TestConfig {
 }

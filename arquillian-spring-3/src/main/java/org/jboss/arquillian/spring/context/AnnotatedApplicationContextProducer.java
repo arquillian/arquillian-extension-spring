@@ -142,12 +142,12 @@ public class AnnotatedApplicationContextProducer extends AbstractApplicationCont
 
             ctor = getConstructor(applicationContextClass, Class[].class);
 
-            return createInstance(applicationContextClass, ctor, (Object[]) classes);
+            return createInstance(applicationContextClass, ctor, (Object) classes);
         } else if (packages.length > 0) {
 
             ctor = getConstructor(applicationContextClass, String[].class);
 
-            return createInstance(applicationContextClass, ctor, (Object[]) packages);
+            return createInstance(applicationContextClass, ctor, (Object) packages);
         }
 
         throw new RuntimeException("The test: " + testClass.getName()

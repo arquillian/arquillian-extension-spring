@@ -16,14 +16,15 @@
  */
 package org.jboss.arquillian.spring.model;
 
-import org.jboss.arquillian.spring.annotations.SpringConfiguration;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.jboss.arquillian.spring.annotations.SpringAnnotatedConfiguration;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * <p>Simple class used for testing the enricher.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-@SpringConfiguration(contextClass = ClassPathXmlApplicationContext.class)
-public class XmlAnnotatedCustomContextClass {
+@SpringAnnotatedConfiguration(packages = "org.jboss.arquillian.spring.model",
+        contextClass = AnnotationConfigApplicationContext.class)
+public class AnnotatedPackagesCustomContextClass {
 }
