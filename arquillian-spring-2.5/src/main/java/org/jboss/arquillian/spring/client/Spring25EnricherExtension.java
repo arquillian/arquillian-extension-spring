@@ -21,7 +21,7 @@ import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchive
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfigurationProducer;
-import org.jboss.arquillian.spring.dependency.Spring3DependencyResolverProducer;
+import org.jboss.arquillian.spring.dependency.Spring25DependencyResolverProducer;
 import org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher;
 import org.jboss.arquillian.test.spi.TestEnricher;
 
@@ -33,7 +33,7 @@ import org.jboss.arquillian.test.spi.TestEnricher;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class SpringEnricherExtension implements LoadableExtension {
+public class Spring25EnricherExtension implements LoadableExtension {
 
     /**
      * {@inheritDoc}
@@ -43,11 +43,11 @@ public class SpringEnricherExtension implements LoadableExtension {
 
         // loads the extension only if Spring Application Context is in Classpath
         if (Validate.classExists(SpringExtensionConsts.APPLICATION_CONTEXT)) {
-            builder.service(AuxiliaryArchiveAppender.class, SpringEnricherArchiveAppender.class)
+            builder.service(AuxiliaryArchiveAppender.class, Spring25EnricherArchiveAppender.class)
                     .service(ProtocolArchiveProcessor.class, SpringProtocolArchiveProcessor.class)
                     .service(TestEnricher.class, SpringInjectionEnricher.class)
                     .observer(SpringExtensionConfigurationProducer.class)
-                    .observer(Spring3DependencyResolverProducer.class);
+                    .observer(Spring25DependencyResolverProducer.class);
         }
     }
 }

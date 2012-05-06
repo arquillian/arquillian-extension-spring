@@ -21,7 +21,7 @@ import org.jboss.arquillian.container.test.spi.client.deployment.CachedAuxilliar
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
 import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
-import org.jboss.arquillian.spring.container.SpringEnricherRemoteExtension;
+import org.jboss.arquillian.spring.container.Spring25EnricherRemoteExtension;
 import org.jboss.arquillian.spring.context.AbstractApplicationContextProducer;
 import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
 import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
@@ -39,7 +39,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class SpringEnricherArchiveAppender extends CachedAuxilliaryArchiveAppender {
+public class Spring25EnricherArchiveAppender extends CachedAuxilliaryArchiveAppender {
 
     /**
      * {@inheritDoc}
@@ -52,8 +52,8 @@ public class SpringEnricherArchiveAppender extends CachedAuxilliaryArchiveAppend
                         TestScopeApplicationContext.class, XmlApplicationContextProducer.class,
                         WebApplicationContextProducer.class)
                 .addClasses(SpringInjectionEnricher.class, SecurityActions.class)
-                .addClasses(SpringEnricherRemoteExtension.class)
+                .addClasses(Spring25EnricherRemoteExtension.class)
                 .addClasses(SpringExtensionConsts.class)
-                .addAsServiceProvider(RemoteLoadableExtension.class, SpringEnricherRemoteExtension.class);
+                .addAsServiceProvider(RemoteLoadableExtension.class, Spring25EnricherRemoteExtension.class);
     }
 }

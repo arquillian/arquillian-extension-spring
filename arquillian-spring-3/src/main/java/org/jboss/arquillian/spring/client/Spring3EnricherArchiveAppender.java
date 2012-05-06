@@ -22,7 +22,7 @@ import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringAnnotatedConfiguration;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
 import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
-import org.jboss.arquillian.spring.container.SpringEnricherRemoteExtension;
+import org.jboss.arquillian.spring.container.Spring3EnricherRemoteExtension;
 import org.jboss.arquillian.spring.context.AbstractApplicationContextProducer;
 import org.jboss.arquillian.spring.context.AnnotatedApplicationContextProducer;
 import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
@@ -41,7 +41,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class SpringEnricherArchiveAppender extends CachedAuxilliaryArchiveAppender {
+public class Spring3EnricherArchiveAppender extends CachedAuxilliaryArchiveAppender {
 
     /**
      * {@inheritDoc}
@@ -54,8 +54,8 @@ public class SpringEnricherArchiveAppender extends CachedAuxilliaryArchiveAppend
                         TestScopeApplicationContext.class, XmlApplicationContextProducer.class,
                         WebApplicationContextProducer.class, AnnotatedApplicationContextProducer.class)
                 .addClasses(SpringInjectionEnricher.class, SecurityActions.class)
-                .addClasses(SpringEnricherRemoteExtension.class)
+                .addClasses(Spring3EnricherRemoteExtension.class)
                 .addClasses(SpringExtensionConsts.class)
-                .addAsServiceProvider(RemoteLoadableExtension.class, SpringEnricherRemoteExtension.class);
+                .addAsServiceProvider(RemoteLoadableExtension.class, Spring3EnricherRemoteExtension.class);
     }
 }

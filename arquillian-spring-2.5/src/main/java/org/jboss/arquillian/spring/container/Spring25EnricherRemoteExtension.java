@@ -18,7 +18,6 @@ package org.jboss.arquillian.spring.container;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
-import org.jboss.arquillian.spring.context.AnnotatedApplicationContextProducer;
 import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
 import org.jboss.arquillian.spring.context.WebApplicationContextProducer;
 import org.jboss.arquillian.spring.context.XmlApplicationContextProducer;
@@ -31,7 +30,7 @@ import org.jboss.arquillian.test.spi.TestEnricher;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class SpringEnricherRemoteExtension implements RemoteLoadableExtension {
+public class Spring25EnricherRemoteExtension implements RemoteLoadableExtension {
 
     /**
      * {@inheritDoc}
@@ -43,7 +42,6 @@ public class SpringEnricherRemoteExtension implements RemoteLoadableExtension {
         if (Validate.classExists(SpringExtensionConsts.APPLICATION_CONTEXT)) {
             builder.service(TestEnricher.class, SpringInjectionEnricher.class)
                     .observer(XmlApplicationContextProducer.class)
-                    .observer(AnnotatedApplicationContextProducer.class)
                     .observer(WebApplicationContextProducer.class)
                     .observer(ApplicationContextDestroyer.class);
         }

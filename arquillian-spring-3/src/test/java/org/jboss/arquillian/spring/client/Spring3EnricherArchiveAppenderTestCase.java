@@ -19,7 +19,7 @@ package org.jboss.arquillian.spring.client;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
 import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
-import org.jboss.arquillian.spring.container.SpringEnricherRemoteExtension;
+import org.jboss.arquillian.spring.container.Spring3EnricherRemoteExtension;
 import org.jboss.arquillian.spring.context.AnnotatedApplicationContextProducer;
 import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.context.WebApplicationContextProducer;
@@ -38,23 +38,23 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * <p>Tests {@link org.jboss.arquillian.spring.client.SpringEnricherArchiveAppender} class.</p>
+ * <p>Tests {@link Spring3EnricherArchiveAppender} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class SpringEnricherArchiveAppenderTestCase {
+public class Spring3EnricherArchiveAppenderTestCase {
 
     /**
      * <p>Represents the instance of tested class.</p>
      */
-    private SpringEnricherArchiveAppender instance;
+    private Spring3EnricherArchiveAppender instance;
 
     /**
      * <p>Represents the list of required classes.</p>
      */
     private List<Class<?>> REQUIRED_CLASSES = Arrays.asList(SpringConfiguration.class, SpringWebConfiguration.class,
             XmlApplicationContextProducer.class, AnnotatedApplicationContextProducer.class,
-            WebApplicationContextProducer.class, SpringEnricherRemoteExtension.class, SpringInjectionEnricher.class,
+            WebApplicationContextProducer.class, Spring3EnricherRemoteExtension.class, SpringInjectionEnricher.class,
             TestScopeApplicationContext.class, SpringExtensionConsts.class);
 
     /**
@@ -63,11 +63,11 @@ public class SpringEnricherArchiveAppenderTestCase {
     @Before
     public void setUp() {
 
-        instance = new SpringEnricherArchiveAppender();
+        instance = new Spring3EnricherArchiveAppender();
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.client.SpringEnricherArchiveAppender#buildArchive()} method.</p>
+     * <p>Tests the {@link Spring3EnricherArchiveAppender#buildArchive()} method.</p>
      */
     @Test
     public void testBuildArchive() {

@@ -17,6 +17,7 @@
 package org.jboss.arquillian.spring.container;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
+import org.jboss.arquillian.spring.context.AnnotatedApplicationContextProducer;
 import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
 import org.jboss.arquillian.spring.context.WebApplicationContextProducer;
 import org.jboss.arquillian.spring.context.XmlApplicationContextProducer;
@@ -32,16 +33,16 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 /**
- * <p>Tests {@link SpringEnricherRemoteExtension} class.</p>
+ * <p>Tests {@link Spring3EnricherRemoteExtension} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class SpringEnricherRemoteExtensionTestCase {
+public class Spring3EnricherRemoteExtensionTestCase {
 
     /**
      * <p>Represents the instance of tested class.</p>
      */
-    private SpringEnricherRemoteExtension instance;
+    private Spring3EnricherRemoteExtension instance;
 
     /**
      * <p>Sets up the test environment.</p>
@@ -49,11 +50,11 @@ public class SpringEnricherRemoteExtensionTestCase {
     @Before
     public void setUp() {
 
-        instance = new SpringEnricherRemoteExtension();
+        instance = new Spring3EnricherRemoteExtension();
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.container.SpringEnricherRemoteExtension#register(LoadableExtension.ExtensionBuilder)}
+     * <p>Tests the {@link Spring3EnricherRemoteExtension#register(org.jboss.arquillian.core.spi.LoadableExtension.ExtensionBuilder)}
      * method.</p>
      */
     @Test
@@ -67,6 +68,7 @@ public class SpringEnricherRemoteExtensionTestCase {
 
         verify(mockExtensionBuilder).service(TestEnricher.class, SpringInjectionEnricher.class);
         verify(mockExtensionBuilder).observer(XmlApplicationContextProducer.class);
+        verify(mockExtensionBuilder).observer(AnnotatedApplicationContextProducer.class);
         verify(mockExtensionBuilder).observer(WebApplicationContextProducer.class);
         verify(mockExtensionBuilder).observer(ApplicationContextDestroyer.class);
 
