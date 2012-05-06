@@ -16,12 +16,20 @@
  */
 package org.jboss.arquillian.spring.testenricher;
 
+import org.jboss.arquillian.core.api.Instance;
+import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
+import org.jboss.arquillian.spring.model.StrategyTest;
+import org.jboss.arquillian.spring.utils.TestReflectionHelper;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.lang.reflect.Method;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * <p>Tests {@link org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher} class.</p>
@@ -45,17 +53,34 @@ public class SpringInjectionEnricherTestCase {
     }
 
     /**
-     * <p>Tests {@link org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher#enrich(Object)} method.</p>
+     * <p>Tests {@link SpringInjectionEnricher#enrich(Object)} method.</p>
+     *
+     * @throws Exception if any error occurs
      */
     @Test
-    public void testEnrich() {
+    public void testEnrich() throws Exception {
 
-        // TODO implement
+        ClassPathXmlApplicationContext applicationContext =
+                new ClassPathXmlApplicationContext("testApplicationContext.xml");
+
+        TestScopeApplicationContext testScopeApplicationContext =
+                new TestScopeApplicationContext(applicationContext, true);
+
+        Instance<TestScopeApplicationContext> mockApplicationContextInstance = mock(Instance.class);
+        TestReflectionHelper.setFieldValue(instance, "testApplicationContext", mockApplicationContextInstance);
+        when(mockApplicationContextInstance.get()).thenReturn(testScopeApplicationContext);
+
+        TestReflectionHelper.setFieldValue(instance, "testApplicationContext", mockApplicationContextInstance);
+
+        StrategyTest strategyTest = new StrategyTest();
+
+        instance.enrich(strategyTest);
+
+        assertNotNull("The bean hasn't been autowired.", strategyTest.getStrategy());
     }
 
     /**
-     * <p>Tests {@link org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher#resolve(java.lang.reflect.Method)}
-     * method.</p>
+     * <p>Tests {@link SpringInjectionEnricher#resolve(java.lang.reflect.Method)} method.</p>
      *
      * @throws Exception if any error occurs
      */

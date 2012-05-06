@@ -60,7 +60,7 @@ public class SpringProtocolArchiveProcessorTestCase {
      * deployment is a JAR archive.</p>
      */
     @Test
-    @Ignore
+    @Ignore("TODO inject the configuration")
     public void testProcessJar() {
 
         JavaArchive deploymentArchive = ShrinkWrap.create(JavaArchive.class, "deployment.jar");
@@ -81,7 +81,7 @@ public class SpringProtocolArchiveProcessorTestCase {
      * deployment is a WAR archive.</p>
      */
     @Test
-    @Ignore
+    @Ignore("TODO inject the configuration")
     public void testProcessWar() {
 
         WebArchive deploymentArchive = ShrinkWrap.create(WebArchive.class, "deployment.war");
