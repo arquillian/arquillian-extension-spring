@@ -91,7 +91,7 @@ public class XmlApplicationContextProducer extends AbstractApplicationContextPro
         try {
             Constructor<T> ctor = applicationContextClass.getConstructor(String[].class);
 
-            return (T) ctor.newInstance(new Object[]{locations});
+            return (T) ctor.newInstance((Object)locations);
         } catch (NoSuchMethodException e) {
 
             throw new RuntimeException("Could not create instance of " + applicationContextClass.getName()
