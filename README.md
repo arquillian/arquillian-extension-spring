@@ -429,6 +429,5 @@ public class EmployeeControllerWebInitTestCase {
 
 ## TODO
 
-* Unit tests
 * Showcase and working examples
 * Arquillian Persistance Extension integration - wrapper for Spring transaction manager

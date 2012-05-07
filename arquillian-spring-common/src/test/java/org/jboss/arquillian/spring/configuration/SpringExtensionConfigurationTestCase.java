@@ -16,7 +16,14 @@
  */
 package org.jboss.arquillian.spring.configuration;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * <p>Tests {@link SpringExtensionConfiguration} class.</p>
@@ -26,10 +33,110 @@ import org.junit.Test;
 public class SpringExtensionConfigurationTestCase {
 
     /**
-     * <p>Tests method.</p>
+     * <p>Represents the instance of tested class.</p>
+     */
+    private SpringExtensionConfiguration instance;
+
+    /**
+     * <p>Represents the instance of {@link org.springframework.context.ApplicationContext}.</p>
+     */
+    private ApplicationContext applicationContext;
+
+    /**
+     * <p>Sets up the test environment.</p>
+     */
+    @Before
+    public void setUp() {
+
+        instance = new SpringExtensionConfiguration();
+    }
+
+    /**
+     * <p>Tests {@link SpringExtensionConfiguration#SpringExtensionConfiguration()} constructor.</p>
      */
     @Test
-    public void test() {
-        // TODO implement
+    public void testCtor() {
+
+        instance = new SpringExtensionConfiguration();
+    }
+
+    /**
+     * <p>Tests both {@link SpringExtensionConfiguration#isAutoPackaging()} and {@link
+     * SpringExtensionConfiguration#setAutoPackaging(boolean)}  method.</p>
+     */
+    @Test
+    public void testIsAutoPackaging() {
+
+        boolean value = false;
+
+        assertTrue("The default value is incorrect.", instance.isAutoPackaging());
+
+        instance.setAutoPackaging(value);
+
+        assertEquals("Invalid value set.", value, instance.isAutoPackaging());
+    }
+
+    /**
+     * <p>Tests both {@link SpringExtensionConfiguration#isIncludeSnowdrop()} and {@link
+     * SpringExtensionConfiguration#setIncludeSnowdrop(boolean)}  method.</p>
+     */
+    @Test
+    public void testIsIncludeSnowdrop() {
+
+        boolean value = true;
+
+        assertFalse("The default value is incorrect.", instance.isIncludeSnowdrop());
+
+        instance.setIncludeSnowdrop(value);
+
+        assertEquals("Invalid value set.", value, instance.isIncludeSnowdrop());
+    }
+
+    /**
+     * <p>Tests both {@link SpringExtensionConfiguration#getSpringVersion()} and {@link
+     * SpringExtensionConfiguration#setSpringVersion(String)}  method.</p>
+     */
+    @Test
+    public void testGetSpringVersion() {
+
+        String version = "2.5.5";
+
+        assertNull("The default value is incorrect.", instance.getSpringVersion());
+
+        instance.setSpringVersion(version);
+
+        assertEquals("Invalid value set.", version, instance.getSpringVersion());
+    }
+
+    /**
+     * <p>Tests both {@link SpringExtensionConfiguration#getSpringVersion()} and {@link
+     * SpringExtensionConfiguration#setCglibVersion(String)} method.</p>
+     */
+    @Test
+    public void testGetCglibVersion() {
+
+        String version = "2.2";
+
+        assertNull("The default value is incorrect.", instance.getCglibVersion());
+
+        instance.setCglibVersion(version);
+
+        assertEquals("Invalid value set.", version, instance.getCglibVersion());
+    }
+
+    /**
+     * <p>Tests both {@link SpringExtensionConfiguration#getSnowdropVersion()} and {@link
+     * SpringExtensionConfiguration#setSnowdropVersion(String)} method.</p>
+     */
+    @Test
+    public void testGetSnowdropVersion() {
+
+        String version = "2.0.3";
+
+        assertNull("The default value is incorrect.", instance.getSnowdropVersion());
+
+        instance.setSnowdropVersion(version);
+
+        assertEquals("Invalid value set.", version, instance.getSnowdropVersion());
     }
 }

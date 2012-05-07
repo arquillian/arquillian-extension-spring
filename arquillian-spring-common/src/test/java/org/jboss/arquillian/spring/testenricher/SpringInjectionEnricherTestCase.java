@@ -22,7 +22,6 @@ import org.jboss.arquillian.spring.model.StrategyTest;
 import org.jboss.arquillian.spring.utils.TestReflectionHelper;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.lang.reflect.Method;

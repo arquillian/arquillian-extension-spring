@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
@@ -79,6 +80,8 @@ public class TestScopeApplicationContextTestCase {
     public void testGetApplicationContext() {
 
         instance = new TestScopeApplicationContext(applicationContext, false);
+
+        assertNotNull("The applicationContext was null.", instance.getApplicationContext());
     }
 
     /**
