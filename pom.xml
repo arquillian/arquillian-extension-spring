@@ -37,18 +37,17 @@
         <!-- Arquillian version -->
         <version.arquillian>1.0.0.Final</version.arquillian>
 
-        <!-- External Deps -->
+        <!-- Arquillian Core dependencies -->
+        <version.javax.inject_javax.inject>1</version.javax.inject_javax.inject>
+
+        <!-- External Dependencies -->
         <version.shrinkwrap_shrinkwrap>1.0.0-cr-3</version.shrinkwrap_shrinkwrap>
         <version.shrinkwrap_resolver>1.0.0-beta-5</version.shrinkwrap_resolver>
         <version.shrinkwrap_descriptors>1.1.0-beta-1</version.shrinkwrap_descriptors>
 
-        <!-- Arquillian Core common Deps, Test related -->
-        <version.javax.inject_javax.inject>1</version.javax.inject_javax.inject>
-        <version.jboss_logging>2.1.0.GA</version.jboss_logging>
-        <version.jetty_jetty>6.1.9</version.jetty_jetty>
+        <!-- Test Dependencies -->
         <version.junit_junit>4.8.1</version.junit_junit>
         <version.mockito_all>1.8.3</version.mockito_all>
-        <version.testng_testng>5.14.6</version.testng_testng>
 
         <!-- Spring Framework dependencies -->
         <version.spring_framework_2_5>2.5.6</version.spring_framework_2_5>
@@ -133,19 +132,7 @@
                 <version>${version.junit_junit}</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>${version.testng_testng}</version>
-                <scope>test</scope>
-            </dependency>
 
-            <dependency>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-embedded</artifactId>
-                <version>${version.jetty_jetty}</version>
-                <scope>test</scope>
-            </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
@@ -160,16 +147,9 @@
             </dependency>
 
             <dependency>
-                <groupId>org.jboss.javaee</groupId>
-                <artifactId>jboss-servlet-api</artifactId>
-                <version>2.5.0.GA</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.jboss.spec</groupId>
-                <artifactId>jboss-javaee-6.0</artifactId>
-                <version>1.0.0.Final</version>
-                <type>pom</type>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>2.4</version>
             </dependency>
 
         </dependencies>
