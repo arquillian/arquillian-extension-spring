@@ -1,9 +1,6 @@
-
-/.idea
-/arquillian-spring-2.5/arquillian-spring-2.5.iml
-/arquillian-spring-2.5/target
-/arquillian-spring-3/target
-/arquillian-spring-common/target
-/arquillian-spring-3/arquillian-spring-3.iml
-/arquillian-spring-common/arquillian-spring-common.iml
-/arquillian-spring-parent.iml
+.classpath
+.idea/
+.project
+.settings/
+target/
+*.iml
