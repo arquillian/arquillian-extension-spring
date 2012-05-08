@@ -34,17 +34,19 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- servlet-api not needed since it comes with the container profile -->
+        <!--
         <dependency>
             <groupId>org.jboss.javaee</groupId>
             <artifactId>jboss-servlet-api</artifactId>
             <version>2.5.0.GA</version>
             <scope>provided</scope>
         </dependency>
+        -->
 
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-spring-2.5</artifactId>
-            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -72,13 +74,11 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -93,7 +93,7 @@
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
-                    <artifactId>jboss-javaee-6.0</artifactId>
+                    <artifactId>jboss-javaee-web-6.0</artifactId>
                     <type>pom</type>
                     <scope>provided</scope>
                 </dependency>
@@ -144,17 +144,6 @@
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
                     <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.jboss.arquillian.protocol</groupId>
-                            <artifactId>arquillian-protocol-servlet</artifactId>
-                        </exclusion>
-                    </exclusions>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.jboss.arquillian.protocol</groupId>
-                    <artifactId>arquillian-protocol-servlet</artifactId>
                     <scope>test</scope>
                 </dependency>
                 <dependency>
