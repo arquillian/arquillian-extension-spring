@@ -430,4 +430,4 @@ public class EmployeeControllerWebInitTestCase {
 ## TODO
 
 * Showcase and working examples
-* Arquillian Persistance Extension integration - wrapper for Spring transaction manager
+* Arquillian Persistance Extension integration (https://community.jboss.org/message/733268#733268)
