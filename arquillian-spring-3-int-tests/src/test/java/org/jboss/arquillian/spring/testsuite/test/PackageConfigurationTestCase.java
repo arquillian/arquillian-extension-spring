@@ -38,7 +38,12 @@ import static org.junit.Assert.assertNotNull;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
 @RunWith(Arquillian.class)
-@SpringAnnotatedConfiguration(packages = {"org.jboss.arquillian.spring.testsuite"})
+// NOTE We need to be specific about the packages we want scanned since
+// an embedded container will see classes outside of ShrinkWrap archive
+@SpringAnnotatedConfiguration(packages = {
+    "org.jboss.arquillian.spring.testsuite.beans.repository",
+    "org.jboss.arquillian.spring.testsuite.beans.service"
+})
 public class PackageConfigurationTestCase {
 
     /**
