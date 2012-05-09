@@ -52,10 +52,12 @@ public class MavenDependencyBuilder {
      *
      * @param artifactName    the artifact name
      * @param artifactVersion the artifact version
+     * @param defaultVersion  the artifact default version
+     * @param exclusions      the names of the artifact which need to excluded during artifact resolving
      */
-    public void addDependency(String artifactName, String artifactVersion, String defaultVersion) {
+    public void addDependency(String artifactName, String artifactVersion, String defaultVersion, String... exclusions) {
 
-        mergeDependencies(resolveArtifact(artifactName, artifactVersion, defaultVersion));
+        mergeDependencies(resolveArtifact(artifactName, artifactVersion, defaultVersion, exclusions));
     }
 
     /**
@@ -94,7 +96,7 @@ public class MavenDependencyBuilder {
      *
      * @return the resolved artifacts
      */
-    private File[] resolveArtifact(String artifact, String version, String defaultVersion) {
+    private File[] resolveArtifact(String artifact, String version, String defaultVersion, String... exclusions) {
         String artifactVersion;
 
         if (version != null && version.length() > 0) {
@@ -103,7 +105,7 @@ public class MavenDependencyBuilder {
             artifactVersion = defaultVersion;
         }
 
-        return resolveArtifact(artifact, artifactVersion);
+        return resolveArtifact(artifact, artifactVersion, exclusions);
     }
 
     /**
@@ -114,12 +116,12 @@ public class MavenDependencyBuilder {
      *
      * @return the resolved files
      */
-    private File[] resolveArtifact(String artifact, String version) {
+    private File[] resolveArtifact(String artifact, String version, String... exclusions) {
         File[] artifacts = null;
         try {
-            artifacts = resolveArtifact(artifact);
+            artifacts = resolveArtifact(artifact, exclusions);
         } catch (Exception e) {
-            artifacts = resolveArtifact(artifact + ":" + version);
+            artifacts = resolveArtifact(artifact + ":" + version, exclusions);
         }
         return artifacts;
     }
@@ -131,7 +133,7 @@ public class MavenDependencyBuilder {
      *
      * @return the resolved files
      */
-    private File[] resolveArtifact(String artifact) {
+    private File[] resolveArtifact(String artifact, String... exclusions) {
 
         MavenDependencyResolver mvnDependencyResolver = DependencyResolvers.use(MavenDependencyResolver.class);
 
@@ -139,7 +141,7 @@ public class MavenDependencyBuilder {
             mvnDependencyResolver.loadMetadataFromPom(SpringExtensionConsts.POM_XML);
         }
 
-        return mvnDependencyResolver.artifacts(artifact).resolveAsFiles();
+        return mvnDependencyResolver.artifacts(artifact).exclusions(exclusions).resolveAsFiles();
     }
 
     /**

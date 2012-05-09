@@ -61,7 +61,8 @@ public class Spring3DependencyResolver extends AbstractDependencyResolver {
         if (getConfiguration().isIncludeSnowdrop()) {
             // adds the snowdrop for testing within jboss
             mavenDependencyBuilder.addDependency(Spring3ExtensionConsts.SNOWDROP_ARTIFACT_NAME,
-                    getConfiguration().getSnowdropVersion(), Spring3ExtensionConsts.SNOWDROP_ARTIFACT_VERSION);
+                    getConfiguration().getSnowdropVersion(), Spring3ExtensionConsts.SNOWDROP_ARTIFACT_VERSION,
+                    Spring3ExtensionConsts.SNOWDROP_EXCLUDED_ARTIFACT);
         }
 
         // returns the resolved files

@@ -58,7 +58,8 @@ public class Spring25DependencyResolver extends AbstractDependencyResolver {
         if (getConfiguration().isIncludeSnowdrop()) {
             // adds the snowdrop for testing within jboss
             mavenDependencyBuilder.addDependency(Spring25ExtensionConsts.SNOWDROP_ARTIFACT_NAME,
-                    getConfiguration().getSnowdropVersion(), Spring25ExtensionConsts.SNOWDROP_ARTIFACT_VERSION);
+                    getConfiguration().getSnowdropVersion(), Spring25ExtensionConsts.SNOWDROP_ARTIFACT_VERSION,
+                    Spring25ExtensionConsts.SNOWDROP_EXCLUDED_ARTIFACT);
         }
 
         // returns the resolved files
