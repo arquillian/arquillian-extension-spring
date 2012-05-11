@@ -11,10 +11,10 @@
 
         <!-- The version of Spring artifact, will be used for auto package the spring-context and spring-web,
          default is 2.5.6 -->
-        <property name="springVersion">2.5.6</property>
+        <!--<property name="springVersion">2.5.6</property>-->
 
         <!-- Whether to auto package the dependencies, default is true -->
-        <property name="autoPackage">true</property>
+        <!--<property name="autoPackage">true</property>-->
     </extension>
 
     <container qualifier="jbossas-managed" default="true">
