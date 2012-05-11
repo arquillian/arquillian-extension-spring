@@ -21,7 +21,6 @@ import org.jboss.arquillian.spring.context.AnnotatedApplicationContextProducer;
 import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
 import org.jboss.arquillian.spring.context.WebApplicationContextProducer;
 import org.jboss.arquillian.spring.context.XmlApplicationContextProducer;
-import org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,6 +66,7 @@ public class Spring3EnricherRemoteExtensionTestCase {
         instance.register(mockExtensionBuilder);
 
         verify(mockExtensionBuilder).service(TestEnricher.class, SpringInjectionEnricher.class);
+        verify(mockExtensionBuilder).observer(SpringExtensionRemoteConfigurationProducer.class);
         verify(mockExtensionBuilder).observer(XmlApplicationContextProducer.class);
         verify(mockExtensionBuilder).observer(AnnotatedApplicationContextProducer.class);
         verify(mockExtensionBuilder).observer(WebApplicationContextProducer.class);

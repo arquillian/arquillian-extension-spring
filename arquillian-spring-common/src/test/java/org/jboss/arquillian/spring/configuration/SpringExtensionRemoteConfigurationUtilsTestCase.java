@@ -14,33 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.spring.annotations;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+package org.jboss.arquillian.spring.configuration;
 
 /**
- * <p>Annotation used for accessing web application context.</p>
+ * <p>Tests {@link SpringExtensionRemoteConfigurationUtils} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
- * @version $Revision: $
  */
-@Documented
-@Retention(RUNTIME)
-@Target(TYPE)
-@Inherited
-public @interface SpringWebConfiguration {
+public class SpringExtensionRemoteConfigurationUtilsTestCase {
 
     /**
-     * <p>Represents the name of the servlet which the {@link org.springframework.context.ApplicationContext} will be
-     * used.</p>
-     *
-     * <p>Not specifying the servlet name will cause the extension to use the Root Web Application Context.</p>
+     * <p>Represents the instance of tested class.</p>
      */
-    String servletName() default "";
+    private SpringExtensionRemoteConfigurationUtils instance;
+
+    /**
+     * <p>Tests {@link SpringExtensionRemoteConfigurationUtils#toString(SpringExtensionRemoteConfiguration)} method.</p>
+     */
+    public void testToString() {
+
+        // TODO implement
+    }
+
+    /**
+     * <p>Tests {@link SpringExtensionRemoteConfigurationUtils#loadResource(java.io.InputStream)} method.</p>
+     */
+    public void testLoadResource() {
+
+        // TODO implement
+    }
 }

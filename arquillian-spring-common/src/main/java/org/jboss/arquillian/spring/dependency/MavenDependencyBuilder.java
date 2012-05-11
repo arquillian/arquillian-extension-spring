@@ -93,6 +93,7 @@ public class MavenDependencyBuilder {
      * @param artifact       the artifact name
      * @param version        the artifact version
      * @param defaultVersion the default artifact version to be used
+     * @param exclusions     the names of the artifact which need to excluded during artifact resolving
      *
      * @return the resolved artifacts
      */
@@ -111,8 +112,9 @@ public class MavenDependencyBuilder {
     /**
      * <p>Resolves the given artifact in specified version using maven.</p>
      *
-     * @param artifact the artifact name
-     * @param version  the artifact version
+     * @param artifact   the artifact name
+     * @param version    the artifact version
+     * @param exclusions the names of the artifact which need to excluded during artifact resolving
      *
      * @return the resolved files
      */
@@ -129,7 +131,8 @@ public class MavenDependencyBuilder {
     /**
      * <p>Resolves the given artifact in specified version using maven.</p>
      *
-     * @param artifact the artifact name
+     * @param artifact   the artifact name
+     * @param exclusions the names of the artifact which need to excluded during artifact resolving
      *
      * @return the resolved files
      */

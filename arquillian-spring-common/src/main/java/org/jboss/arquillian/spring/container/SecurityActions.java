@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.spring.testenricher;
+package org.jboss.arquillian.spring.container;
 
+import java.io.InputStream;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 
@@ -28,7 +29,7 @@ import java.security.PrivilegedAction;
 public final class SecurityActions {
 
     /**
-     * <p>Creates new instance of {@link SecurityActions}.</p>
+     * <p>Creates new instance of {@link org.jboss.arquillian.spring.container.SecurityActions}.</p>
      *
      * <p>Private constructor prevents from instantiation outside this class.</p>
      */
@@ -43,13 +44,29 @@ public final class SecurityActions {
      *
      * @return true if the given class is present in the class path, false otheriwse
      */
-    static boolean isClassPresent(String name) {
+    public static boolean isClassPresent(String name) {
         try {
             ClassLoader classLoader = getThreadContextClassLoader();
             classLoader.loadClass(name);
             return true;
         } catch (ClassNotFoundException e) {
             return false;
+        }
+    }
+    
+    public static InputStream getResource(String resourceName) {
+
+        return getThreadContextClassLoader().getResourceAsStream(resourceName);
+    }
+
+    public static <T> Class<T> classForName(String name) {
+
+        try {
+            ClassLoader classLoader = getThreadContextClassLoader();
+             return (Class<T>) classLoader.loadClass(name);
+        } catch (ClassNotFoundException e) {
+            
+            throw new RuntimeException("Could not create load class " + name, e);
         }
     }
 

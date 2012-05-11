@@ -17,22 +17,22 @@
 package org.jboss.arquillian.spring.client;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.container.test.spi.client.deployment.CachedAuxilliaryArchiveAppender;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringAnnotatedConfiguration;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
 import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfigurationUtils;
+import org.jboss.arquillian.spring.container.SecurityActions;
 import org.jboss.arquillian.spring.container.Spring3EnricherRemoteExtension;
+import org.jboss.arquillian.spring.container.SpringExtensionRemoteConfigurationProducer;
+import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
 import org.jboss.arquillian.spring.context.AbstractApplicationContextProducer;
 import org.jboss.arquillian.spring.context.AnnotatedApplicationContextProducer;
 import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
 import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.context.WebApplicationContextProducer;
 import org.jboss.arquillian.spring.context.XmlApplicationContextProducer;
-import org.jboss.arquillian.spring.testenricher.SecurityActions;
-import org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher;
-import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 /**
@@ -41,19 +41,21 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class Spring3EnricherArchiveAppender extends CachedAuxilliaryArchiveAppender {
+public class Spring3EnricherArchiveAppender extends SpringEnricherArchiveAppender {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected Archive<?> buildArchive() {
-        return ShrinkWrap.create(JavaArchive.class, "arquillian-testenricher-spring.jar")
-                .addClasses(SpringConfiguration.class, SpringWebConfiguration.class, SpringAnnotatedConfiguration.class)
+    protected void appendResources(JavaArchive archive) {
+
+        archive.addClasses(SpringConfiguration.class, SpringWebConfiguration.class, SpringAnnotatedConfiguration.class)
                 .addClasses(AbstractApplicationContextProducer.class, ApplicationContextDestroyer.class,
                         TestScopeApplicationContext.class, XmlApplicationContextProducer.class,
                         WebApplicationContextProducer.class, AnnotatedApplicationContextProducer.class)
-                .addClasses(SpringInjectionEnricher.class, SecurityActions.class)
+                .addClasses(SpringInjectionEnricher.class, SecurityActions.class,
+                        SpringExtensionRemoteConfigurationProducer.class)
+                .addClasses(SpringExtensionRemoteConfiguration.class, SpringExtensionRemoteConfigurationUtils.class)
                 .addClasses(Spring3EnricherRemoteExtension.class)
                 .addClasses(SpringExtensionConsts.class)
                 .addAsServiceProvider(RemoteLoadableExtension.class, Spring3EnricherRemoteExtension.class);

@@ -34,7 +34,7 @@ import static org.junit.Assert.assertNotNull;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
 @RunWith(Arquillian.class)
-@SpringConfiguration(value = {"applicationContext.xml"}, contextClass = VFSClassPathXmlApplicationContext.class)
+@SpringConfiguration(value = {"applicationContext.xml"})
 public class ApplicationContextTestCase {
 
     /**

@@ -21,6 +21,7 @@ import org.jboss.arquillian.spring.model.PlainClass;
 import org.jboss.arquillian.spring.utils.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
@@ -36,6 +37,7 @@ import static org.mockito.Mockito.when;
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
+@Ignore
 public class AbstractApplicationContextProducerTestCase {
 
     /**

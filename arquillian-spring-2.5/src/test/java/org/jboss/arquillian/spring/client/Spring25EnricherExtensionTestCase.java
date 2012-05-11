@@ -20,8 +20,8 @@ import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiv
 import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfigurationProducer;
+import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
 import org.jboss.arquillian.spring.dependency.Spring25DependencyResolverProducer;
-import org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,8 +54,7 @@ public class Spring25EnricherExtensionTestCase {
     }
 
     /**
-     * <p>Tests the {@link Spring25EnricherExtension#register(LoadableExtension.ExtensionBuilder)}
-     * method.</p>
+     * <p>Tests the {@link Spring25EnricherExtension#register(LoadableExtension.ExtensionBuilder)} method.</p>
      */
     @Test
     public void testRegister() {

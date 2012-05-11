@@ -21,7 +21,7 @@ import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
 import java.io.File;
 
 /**
- * <p>Dependency resolver.</p>
+ * <p>Base class for all dependency resolvers.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $

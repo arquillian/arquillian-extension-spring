@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.spring.testenricher;
+package org.jboss.arquillian.spring.container;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * <p>Tests {@link org.jboss.arquillian.spring.testenricher.SpringInjectionEnricher} class.</p>
+ * <p>Tests {@link SpringInjectionEnricher} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */

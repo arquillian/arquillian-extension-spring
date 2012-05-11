@@ -18,7 +18,6 @@ package org.jboss.arquillian.spring.configuration;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -36,11 +35,6 @@ public class SpringExtensionConfigurationTestCase {
      * <p>Represents the instance of tested class.</p>
      */
     private SpringExtensionConfiguration instance;
-
-    /**
-     * <p>Represents the instance of {@link org.springframework.context.ApplicationContext}.</p>
-     */
-    private ApplicationContext applicationContext;
 
     /**
      * <p>Sets up the test environment.</p>
@@ -138,5 +132,37 @@ public class SpringExtensionConfigurationTestCase {
         instance.setSnowdropVersion(version);
 
         assertEquals("Invalid value set.", version, instance.getSnowdropVersion());
+    }
+
+    /**
+     * <p>Tests both {@link SpringExtensionConfiguration#getCustomContextClass()} ()} and {@link
+     * SpringExtensionConfiguration#setCustomContextClass(String)} method.</p>
+     */
+    @Test
+    public void testGetCustomContextClass() {
+
+        String className = "org.springframework.context.ApplicationContext";
+
+        assertNull("The default value is incorrect.", instance.getCustomContextClass());
+
+        instance.setCustomContextClass(className);
+
+        assertEquals("Invalid value set.", className, instance.getCustomContextClass());
+    }
+
+    /**
+     * <p>Tests both {@link SpringExtensionConfiguration#getCustomAnnotatedContextClass()} and {@link
+     * SpringExtensionConfiguration#setCustomAnnotatedContextClass(String)} method.</p>
+     */
+    @Test
+    public void testGetCustomAnnotatedContextClass() {
+
+        String className = "org.springframework.context.annotation.AnnotationConfigApplicationContext";
+
+        assertNull("The default value is incorrect.", instance.getCustomAnnotatedContextClass());
+
+        instance.setCustomAnnotatedContextClass(className);
+
+        assertEquals("Invalid value set.", className, instance.getCustomAnnotatedContextClass());
     }
 }

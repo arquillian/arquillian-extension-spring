@@ -112,21 +112,13 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
     }
 
     /**
-     * <p>Returns whether maven is being used in project.</p>
-     *
-     * @return true if maven is being used in project, false otherwise
-     */
-    private boolean isMavenUsed() {
-        return new File(SpringExtensionConsts.POM_XML).exists();
-    }
-
-    /**
      * <p>Retrieves the extension configuration</p>
      *
      * @return the extension configuration
      */
     public SpringExtensionConfiguration getConfiguration() {
-        return configuration != null ? configuration.get() : null;
+
+        return configuration.get();
     }
 
     /**

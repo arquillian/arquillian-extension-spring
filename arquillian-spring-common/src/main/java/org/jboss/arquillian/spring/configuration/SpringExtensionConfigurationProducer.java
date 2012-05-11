@@ -56,7 +56,7 @@ public class SpringExtensionConfigurationProducer {
      *
      * @param beforeSuiteEvent the event fired before execution of the test suite
      */
-    public void configure(@Observes(precedence = SpringExtensionConsts.INIT_PRECEDENCE) BeforeSuite beforeSuiteEvent) {
+    public void initConfiguration(@Observes(precedence = SpringExtensionConsts.INIT_PRECEDENCE) BeforeSuite beforeSuiteEvent) {
 
         SpringExtensionConfiguration config = getConfiguration(descriptor);
 
@@ -85,6 +85,11 @@ public class SpringExtensionConfigurationProducer {
                 SpringExtensionConsts.CONFIGURATION_INCLUDE_SNOWDROP, false));
         result.setSnowdropVersion(getStringProperty(properties,
                 SpringExtensionConsts.CONFIGURATION_SNOWDROP_VERSION, null));
+        
+        result.setCustomContextClass(getStringProperty(properties, 
+                SpringExtensionConsts.CONFIGURATION_CUSTOM_CONTEXT_CLASS, ""));
+        result.setCustomAnnotatedContextClass(getStringProperty(properties,
+                SpringExtensionConsts.CONFIGURATION_CUSTOM_ANNOTATED_CONTEXT_CLASS, ""));
 
         return result;
     }

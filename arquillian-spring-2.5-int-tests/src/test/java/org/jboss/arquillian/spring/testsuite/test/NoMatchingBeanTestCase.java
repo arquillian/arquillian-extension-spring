@@ -35,7 +35,7 @@ import static org.junit.Assert.assertNull;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
 @RunWith(Arquillian.class)
-@SpringConfiguration(value = {"empty.xml"}, contextClass = VFSClassPathXmlApplicationContext.class)
+@SpringConfiguration(value = {"empty.xml"})
 public class NoMatchingBeanTestCase {
 
     /**

@@ -38,12 +38,12 @@ import java.io.File;
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class Deployments {
+public final class Deployments {
 
     /**
      * <p>Creates new instance of {@link Deployments} class.</p>
      *
-     * <p>Private constructor prevents from instantiation.</p>
+     * <p>Private constructor prevents from instantiation outside this class.</p>
      */
     private Deployments() {
         // empty constructor

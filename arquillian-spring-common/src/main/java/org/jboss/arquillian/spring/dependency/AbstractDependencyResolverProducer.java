@@ -26,7 +26,7 @@ import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
 import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 
 /**
- * <p>An abstract producer that is responsible for creating instances of {@link AbstractDependencyResolver}.</p>
+ * <p>An abstract producer that is responsible for creating instances of concrete {@link AbstractDependencyResolver}.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $

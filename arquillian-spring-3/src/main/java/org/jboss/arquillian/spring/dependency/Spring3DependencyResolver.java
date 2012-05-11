@@ -59,7 +59,7 @@ public class Spring3DependencyResolver extends AbstractDependencyResolver {
                 getConfiguration().getCglibVersion(), Spring3ExtensionConsts.CGLIB_ARTIFACT_VERSION);
 
         if (getConfiguration().isIncludeSnowdrop()) {
-            // adds the snowdrop for testing within jboss
+            // adds the snowdrop for testing within JBoss AS
             mavenDependencyBuilder.addDependency(Spring3ExtensionConsts.SNOWDROP_ARTIFACT_NAME,
                     getConfiguration().getSnowdropVersion(), Spring3ExtensionConsts.SNOWDROP_ARTIFACT_VERSION,
                     Spring3ExtensionConsts.SNOWDROP_EXCLUDED_ARTIFACT);

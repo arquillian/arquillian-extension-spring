@@ -21,6 +21,9 @@
 
         <!-- The version of the Snowdrop artifact, default is 2.0.3.Final -->
         <property name="snowdropVersion">2.0.3.Final</property>
+
+        <!-- The custom context class to use -->
+        <property name="customContextClass">org.jboss.spring.vfs.context.VFSClassPathXmlApplicationContext</property>
     </extension>
 
     <container qualifier="jbossas-managed" default="true">

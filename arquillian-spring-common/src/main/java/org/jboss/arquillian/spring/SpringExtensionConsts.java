@@ -86,6 +86,16 @@ public final class SpringExtensionConsts {
     public static final String CONFIGURATION_SNOWDROP_VERSION = "snowdropVersion";
 
     /**
+     * <p>Represents the extension configuration property name.</p>
+     */
+    public static final String CONFIGURATION_CUSTOM_CONTEXT_CLASS = "customContextClass";
+
+    /**
+     * <p>Represents the extension configuration property name.</p>
+     */
+    public static final String CONFIGURATION_CUSTOM_ANNOTATED_CONTEXT_CLASS = "customAnnotatedContextClass";
+
+    /**
      * <p>Represents the default precedence of observer class.</p>
      */
     public static final int INIT_PRECEDENCE = 2;

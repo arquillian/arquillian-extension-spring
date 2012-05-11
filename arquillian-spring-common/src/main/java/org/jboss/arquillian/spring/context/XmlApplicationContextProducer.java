@@ -16,8 +16,10 @@
  */
 package org.jboss.arquillian.spring.context;
 
+import org.jboss.arquillian.core.spi.Validate;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
+import org.jboss.arquillian.spring.container.SecurityActions;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -26,8 +28,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- * <p>The {@link AbstractApplicationContextProducer} that creates the {@link org.springframework.context.support.ClassPathXmlApplicationContext}
- * instance using xml files.</p>
+ * <p>The {@link AbstractApplicationContextProducer} that creates the {@link ClassPathXmlApplicationContext} with
+ * configuration loaded from locations specified by the test..</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -68,13 +70,34 @@ public class XmlApplicationContextProducer extends AbstractApplicationContextPro
             locations = springConfiguration.value();
         }
 
-        Class<? extends ApplicationContext> applicationContextClass = ClassPathXmlApplicationContext.class;
+        Class<? extends ApplicationContext> applicationContextClass = getCustomContextClass();
         if (springConfiguration.contextClass() != ApplicationContext.class) {
 
             applicationContextClass = springConfiguration.contextClass();
         }
 
+        // if the application context class was not specified, then use the default
+        if (applicationContextClass == null) {
+            applicationContextClass = ClassPathXmlApplicationContext.class;
+        }
+
         return createInstance(applicationContextClass, locations);
+    }
+
+    /**
+     * <p>Retrieves the custom context class.</p>
+     *
+     * @return the custom context class
+     */
+    private Class<? extends ApplicationContext> getCustomContextClass() {
+
+        if (getRemoteConfiguration().getCustomContextClass() != null
+                && getRemoteConfiguration().getCustomContextClass().trim().length() > 0) {
+
+            return SecurityActions.classForName(getRemoteConfiguration().getCustomContextClass());
+        }
+
+        return null;
     }
 
     /**
@@ -91,7 +114,7 @@ public class XmlApplicationContextProducer extends AbstractApplicationContextPro
         try {
             Constructor<T> ctor = applicationContextClass.getConstructor(String[].class);
 
-            return (T) ctor.newInstance((Object)locations);
+            return (T) ctor.newInstance((Object) locations);
         } catch (NoSuchMethodException e) {
 
             throw new RuntimeException("Could not create instance of " + applicationContextClass.getName()

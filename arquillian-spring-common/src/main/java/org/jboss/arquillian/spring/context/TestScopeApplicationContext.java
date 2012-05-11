@@ -19,7 +19,7 @@ package org.jboss.arquillian.spring.context;
 import org.springframework.context.ApplicationContext;
 
 /**
- * <p>Spring test enricher, injects spring beans.</p>
+ * <p>A test scope application context.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -27,7 +27,7 @@ import org.springframework.context.ApplicationContext;
 public class TestScopeApplicationContext {
 
     /**
-     * <p>Represents instance of {@link org.springframework.context.ApplicationContext}.</p>
+     * <p>Represents instance of {@link ApplicationContext}.</p>
      */
     private ApplicationContext applicationContext;
 

@@ -16,10 +16,14 @@
  */
 package org.jboss.arquillian.spring.context;
 
+import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
+import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfigurationUtils;
+import org.jboss.arquillian.spring.container.SecurityActions;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 
@@ -45,6 +49,21 @@ public abstract class AbstractApplicationContextProducer {
     @Inject
     @ApplicationScoped
     private InstanceProducer<TestScopeApplicationContext> testApplicationContext;
+
+    /**
+     * <p>Instance of {@link SpringExtensionRemoteConfiguration}.</p>
+     */
+    @Inject
+    private Instance<SpringExtensionRemoteConfiguration> remoteConfiguration;
+
+    /**
+     * <p>Retrieves the remote configuration.</p>
+     *
+     * @return the remote configuration
+     */
+    protected SpringExtensionRemoteConfiguration getRemoteConfiguration() {
+        return remoteConfiguration.get();
+    }
 
     /**
      * <p>Builds the application context before the test suite is being executed.</p>

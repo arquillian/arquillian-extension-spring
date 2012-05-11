@@ -17,6 +17,7 @@
 package org.jboss.arquillian.spring.context;
 
 import org.jboss.arquillian.spring.annotations.SpringAnnotatedConfiguration;
+import org.jboss.arquillian.spring.container.SecurityActions;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -63,8 +64,14 @@ public class AnnotatedApplicationContextProducer extends AbstractApplicationCont
 
         String[] packages = springConfiguration.packages();
         Class<?>[] classes = springConfiguration.classes();
+        Class<?> customAnnotatedContextClass;
 
+        customAnnotatedContextClass = getCustomAnnotatedContextClass();
         if (springConfiguration.contextClass() != ApplicationContext.class) {
+            customAnnotatedContextClass = springConfiguration.contextClass();
+        }
+
+        if (customAnnotatedContextClass != null) {
 
             // creates custom annotated application context
             return createCustomAnnotatedApplicationContext(testClass, springConfiguration.contextClass(), classes, packages);
@@ -72,6 +79,21 @@ public class AnnotatedApplicationContextProducer extends AbstractApplicationCont
 
         // creates standard spring annotated application context
         return createAnnotatedApplicationContext(testClass, packages, classes);
+    }
+
+    /**
+     * <p>Retrieves the custom annotated context class.</p>
+     *
+     * @return the custom context class
+     */
+    private Class<? extends ApplicationContext> getCustomAnnotatedContextClass() {
+
+        if (getRemoteConfiguration().getCustomAnnotatedContextClass() != null
+                && getRemoteConfiguration().getCustomContextClass().trim().length() > 0) {
+            return SecurityActions.classForName(getRemoteConfiguration().getCustomAnnotatedContextClass());
+        }
+
+        return null;
     }
 
     /**
@@ -84,6 +106,7 @@ public class AnnotatedApplicationContextProducer extends AbstractApplicationCont
      * @return the created instance of {@link AnnotationConfigApplicationContext}
      */
     private ApplicationContext createAnnotatedApplicationContext(TestClass testClass, String[] packages, Class<?>[] classes) {
+
         if (packages.length > 0 || classes.length > 0) {
 
             return createAnnotatedApplicationContext(classes, packages);
@@ -193,6 +216,7 @@ public class AnnotatedApplicationContextProducer extends AbstractApplicationCont
     private <T extends ApplicationContext> Constructor<T> getConstructor(Class<T> type, Class... parameterTypes) {
 
         try {
+
             return type.getConstructor(parameterTypes);
         } catch (NoSuchMethodException e) {
 
