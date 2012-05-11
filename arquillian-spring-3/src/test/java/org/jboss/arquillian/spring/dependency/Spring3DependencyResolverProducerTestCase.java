@@ -52,7 +52,9 @@ public class Spring3DependencyResolverProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link Spring3DependencyResolverProducer#initDependencyResolver(org.jboss.arquillian.test.spi.event.suite.BeforeSuite)} method.</p>
+     * <p>Tests the {@link Spring3DependencyResolverProducer#initDependencyResolver(BeforeSuite)} method.</p>
+     *
+     * @throws Exception if any error occurs
      */
     @Test
     public void testInitDependencyResolver() throws Exception {

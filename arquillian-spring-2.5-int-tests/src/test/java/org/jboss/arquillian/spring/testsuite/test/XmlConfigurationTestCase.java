@@ -65,7 +65,7 @@ public class XmlConfigurationTestCase {
      * <p>Tests the {@link EmployeeService#getEmployees()}</p>
      */
     @Test
-    public void testGetEmployees() throws Exception {
+    public void testGetEmployees() {
 
         List<Employee> result = employeeService.getEmployees();
 

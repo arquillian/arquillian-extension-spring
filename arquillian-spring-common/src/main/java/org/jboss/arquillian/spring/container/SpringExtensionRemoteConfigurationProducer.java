@@ -42,7 +42,7 @@ public class SpringExtensionRemoteConfigurationProducer {
     /**
      * <p>Builds the application context before the test suite is being executed.</p>
      *
-     * @param beforeSuite the event fired before execution of test sutie
+     * @param beforeSuite the event fired before execution of test suite
      */
     public void initRemoteConfiguration(@Observes BeforeSuite beforeSuite) {
 

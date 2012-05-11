@@ -54,7 +54,7 @@ public class NoConfigurationTestCase {
      * <p>Tests if the {@link EmployeeService} hasn't been injected.</p>
      */
     @Test
-    public void testEmployeeServie() throws Exception {
+    public void testEmployeeService() {
 
         assertNull("The service was expected to be null.", employeeService);
     }

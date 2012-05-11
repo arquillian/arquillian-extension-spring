@@ -58,6 +58,8 @@ public class Spring25DependencyResolverProducerTestCase {
 
     /**
      * <p>Tests the {@link Spring25DependencyResolverProducer#initDependencyResolver(BeforeSuite)} method.</p>
+     *
+     * @throws Exception if any error occurs
      */
     @Test
     public void testInitDependencyResolver() throws Exception {

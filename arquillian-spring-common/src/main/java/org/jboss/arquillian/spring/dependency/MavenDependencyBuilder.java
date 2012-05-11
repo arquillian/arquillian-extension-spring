@@ -119,7 +119,7 @@ public class MavenDependencyBuilder {
      * @return the resolved files
      */
     private File[] resolveArtifact(String artifact, String version, String... exclusions) {
-        File[] artifacts = null;
+        File[] artifacts;
         try {
             artifacts = resolveArtifact(artifact, exclusions);
         } catch (Exception e) {

@@ -47,6 +47,8 @@ public class AbstractApplicationContextProducerTestCase {
 
     /**
      * <p>Tests the {@link AbstractApplicationContextProducer#initApplicationContext(BeforeClass)} method.</p>
+     * 
+     * @throws Exception if any error occurs
      */
     @Test
     public void testInitApplicationContextNotSupported() throws Exception {
@@ -67,6 +69,8 @@ public class AbstractApplicationContextProducerTestCase {
 
     /**
      * <p>Tests the {@link AbstractApplicationContextProducer#initApplicationContext(BeforeClass)} method.</p>
+     *
+     * @throws Exception if any error occurs
      */
     @Test
     public void testInitApplicationContextSupported() throws Exception {

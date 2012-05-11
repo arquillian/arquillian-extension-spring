@@ -42,6 +42,7 @@ public final class TestReflectionHelper {
      * @param value     the value to set
      *
      * @throws IllegalAccessException if any error occurs when setting the field value
+     * @throws NoSuchFieldException   if the field of the given name could not be found
      */
     public static void setFieldValue(Object obj, String fieldName, Object value) throws IllegalAccessException,
             NoSuchFieldException {
@@ -59,6 +60,8 @@ public final class TestReflectionHelper {
      * @param fieldName the name of the field
      *
      * @return the class field
+     *
+     * @throws NoSuchFieldException if the field of the given name could not be found
      */
     private static Field getField(Object obj, String fieldName) throws NoSuchFieldException {
 

@@ -115,7 +115,7 @@ public class XmlApplicationContextProducerTestCase {
     public void testCreateApplicationContextMissingResource() {
         TestClass testClass = new TestClass(XmlAnnotatedMissingResourceClass.class);
 
-        TestScopeApplicationContext result = instance.createApplicationContext(testClass);
+        instance.createApplicationContext(testClass);
     }
 
     /**

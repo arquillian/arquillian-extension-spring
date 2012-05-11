@@ -44,6 +44,8 @@ public class AbstractDependencyResolverProducerTestCase {
 
     /**
      * <p>Tests the {@link AbstractDependencyResolverProducer#initDependencyResolver(BeforeSuite)}  method.</p>
+     *
+     * @throws Exception if any error occurs
      */
     @Test
     public void testInitDependencyResolverNull() throws Exception {
@@ -67,6 +69,8 @@ public class AbstractDependencyResolverProducerTestCase {
 
     /**
      * <p>Tests the {@link AbstractDependencyResolverProducer#initDependencyResolver(BeforeSuite)}  method.</p>
+     *
+     * @throws Exception if any error occurs
      */
     @Test
     public void testInitDependencyResolver() throws Exception {

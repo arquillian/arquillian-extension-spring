@@ -58,7 +58,7 @@ public class NoMatchingBeanTestCase {
      * <p>Tests if the {@link EmployeeService} hasn't been injected.</p>
      */
     @Test
-    public void testGetEmployees() throws Exception {
+    public void testGetEmployees() {
 
         assertNull("The service was expected to be null.", employeeService);
     }

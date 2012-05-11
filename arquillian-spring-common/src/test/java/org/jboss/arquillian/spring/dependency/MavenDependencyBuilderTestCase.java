@@ -61,7 +61,7 @@ public class MavenDependencyBuilderTestCase {
     }
 
     /**
-     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String, String, String)} method.</p>
+     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String, String, String, String...)} method.</p>
      */
     @Test
     public void testAddDependenciesDefault() {
@@ -77,7 +77,7 @@ public class MavenDependencyBuilderTestCase {
     }
 
     /**
-     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String, String, String)} method.</p>
+     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String, String, String, String...)} method.</p>
      *
      * <p>{@link ResolutionException} is expected.</p>
      */
@@ -91,7 +91,7 @@ public class MavenDependencyBuilderTestCase {
     }
 
     /**
-     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String, String, String)} method.</p>
+     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String, String, String, String...)} method.</p>
      */
     @Test
     public void testAddDependencies() {
@@ -107,7 +107,7 @@ public class MavenDependencyBuilderTestCase {
     }
 
     /**
-     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String, String, String)} method.</p>
+     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String, String, String, String...)} method.</p>
      */
     @Test
     public void testAddDependenciesEmptyString() {
@@ -120,7 +120,7 @@ public class MavenDependencyBuilderTestCase {
     }
 
     /**
-     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String, String, String)} method.</p>
+     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String, String, String, String...)} method.</p>
      *
      * {@link ResolutionException} is expected
      */

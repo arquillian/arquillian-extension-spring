@@ -40,7 +40,7 @@ public class AbstractDependencyResolverTestCase {
      * <p>Tests the {@link AbstractDependencyResolver# method.</p>
      */
     @Test
-    public void testCtor() throws Exception {
+    public void testCtor() {
 
         SpringExtensionConfiguration extensionConfiguration = new SpringExtensionConfiguration();
 
@@ -51,7 +51,7 @@ public class AbstractDependencyResolverTestCase {
      * <p>Tests the {@link AbstractDependencyResolver#getConfiguration()}  method.</p>
      */
     @Test
-    public void testGetConfiguration() throws Exception {
+    public void testGetConfiguration() {
 
         SpringExtensionConfiguration extensionConfiguration = new SpringExtensionConfiguration();
 
@@ -64,7 +64,7 @@ public class AbstractDependencyResolverTestCase {
      * <p>Tests the {@link AbstractDependencyResolver#getConfiguration()}  method.</p>
      */
     @Test
-    public void testGetConfigurationNull() throws Exception {
+    public void testGetConfigurationNull() {
 
         instance = new MockDependencyResolver(null);
 

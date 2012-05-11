@@ -145,6 +145,7 @@ public class AnnotatedApplicationContextProducer extends AbstractApplicationCont
     /**
      * <p>Creates new instance of custom application context.</p>
      *
+     * @param testClass               the test class
      * @param applicationContextClass the application context class
      * @param classes                 the annotated classes to register
      * @param packages                the packages containing the annotated classes

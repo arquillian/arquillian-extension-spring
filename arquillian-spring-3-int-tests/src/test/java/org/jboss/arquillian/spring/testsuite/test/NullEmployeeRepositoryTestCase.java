@@ -60,10 +60,10 @@ public class NullEmployeeRepositoryTestCase {
     private EmployeeRepository employeeRepository;
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.testsuite.beans.service.EmployeeService#getEmployees()}</p>
+     * <p>Tests the {@link EmployeeRepository#getEmployees()}</p>
      */
     @Test
-    public void testGetEmployees() throws Exception {
+    public void testGetEmployees() {
 
         List<Employee> result = employeeRepository.getEmployees();
 
