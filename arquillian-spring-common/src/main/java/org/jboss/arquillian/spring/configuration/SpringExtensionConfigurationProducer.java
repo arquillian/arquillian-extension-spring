@@ -41,7 +41,6 @@ public class SpringExtensionConfigurationProducer {
      * <p>Represents the application descriptor.</p>
      */
     @Inject
-    @ApplicationScoped
     private Instance<ArquillianDescriptor> descriptor;
 
     /**
@@ -85,11 +84,11 @@ public class SpringExtensionConfigurationProducer {
                 SpringExtensionConsts.CONFIGURATION_INCLUDE_SNOWDROP, false));
         result.setSnowdropVersion(getStringProperty(properties,
                 SpringExtensionConsts.CONFIGURATION_SNOWDROP_VERSION, null));
-        
-        result.setCustomContextClass(getStringProperty(properties, 
-                SpringExtensionConsts.CONFIGURATION_CUSTOM_CONTEXT_CLASS, ""));
+
+        result.setCustomContextClass(getStringProperty(properties,
+                SpringExtensionConsts.CONFIGURATION_CUSTOM_CONTEXT_CLASS, null));
         result.setCustomAnnotatedContextClass(getStringProperty(properties,
-                SpringExtensionConsts.CONFIGURATION_CUSTOM_ANNOTATED_CONTEXT_CLASS, ""));
+                SpringExtensionConsts.CONFIGURATION_CUSTOM_ANNOTATED_CONTEXT_CLASS, null));
 
         return result;
     }

@@ -20,7 +20,6 @@ import org.jboss.arquillian.container.test.spi.TestDeployment;
 import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
 import org.jboss.arquillian.spring.dependency.AbstractDependencyResolver;
 import org.jboss.shrinkwrap.api.Archive;

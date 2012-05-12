@@ -27,9 +27,9 @@ import javax.servlet.ServletContext;
 import java.text.MessageFormat;
 
 /**
- * <p>The instance of {@link AbstractApplicationContextProducer} that access the {@link WebApplicationContext}
- * from servlet context for specific Spring's FrameworkServlet or when the servlet name was not specified retrieves
- * the root web application context.</p>
+ * <p>The instance of {@link AbstractApplicationContextProducer} that access the {@link WebApplicationContext} from
+ * servlet context for specific Spring's FrameworkServlet or when the servlet name was not specified retrieves the root
+ * web application context.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $

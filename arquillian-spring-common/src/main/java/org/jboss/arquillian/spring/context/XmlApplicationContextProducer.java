@@ -16,7 +16,6 @@
  */
 package org.jboss.arquillian.spring.context;
 
-import org.jboss.arquillian.core.spi.Validate;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
 import org.jboss.arquillian.spring.container.SecurityActions;

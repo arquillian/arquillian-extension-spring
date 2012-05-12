@@ -19,7 +19,6 @@ package org.jboss.arquillian.spring.dependency;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
-import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.utils.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 import org.junit.Before;
@@ -28,12 +27,8 @@ import org.mockito.ArgumentCaptor;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 
 /**
  * <p>Tests {@link Spring25DependencyResolverProducer} class.</p>
@@ -76,7 +71,7 @@ public class Spring25DependencyResolverProducerTestCase {
         ArgumentCaptor<AbstractDependencyResolver> dependencyResolver =
                 ArgumentCaptor.forClass(AbstractDependencyResolver.class);
         verify(mockProducer).set(dependencyResolver.capture());
-        
+
         assertNotNull("The crated dependency resolver was null.", dependencyResolver.getValue());
         assertTrue("The producer created incorrect type.",
                 dependencyResolver.getValue() instanceof Spring25DependencyResolver);

@@ -16,12 +16,13 @@
  */
 package org.jboss.arquillian.spring.context;
 
+import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfiguration;
 import org.jboss.arquillian.spring.model.PlainClass;
 import org.jboss.arquillian.spring.utils.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
@@ -37,7 +38,6 @@ import static org.mockito.Mockito.when;
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-@Ignore
 public class AbstractApplicationContextProducerTestCase {
 
     /**
@@ -47,7 +47,7 @@ public class AbstractApplicationContextProducerTestCase {
 
     /**
      * <p>Tests the {@link AbstractApplicationContextProducer#initApplicationContext(BeforeClass)} method.</p>
-     * 
+     *
      * @throws Exception if any error occurs
      */
     @Test
@@ -55,6 +55,12 @@ public class AbstractApplicationContextProducerTestCase {
         BeforeClass event = new BeforeClass(PlainClass.class);
 
         instance = mock(AbstractApplicationContextProducer.class);
+
+        SpringExtensionRemoteConfiguration extensionRemoteConfiguration = new SpringExtensionRemoteConfiguration();
+
+        Instance<SpringExtensionRemoteConfiguration> mockExtensionRemoteConfigurationInstance = mock(Instance.class);
+        when(mockExtensionRemoteConfigurationInstance.get()).thenReturn(extensionRemoteConfiguration);
+        TestReflectionHelper.setFieldValue(instance, "remoteConfiguration", mockExtensionRemoteConfigurationInstance);
 
         InstanceProducer<TestScopeApplicationContext> mockProducer = mock(InstanceProducer.class);
         TestReflectionHelper.setFieldValue(instance, "testApplicationContext", mockProducer);
@@ -81,6 +87,12 @@ public class AbstractApplicationContextProducerTestCase {
                 new TestScopeApplicationContext(mockApplicationContext, false);
 
         instance = mock(AbstractApplicationContextProducer.class);
+
+        SpringExtensionRemoteConfiguration extensionRemoteConfiguration = new SpringExtensionRemoteConfiguration();
+
+        Instance<SpringExtensionRemoteConfiguration> mockExtensionRemoteConfigurationInstance = mock(Instance.class);
+        when(mockExtensionRemoteConfigurationInstance.get()).thenReturn(extensionRemoteConfiguration);
+        TestReflectionHelper.setFieldValue(instance, "remoteConfiguration", mockExtensionRemoteConfigurationInstance);
 
         doCallRealMethod().when(instance).initApplicationContext(any(BeforeClass.class));
         when(instance.supports(any(TestClass.class))).thenReturn(true);

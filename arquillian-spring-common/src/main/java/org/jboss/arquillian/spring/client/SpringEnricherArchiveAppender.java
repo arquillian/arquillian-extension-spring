@@ -28,7 +28,7 @@ import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 /**
- * <p>The base auxillary archive that adds the properties file with the settings for the remote extension.</p>
+ * <p>The base auxiliary archive that adds the properties file with the settings for the remote extension.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -47,7 +47,7 @@ public abstract class SpringEnricherArchiveAppender extends CachedAuxilliaryArch
     @Override
     protected Archive<?> buildArchive() {
 
-        // creates the auxillary archive
+        // creates the auxiliary archive
         JavaArchive archive = createArchive();
 
         // appends all required resources
@@ -62,14 +62,14 @@ public abstract class SpringEnricherArchiveAppender extends CachedAuxilliaryArch
     /**
      * <p>Appends the resources into the test deployment.</p>
      *
-     * @param archive the auxillary archive
+     * @param archive the auxiliary archive
      */
     protected abstract void appendResources(JavaArchive archive);
 
     /**
-     * <p>Appends the properties to the auxillary archive.</p>
+     * <p>Appends the properties to the auxiliary archive.</p>
      *
-     * @param archive the auxillary archive
+     * @param archive the auxiliary archive
      */
     protected void appendProperties(JavaArchive archive) {
 
@@ -83,9 +83,9 @@ public abstract class SpringEnricherArchiveAppender extends CachedAuxilliaryArch
     }
 
     /**
-     * <p>Creates the auxillary archive.</p>
+     * <p>Creates the auxiliary archive.</p>
      *
-     * @return the created auxillary archive
+     * @return the created auxiliary archive
      */
     protected JavaArchive createArchive() {
 

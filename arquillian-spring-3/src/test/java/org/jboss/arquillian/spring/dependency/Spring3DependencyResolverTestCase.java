@@ -17,12 +17,11 @@
 package org.jboss.arquillian.spring.dependency;
 
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 /**
  * <p>Tests {@link Spring3DependencyResolver} class.</p>
@@ -37,32 +36,52 @@ public class Spring3DependencyResolverTestCase {
     private Spring3DependencyResolver instance;
 
     /**
-     * <p>Sets up the test environment.</p>
+     * <p>Tests {@link Spring3DependencyResolver#resolveDependencies()} method.</p>
      */
-    @Before
-    public void setUp() {
+    @Test
+    public void testResolveDependencies() {
 
-        SpringExtensionConfiguration springExtensionConfiguration = new SpringExtensionConfiguration();
-        springExtensionConfiguration.setAutoPackaging(true);
-        springExtensionConfiguration.setSpringVersion("3.1.1.RELEASE");
-        springExtensionConfiguration.setCglibVersion("2.2.2");
-        springExtensionConfiguration.setIncludeSnowdrop(true);
+        SpringExtensionConfiguration springExtensionConfiguration = createConfiguration();
+        springExtensionConfiguration.setIncludeSnowdrop(false);
 
         instance = new Spring3DependencyResolver(springExtensionConfiguration);
+
+        File[] files = instance.resolveDependencies();
+
+        assertDependencies(files, true, true, true, false);
     }
 
     /**
      * <p>Tests {@link Spring3DependencyResolver#resolveDependencies()} method.</p>
      */
     @Test
-    public void testResolveDependencies() {
+    public void testResolveDependenciesIncludeSnowdrop() {
+
+        SpringExtensionConfiguration springExtensionConfiguration = createConfiguration();
+
+        instance = new Spring3DependencyResolver(springExtensionConfiguration);
+
+        File[] files = instance.resolveDependencies();
+
+        assertDependencies(files, true, true, true, true);
+    }
+
+    /**
+     * <p>Asserts that all required dependencies are present.</p>
+     *
+     * @param files                    the resoled dependencies
+     * @param springPresentExpected    whether the dependencies should contain spring-context
+     * @param springWebPresentExpected whether the dependencies should contain spring-web
+     * @param cglibPresentExpected     whether the dependencies should contain cglib
+     * @param snowdropPresentExpected  whether the dependencies should contain snowdrop
+     */
+    private void assertDependencies(File[] files, boolean springPresentExpected, boolean springWebPresentExpected,
+                                    boolean cglibPresentExpected, boolean snowdropPresentExpected) {
 
         boolean isSpringPresent = false;
         boolean isSpringWebPresent = false;
         boolean isCglibPresent = false;
         boolean isSnowdropPresent = false;
-
-        File[] files = instance.resolveDependencies();
 
         for (File file : files) {
             String path = file.getAbsolutePath();
@@ -82,9 +101,24 @@ public class Spring3DependencyResolverTestCase {
             }
         }
 
-        assertTrue("Required dependencies is missing: spring-context.", isSpringPresent);
-        assertTrue("Required dependencies is missing: spring-web.", isSpringWebPresent);
-        assertTrue("Required dependencies is missing: cglib.", isCglibPresent);
-        assertTrue("Required dependencies is missing: snowdrop.", isSnowdropPresent);
+        assertEquals("Required dependencies is missing: spring-context.", springPresentExpected, isSpringPresent);
+        assertEquals("Required dependencies is missing: spring-web.", springWebPresentExpected, isSpringWebPresent);
+        assertEquals("Required dependencies is missing: cglib.", cglibPresentExpected, isCglibPresent);
+        assertEquals("Required dependencies is missing: snowdrop.", snowdropPresentExpected, isSnowdropPresent);
+
+    }
+
+    /**
+     * <p>Creates new instance of {@link SpringExtensionConfiguration}.</p>
+     *
+     * @return the create instance of {@link SpringExtensionConfiguration}
+     */
+    private SpringExtensionConfiguration createConfiguration() {
+        SpringExtensionConfiguration springExtensionConfiguration = new SpringExtensionConfiguration();
+        springExtensionConfiguration.setAutoPackaging(true);
+        springExtensionConfiguration.setSpringVersion("3.1.1.RELEASE");
+        springExtensionConfiguration.setCglibVersion("2.2.2");
+        springExtensionConfiguration.setIncludeSnowdrop(true);
+        return springExtensionConfiguration;
     }
 }

@@ -53,7 +53,7 @@ public class SpringExtensionRemoteConfigurationTestCase {
     }
 
     /**
-     * <p>Tests both {@link SpringExtensionRemoteConfiguration#getCustomContextClass()} ()} and {@link
+     * <p>Tests both {@link SpringExtensionRemoteConfiguration#getCustomContextClass()} and {@link
      * SpringExtensionRemoteConfiguration#setCustomContextClass(String)} method.</p>
      */
     @Test

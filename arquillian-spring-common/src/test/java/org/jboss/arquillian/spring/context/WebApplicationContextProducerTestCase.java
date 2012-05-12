@@ -16,14 +16,19 @@
  */
 package org.jboss.arquillian.spring.context;
 
+import org.jboss.arquillian.core.api.Instance;
+import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfiguration;
 import org.jboss.arquillian.spring.model.PlainClass;
 import org.jboss.arquillian.spring.model.WebAnnotatedClass;
+import org.jboss.arquillian.spring.utils.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * <p>Tests {@link WebApplicationContextProducer} class.</p>
@@ -39,11 +44,19 @@ public class WebApplicationContextProducerTestCase {
 
     /**
      * <p>Sets up the test environment.</p>
+     *
+     * @throws Exception if any error occurs
      */
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
 
         instance = new WebApplicationContextProducer();
+
+        SpringExtensionRemoteConfiguration extensionRemoteConfiguration = new SpringExtensionRemoteConfiguration();
+
+        Instance<SpringExtensionRemoteConfiguration> mockExtensionRemoteConfigurationInstance = mock(Instance.class);
+        when(mockExtensionRemoteConfigurationInstance.get()).thenReturn(extensionRemoteConfiguration);
+        TestReflectionHelper.setFieldValue(instance, "remoteConfiguration", mockExtensionRemoteConfigurationInstance);
     }
 
     /**

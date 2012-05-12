@@ -16,19 +16,26 @@
  */
 package org.jboss.arquillian.spring.client;
 
+import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
 import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfigurationUtils;
+import org.jboss.arquillian.spring.container.SecurityActions;
 import org.jboss.arquillian.spring.container.Spring25EnricherRemoteExtension;
+import org.jboss.arquillian.spring.container.SpringExtensionRemoteConfigurationProducer;
 import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
+import org.jboss.arquillian.spring.context.AbstractApplicationContextProducer;
 import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.context.WebApplicationContextProducer;
 import org.jboss.arquillian.spring.context.XmlApplicationContextProducer;
+import org.jboss.arquillian.spring.utils.TestReflectionHelper;
 import org.jboss.arquillian.spring.utils.TestResourceHelper;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -36,13 +43,14 @@ import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * <p>Tests {@link Spring25EnricherArchiveAppender} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-@Ignore
 public class Spring25EnricherArchiveAppenderTestCase {
 
     /**
@@ -55,8 +63,11 @@ public class Spring25EnricherArchiveAppenderTestCase {
      */
     private List<Class<?>> REQUIRED_CLASSES = Arrays.asList(SpringConfiguration.class, SpringWebConfiguration.class,
             XmlApplicationContextProducer.class, WebApplicationContextProducer.class,
-            Spring25EnricherRemoteExtension.class, SpringInjectionEnricher.class,
-            TestScopeApplicationContext.class, SpringExtensionConsts.class);
+            AbstractApplicationContextProducer.class, TestScopeApplicationContext.class,
+            Spring25EnricherRemoteExtension.class, SpringInjectionEnricher.class, SecurityActions.class,
+            SpringExtensionRemoteConfigurationProducer.class, SpringExtensionRemoteConfiguration.class,
+            SpringExtensionRemoteConfigurationUtils.class,
+            SpringExtensionConsts.class);
 
     /**
      * <p>Sets up the test environment.</p>
@@ -69,9 +80,17 @@ public class Spring25EnricherArchiveAppenderTestCase {
 
     /**
      * <p>Tests the {@link Spring25EnricherArchiveAppender#buildArchive()} method.</p>
+     *
+     * @throws Exception if any error occurs
      */
     @Test
-    public void testBuildArchive() {
+    public void testBuildArchive() throws Exception {
+
+        SpringExtensionConfiguration extensionConfiguration = new SpringExtensionConfiguration();
+
+        Instance<SpringExtensionConfiguration> mockExtensionConfigurationInstance = mock(Instance.class);
+        when(mockExtensionConfigurationInstance.get()).thenReturn(extensionConfiguration);
+        TestReflectionHelper.setFieldValue(instance, "configuration", mockExtensionConfigurationInstance);
 
         Archive archive = instance.buildArchive();
 

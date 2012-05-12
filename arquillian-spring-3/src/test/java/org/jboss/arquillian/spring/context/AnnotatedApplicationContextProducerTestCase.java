@@ -16,7 +16,9 @@
  */
 package org.jboss.arquillian.spring.context;
 
+import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfiguration;
 import org.jboss.arquillian.spring.model.AnnotatedClassesCustomContextClass;
 import org.jboss.arquillian.spring.model.AnnotatedPackagesCustomContextClass;
 import org.jboss.arquillian.spring.model.ClassesAnnotatedClass;
@@ -27,7 +29,6 @@ import org.jboss.arquillian.spring.utils.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -37,13 +38,13 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * <p>Tests {@link AnnotatedApplicationContextProducer} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-@Ignore
 public class AnnotatedApplicationContextProducerTestCase {
 
     /**
@@ -53,11 +54,19 @@ public class AnnotatedApplicationContextProducerTestCase {
 
     /**
      * <p>Sets up the test environment.</p>
+     *
+     * @throws Exception if any error occurs
      */
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
 
         instance = new AnnotatedApplicationContextProducer();
+
+        SpringExtensionRemoteConfiguration extensionRemoteConfiguration = new SpringExtensionRemoteConfiguration();
+
+        Instance<SpringExtensionRemoteConfiguration> mockExtensionRemoteConfigurationInstance = mock(Instance.class);
+        when(mockExtensionRemoteConfigurationInstance.get()).thenReturn(extensionRemoteConfiguration);
+        TestReflectionHelper.setFieldValue(instance, "remoteConfiguration", mockExtensionRemoteConfigurationInstance);
     }
 
     /**

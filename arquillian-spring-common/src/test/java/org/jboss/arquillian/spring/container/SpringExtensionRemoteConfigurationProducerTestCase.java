@@ -17,6 +17,7 @@
 package org.jboss.arquillian.spring.container;
 
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * <p>Tests {@link SpringExtensionRemoteConfigurationProducer} class.</p>
@@ -42,6 +43,7 @@ public class SpringExtensionRemoteConfigurationProducerTestCase {
     /**
      * <p>Tests the {@link SpringExtensionRemoteConfigurationProducer#initRemoteConfiguration(BeforeSuite)}</p>
      */
+    @Test
     public void testInitRemoteConfiguration() {
 
         // TODO implement

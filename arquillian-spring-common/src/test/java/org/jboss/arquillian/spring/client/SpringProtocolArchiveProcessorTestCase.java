@@ -72,7 +72,7 @@ public class SpringProtocolArchiveProcessorTestCase {
     @Test
     public void testProcessJarAutoPackageTrue() throws Exception {
 
-        injectFields(true);
+        injectConfiguration(true);
 
         JavaArchive deploymentArchive = ShrinkWrap.create(JavaArchive.class, "deployment.jar");
         JavaArchive auxiliaryArchive = ShrinkWrap.create(JavaArchive.class, "auxiliary.jar");
@@ -96,7 +96,7 @@ public class SpringProtocolArchiveProcessorTestCase {
     @Test
     public void testProcessJarAutoPackageFalse() throws Exception {
 
-        injectFields(false);
+        injectConfiguration(false);
 
         JavaArchive deploymentArchive = ShrinkWrap.create(JavaArchive.class, "deployment.jar");
         JavaArchive auxiliaryArchive = ShrinkWrap.create(JavaArchive.class, "auxiliary.jar");
@@ -120,7 +120,7 @@ public class SpringProtocolArchiveProcessorTestCase {
     @Test
     public void testProcessWarAutoPackageTrue() throws Exception {
 
-        injectFields(true);
+        injectConfiguration(true);
 
         WebArchive deploymentArchive = ShrinkWrap.create(WebArchive.class, "deployment.war");
         JavaArchive auxiliaryArchive = ShrinkWrap.create(JavaArchive.class, "auxiliary.jar");
@@ -144,7 +144,7 @@ public class SpringProtocolArchiveProcessorTestCase {
     @Test
     public void testProcessWarAutoPackageFalse() throws Exception {
 
-        injectFields(false);
+        injectConfiguration(false);
 
         WebArchive deploymentArchive = ShrinkWrap.create(WebArchive.class, "deployment.war");
         JavaArchive auxiliaryArchive = ShrinkWrap.create(JavaArchive.class, "auxiliary.jar");
@@ -166,7 +166,7 @@ public class SpringProtocolArchiveProcessorTestCase {
      *
      * @throws Exception if any error occurs
      */
-    private void injectFields(boolean autoPackage) throws Exception {
+    private void injectConfiguration(boolean autoPackage) throws Exception {
         SpringExtensionConfiguration extensionConfiguration = new SpringExtensionConfiguration();
         extensionConfiguration.setAutoPackaging(autoPackage);
 

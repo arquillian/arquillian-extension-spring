@@ -9,6 +9,6 @@
     <context:annotation-config/>
 
     <!-- An instance of simple bean that will be injected by spring. -->
-    <bean name="strategy" class="org.jboss.arquillian.spring.model.StrategyImpl" />
+    <bean name="strategy" class="org.jboss.arquillian.spring.model.StrategyImpl"/>
 
 </beans>

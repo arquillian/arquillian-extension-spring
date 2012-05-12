@@ -53,7 +53,7 @@ public final class SecurityActions {
             return false;
         }
     }
-    
+
     public static InputStream getResource(String resourceName) {
 
         return getThreadContextClassLoader().getResourceAsStream(resourceName);
@@ -63,9 +63,9 @@ public final class SecurityActions {
 
         try {
             ClassLoader classLoader = getThreadContextClassLoader();
-             return (Class<T>) classLoader.loadClass(name);
+            return (Class<T>) classLoader.loadClass(name);
         } catch (ClassNotFoundException e) {
-            
+
             throw new RuntimeException("Could not create load class " + name, e);
         }
     }

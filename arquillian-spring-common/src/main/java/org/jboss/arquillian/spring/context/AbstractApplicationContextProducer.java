@@ -22,8 +22,6 @@ import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfiguration;
-import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfigurationUtils;
-import org.jboss.arquillian.spring.container.SecurityActions;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 

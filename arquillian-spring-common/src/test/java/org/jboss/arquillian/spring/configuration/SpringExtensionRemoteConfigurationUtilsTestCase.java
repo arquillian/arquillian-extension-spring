@@ -29,7 +29,8 @@ public class SpringExtensionRemoteConfigurationUtilsTestCase {
     private SpringExtensionRemoteConfigurationUtils instance;
 
     /**
-     * <p>Tests {@link SpringExtensionRemoteConfigurationUtils#toString(SpringExtensionRemoteConfiguration)} method.</p>
+     * <p>Tests {@link SpringExtensionRemoteConfigurationUtils#toString(SpringExtensionRemoteConfiguration)}
+     * method.</p>
      */
     public void testToString() {
 
