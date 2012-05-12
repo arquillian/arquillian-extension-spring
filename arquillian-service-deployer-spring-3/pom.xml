@@ -17,9 +17,9 @@
     <artifactId>arquillian-service-deployer-spring-3</artifactId>
     <packaging>jar</packaging>
 
-    <name>Arquillian Spring Framework 3 Extension</name>
+    <name>Arquillian Spring Framework 3 Service Deployer</name>
     <url>http://www.jboss.org</url>
-    <description>Spring Framework 3 extension for Arquillian</description>
+    <description>Spring Framework 3 service deployer for Arquillian</description>
 
     <!-- Properties -->
     <properties>

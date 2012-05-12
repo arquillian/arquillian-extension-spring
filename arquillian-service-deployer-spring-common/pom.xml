@@ -17,9 +17,9 @@
     <artifactId>arquillian-service-deployer-spring-common</artifactId>
     <packaging>jar</packaging>
 
-    <name>Arquillian Spring Framework Extension Common</name>
+    <name>Arquillian Spring Framework Service Deployer Common</name>
     <url>http://www.jboss.org</url>
-    <description>Spring Framework extension common for Arquillian</description>
+    <description>Spring Framework service deployer common for Arquillian</description>
 
     <!-- Properties -->
     <properties>

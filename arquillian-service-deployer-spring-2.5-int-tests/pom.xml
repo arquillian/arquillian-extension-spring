@@ -17,9 +17,9 @@
     <artifactId>arquillian-service-deployer-spring-2.5-int-tests</artifactId>
     <packaging>jar</packaging>
 
-    <name>Arquillian Spring Framework 2.5 Extension Integration Tests</name>
+    <name>Arquillian Spring Framework 2.5 Service Deployer Integration Tests</name>
     <url>http://www.jboss.org</url>
-    <description>Spring Framework 2.5 extension for Arquillian integration tests</description>
+    <description>Spring Framework 2.5 service deployer for Arquillian integration tests</description>
 
     <!-- Properties -->
     <properties>

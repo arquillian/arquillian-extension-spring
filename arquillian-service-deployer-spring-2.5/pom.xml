@@ -17,9 +17,9 @@
     <artifactId>arquillian-service-deployer-spring-2.5</artifactId>
     <packaging>jar</packaging>
 
-    <name>Arquillian Spring Framework 2.5 Extension</name>
+    <name>Arquillian Spring Framework 2.5 Service Deployer</name>
     <url>http://www.jboss.org</url>
-    <description>Spring Framework 2.5 extension for Arquillian</description>
+    <description>Spring Framework 2.5 service deployer for Arquillian</description>
 
     <!-- Properties -->
     <properties>
