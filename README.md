@@ -20,13 +20,13 @@ Enabling the extension is as simple as adding the fallowing dependency into the 
 ```
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-spring-3</artifactId>
+            <artifactId>arquillian-service-deployer-spring-3</artifactId>
             <version>${arquillian.spring.version}</version>
             <scope>test</scope>
         </dependency>
 ```
 
-Note: For testing Spring 2.5 applications please use arquillian-spring-2.5 instead.
+Note: For testing Spring 2.5 applications please use arquillian-service-deployer-spring-2.5 instead.
 
 Each Arquillian test which relies on Spring framework and requires dependency injection of configured beans has to be
 annotated with one of the fallowing:

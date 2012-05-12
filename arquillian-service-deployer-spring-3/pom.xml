@@ -14,12 +14,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.arquillian.extension</groupId>
-    <artifactId>arquillian-spring-2.5</artifactId>
+    <artifactId>arquillian-service-deployer-spring-3</artifactId>
     <packaging>jar</packaging>
 
-    <name>Arquillian Spring Framework 2.5 Extension</name>
+    <name>Arquillian Spring Framework 3 Extension</name>
     <url>http://www.jboss.org</url>
-    <description>Spring Framework 2.5 extension for Arquillian</description>
+    <description>Spring Framework 3 extension for Arquillian</description>
 
     <!-- Properties -->
     <properties>
@@ -48,14 +48,20 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${version.spring_framework_2_5}</version>
+            <version>${version.spring_framework_3}</version>
             <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>${version.spring_framework_2_5}</version>
+            <version>${version.spring_framework_3}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
             <optional>true</optional>
         </dependency>
 
@@ -76,6 +82,5 @@
         </dependency>
 
     </dependencies>
-
 
 </project>

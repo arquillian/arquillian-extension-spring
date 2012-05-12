@@ -14,25 +14,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.arquillian.extension</groupId>
-    <artifactId>arquillian-spring-common</artifactId>
+    <artifactId>arquillian-service-deployer-spring-2.5</artifactId>
     <packaging>jar</packaging>
 
-    <name>Arquillian Spring Framework Extension Common</name>
+    <name>Arquillian Spring Framework 2.5 Extension</name>
     <url>http://www.jboss.org</url>
-    <description>Spring Framework extension common for Arquillian</description>
+    <description>Spring Framework 2.5 extension for Arquillian</description>
 
     <!-- Properties -->
     <properties>
 
     </properties>
-
-    <!-- Licenses -->
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
 
     <!-- Dependencies -->
     <dependencies>
@@ -49,6 +41,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-spring-common</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${version.spring_framework_2_5}</version>
@@ -60,12 +57,6 @@
             <artifactId>spring-web</artifactId>
             <version>${version.spring_framework_2_5}</version>
             <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -85,5 +76,6 @@
         </dependency>
 
     </dependencies>
+
 
 </project>

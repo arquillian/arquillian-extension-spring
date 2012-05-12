@@ -24,11 +24,11 @@
 
     <!-- Modules -->
     <modules>
-        <module>arquillian-spring-common</module>
-        <module>arquillian-spring-2.5</module>
-        <module>arquillian-spring-2.5-int-tests</module>
-        <module>arquillian-spring-3</module>
-        <module>arquillian-spring-3-int-tests</module>
+        <module>arquillian-service-deployer-spring-common</module>
+        <module>arquillian-service-deployer-spring-2.5</module>
+        <module>arquillian-service-deployer-spring-2.5-int-tests</module>
+        <module>arquillian-service-deployer-spring-3</module>
+        <module>arquillian-service-deployer-spring-3-int-tests</module>
     </modules>
 
     <!-- Properties -->

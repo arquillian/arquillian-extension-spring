@@ -14,17 +14,25 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.arquillian.extension</groupId>
-    <artifactId>arquillian-spring-3</artifactId>
+    <artifactId>arquillian-service-deployer-spring-common</artifactId>
     <packaging>jar</packaging>
 
-    <name>Arquillian Spring Framework 3 Extension</name>
+    <name>Arquillian Spring Framework Extension Common</name>
     <url>http://www.jboss.org</url>
-    <description>Spring Framework 3 extension for Arquillian</description>
+    <description>Spring Framework extension common for Arquillian</description>
 
     <!-- Properties -->
     <properties>
 
     </properties>
+
+    <!-- Licenses -->
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
     <!-- Dependencies -->
     <dependencies>
@@ -41,28 +49,23 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-spring-common</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${version.spring_framework_3}</version>
+            <version>${version.spring_framework_2_5}</version>
             <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>${version.spring_framework_3}</version>
+            <version>${version.spring_framework_2_5}</version>
             <optional>true</optional>
         </dependency>
 
         <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <optional>true</optional>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

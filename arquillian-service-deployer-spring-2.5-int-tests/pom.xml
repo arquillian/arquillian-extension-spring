@@ -14,12 +14,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.arquillian.extension</groupId>
-    <artifactId>arquillian-spring-3-int-tests</artifactId>
+    <artifactId>arquillian-service-deployer-spring-2.5-int-tests</artifactId>
     <packaging>jar</packaging>
 
-    <name>Arquillian Spring Framework 3 Extension Integration Tests</name>
+    <name>Arquillian Spring Framework 2.5 Extension Integration Tests</name>
     <url>http://www.jboss.org</url>
-    <description>Spring Framework 3 extension for Arquillian integration tests</description>
+    <description>Spring Framework 2.5 extension for Arquillian integration tests</description>
 
     <!-- Properties -->
     <properties>
@@ -35,29 +35,40 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- servlet-api not needed since it comes with the container profile -->
+        <!--
+        <dependency>
+            <groupId>org.jboss.javaee</groupId>
+            <artifactId>jboss-servlet-api</artifactId>
+            <version>2.5.0.GA</version>
+            <scope>provided</scope>
+        </dependency>
+        -->
+
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-spring-3</artifactId>
+            <artifactId>arquillian-spring-2.5</artifactId>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${version.spring_framework_3}</version>
+            <version>${version.spring_framework_2_5}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>${version.spring_framework_3}</version>
+            <version>${version.spring_framework_2_5}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
+            <groupId>org.jboss.snowdrop</groupId>
+            <artifactId>snowdrop-vfs</artifactId>
+            <version>2.0.3.Final</version>
             <scope>test</scope>
         </dependency>
 
@@ -70,15 +81,16 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
         </dependency>
+
     </dependencies>
 
     <profiles>
 
         <profile>
+            <id>arquillian-jbossas-managed</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <id>arquillian-jbossas-managed</id>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
@@ -124,6 +136,15 @@
                         </executions>
                     </plugin>
                 </plugins>
+
+                <testResources>
+                    <testResource>
+                        <directory>src/test/resources</directory>
+                    </testResource>
+                    <testResource>
+                        <directory>src/test/resources-jbossas</directory>
+                    </testResource>
+                </testResources>
             </build>
         </profile>
 
@@ -141,7 +162,16 @@
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
+            <build>
+                <testResources>
+                    <testResource>
+                        <directory>src/test/resources</directory>
+                    </testResource>
+                    <testResource>
+                        <directory>src/test/resources-glassfish</directory>
+                    </testResource>
+                </testResources>
+            </build>
         </profile>
     </profiles>
-
 </project>
