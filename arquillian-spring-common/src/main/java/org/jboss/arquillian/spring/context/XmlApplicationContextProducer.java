@@ -17,7 +17,7 @@
 package org.jboss.arquillian.spring.context;
 
 import org.jboss.arquillian.spring.SpringExtensionConsts;
-import org.jboss.arquillian.spring.annotations.SpringConfiguration;
+import org.jboss.arquillian.spring.test.annotation.SpringConfiguration;
 import org.jboss.arquillian.spring.container.SecurityActions;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;

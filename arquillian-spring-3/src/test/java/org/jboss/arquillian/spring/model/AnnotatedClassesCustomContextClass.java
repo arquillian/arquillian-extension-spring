@@ -16,7 +16,7 @@
  */
 package org.jboss.arquillian.spring.model;
 
-import org.jboss.arquillian.spring.annotations.SpringAnnotatedConfiguration;
+import org.jboss.arquillian.spring.test.annotation.SpringAnnotatedConfiguration;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**

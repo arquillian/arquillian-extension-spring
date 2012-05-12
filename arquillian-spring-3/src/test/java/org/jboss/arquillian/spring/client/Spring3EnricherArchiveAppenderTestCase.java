@@ -18,9 +18,9 @@ package org.jboss.arquillian.spring.client;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
-import org.jboss.arquillian.spring.annotations.SpringAnnotatedConfiguration;
-import org.jboss.arquillian.spring.annotations.SpringConfiguration;
-import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
+import org.jboss.arquillian.spring.test.annotation.SpringAnnotatedConfiguration;
+import org.jboss.arquillian.spring.test.annotation.SpringConfiguration;
+import org.jboss.arquillian.spring.test.annotation.SpringWebConfiguration;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
 import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfiguration;
 import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfigurationUtils;

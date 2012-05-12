@@ -18,9 +18,9 @@ package org.jboss.arquillian.spring.client;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.spring.SpringExtensionConsts;
-import org.jboss.arquillian.spring.annotations.SpringAnnotatedConfiguration;
-import org.jboss.arquillian.spring.annotations.SpringConfiguration;
-import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
+import org.jboss.arquillian.spring.test.annotation.SpringAnnotatedConfiguration;
+import org.jboss.arquillian.spring.test.annotation.SpringConfiguration;
+import org.jboss.arquillian.spring.test.annotation.SpringWebConfiguration;
 import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfiguration;
 import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfigurationUtils;
 import org.jboss.arquillian.spring.container.SecurityActions;

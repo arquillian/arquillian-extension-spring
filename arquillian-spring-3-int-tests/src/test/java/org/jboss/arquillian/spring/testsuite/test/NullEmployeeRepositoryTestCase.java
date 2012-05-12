@@ -18,7 +18,7 @@ package org.jboss.arquillian.spring.testsuite.test;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.spring.annotations.SpringConfiguration;
+import org.jboss.arquillian.spring.test.annotation.SpringConfiguration;
 import org.jboss.arquillian.spring.testsuite.beans.model.Employee;
 import org.jboss.arquillian.spring.testsuite.beans.repository.EmployeeRepository;
 import org.jboss.arquillian.spring.testsuite.beans.repository.impl.NullEmployeeRepository;

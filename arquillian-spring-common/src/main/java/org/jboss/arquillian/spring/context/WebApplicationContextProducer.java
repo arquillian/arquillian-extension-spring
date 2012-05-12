@@ -17,7 +17,7 @@
 package org.jboss.arquillian.spring.context;
 
 import org.jboss.arquillian.spring.SpringExtensionConsts;
-import org.jboss.arquillian.spring.annotations.SpringWebConfiguration;
+import org.jboss.arquillian.spring.test.annotation.SpringWebConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoader;
