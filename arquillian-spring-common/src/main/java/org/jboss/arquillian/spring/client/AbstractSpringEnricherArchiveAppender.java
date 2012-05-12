@@ -33,7 +33,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public abstract class SpringEnricherArchiveAppender extends CachedAuxilliaryArchiveAppender {
+public abstract class AbstractSpringEnricherArchiveAppender extends CachedAuxilliaryArchiveAppender {
 
     /**
      * <p>Represents the instance of {@link SpringExtensionConfiguration}.</p>
@@ -73,13 +73,22 @@ public abstract class SpringEnricherArchiveAppender extends CachedAuxilliaryArch
      */
     protected void appendProperties(JavaArchive archive) {
 
-        // TODO
-        SpringExtensionRemoteConfiguration remoteConfig = new SpringExtensionRemoteConfiguration();
-        remoteConfig.setCustomContextClass(configuration.get().getCustomContextClass());
-        remoteConfig.setCustomAnnotatedContextClass(configuration.get().getCustomAnnotatedContextClass());
+        SpringExtensionRemoteConfiguration remoteConfig = createRemoteConfiguration();
 
         archive.addAsResource(new StringAsset(SpringExtensionRemoteConfigurationUtils.toString(remoteConfig)),
                 SpringExtensionRemoteConfigurationUtils.SPRING_REMOTE_PROPERTIES);
+    }
+
+    /**
+     * <p>Creates the remote configuration.</p>
+     *
+     * @return the remote configuration
+     */
+    private SpringExtensionRemoteConfiguration createRemoteConfiguration() {
+        SpringExtensionRemoteConfiguration remoteConfig = new SpringExtensionRemoteConfiguration();
+        remoteConfig.setCustomContextClass(configuration.get().getCustomContextClass());
+        remoteConfig.setCustomAnnotatedContextClass(configuration.get().getCustomAnnotatedContextClass());
+        return remoteConfig;
     }
 
     /**

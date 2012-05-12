@@ -53,6 +53,11 @@ public class AnnotatedApplicationContextProducerTestCase {
     private AnnotatedApplicationContextProducer instance;
 
     /**
+     * <p>Represents the producer configuration.</p>
+     */
+    private SpringExtensionRemoteConfiguration extensionRemoteConfiguration;
+
+    /**
      * <p>Sets up the test environment.</p>
      *
      * @throws Exception if any error occurs
@@ -62,7 +67,7 @@ public class AnnotatedApplicationContextProducerTestCase {
 
         instance = new AnnotatedApplicationContextProducer();
 
-        SpringExtensionRemoteConfiguration extensionRemoteConfiguration = new SpringExtensionRemoteConfiguration();
+        extensionRemoteConfiguration = new SpringExtensionRemoteConfiguration();
 
         Instance<SpringExtensionRemoteConfiguration> mockExtensionRemoteConfigurationInstance = mock(Instance.class);
         when(mockExtensionRemoteConfigurationInstance.get()).thenReturn(extensionRemoteConfiguration);
@@ -104,8 +109,91 @@ public class AnnotatedApplicationContextProducerTestCase {
      * <p>Tests the {@link AnnotatedApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      */
     @Test
+    public void testCreateApplicationContextCustomContextClassesConfiguration() {
+        TestClass testClass = new TestClass(ClassesAnnotatedClass.class);
+
+        extensionRemoteConfiguration.setCustomAnnotatedContextClass(
+                "org.springframework.context.annotation.AnnotationConfigApplicationContext");
+
+        TestScopeApplicationContext result = instance.createApplicationContext(testClass);
+
+        assertNotNull("The result was null.", result);
+        assertTrue("The application context should be marked as closable.", result.isClosable());
+        assertNotNull("The application context hasn't been created.", result.getApplicationContext());
+    }
+
+    /**
+     * <p>Tests the {@link AnnotatedApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     *
+     * <p>{@link RuntimeException} is expected.</p>
+     */
+    @Test(expected = RuntimeException.class)
+    public void testCreateApplicationContextCustomContextClassesConfigurationError() {
+        TestClass testClass = new TestClass(ClassesAnnotatedClass.class);
+
+        extensionRemoteConfiguration.setCustomAnnotatedContextClass(
+                "invalid class name");
+
+        instance.createApplicationContext(testClass);
+    }
+
+    /**
+     * <p>Tests the {@link AnnotatedApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     */
+    @Test
+    public void testCreateApplicationContextCustomContextPackagesConfiguration() {
+        TestClass testClass = new TestClass(PackagesAnnotatedClass.class);
+
+        extensionRemoteConfiguration.setCustomAnnotatedContextClass(
+                "org.springframework.context.annotation.AnnotationConfigApplicationContext");
+
+        TestScopeApplicationContext result = instance.createApplicationContext(testClass);
+
+        assertNotNull("The result was null.", result);
+        assertTrue("The application context should be marked as closable.", result.isClosable());
+        assertNotNull("The application context hasn't been created.", result.getApplicationContext());
+    }
+
+    /**
+     * <p>Tests the {@link AnnotatedApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     *
+     * <p>{@link RuntimeException} is expected.</p>
+     */
+    @Test(expected = RuntimeException.class)
+    public void testCreateApplicationContextCustomContextPackagesConfigurationError() {
+        TestClass testClass = new TestClass(PackagesAnnotatedClass.class);
+
+        extensionRemoteConfiguration.setCustomAnnotatedContextClass(
+                "invalid class name");
+
+        instance.createApplicationContext(testClass);
+    }
+
+    /**
+     * <p>Tests the {@link AnnotatedApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     */
+    @Test
     public void testCreateApplicationContextCustomContextClasses() {
         TestClass testClass = new TestClass(AnnotatedClassesCustomContextClass.class);
+
+        TestScopeApplicationContext result = instance.createApplicationContext(testClass);
+
+        assertNotNull("The result was null.", result);
+        assertTrue("The application context should be marked as closable.", result.isClosable());
+        assertNotNull("The application context hasn't been created.", result.getApplicationContext());
+    }
+
+    /**
+     * <p>Tests the {@link AnnotatedApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     *
+     * <p>{@link RuntimeException} is expected.</p>
+     */
+    @Test(expected = RuntimeException.class)
+    public void testCreateApplicationContextCustomContextClassesConfigurationAndAnnotation() {
+        TestClass testClass = new TestClass(AnnotatedClassesCustomContextClass.class);
+
+        extensionRemoteConfiguration.setCustomAnnotatedContextClass(
+                "invalid class name");
 
         TestScopeApplicationContext result = instance.createApplicationContext(testClass);
 
@@ -120,6 +208,25 @@ public class AnnotatedApplicationContextProducerTestCase {
     @Test
     public void testCreateApplicationContextCustomContextPackages() {
         TestClass testClass = new TestClass(AnnotatedPackagesCustomContextClass.class);
+
+        TestScopeApplicationContext result = instance.createApplicationContext(testClass);
+
+        assertNotNull("The result was null.", result);
+        assertTrue("The application context should be marked as closable.", result.isClosable());
+        assertNotNull("The application context hasn't been created.", result.getApplicationContext());
+    }
+
+    /**
+     * <p>Tests the {@link AnnotatedApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     *
+     * <p>{@link RuntimeException} is expected.</p>
+     */
+    @Test(expected = RuntimeException.class)
+    public void testCreateApplicationContextCustomContextPackagesConfigurationAndAnnotation() {
+        TestClass testClass = new TestClass(AnnotatedPackagesCustomContextClass.class);
+
+        extensionRemoteConfiguration.setCustomAnnotatedContextClass(
+                "invalid class name");
 
         TestScopeApplicationContext result = instance.createApplicationContext(testClass);
 

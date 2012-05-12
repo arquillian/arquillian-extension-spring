@@ -20,7 +20,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.spring.annotations.SpringConfiguration;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.spring.vfs.context.VFSClassPathXmlApplicationContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -16,8 +16,18 @@
  */
 package org.jboss.arquillian.spring.container;
 
+import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.spring.configuration.SpringExtensionRemoteConfiguration;
+import org.jboss.arquillian.spring.utils.TestReflectionHelper;
+import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  * <p>Tests {@link SpringExtensionRemoteConfigurationProducer} class.</p>
@@ -42,10 +52,27 @@ public class SpringExtensionRemoteConfigurationProducerTestCase {
 
     /**
      * <p>Tests the {@link SpringExtensionRemoteConfigurationProducer#initRemoteConfiguration(BeforeSuite)}</p>
+     *
+     * @throws Exception if any error occurs
      */
     @Test
-    public void testInitRemoteConfiguration() {
+    public void testInitRemoteConfiguration() throws Exception {
 
-        // TODO implement
+        BeforeSuite event = new BeforeSuite();
+
+        InstanceProducer<SpringExtensionRemoteConfiguration> mockProducer = mock(InstanceProducer.class);
+        TestReflectionHelper.setFieldValue(instance, "remoteConfiguration", mockProducer);
+
+        instance.initRemoteConfiguration(event);
+
+        ArgumentCaptor<SpringExtensionRemoteConfiguration> argument =
+                ArgumentCaptor.forClass(SpringExtensionRemoteConfiguration.class);
+        verify(mockProducer).set(argument.capture());
+
+        assertNotNull("The result was null.", argument.getValue());
+        assertEquals("The custom context class name is incorrect.", "testCustomContextClass",
+                argument.getValue().getCustomContextClass());
+        assertEquals("The custom annotated context class name is incorrect.", "testCustomAnnotatedContextClass",
+                argument.getValue().getCustomAnnotatedContextClass());
     }
 }

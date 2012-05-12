@@ -51,6 +51,11 @@ public class XmlApplicationContextProducerTestCase {
     private XmlApplicationContextProducer instance;
 
     /**
+     * <p>The producer configuration.</p>
+     */
+    private SpringExtensionRemoteConfiguration extensionRemoteConfiguration;
+
+    /**
      * <p>Sets up the test environment.</p>
      *
      * @throws Exception if any error occurs
@@ -60,7 +65,7 @@ public class XmlApplicationContextProducerTestCase {
 
         instance = new XmlApplicationContextProducer();
 
-        SpringExtensionRemoteConfiguration extensionRemoteConfiguration = new SpringExtensionRemoteConfiguration();
+        extensionRemoteConfiguration = new SpringExtensionRemoteConfiguration();
 
         Instance<SpringExtensionRemoteConfiguration> mockExtensionRemoteConfigurationInstance = mock(Instance.class);
         when(mockExtensionRemoteConfigurationInstance.get()).thenReturn(extensionRemoteConfiguration);
@@ -105,6 +110,37 @@ public class XmlApplicationContextProducerTestCase {
      * <p>Tests the {@link XmlApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      */
     @Test
+    public void testCreateApplicationContextCustomContextConfiguration() {
+        TestClass testClass = new TestClass(XmlAnnotatedClass.class);
+
+        extensionRemoteConfiguration.setCustomContextClass(
+                "org.springframework.context.support.ClassPathXmlApplicationContext");
+
+        TestScopeApplicationContext result = instance.createApplicationContext(testClass);
+
+        assertNotNull("The result was null.", result);
+        assertTrue("The application context should be marked as closable.", result.isClosable());
+        assertNotNull("The application context hasn't been created.", result.getApplicationContext());
+    }
+
+    /**
+     * <p>Tests the {@link XmlApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     *
+     * <p>{@link RuntimeException} is expected.</p>
+     */
+    @Test(expected = RuntimeException.class)
+    public void testCreateApplicationContextCustomContextConfigurationError() {
+        TestClass testClass = new TestClass(XmlAnnotatedClass.class);
+
+        extensionRemoteConfiguration.setCustomContextClass("invalid class name");
+
+        instance.createApplicationContext(testClass);
+    }
+
+    /**
+     * <p>Tests the {@link XmlApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     */
+    @Test
     public void testCreateApplicationContextCustomContext() {
         TestClass testClass = new TestClass(XmlAnnotatedCustomContextClass.class);
 
@@ -114,6 +150,25 @@ public class XmlApplicationContextProducerTestCase {
         assertTrue("The application context should be marked as closable.", result.isClosable());
         assertNotNull("The application context hasn't been created.", result.getApplicationContext());
     }
+
+    /**
+     * <p>Tests the {@link XmlApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     *
+     * <p>{@link RuntimeException} is expected.</p>
+     */
+    @Test(expected = RuntimeException.class)
+    public void testCreateApplicationContextCustomContextConfigurationAndAnnotation() {
+        TestClass testClass = new TestClass(XmlAnnotatedCustomContextClass.class);
+
+        extensionRemoteConfiguration.setCustomContextClass("invalid class name");
+
+        TestScopeApplicationContext result = instance.createApplicationContext(testClass);
+
+        assertNotNull("The result was null.", result);
+        assertTrue("The application context should be marked as closable.", result.isClosable());
+        assertNotNull("The application context hasn't been created.", result.getApplicationContext());
+    }
+
 
     /**
      * <p>Tests the {@link XmlApplicationContextProducer#createApplicationContext(TestClass)} method.</p>

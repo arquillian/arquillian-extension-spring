@@ -16,6 +16,14 @@
  */
 package org.jboss.arquillian.spring.configuration;
 
+import org.junit.Test;
+
+import java.io.File;
+import java.io.FileInputStream;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 /**
  * <p>Tests {@link SpringExtensionRemoteConfigurationUtils} class.</p>
  *
@@ -24,24 +32,51 @@ package org.jboss.arquillian.spring.configuration;
 public class SpringExtensionRemoteConfigurationUtilsTestCase {
 
     /**
-     * <p>Represents the instance of tested class.</p>
+     * <p>Tests {@link SpringExtensionRemoteConfigurationUtils#toString(SpringExtensionRemoteConfiguration)}
+     * method.</p>
      */
-    private SpringExtensionRemoteConfigurationUtils instance;
+    @Test
+    public void testToStringEmpty() {
+
+        SpringExtensionRemoteConfiguration config = new SpringExtensionRemoteConfiguration();
+
+        String result = SpringExtensionRemoteConfigurationUtils.toString(config);
+
+        assertNotNull("The result was null.", result);
+    }
 
     /**
      * <p>Tests {@link SpringExtensionRemoteConfigurationUtils#toString(SpringExtensionRemoteConfiguration)}
      * method.</p>
      */
+    @Test
     public void testToString() {
 
-        // TODO implement
+        SpringExtensionRemoteConfiguration config = new SpringExtensionRemoteConfiguration();
+        config.setCustomContextClass("customContextClass");
+        config.setCustomContextClass("customAnnotatedContextClass");
+
+        String result = SpringExtensionRemoteConfigurationUtils.toString(config);
+
+        assertNotNull("The result was null.", result);
     }
 
     /**
      * <p>Tests {@link SpringExtensionRemoteConfigurationUtils#loadResource(java.io.InputStream)} method.</p>
+     *
+     * @throws Exception if any error occurs
      */
-    public void testLoadResource() {
+    @Test
+    public void testLoadResource() throws Exception {
 
-        // TODO implement
+        SpringExtensionRemoteConfiguration result = SpringExtensionRemoteConfigurationUtils.loadResource(
+                new FileInputStream(new File("src/test/resources",
+                        "arquillian-spring-remote-configuration.properties")));
+
+        assertNotNull("The result was null.", result);
+        assertEquals("The custom context class name is incorrect.", "testCustomContextClass",
+                result.getCustomContextClass());
+        assertEquals("The custom annotated context class name is incorrect.", "testCustomAnnotatedContextClass",
+                result.getCustomAnnotatedContextClass());
     }
 }

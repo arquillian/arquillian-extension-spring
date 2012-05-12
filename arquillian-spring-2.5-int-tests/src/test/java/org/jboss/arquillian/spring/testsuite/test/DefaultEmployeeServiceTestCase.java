@@ -23,7 +23,6 @@ import org.jboss.arquillian.spring.testsuite.beans.model.Employee;
 import org.jboss.arquillian.spring.testsuite.beans.service.EmployeeService;
 import org.jboss.arquillian.spring.testsuite.beans.service.impl.DefaultEmployeeService;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.spring.vfs.context.VFSClassPathXmlApplicationContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +49,7 @@ public class DefaultEmployeeServiceTestCase {
     @Deployment
     public static Archive createTestArchive() {
 
-        Archive archive = Deployments.createServicesDeployment();
-
-        return archive;
+        return Deployments.createServicesDeployment();
     }
 
     /**

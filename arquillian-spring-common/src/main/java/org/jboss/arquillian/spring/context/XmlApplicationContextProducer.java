@@ -93,7 +93,8 @@ public class XmlApplicationContextProducer extends AbstractApplicationContextPro
         if (getRemoteConfiguration().getCustomContextClass() != null
                 && getRemoteConfiguration().getCustomContextClass().trim().length() > 0) {
 
-            return SecurityActions.classForName(getRemoteConfiguration().getCustomContextClass());
+            return (Class<? extends ApplicationContext>)
+                    SecurityActions.classForName(getRemoteConfiguration().getCustomContextClass());
         }
 
         return null;
@@ -113,7 +114,7 @@ public class XmlApplicationContextProducer extends AbstractApplicationContextPro
         try {
             Constructor<T> ctor = applicationContextClass.getConstructor(String[].class);
 
-            return (T) ctor.newInstance((Object) locations);
+            return ctor.newInstance((Object) locations);
         } catch (NoSuchMethodException e) {
 
             throw new RuntimeException("Could not create instance of " + applicationContextClass.getName()

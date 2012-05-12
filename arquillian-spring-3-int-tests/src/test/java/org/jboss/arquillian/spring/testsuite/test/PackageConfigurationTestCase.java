@@ -39,8 +39,8 @@ import static org.junit.Assert.assertNotNull;
  */
 @RunWith(Arquillian.class)
 @SpringAnnotatedConfiguration(packages = {
-    "org.jboss.arquillian.spring.testsuite.beans.repository.impl",
-    "org.jboss.arquillian.spring.testsuite.beans.service.impl"
+        "org.jboss.arquillian.spring.testsuite.beans.repository.impl",
+        "org.jboss.arquillian.spring.testsuite.beans.service.impl"
 })
 public class PackageConfigurationTestCase {
 

@@ -54,19 +54,33 @@ public final class SecurityActions {
         }
     }
 
+    /**
+     * <p>Loads the resources using the executing thread class loader.</p>
+     *
+     * @param resourceName the resource name
+     *
+     * @return the loaded resource as stream
+     */
     public static InputStream getResource(String resourceName) {
 
         return getThreadContextClassLoader().getResourceAsStream(resourceName);
     }
 
-    public static <T> Class<T> classForName(String name) {
+    /**
+     * <p>Loads the class by it's name.</p>
+     *
+     * @param name the class name
+     *
+     * @return the loaded class
+     */
+    public static Class<?> classForName(String name) {
 
         try {
             ClassLoader classLoader = getThreadContextClassLoader();
-            return (Class<T>) classLoader.loadClass(name);
+            return classLoader.loadClass(name);
         } catch (ClassNotFoundException e) {
 
-            throw new RuntimeException("Could not create load class " + name, e);
+            throw new RuntimeException("Could not load class by name " + name, e);
         }
     }
 

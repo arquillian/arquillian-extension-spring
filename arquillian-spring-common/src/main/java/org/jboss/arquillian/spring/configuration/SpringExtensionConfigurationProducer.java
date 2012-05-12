@@ -55,7 +55,8 @@ public class SpringExtensionConfigurationProducer {
      *
      * @param beforeSuiteEvent the event fired before execution of the test suite
      */
-    public void initConfiguration(@Observes(precedence = SpringExtensionConsts.INIT_PRECEDENCE) BeforeSuite beforeSuiteEvent) {
+    public void initConfiguration(@Observes(precedence = SpringExtensionConsts.INIT_PRECEDENCE)
+                                  BeforeSuite beforeSuiteEvent) {
 
         SpringExtensionConfiguration config = getConfiguration(descriptor);
 
@@ -109,7 +110,7 @@ public class SpringExtensionConfigurationProducer {
             }
         }
 
-        return Collections.<String, String>emptyMap();
+        return Collections.emptyMap();
     }
 
     /**

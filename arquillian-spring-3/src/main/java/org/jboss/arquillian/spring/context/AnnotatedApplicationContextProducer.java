@@ -64,7 +64,7 @@ public class AnnotatedApplicationContextProducer extends AbstractApplicationCont
 
         String[] packages = springConfiguration.packages();
         Class<?>[] classes = springConfiguration.classes();
-        Class<?> customAnnotatedContextClass;
+        Class<? extends ApplicationContext> customAnnotatedContextClass;
 
         customAnnotatedContextClass = getCustomAnnotatedContextClass();
         if (springConfiguration.contextClass() != ApplicationContext.class) {
@@ -74,7 +74,7 @@ public class AnnotatedApplicationContextProducer extends AbstractApplicationCont
         if (customAnnotatedContextClass != null) {
 
             // creates custom annotated application context
-            return createCustomAnnotatedApplicationContext(testClass, springConfiguration.contextClass(), classes, packages);
+            return createCustomAnnotatedApplicationContext(testClass, customAnnotatedContextClass, classes, packages);
         }
 
         // creates standard spring annotated application context
@@ -89,8 +89,9 @@ public class AnnotatedApplicationContextProducer extends AbstractApplicationCont
     private Class<? extends ApplicationContext> getCustomAnnotatedContextClass() {
 
         if (getRemoteConfiguration().getCustomAnnotatedContextClass() != null
-                && getRemoteConfiguration().getCustomContextClass().trim().length() > 0) {
-            return SecurityActions.classForName(getRemoteConfiguration().getCustomAnnotatedContextClass());
+                && getRemoteConfiguration().getCustomAnnotatedContextClass().trim().length() > 0) {
+            return (Class<? extends ApplicationContext>)
+                    SecurityActions.classForName(getRemoteConfiguration().getCustomAnnotatedContextClass());
         }
 
         return null;

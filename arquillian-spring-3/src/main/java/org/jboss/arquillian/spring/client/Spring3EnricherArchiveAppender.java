@@ -41,7 +41,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class Spring3EnricherArchiveAppender extends SpringEnricherArchiveAppender {
+public class Spring3EnricherArchiveAppender extends AbstractSpringEnricherArchiveAppender {
 
     /**
      * {@inheritDoc}

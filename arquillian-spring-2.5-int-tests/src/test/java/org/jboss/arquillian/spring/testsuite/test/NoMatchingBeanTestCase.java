@@ -22,7 +22,6 @@ import org.jboss.arquillian.spring.annotations.SpringConfiguration;
 import org.jboss.arquillian.spring.testsuite.beans.repository.impl.DefaultEmployeeRepository;
 import org.jboss.arquillian.spring.testsuite.beans.service.EmployeeService;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.spring.vfs.context.VFSClassPathXmlApplicationContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
