@@ -35,19 +35,9 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- servlet-api not needed since it comes with the container profile -->
-        <!--
-        <dependency>
-            <groupId>org.jboss.javaee</groupId>
-            <artifactId>jboss-servlet-api</artifactId>
-            <version>2.5.0.GA</version>
-            <scope>provided</scope>
-        </dependency>
-        -->
-
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-spring-2.5</artifactId>
+            <artifactId>arquillian-service-deployer-spring-2.5</artifactId>
             <scope>test</scope>
         </dependency>
 

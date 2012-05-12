@@ -42,7 +42,7 @@
 
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-spring-common</artifactId>
+            <artifactId>arquillian-service-deployer-spring-common</artifactId>
         </dependency>
 
         <dependency>

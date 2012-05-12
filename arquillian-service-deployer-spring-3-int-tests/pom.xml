@@ -37,7 +37,7 @@
 
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-spring-3</artifactId>
+            <artifactId>arquillian-service-deployer-spring-3</artifactId>
             <scope>test</scope>
         </dependency>
 
