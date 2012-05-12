@@ -48,6 +48,8 @@ It's posible to modify the default behaviour of the extension and set the fallow
   in JBoss AS (https://jira.springsource.org/browse/SPR-7197)
 * Name of custom context classes to be used instead of Spring's ClassPathXmlApplicationContext and AnnotationConfigApplicationContext.
 
+All the properties are optional.
+
 Note: When using the extension with Maven the artifacts version is being read from POM file directly. Modifying the
 version in the arquillian.xml will have no effect. It's intention is to support other then Maven build systems.
 
@@ -61,26 +63,28 @@ Example:
 
     <extension qualifier="spring">
 
-        <!-- The version of Spring artifact, will be used for auto package the spring-context and spring-web,
+        <!-- The version of Spring artifact, will be used for auto package the spring-context and spring-web, optional
          default is 3.1.1.RELEASE -->
         <property name="springVersion">3.0.0.RELEASE</property>
 
-        <!-- The version of CGLIB artifact, required by Java-based config, default is 2.2.2 -->
+        <!-- The version of CGLIB artifact - required by Java-based config, optional, default is 2.2.2 -->
         <property name="cglibVersion">2.2</property>
 
-        <!-- Whether to auto package the dependencies, default is true -->
+        <!-- Whether to auto package the dependencies, optional, default is true -->
         <property name="autoPackage">true</property>
 
-        <!-- Whether to include the snowdrop in test deployment, default is false -->
+        <!-- Whether to include the snowdrop in test deployment, optional, default is false -->
         <property name="includeSnowdrop">true</property>
 
-        <!-- The version of the Snowdrop artifact, default is 2.0.3.Final -->
+        <!-- The version of the Snowdrop artifact, optional, default is 2.0.3.Final -->
         <property name="snowdropVersion">2.0.3.Final</property>
 
-        <!-- The name of custom context class -->
+        <!-- The name of custom context class, optional, when not specified
+         then org.springframework.context.support.ClassPathXmlApplicationContext will be used -->
         <property name="customContextClass">org.springframework.context.support.ClassPathXmlApplicationContext</property>
 
-        <!-- The name of custom context class -->
+        <!-- The name of custom context class, optional, when not specified then
+         org.springframework.context.annotation.AnnotationConfigApplicationContext -->
         <property name="customAnnotatedContextClass">org.springframework.context.annotation.AnnotationConfigApplicationContext</property>
     </extension>
 </arquillian>
