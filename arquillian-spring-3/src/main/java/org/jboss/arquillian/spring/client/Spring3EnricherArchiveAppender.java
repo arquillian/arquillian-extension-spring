@@ -17,7 +17,7 @@
 package org.jboss.arquillian.spring.client;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.spring.SpringExtensionConsts;
+import org.jboss.arquillian.spring.SpringExtensionConstants;
 import org.jboss.arquillian.spring.test.annotation.SpringAnnotatedConfiguration;
 import org.jboss.arquillian.spring.test.annotation.SpringConfiguration;
 import org.jboss.arquillian.spring.test.annotation.SpringWebConfiguration;
@@ -57,7 +57,7 @@ public class Spring3EnricherArchiveAppender extends AbstractSpringEnricherArchiv
                         SpringExtensionRemoteConfigurationProducer.class)
                 .addClasses(SpringExtensionRemoteConfiguration.class, SpringExtensionRemoteConfigurationUtils.class)
                 .addClasses(Spring3EnricherRemoteExtension.class)
-                .addClasses(SpringExtensionConsts.class)
+                .addClasses(SpringExtensionConstants.class)
                 .addAsServiceProvider(RemoteLoadableExtension.class, Spring3EnricherRemoteExtension.class);
     }
 }

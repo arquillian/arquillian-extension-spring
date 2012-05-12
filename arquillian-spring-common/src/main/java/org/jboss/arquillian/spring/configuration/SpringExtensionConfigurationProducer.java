@@ -23,7 +23,7 @@ import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.spring.SpringExtensionConsts;
+import org.jboss.arquillian.spring.SpringExtensionConstants;
 import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 
 import java.util.Collections;
@@ -55,7 +55,7 @@ public class SpringExtensionConfigurationProducer {
      *
      * @param beforeSuiteEvent the event fired before execution of the test suite
      */
-    public void initConfiguration(@Observes(precedence = SpringExtensionConsts.INIT_PRECEDENCE)
+    public void initConfiguration(@Observes(precedence = SpringExtensionConstants.INIT_PRECEDENCE)
                                   BeforeSuite beforeSuiteEvent) {
 
         SpringExtensionConfiguration config = getConfiguration(descriptor);
@@ -76,20 +76,20 @@ public class SpringExtensionConfigurationProducer {
 
         SpringExtensionConfiguration result = new SpringExtensionConfiguration();
         result.setAutoPackaging(getBooleanProperty(properties,
-                SpringExtensionConsts.CONFIGURATION_AUTO_PACKAGE, true));
+                SpringExtensionConstants.CONFIGURATION_AUTO_PACKAGE, true));
         result.setSpringVersion(getStringProperty(properties,
-                SpringExtensionConsts.CONFIGURATION_SPRING_VERSION, null));
+                SpringExtensionConstants.CONFIGURATION_SPRING_VERSION, null));
         result.setCglibVersion(getStringProperty(properties,
-                SpringExtensionConsts.CONFIGURATION_CGLIB_VERSION, null));
+                SpringExtensionConstants.CONFIGURATION_CGLIB_VERSION, null));
         result.setIncludeSnowdrop(getBooleanProperty(properties,
-                SpringExtensionConsts.CONFIGURATION_INCLUDE_SNOWDROP, false));
+                SpringExtensionConstants.CONFIGURATION_INCLUDE_SNOWDROP, false));
         result.setSnowdropVersion(getStringProperty(properties,
-                SpringExtensionConsts.CONFIGURATION_SNOWDROP_VERSION, null));
+                SpringExtensionConstants.CONFIGURATION_SNOWDROP_VERSION, null));
 
         result.setCustomContextClass(getStringProperty(properties,
-                SpringExtensionConsts.CONFIGURATION_CUSTOM_CONTEXT_CLASS, null));
+                SpringExtensionConstants.CONFIGURATION_CUSTOM_CONTEXT_CLASS, null));
         result.setCustomAnnotatedContextClass(getStringProperty(properties,
-                SpringExtensionConsts.CONFIGURATION_CUSTOM_ANNOTATED_CONTEXT_CLASS, null));
+                SpringExtensionConstants.CONFIGURATION_CUSTOM_ANNOTATED_CONTEXT_CLASS, null));
 
         return result;
     }
@@ -104,7 +104,7 @@ public class SpringExtensionConfigurationProducer {
     private Map<String, String> getExtensionProperties(ArquillianDescriptor desc) {
         for (ExtensionDef extensionDef : desc.getExtensions()) {
 
-            if (SpringExtensionConsts.EXTESION_CONFIGURATION_PREFIX.equals(extensionDef.getExtensionName())) {
+            if (SpringExtensionConstants.EXTESION_CONFIGURATION_PREFIX.equals(extensionDef.getExtensionName())) {
 
                 return extensionDef.getExtensionProperties();
             }

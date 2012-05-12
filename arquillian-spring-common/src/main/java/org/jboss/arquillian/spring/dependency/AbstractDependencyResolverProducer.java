@@ -21,7 +21,7 @@ import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.spring.SpringExtensionConsts;
+import org.jboss.arquillian.spring.SpringExtensionConstants;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
 import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 
@@ -61,7 +61,7 @@ public abstract class AbstractDependencyResolverProducer {
      *
      * @param beforeSuiteEvent the event fired before execution of the test suite
      */
-    public void initDependencyResolver(@Observes(precedence = SpringExtensionConsts.DEFAULT_PRECEDENCE) BeforeSuite beforeSuiteEvent) {
+    public void initDependencyResolver(@Observes(precedence = SpringExtensionConstants.DEFAULT_PRECEDENCE) BeforeSuite beforeSuiteEvent) {
 
         AbstractDependencyResolver abstractDependencyResolver = createDependencyResolver();
 

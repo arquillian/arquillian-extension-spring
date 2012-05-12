@@ -18,7 +18,7 @@ package org.jboss.arquillian.spring.container;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.spring.SpringExtensionConsts;
+import org.jboss.arquillian.spring.SpringExtensionConstants;
 import org.jboss.arquillian.spring.context.TestScopeApplicationContext;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -52,7 +52,7 @@ public class SpringInjectionEnricher implements TestEnricher {
     @Override
     public void enrich(Object testCase) {
 
-        if (SecurityActions.isClassPresent(SpringExtensionConsts.APPLICATION_CONTEXT)
+        if (SecurityActions.isClassPresent(SpringExtensionConstants.APPLICATION_CONTEXT)
                 && getApplicationContextExists()) {
             injectClass(testCase);
         }

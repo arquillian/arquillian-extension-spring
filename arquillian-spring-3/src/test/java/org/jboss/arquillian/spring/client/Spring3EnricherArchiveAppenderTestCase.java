@@ -17,7 +17,7 @@
 package org.jboss.arquillian.spring.client;
 
 import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.spring.SpringExtensionConsts;
+import org.jboss.arquillian.spring.SpringExtensionConstants;
 import org.jboss.arquillian.spring.test.annotation.SpringAnnotatedConfiguration;
 import org.jboss.arquillian.spring.test.annotation.SpringConfiguration;
 import org.jboss.arquillian.spring.test.annotation.SpringWebConfiguration;
@@ -69,7 +69,7 @@ public class Spring3EnricherArchiveAppenderTestCase {
             AbstractApplicationContextProducer.class, TestScopeApplicationContext.class, SpringInjectionEnricher.class,
             SecurityActions.class, SpringExtensionRemoteConfigurationProducer.class,
             SpringExtensionRemoteConfiguration.class, SpringExtensionRemoteConfigurationUtils.class,
-            Spring3EnricherRemoteExtension.class, SpringExtensionConsts.class);
+            Spring3EnricherRemoteExtension.class, SpringExtensionConstants.class);
 
     /**
      * <p>Sets up the test environment.</p>

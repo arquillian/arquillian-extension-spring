@@ -16,7 +16,7 @@
  */
 package org.jboss.arquillian.spring.dependency;
 
-import org.jboss.arquillian.spring.Spring25ExtensionConsts;
+import org.jboss.arquillian.spring.SpringExtensionConstants_2_5;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
 
 import java.io.File;
@@ -48,18 +48,18 @@ public class Spring25DependencyResolver extends AbstractDependencyResolver {
         MavenDependencyBuilder mavenDependencyBuilder = new MavenDependencyBuilder();
 
         // adds the spring-context dependencies
-        mavenDependencyBuilder.addDependency(Spring25ExtensionConsts.SPRING_ARTIFACT_NAME,
-                getConfiguration().getSpringVersion(), Spring25ExtensionConsts.SPRING_ARTIFACT_VERSION);
+        mavenDependencyBuilder.addDependency(SpringExtensionConstants_2_5.SPRING_ARTIFACT_NAME,
+                getConfiguration().getSpringVersion(), SpringExtensionConstants_2_5.SPRING_ARTIFACT_VERSION);
 
         // adds spring web dependencies
-        mavenDependencyBuilder.addDependency(Spring25ExtensionConsts.SPRING_ARTIFACT_WEB_NAME,
-                getConfiguration().getSpringVersion(), Spring25ExtensionConsts.SPRING_ARTIFACT_VERSION);
+        mavenDependencyBuilder.addDependency(SpringExtensionConstants_2_5.SPRING_ARTIFACT_WEB_NAME,
+                getConfiguration().getSpringVersion(), SpringExtensionConstants_2_5.SPRING_ARTIFACT_VERSION);
 
         if (getConfiguration().isIncludeSnowdrop()) {
             // adds the snowdrop for testing within JBoss AS
-            mavenDependencyBuilder.addDependency(Spring25ExtensionConsts.SNOWDROP_ARTIFACT_NAME,
-                    getConfiguration().getSnowdropVersion(), Spring25ExtensionConsts.SNOWDROP_ARTIFACT_VERSION,
-                    Spring25ExtensionConsts.SNOWDROP_EXCLUDED_ARTIFACT);
+            mavenDependencyBuilder.addDependency(SpringExtensionConstants_2_5.SNOWDROP_ARTIFACT_NAME,
+                    getConfiguration().getSnowdropVersion(), SpringExtensionConstants_2_5.SNOWDROP_ARTIFACT_VERSION,
+                    SpringExtensionConstants_2_5.SNOWDROP_EXCLUDED_ARTIFACT);
         }
 
         // returns the resolved files

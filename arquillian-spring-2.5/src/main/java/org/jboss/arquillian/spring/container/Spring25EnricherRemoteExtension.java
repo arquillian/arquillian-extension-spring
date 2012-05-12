@@ -17,7 +17,7 @@
 package org.jboss.arquillian.spring.container;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.spring.SpringExtensionConsts;
+import org.jboss.arquillian.spring.SpringExtensionConstants;
 import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
 import org.jboss.arquillian.spring.context.WebApplicationContextProducer;
 import org.jboss.arquillian.spring.context.XmlApplicationContextProducer;
@@ -38,7 +38,7 @@ public class Spring25EnricherRemoteExtension implements RemoteLoadableExtension 
     public void register(ExtensionBuilder builder) {
 
         // loads the extension only if Spring Application Context is in ClassPath
-        if (Validate.classExists(SpringExtensionConsts.APPLICATION_CONTEXT)) {
+        if (Validate.classExists(SpringExtensionConstants.APPLICATION_CONTEXT)) {
             builder.service(TestEnricher.class, SpringInjectionEnricher.class)
                     .observer(SpringExtensionRemoteConfigurationProducer.class)
                     .observer(XmlApplicationContextProducer.class)

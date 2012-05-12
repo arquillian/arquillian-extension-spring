@@ -17,19 +17,19 @@
 package org.jboss.arquillian.spring;
 
 /**
- * <p>Defines consts used by this extension.</p>
+ * <p>Defines constants used by this extension.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public final class SpringExtensionConsts {
+public final class SpringExtensionConstants {
 
     /**
-     * <p>Creates new instance of {@link SpringExtensionConsts}.</p>
+     * <p>Creates new instance of {@link SpringExtensionConstants}.</p>
      *
      * <p>Private constructor prevents from instantiation outside this class.</p>
      */
-    private SpringExtensionConsts() {
+    private SpringExtensionConstants() {
         // empty constructor
     }
 

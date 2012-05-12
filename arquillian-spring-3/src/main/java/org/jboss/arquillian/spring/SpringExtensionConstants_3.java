@@ -17,19 +17,19 @@
 package org.jboss.arquillian.spring;
 
 /**
- * <p>Defines consts used by this extension.</p>
+ * <p>Defines constants used by this extension.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public final class Spring25ExtensionConsts {
+public final class SpringExtensionConstants_3 {
 
     /**
-     * <p>Creates new instance of {@link Spring25ExtensionConsts}.</p>
+     * <p>Creates new instance of {@link SpringExtensionConstants_3}.</p>
      *
      * <p>Private constructor prevents from instantiation outside of this class.</p>
      */
-    private Spring25ExtensionConsts() {
+    private SpringExtensionConstants_3() {
         // empty constructor
     }
 
@@ -46,7 +46,17 @@ public final class Spring25ExtensionConsts {
     /**
      * <p>Represents the default version of the Spring Framework.</p>
      */
-    public static final String SPRING_ARTIFACT_VERSION = "2.5.6";
+    public static final String SPRING_ARTIFACT_VERSION = "3.1.1.RELEASE";
+
+    /**
+     * <p>Represents the CGLIB maven artifact name.</p>
+     */
+    public static final String CGLIB_ARTIFACT_NAME = "cglib:cglib";
+
+    /**
+     * <p>Represents the default CGLIB artifact name.</p>
+     */
+    public static final String CGLIB_ARTIFACT_VERSION = "2.2.2";
 
     /**
      * <p>Represents the Snowdrop maven artifact name.</p>

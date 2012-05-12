@@ -16,7 +16,7 @@
  */
 package org.jboss.arquillian.spring.dependency;
 
-import org.jboss.arquillian.spring.Spring3ExtensionConsts;
+import org.jboss.arquillian.spring.SpringExtensionConstants_3;
 import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
 
 import java.io.File;
@@ -47,22 +47,22 @@ public class Spring3DependencyResolver extends AbstractDependencyResolver {
         MavenDependencyBuilder mavenDependencyBuilder = new MavenDependencyBuilder();
 
         // adds the spring-context dependencies
-        mavenDependencyBuilder.addDependency(Spring3ExtensionConsts.SPRING_ARTIFACT_NAME,
-                getConfiguration().getSpringVersion(), Spring3ExtensionConsts.SPRING_ARTIFACT_VERSION);
+        mavenDependencyBuilder.addDependency(SpringExtensionConstants_3.SPRING_ARTIFACT_NAME,
+                getConfiguration().getSpringVersion(), SpringExtensionConstants_3.SPRING_ARTIFACT_VERSION);
 
         // adds spring web dependencies
-        mavenDependencyBuilder.addDependency(Spring3ExtensionConsts.SPRING_ARTIFACT_WEB_NAME,
-                getConfiguration().getSpringVersion(), Spring3ExtensionConsts.SPRING_ARTIFACT_VERSION);
+        mavenDependencyBuilder.addDependency(SpringExtensionConstants_3.SPRING_ARTIFACT_WEB_NAME,
+                getConfiguration().getSpringVersion(), SpringExtensionConstants_3.SPRING_ARTIFACT_VERSION);
 
         // adds the cglib
-        mavenDependencyBuilder.addDependency(Spring3ExtensionConsts.CGLIB_ARTIFACT_NAME,
-                getConfiguration().getCglibVersion(), Spring3ExtensionConsts.CGLIB_ARTIFACT_VERSION);
+        mavenDependencyBuilder.addDependency(SpringExtensionConstants_3.CGLIB_ARTIFACT_NAME,
+                getConfiguration().getCglibVersion(), SpringExtensionConstants_3.CGLIB_ARTIFACT_VERSION);
 
         if (getConfiguration().isIncludeSnowdrop()) {
             // adds the snowdrop for testing within JBoss AS
-            mavenDependencyBuilder.addDependency(Spring3ExtensionConsts.SNOWDROP_ARTIFACT_NAME,
-                    getConfiguration().getSnowdropVersion(), Spring3ExtensionConsts.SNOWDROP_ARTIFACT_VERSION,
-                    Spring3ExtensionConsts.SNOWDROP_EXCLUDED_ARTIFACT);
+            mavenDependencyBuilder.addDependency(SpringExtensionConstants_3.SNOWDROP_ARTIFACT_NAME,
+                    getConfiguration().getSnowdropVersion(), SpringExtensionConstants_3.SNOWDROP_ARTIFACT_VERSION,
+                    SpringExtensionConstants_3.SNOWDROP_EXCLUDED_ARTIFACT);
         }
 
         // returns the resolved files

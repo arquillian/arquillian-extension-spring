@@ -16,7 +16,7 @@
  */
 package org.jboss.arquillian.spring.context;
 
-import org.jboss.arquillian.spring.SpringExtensionConsts;
+import org.jboss.arquillian.spring.SpringExtensionConstants;
 import org.jboss.arquillian.spring.test.annotation.SpringWebConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
@@ -107,7 +107,7 @@ public class WebApplicationContextProducer extends AbstractApplicationContextPro
 
         // retrieves the application context for the given servlet using it's name
         return (ApplicationContext) servletContext.getAttribute(MessageFormat.format(
-                SpringExtensionConsts.SERVLET_APPLICATION_CONTEXT, servletName));
+                SpringExtensionConstants.SERVLET_APPLICATION_CONTEXT, servletName));
     }
 
 
