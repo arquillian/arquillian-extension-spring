@@ -58,7 +58,7 @@ Alternatively it is possible to set up the context class for all the tests throu
 
         <!-- The name of custom context class, optional, when not specified
          then org.springframework.context.support.ClassPathXmlApplicationContext will be used -->
-        <property name="customContextClass">org.springframework.context.support.ClassPathXmlApplicationContext</property>
+        <property name="customContextClass">org.jboss.spring.vfs.context.VFSClassPathXmlApplicationContext</property>
 
     </extension>
 </arquillian>
