@@ -94,7 +94,7 @@ This done by specifying the init param for dispatcher servlet:
 </web-app>
 ```
 
-When the VFSXmlWebApplicationContext need to be used with ContextLoaderListener then <context-param/> is used instead.
+When the VFSXmlWebApplicationContext need to be used with ContextLoaderListener then context param is used instead.
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
