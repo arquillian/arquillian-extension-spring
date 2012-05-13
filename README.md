@@ -85,7 +85,7 @@ Example:
 
         <!-- The name of custom context class, optional, when not specified then
          org.springframework.context.annotation.AnnotationConfigApplicationContext -->
-        <property name="customAnnotatedContextClass">org.springframework.context.annotation.AnnotationConfigApplicationContext</property>
+        <property name="customAnnotationContextClass">org.springframework.context.annotation.AnnotationConfigApplicationContext</property>
     </extension>
 </arquillian>
 ```

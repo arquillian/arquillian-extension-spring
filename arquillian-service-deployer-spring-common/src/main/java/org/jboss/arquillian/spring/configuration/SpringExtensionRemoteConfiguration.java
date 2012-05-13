@@ -30,9 +30,9 @@ public class SpringExtensionRemoteConfiguration {
     private String customContextClass;
 
     /**
-     * <p>Represents the annotated custom context class name.</p>
+     * <p>Represents the annotation custom context class name.</p>
      */
-    private String customAnnotatedContextClass;
+    private String customAnnotationContextClass;
 
     /**
      * <p>Creates new instance of {@link SpringExtensionRemoteConfiguration} class.</p>
@@ -60,20 +60,20 @@ public class SpringExtensionRemoteConfiguration {
     }
 
     /**
-     * <p>Retrieves the annotated custom context class name.</p>
+     * <p>Retrieves the custom annotation context class name.</p>
      *
-     * @return the annotated custom context class name
+     * @return the custom annotation context class name
      */
-    public String getCustomAnnotatedContextClass() {
-        return customAnnotatedContextClass;
+    public String getCustomAnnotationContextClass() {
+        return customAnnotationContextClass;
     }
 
     /**
-     * <p>Sets the annotated custom context class name.</p>
+     * <p>Sets the custom annotation context class name.</p>
      *
-     * @param customAnnotatedContextClass the annotated custom context class name
+     * @param customAnnotationContextClass the custom annotation context class name
      */
-    public void setCustomAnnotatedContextClass(String customAnnotatedContextClass) {
-        this.customAnnotatedContextClass = customAnnotatedContextClass;
+    public void setCustomAnnotationContextClass(String customAnnotationContextClass) {
+        this.customAnnotationContextClass = customAnnotationContextClass;
     }
 }

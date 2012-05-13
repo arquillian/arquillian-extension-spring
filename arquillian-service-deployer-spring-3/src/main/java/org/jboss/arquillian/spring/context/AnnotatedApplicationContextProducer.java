@@ -64,17 +64,17 @@ public class AnnotatedApplicationContextProducer extends AbstractApplicationCont
 
         String[] packages = springConfiguration.packages();
         Class<?>[] classes = springConfiguration.classes();
-        Class<? extends ApplicationContext> customAnnotatedContextClass;
+        Class<? extends ApplicationContext> customAnnotationContextClass;
 
-        customAnnotatedContextClass = getCustomAnnotatedContextClass();
+        customAnnotationContextClass = getCustomAnnotationContextClass();
         if (springConfiguration.contextClass() != ApplicationContext.class) {
-            customAnnotatedContextClass = springConfiguration.contextClass();
+            customAnnotationContextClass = springConfiguration.contextClass();
         }
 
-        if (customAnnotatedContextClass != null) {
+        if (customAnnotationContextClass != null) {
 
             // creates custom annotated application context
-            return createCustomAnnotatedApplicationContext(testClass, customAnnotatedContextClass, classes, packages);
+            return createCustomAnnotatedApplicationContext(testClass, customAnnotationContextClass, classes, packages);
         }
 
         // creates standard spring annotated application context
@@ -86,12 +86,12 @@ public class AnnotatedApplicationContextProducer extends AbstractApplicationCont
      *
      * @return the custom context class
      */
-    private Class<? extends ApplicationContext> getCustomAnnotatedContextClass() {
+    private Class<? extends ApplicationContext> getCustomAnnotationContextClass() {
 
-        if (getRemoteConfiguration().getCustomAnnotatedContextClass() != null
-                && getRemoteConfiguration().getCustomAnnotatedContextClass().trim().length() > 0) {
+        if (getRemoteConfiguration().getCustomAnnotationContextClass() != null
+                && getRemoteConfiguration().getCustomAnnotationContextClass().trim().length() > 0) {
             return (Class<? extends ApplicationContext>)
-                    SecurityActions.classForName(getRemoteConfiguration().getCustomAnnotatedContextClass());
+                    SecurityActions.classForName(getRemoteConfiguration().getCustomAnnotationContextClass());
         }
 
         return null;

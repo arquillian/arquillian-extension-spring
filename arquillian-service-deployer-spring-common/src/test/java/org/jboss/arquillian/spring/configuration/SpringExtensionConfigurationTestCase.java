@@ -151,18 +151,18 @@ public class SpringExtensionConfigurationTestCase {
     }
 
     /**
-     * <p>Tests both {@link SpringExtensionConfiguration#getCustomAnnotatedContextClass()} and {@link
-     * SpringExtensionConfiguration#setCustomAnnotatedContextClass(String)} method.</p>
+     * <p>Tests both {@link SpringExtensionConfiguration#getCustomAnnotationContextClass()} and {@link
+     * SpringExtensionConfiguration#setCustomAnnotationContextClass(String)} method.</p>
      */
     @Test
-    public void testGetCustomAnnotatedContextClass() {
+    public void testGetCustomAnnotationContextClass() {
 
         String className = "org.springframework.context.annotation.AnnotationConfigApplicationContext";
 
-        assertNull("The default value is incorrect.", instance.getCustomAnnotatedContextClass());
+        assertNull("The default value is incorrect.", instance.getCustomAnnotationContextClass());
 
-        instance.setCustomAnnotatedContextClass(className);
+        instance.setCustomAnnotationContextClass(className);
 
-        assertEquals("Invalid value set.", className, instance.getCustomAnnotatedContextClass());
+        assertEquals("Invalid value set.", className, instance.getCustomAnnotationContextClass());
     }
 }

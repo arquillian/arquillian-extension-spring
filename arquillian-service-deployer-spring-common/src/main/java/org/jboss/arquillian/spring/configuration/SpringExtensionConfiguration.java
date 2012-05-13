@@ -47,9 +47,9 @@ public class SpringExtensionConfiguration {
     private String customContextClass;
 
     /**
-     * <p>Represents the name of the custom annotated context class.</p>
+     * <p>Represents the name of the custom annotation context class.</p>
      */
-    private String customAnnotatedContextClass;
+    private String customAnnotationContextClass;
 
     /**
      * <p>Represents whether to include the Snowdrop.</p>
@@ -161,21 +161,21 @@ public class SpringExtensionConfiguration {
     }
 
     /**
-     * <p>Retrieves the custom annotated context class.</p>
+     * <p>Retrieves the custom annotation context class.</p>
      *
-     * @return custom annotated context class
+     * @return custom annotation context class
      */
-    public String getCustomAnnotatedContextClass() {
-        return customAnnotatedContextClass;
+    public String getCustomAnnotationContextClass() {
+        return customAnnotationContextClass;
     }
 
     /**
-     * <p>Sets custom annotated context class.</p>
+     * <p>Sets custom annotation context class.</p>
      *
-     * @param customAnnotatedContextClass custom annotated context class
+     * @param customAnnotationContextClass custom annotation context class
      */
-    public void setCustomAnnotatedContextClass(String customAnnotatedContextClass) {
-        this.customAnnotatedContextClass = customAnnotatedContextClass;
+    public void setCustomAnnotationContextClass(String customAnnotationContextClass) {
+        this.customAnnotationContextClass = customAnnotationContextClass;
     }
 
     /**

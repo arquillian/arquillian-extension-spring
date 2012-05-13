@@ -91,8 +91,8 @@ public class SpringExtensionConfigurationProducerTestCase {
         assertNull("Invalid cglibVersion property.", argument.getValue().getCglibVersion());
         assertNull("Invalid snowdropVersion property.", argument.getValue().getSnowdropVersion());
         assertNull("Invalid customContextClass property.", argument.getValue().getCustomContextClass());
-        assertNull("Invalid customAnnotatedContextClass property.",
-                argument.getValue().getCustomAnnotatedContextClass());
+        assertNull("Invalid customAnnotationContextClass property.",
+                argument.getValue().getCustomAnnotationContextClass());
     }
 
     /**
@@ -128,9 +128,9 @@ public class SpringExtensionConfigurationProducerTestCase {
         assertEquals("Invalid customContextClass property.",
                 "org.springframework.context.support.ClassPathXmlApplicationContext",
                 argument.getValue().getCustomContextClass());
-        assertEquals("Invalid customAnnotatedContextClass property.",
+        assertEquals("Invalid customAnnotationContextClass property.",
                 "org.springframework.context.annotation.AnnotationConfigApplicationContext",
-                argument.getValue().getCustomAnnotatedContextClass());
+                argument.getValue().getCustomAnnotationContextClass());
     }
 
     private void injectDescriptor(ArquillianDescriptor descriptor) throws IllegalAccessException, NoSuchFieldException {

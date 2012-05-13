@@ -93,7 +93,7 @@ public final class SpringExtensionConstants {
     /**
      * <p>Represents the extension configuration property name.</p>
      */
-    public static final String CONFIGURATION_CUSTOM_ANNOTATED_CONTEXT_CLASS = "customAnnotatedContextClass";
+    public static final String CONFIGURATION_CUSTOM_ANNOTATION_CONTEXT_CLASS = "customAnnotationContextClass";
 
     /**
      * <p>Represents the default precedence of observer class.</p>

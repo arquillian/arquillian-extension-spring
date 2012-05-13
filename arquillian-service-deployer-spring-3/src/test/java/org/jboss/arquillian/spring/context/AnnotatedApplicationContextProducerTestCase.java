@@ -112,7 +112,7 @@ public class AnnotatedApplicationContextProducerTestCase {
     public void testCreateApplicationContextCustomContextClassesConfiguration() {
         TestClass testClass = new TestClass(ClassesAnnotatedClass.class);
 
-        extensionRemoteConfiguration.setCustomAnnotatedContextClass(
+        extensionRemoteConfiguration.setCustomAnnotationContextClass(
                 "org.springframework.context.annotation.AnnotationConfigApplicationContext");
 
         TestScopeApplicationContext result = instance.createApplicationContext(testClass);
@@ -131,7 +131,7 @@ public class AnnotatedApplicationContextProducerTestCase {
     public void testCreateApplicationContextCustomContextClassesConfigurationError() {
         TestClass testClass = new TestClass(ClassesAnnotatedClass.class);
 
-        extensionRemoteConfiguration.setCustomAnnotatedContextClass(
+        extensionRemoteConfiguration.setCustomAnnotationContextClass(
                 "invalid class name");
 
         instance.createApplicationContext(testClass);
@@ -144,7 +144,7 @@ public class AnnotatedApplicationContextProducerTestCase {
     public void testCreateApplicationContextCustomContextPackagesConfiguration() {
         TestClass testClass = new TestClass(PackagesAnnotatedClass.class);
 
-        extensionRemoteConfiguration.setCustomAnnotatedContextClass(
+        extensionRemoteConfiguration.setCustomAnnotationContextClass(
                 "org.springframework.context.annotation.AnnotationConfigApplicationContext");
 
         TestScopeApplicationContext result = instance.createApplicationContext(testClass);
@@ -163,7 +163,7 @@ public class AnnotatedApplicationContextProducerTestCase {
     public void testCreateApplicationContextCustomContextPackagesConfigurationError() {
         TestClass testClass = new TestClass(PackagesAnnotatedClass.class);
 
-        extensionRemoteConfiguration.setCustomAnnotatedContextClass(
+        extensionRemoteConfiguration.setCustomAnnotationContextClass(
                 "invalid class name");
 
         instance.createApplicationContext(testClass);
@@ -192,7 +192,7 @@ public class AnnotatedApplicationContextProducerTestCase {
     public void testCreateApplicationContextCustomContextClassesConfigurationAndAnnotation() {
         TestClass testClass = new TestClass(AnnotatedClassesCustomContextClass.class);
 
-        extensionRemoteConfiguration.setCustomAnnotatedContextClass(
+        extensionRemoteConfiguration.setCustomAnnotationContextClass(
                 "invalid class name");
 
         TestScopeApplicationContext result = instance.createApplicationContext(testClass);
@@ -225,7 +225,7 @@ public class AnnotatedApplicationContextProducerTestCase {
     public void testCreateApplicationContextCustomContextPackagesConfigurationAndAnnotation() {
         TestClass testClass = new TestClass(AnnotatedPackagesCustomContextClass.class);
 
-        extensionRemoteConfiguration.setCustomAnnotatedContextClass(
+        extensionRemoteConfiguration.setCustomAnnotationContextClass(
                 "invalid class name");
 
         TestScopeApplicationContext result = instance.createApplicationContext(testClass);

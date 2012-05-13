@@ -72,7 +72,7 @@ public class SpringExtensionRemoteConfigurationProducerTestCase {
         assertNotNull("The result was null.", argument.getValue());
         assertEquals("The custom context class name is incorrect.", "testCustomContextClass",
                 argument.getValue().getCustomContextClass());
-        assertEquals("The custom annotated context class name is incorrect.", "testCustomAnnotatedContextClass",
-                argument.getValue().getCustomAnnotatedContextClass());
+        assertEquals("The custom annotated context class name is incorrect.", "testCustomAnnotationContextClass",
+                argument.getValue().getCustomAnnotationContextClass());
     }
 }

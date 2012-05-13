@@ -87,7 +87,7 @@ public abstract class AbstractSpringEnricherArchiveAppender extends CachedAuxill
     private SpringExtensionRemoteConfiguration createRemoteConfiguration() {
         SpringExtensionRemoteConfiguration remoteConfig = new SpringExtensionRemoteConfiguration();
         remoteConfig.setCustomContextClass(configuration.get().getCustomContextClass());
-        remoteConfig.setCustomAnnotatedContextClass(configuration.get().getCustomAnnotatedContextClass());
+        remoteConfig.setCustomAnnotationContextClass(configuration.get().getCustomAnnotationContextClass());
         return remoteConfig;
     }
 

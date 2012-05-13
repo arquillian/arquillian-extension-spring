@@ -54,7 +54,7 @@ public class SpringExtensionRemoteConfigurationUtilsTestCase {
 
         SpringExtensionRemoteConfiguration config = new SpringExtensionRemoteConfiguration();
         config.setCustomContextClass("customContextClass");
-        config.setCustomContextClass("customAnnotatedContextClass");
+        config.setCustomContextClass("customAnnotationContextClass");
 
         String result = SpringExtensionRemoteConfigurationUtils.toString(config);
 
@@ -76,7 +76,7 @@ public class SpringExtensionRemoteConfigurationUtilsTestCase {
         assertNotNull("The result was null.", result);
         assertEquals("The custom context class name is incorrect.", "testCustomContextClass",
                 result.getCustomContextClass());
-        assertEquals("The custom annotated context class name is incorrect.", "testCustomAnnotatedContextClass",
-                result.getCustomAnnotatedContextClass());
+        assertEquals("The custom annotation context class name is incorrect.", "testCustomAnnotationContextClass",
+                result.getCustomAnnotationContextClass());
     }
 }

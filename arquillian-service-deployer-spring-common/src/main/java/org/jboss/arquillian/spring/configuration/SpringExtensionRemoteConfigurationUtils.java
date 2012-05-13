@@ -40,9 +40,9 @@ public class SpringExtensionRemoteConfigurationUtils {
     public static final String CUSTOM_CONTEXT_CLASS_PROPERTY_NAME = "customContextClass";
 
     /**
-     * <p>Represents the name of property that stores the custom annotated context class name.</p>
+     * <p>Represents the name of property that stores the custom annotation context class name.</p>
      */
-    public static final String CUSTOM_ANNOTATED_CONTEXT_CLASS_PROPERTY_NAME = "customAnnotatedContextClass";
+    public static final String CUSTOM_ANNOTATION_CONTEXT_CLASS_PROPERTY_NAME = "customAnnotationContextClass";
 
     /**
      * <p>Returns the text representation of the {@link SpringExtensionRemoteConfiguration}.</p>
@@ -58,8 +58,8 @@ public class SpringExtensionRemoteConfigurationUtils {
 
             Properties properties = new Properties();
             setPropertyValue(properties, CUSTOM_CONTEXT_CLASS_PROPERTY_NAME, config.getCustomContextClass());
-            setPropertyValue(properties, CUSTOM_ANNOTATED_CONTEXT_CLASS_PROPERTY_NAME,
-                    config.getCustomAnnotatedContextClass());
+            setPropertyValue(properties, CUSTOM_ANNOTATION_CONTEXT_CLASS_PROPERTY_NAME,
+                    config.getCustomAnnotationContextClass());
 
             properties.store(outputStream, "arquillian-spring-remote-configuration");
 
@@ -88,8 +88,8 @@ public class SpringExtensionRemoteConfigurationUtils {
 
             springExtensionRemoteConfiguration.setCustomContextClass(
                     getPropertyValue(properties, CUSTOM_CONTEXT_CLASS_PROPERTY_NAME));
-            springExtensionRemoteConfiguration.setCustomAnnotatedContextClass(
-                    getPropertyValue(properties, CUSTOM_ANNOTATED_CONTEXT_CLASS_PROPERTY_NAME));
+            springExtensionRemoteConfiguration.setCustomAnnotationContextClass(
+                    getPropertyValue(properties, CUSTOM_ANNOTATION_CONTEXT_CLASS_PROPERTY_NAME));
 
             return springExtensionRemoteConfiguration;
 

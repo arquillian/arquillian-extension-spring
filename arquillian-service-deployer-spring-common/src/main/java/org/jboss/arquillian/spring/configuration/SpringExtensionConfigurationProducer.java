@@ -88,8 +88,8 @@ public class SpringExtensionConfigurationProducer {
 
         result.setCustomContextClass(getStringProperty(properties,
                 SpringExtensionConstants.CONFIGURATION_CUSTOM_CONTEXT_CLASS, null));
-        result.setCustomAnnotatedContextClass(getStringProperty(properties,
-                SpringExtensionConstants.CONFIGURATION_CUSTOM_ANNOTATED_CONTEXT_CLASS, null));
+        result.setCustomAnnotationContextClass(getStringProperty(properties,
+                SpringExtensionConstants.CONFIGURATION_CUSTOM_ANNOTATION_CONTEXT_CLASS, null));
 
         return result;
     }

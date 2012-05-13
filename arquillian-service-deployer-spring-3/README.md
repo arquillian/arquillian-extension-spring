@@ -32,9 +32,9 @@ Example
          then org.springframework.context.support.ClassPathXmlApplicationContext will be used -->
         <property name="customContextClass">org.springframework.context.support.ClassPathXmlApplicationContext</property>
 
-        <!-- The name of custom context class, optional, when not specified then
+        <!-- The name of custom annotation context class, optional, when not specified then
          org.springframework.context.annotation.AnnotationConfigApplicationContext -->
-        <property name="customAnnotatedContextClass">org.springframework.context.annotation.AnnotationConfigApplicationContext</property>
+        <property name="customAnnotationContextClass">org.springframework.context.annotation.AnnotationConfigApplicationContext</property>
     </extension>
 </arquillian>
 ```
