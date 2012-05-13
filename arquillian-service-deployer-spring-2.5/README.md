@@ -64,6 +64,59 @@ Alternatively it is possible to set up the context class for all the tests throu
 </arquillian>
 ```
 
+When running a web application custom context classes need to be registered in web.xml.
+This done by specifying the init param for dispatcher servlet:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+
+    <servlet>
+        <servlet-name>employee</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>
+                org.jboss.spring.vfs.context.VFSXmlWebApplicationContext
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>employee</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+    </servlet-mapping>
+
+</web-app>
+```
+
+When the VFSXmlWebApplicationContext need to be used with ContextLoaderListener then <context-param/> is used instead.
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>
+            org.jboss.spring.vfs.context.VFSXmlWebApplicationContext
+        </param-value>
+    </context-param>
+
+</web-app>
+```
+
 ## Buid
 
 ```
