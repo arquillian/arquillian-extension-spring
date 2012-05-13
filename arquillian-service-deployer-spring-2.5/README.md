@@ -24,6 +24,10 @@ Example
 
         <!-- The version of the Snowdrop artifact, default is 2.0.3.Final -->
         <property name="snowdropVersion">2.0.3.Final</property>
+
+        <!-- The name of custom context class, optional, when not specified
+         then org.springframework.context.support.ClassPathXmlApplicationContext will be used -->
+        <property name="customContextClass">org.springframework.context.support.ClassPathXmlApplicationContext</property>
     </extension>
 </arquillian>
 ```
@@ -40,6 +44,24 @@ public class DefaultEmployeeRepositoryTestCase {
 
     // test code
 }
+```
+
+Alternatively it is possible to set up the context class for all the tests through arquillian.xml.
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://jboss.org/schema/arquillian"
+            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <extension qualifier="spring">
+
+        <!-- The name of custom context class, optional, when not specified
+         then org.springframework.context.support.ClassPathXmlApplicationContext will be used -->
+        <property name="customContextClass">org.springframework.context.support.ClassPathXmlApplicationContext</property>
+
+    </extension>
+</arquillian>
 ```
 
 ## Buid

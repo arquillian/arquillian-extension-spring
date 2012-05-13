@@ -442,3 +442,14 @@ public class EmployeeControllerWebInitTestCase {
 
 * Showcase and working examples
 * Arquillian Persistance Extension integration (https://community.jboss.org/message/733268#733268)
+
+## Build
+
+```
+mvn clean install
+```
+
+Available profiles (for running the integration tests in the container):
+
+* arquillian-jbossas-managed
+* arquillian-jbossas-embedded

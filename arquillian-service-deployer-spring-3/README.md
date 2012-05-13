@@ -27,6 +27,14 @@ Example
 
         <!-- The version of the Snowdrop artifact, default is 2.0.3.Final -->
         <property name="snowdropVersion">2.0.3.Final</property>
+
+        <!-- The name of custom context class, optional, when not specified
+         then org.springframework.context.support.ClassPathXmlApplicationContext will be used -->
+        <property name="customContextClass">org.springframework.context.support.ClassPathXmlApplicationContext</property>
+
+        <!-- The name of custom context class, optional, when not specified then
+         org.springframework.context.annotation.AnnotationConfigApplicationContext -->
+        <property name="customAnnotatedContextClass">org.springframework.context.annotation.AnnotationConfigApplicationContext</property>
     </extension>
 </arquillian>
 ```
