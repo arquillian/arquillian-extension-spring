@@ -452,4 +452,4 @@ mvn clean install
 Available profiles (for running the integration tests in the container):
 
 * arquillian-jbossas-managed
-* arquillian-jbossas-embedded
+* arquillian-glassfish-embedded
