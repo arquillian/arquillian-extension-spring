@@ -48,7 +48,6 @@ public @interface SpringAnnotatedConfiguration {
      */
     String[] packages() default {};
 
-
     /**
      * <p>The custom context class to be used when instantiating the application context.</p>
      */
