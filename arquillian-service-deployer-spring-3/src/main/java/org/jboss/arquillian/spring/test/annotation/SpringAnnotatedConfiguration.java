@@ -39,7 +39,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface SpringAnnotatedConfiguration {
 
     /**
-     * <p>The annotated class that should be loaded with the application context.</p>
+     * <p>The annotated class that should be loaded by the application context.</p>
      */
     Class<?>[] classes() default {};
 
