@@ -39,13 +39,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface SpringAnnotatedConfiguration {
 
     /**
-     * <p>The classes annotated with {@link org.springframework.context.annotation.Configuration} to be loaded.</p>
+     * <p>The annotated class that should be loaded with the application context.</p>
      */
     Class<?>[] classes() default {};
 
     /**
-     * <p>The packages that will scanned for {@link org.springframework.context.annotation.Configuration} annotated
-     * classes.</p>
+     * <p>The packages that will scanned for annotated classes.</p>
      */
     String[] packages() default {};
 
