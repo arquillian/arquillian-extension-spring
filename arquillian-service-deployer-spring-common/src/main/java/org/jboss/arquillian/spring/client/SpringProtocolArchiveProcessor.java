@@ -77,7 +77,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
      * @return true if passed archive is an enterprise archive, false otherwise
      */
     private boolean isEnterpriseArchive(Archive<?> archive) {
-        return archive instanceof EnterpriseArchive;
+        return archive.getName().endsWith(".ear");
     }
 
     /**
@@ -88,7 +88,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
      * @return true if passed archive is an web archive, false otherwise
      */
     private boolean isWebArchive(Archive<?> archive) {
-        return archive instanceof WebArchive;
+        return archive.getName().endsWith(".war");
     }
 
     /**
