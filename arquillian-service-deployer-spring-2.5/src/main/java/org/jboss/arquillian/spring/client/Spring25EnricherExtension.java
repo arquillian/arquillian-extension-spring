@@ -20,7 +20,10 @@ import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiv
 import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.spring.SpringExtensionConstants;
+import org.jboss.arquillian.spring.container.SpringExtensionRemoteConfigurationProducer;
 import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
+import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
+import org.jboss.arquillian.spring.context.XmlApplicationContextProducer;
 import org.jboss.arquillian.spring.dependency.Spring25DependencyResolverProducer;
 import org.jboss.arquillian.test.spi.TestEnricher;
 
@@ -44,9 +47,14 @@ public class Spring25EnricherExtension implements LoadableExtension {
         if (Validate.classExists(SpringExtensionConstants.APPLICATION_CONTEXT)) {
             builder.service(AuxiliaryArchiveAppender.class, Spring25EnricherArchiveAppender.class)
                     .service(ProtocolArchiveProcessor.class, SpringProtocolArchiveProcessor.class)
-                    .service(TestEnricher.class, SpringInjectionEnricher.class)
                     .observer(SpringExtensionConfigurationProducer.class)
                     .observer(Spring25DependencyResolverProducer.class);
+
+            // registers the extension on client side
+            builder.service(TestEnricher.class, SpringInjectionEnricher.class)
+                    .observer(SpringExtensionRemoteConfigurationProducer.class)
+                    .observer(XmlApplicationContextProducer.class)
+                    .observer(ApplicationContextDestroyer.class);
         }
     }
 }

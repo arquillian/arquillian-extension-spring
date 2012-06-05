@@ -19,7 +19,11 @@ package org.jboss.arquillian.spring.client;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
 import org.jboss.arquillian.core.spi.LoadableExtension;
+import org.jboss.arquillian.spring.container.SpringExtensionRemoteConfigurationProducer;
 import org.jboss.arquillian.spring.container.SpringInjectionEnricher;
+import org.jboss.arquillian.spring.context.AnnotatedApplicationContextProducer;
+import org.jboss.arquillian.spring.context.ApplicationContextDestroyer;
+import org.jboss.arquillian.spring.context.XmlApplicationContextProducer;
 import org.jboss.arquillian.spring.dependency.Spring3DependencyResolverProducer;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.junit.Before;
@@ -67,9 +71,14 @@ public class Spring3EnricherExtensionTestCase {
 
         verify(mockExtensionBuilder).service(AuxiliaryArchiveAppender.class, Spring3EnricherArchiveAppender.class);
         verify(mockExtensionBuilder).service(ProtocolArchiveProcessor.class, SpringProtocolArchiveProcessor.class);
-        verify(mockExtensionBuilder).service(TestEnricher.class, SpringInjectionEnricher.class);
         verify(mockExtensionBuilder).observer(SpringExtensionConfigurationProducer.class);
         verify(mockExtensionBuilder).observer(Spring3DependencyResolverProducer.class);
+
+        verify(mockExtensionBuilder).service(TestEnricher.class, SpringInjectionEnricher.class);
+        verify(mockExtensionBuilder).observer(SpringExtensionRemoteConfigurationProducer.class);
+        verify(mockExtensionBuilder).observer(XmlApplicationContextProducer.class);
+        verify(mockExtensionBuilder).observer(AnnotatedApplicationContextProducer.class);
+        verify(mockExtensionBuilder).observer(ApplicationContextDestroyer.class);
 
         verifyNoMoreInteractions(mockExtensionBuilder);
     }
