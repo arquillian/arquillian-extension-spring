@@ -80,16 +80,18 @@ public class SpringExtensionRemoteConfigurationUtils {
     public static SpringExtensionRemoteConfiguration loadResource(InputStream inputStream) {
 
         try {
-            Properties properties = new Properties();
-            properties.load(inputStream);
-
             SpringExtensionRemoteConfiguration springExtensionRemoteConfiguration =
                     new SpringExtensionRemoteConfiguration();
 
-            springExtensionRemoteConfiguration.setCustomContextClass(
-                    getPropertyValue(properties, CUSTOM_CONTEXT_CLASS_PROPERTY_NAME));
-            springExtensionRemoteConfiguration.setCustomAnnotationContextClass(
-                    getPropertyValue(properties, CUSTOM_ANNOTATION_CONTEXT_CLASS_PROPERTY_NAME));
+            if (inputStream != null) {
+                Properties properties = new Properties();
+                properties.load(inputStream);
+
+                springExtensionRemoteConfiguration.setCustomContextClass(
+                        getPropertyValue(properties, CUSTOM_CONTEXT_CLASS_PROPERTY_NAME));
+                springExtensionRemoteConfiguration.setCustomAnnotationContextClass(
+                        getPropertyValue(properties, CUSTOM_ANNOTATION_CONTEXT_CLASS_PROPERTY_NAME));
+            }
 
             return springExtensionRemoteConfiguration;
 
