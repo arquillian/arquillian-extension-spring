@@ -27,12 +27,13 @@
         <module>arquillian-service-deployer-spring-common</module>
         <module>arquillian-service-deployer-spring-2.5</module>
         <module>arquillian-service-deployer-spring-3</module>
-
         <module>arquillian-service-integration-spring</module>
         <module>arquillian-service-integration-spring-inject</module>
         <module>arquillian-service-integration-spring-javaconfig</module>
         <module>arquillian-service-integration-spring-2.5-int-tests</module>
         <module>arquillian-service-integration-spring-3-int-tests</module>
+        <module>arquillian-warp-spring</module>
+        <module>arquillian-warp-spring-ftest</module>
     </modules>
 
     <!-- Properties -->
@@ -43,6 +44,12 @@
 
         <!-- Arquillian Core -->
         <version.arquillian_core>1.0.0.Final</version.arquillian_core>
+
+        <!-- Arquillian Drone -->
+        <version.arquillian_drone>1.0.0.Final</version.arquillian_drone>
+
+        <!-- Arquillian Warp -->
+        <version.arquillian_warp>1.0.0.Alpha1</version.arquillian_warp>
 
         <!-- Test Dependencies -->
         <version.junit_junit>4.8.1</version.junit_junit>
@@ -104,11 +111,52 @@
             </dependency>
 
             <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-warp-spring</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
                 <version>${version.arquillian_core}</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+
+            <!-- Arquillian Drone -->
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-drone-bom</artifactId>
+                <version>${version.arquillian_drone}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Arquillian Warp -->
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-warp-bom</artifactId>
+                <version>${version.arquillian_warp}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>${version.cglib}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>1.0.0.GA</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>4.1.0.Final</version>
             </dependency>
 
             <dependency>
@@ -123,12 +171,6 @@
                 <artifactId>mockito-all</artifactId>
                 <version>${version.mockito_all}</version>
                 <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>cglib</groupId>
-                <artifactId>cglib</artifactId>
-                <version>${version.cglib}</version>
             </dependency>
 
             <!-- Containers dependencies -->
