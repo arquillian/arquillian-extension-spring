@@ -18,7 +18,7 @@ package org.jboss.arquillian.spring.dependency;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
-import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringDeployerConfiguration;
 import org.jboss.arquillian.spring.utils.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 import org.junit.Test;
@@ -53,7 +53,7 @@ public class AbstractDependencyResolverProducerTestCase {
 
         instance = mock(AbstractDependencyResolverProducer.class);
 
-        Instance<SpringExtensionConfiguration> mockConfigurationInstance = mock(Instance.class);
+        Instance<SpringDeployerConfiguration> mockConfigurationInstance = mock(Instance.class);
         TestReflectionHelper.setFieldValue(instance, "configuration", mockConfigurationInstance);
 
         InstanceProducer<AbstractDependencyResolver> mockProducer = mock(InstanceProducer.class);
@@ -80,7 +80,7 @@ public class AbstractDependencyResolverProducerTestCase {
 
         instance = mock(AbstractDependencyResolverProducer.class);
 
-        Instance<SpringExtensionConfiguration> mockConfigurationInstance = mock(Instance.class);
+        Instance<SpringDeployerConfiguration> mockConfigurationInstance = mock(Instance.class);
         TestReflectionHelper.setFieldValue(instance, "configuration", mockConfigurationInstance);
 
         InstanceProducer<AbstractDependencyResolver> mockProducer = mock(InstanceProducer.class);

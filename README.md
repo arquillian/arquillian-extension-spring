@@ -15,40 +15,43 @@
 * Spring 2.5.x
 
 ## Test setup
-Enabling the extension is as simple as adding the fallowing dependency into the project POM.
+The extension is splitted into couple modules. In order to enable the Spring IOC for the Arquillian Tests it
+is required to add the fallowing dependency into the project POM.
 
 ```
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-service-deployer-spring-3</artifactId>
+            <artifactId>arquillian-service-integration-spring-inject</artifactId>
             <version>${arquillian.spring.version}</version>
             <scope>test</scope>
         </dependency>
 ```
 
-Note: For testing Spring 2.5 applications please use arquillian-service-deployer-spring-2.5 instead.
+Java config is also supported and it requires fallowing dependency:
+
+```
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-service-integration-spring-javaconfig</artifactId>
+            <version>${arquillian.spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+```
 
 Each Arquillian test which relies on Spring framework and requires dependency injection of configured beans has to be
 annotated with one of the fallowing:
-``@SpringConfiguration`` - for xml configuration, ``@SpringAnnotatedConfiguration`` - for Java-based configuration
+``@SpringConfiguration`` - for xml configuration, ``@SpringAnnotationConfiguration`` - for Java-based configuration
 and ``@SpringWebConfiguration`` - for web applications.
 The annotation will instruct the test enricher how to initialize the application context, the first two will cause that
-for each test case new application context will be created. @SpringWebConfiguration is used for retrieving the context of
+for each test case new application context will be created. ``@SpringWebConfiguration`` is used for retrieving the context of
 specific Spring FrameworkServlet (e.g. DispatcherServlet) or the root web application context in general.
 
 Note: The annotations may not be mixed with each other, each test will use only one application context.
 
-## Configuration
+### Configuration
 It's posible to modify the default behaviour of the extension and set the fallowing settings through arquillian.xml.
 
-* If the extension should add the spring dependencies by default for each deployment.
-* The version of the maven artifact for the Spring Context and Spring Web.
-* The version of the CGLIB.
-* Whether to include with each test deployment Snowdrop. Snowdrop is required to run Spring prior version 3.0.3
-  in JBoss AS (https://jira.springsource.org/browse/SPR-7197)
 * Name of custom context classes to be used instead of Spring's ClassPathXmlApplicationContext and AnnotationConfigApplicationContext.
-
-All the properties are optional.
 
 Note: When using the extension with Maven the artifacts version is being read from POM file directly. Modifying the
 version in the arquillian.xml will have no effect. It's intention is to support other then Maven build systems.
@@ -62,6 +65,54 @@ Example:
             xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
     <extension qualifier="spring">
+        <!-- The name of custom context class, optional, when not specified
+         then org.springframework.context.support.ClassPathXmlApplicationContext will be used -->
+        <property name="customContextClass">org.springframework.context.support.ClassPathXmlApplicationContext</property>
+
+        <!-- The name of custom context class, optional, when not specified then
+         org.springframework.context.annotation.AnnotationConfigApplicationContext -->
+        <property name="customAnnotationContextClass">org.springframework.context.annotation.AnnotationConfigApplicationContext</property>
+    </extension>
+</arquillian>
+```
+
+## Deployer
+
+Deployer allows to autopackage the Spring Framework artifacts with each test case. By default it adds the
+spring-context and spring-web so they do not need to be added manualy into the test deployments. It comes in two
+different versions for packaging the Spring 3 and 2.5.
+
+When added into the project POM it will from now on enrich each deployment.
+
+```
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-service-integration-deployer-spring-3</artifactId>
+            <version>${arquillian.spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+```
+
+Note: In order to auto package Spring 2.5 please use arquillian-service-integration-deployer-spring-2.5 instead.
+
+### Configuration
+The deployer has it own configuration that allows to set the fallowing settings:
+
+* If the extension should add the spring dependencies by default for each deployment - can be disabled.
+* The version of the maven artifact for the Spring Context and Spring Web.
+* The version of the CGLIB.
+* Whether to include with each test deployment Snowdrop. Snowdrop is required to run Spring prior version 3.0.3
+  in JBoss AS (https://jira.springsource.org/browse/SPR-7197)
+
+Example:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://jboss.org/schema/arquillian"
+            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <extension qualifier="spring-deployer">
 
         <!-- The version of Spring artifact, will be used for auto package the spring-context and spring-web, optional
          default is 3.1.1.RELEASE -->
@@ -78,14 +129,6 @@ Example:
 
         <!-- The version of the Snowdrop artifact, optional, default is 2.0.3.Final -->
         <property name="snowdropVersion">2.0.3.Final</property>
-
-        <!-- The name of custom context class, optional, when not specified
-         then org.springframework.context.support.ClassPathXmlApplicationContext will be used -->
-        <property name="customContextClass">org.springframework.context.support.ClassPathXmlApplicationContext</property>
-
-        <!-- The name of custom context class, optional, when not specified then
-         org.springframework.context.annotation.AnnotationConfigApplicationContext -->
-        <property name="customAnnotationContextClass">org.springframework.context.annotation.AnnotationConfigApplicationContext</property>
     </extension>
 </arquillian>
 ```
@@ -166,7 +209,7 @@ public class AppConfig {
 
 ```java
 @RunWith(Arquillian.class)
-@SpringAnnotatedConfiguration(classes = {AppConfig.class})
+@SpringAnnotationConfiguration(classes = {AppConfig.class})
 public class AnnotatedConfigurationTestCase {
 
     @Deployment
@@ -438,10 +481,9 @@ public class EmployeeControllerWebInitTestCase {
 }
 ```
 
-## TODO
+## Showcase
 
-* Showcase and working examples
-* Arquillian Persistance Extension integration (https://community.jboss.org/message/733268#733268)
+For additional examples please take a look at the [Showcase](https://github.com/arquillian/arquillian-showcase/tree/master/spring)
 
 ## Build
 
@@ -451,5 +493,5 @@ mvn clean install
 
 Available profiles (for running the integration tests in the container):
 
-* arquillian-jbossas-managed
-* arquillian-glassfish-embedded
+* jbossas-managed
+* glassfish-embedded

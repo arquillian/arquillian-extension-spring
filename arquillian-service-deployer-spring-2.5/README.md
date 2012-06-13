@@ -10,7 +10,7 @@ Example
             xmlns="http://jboss.org/schema/arquillian"
             xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
-    <extension qualifier="spring">
+    <extension qualifier="spring-deployer">
 
         <!-- The version of Spring artifact, will be used for auto package the spring-context and spring-web,
          default is 2.5.6 -->
@@ -24,10 +24,6 @@ Example
 
         <!-- The version of the Snowdrop artifact, default is 2.0.3.Final -->
         <property name="snowdropVersion">2.0.3.Final</property>
-
-        <!-- The name of custom context class, optional, when not specified
-         then org.springframework.context.support.ClassPathXmlApplicationContext will be used -->
-        <property name="customContextClass">org.springframework.context.support.ClassPathXmlApplicationContext</property>
     </extension>
 </arquillian>
 ```

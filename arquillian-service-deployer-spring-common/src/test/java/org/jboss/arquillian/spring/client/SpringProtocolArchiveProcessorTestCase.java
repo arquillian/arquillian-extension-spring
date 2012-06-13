@@ -18,7 +18,7 @@ package org.jboss.arquillian.spring.client;
 
 import org.jboss.arquillian.container.test.spi.TestDeployment;
 import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringDeployerConfiguration;
 import org.jboss.arquillian.spring.dependency.AbstractDependencyResolver;
 import org.jboss.arquillian.spring.dependency.MavenDependencyBuilder;
 import org.jboss.arquillian.spring.utils.TestReflectionHelper;
@@ -167,11 +167,11 @@ public class SpringProtocolArchiveProcessorTestCase {
      * @throws Exception if any error occurs
      */
     private void injectConfiguration(boolean autoPackage) throws Exception {
-        SpringExtensionConfiguration extensionConfiguration = new SpringExtensionConfiguration();
-        extensionConfiguration.setAutoPackaging(autoPackage);
+        SpringDeployerConfiguration deployerConfiguration = new SpringDeployerConfiguration();
+        deployerConfiguration.setAutoPackaging(autoPackage);
 
-        Instance<SpringExtensionConfiguration> mockExtensionConfigurationInstance = mock(Instance.class);
-        when(mockExtensionConfigurationInstance.get()).thenReturn(extensionConfiguration);
+        Instance<SpringDeployerConfiguration> mockExtensionConfigurationInstance = mock(Instance.class);
+        when(mockExtensionConfigurationInstance.get()).thenReturn(deployerConfiguration);
         TestReflectionHelper.setFieldValue(instance, "configuration", mockExtensionConfigurationInstance);
 
         MavenDependencyBuilder mavenDependencyBuilder = new MavenDependencyBuilder();
