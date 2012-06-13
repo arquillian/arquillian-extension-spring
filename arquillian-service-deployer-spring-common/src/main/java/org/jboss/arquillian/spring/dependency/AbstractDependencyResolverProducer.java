@@ -21,8 +21,8 @@ import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.spring.SpringExtensionConstants;
-import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
+import org.jboss.arquillian.spring.SpringDeployerConstants;
+import org.jboss.arquillian.spring.configuration.SpringDeployerConfiguration;
 import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 
 /**
@@ -35,10 +35,10 @@ import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 public abstract class AbstractDependencyResolverProducer {
 
     /**
-     * <p>Represents the instance of {@link SpringExtensionConfiguration}.</p>
+     * <p>Represents the instance of {@link SpringDeployerConfiguration}.</p>
      */
     @Inject
-    private Instance<SpringExtensionConfiguration> configuration;
+    private Instance<SpringDeployerConfiguration> configuration;
 
     /**
      * <p>Represents the dependency resolver.</p>
@@ -52,7 +52,7 @@ public abstract class AbstractDependencyResolverProducer {
      *
      * @return the configuration
      */
-    public SpringExtensionConfiguration getConfiguration() {
+    public SpringDeployerConfiguration getConfiguration() {
         return configuration.get() != null ? configuration.get() : null;
     }
 
@@ -61,7 +61,7 @@ public abstract class AbstractDependencyResolverProducer {
      *
      * @param beforeSuiteEvent the event fired before execution of the test suite
      */
-    public void initDependencyResolver(@Observes(precedence = SpringExtensionConstants.DEFAULT_PRECEDENCE) BeforeSuite beforeSuiteEvent) {
+    public void initDependencyResolver(@Observes(precedence = SpringDeployerConstants.INIT_PRECEDENCE) BeforeSuite beforeSuiteEvent) {
 
         AbstractDependencyResolver abstractDependencyResolver = createDependencyResolver();
 

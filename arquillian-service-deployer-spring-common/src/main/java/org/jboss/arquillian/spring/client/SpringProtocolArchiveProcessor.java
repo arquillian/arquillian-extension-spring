@@ -20,7 +20,7 @@ import org.jboss.arquillian.container.test.spi.TestDeployment;
 import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringDeployerConfiguration;
 import org.jboss.arquillian.spring.dependency.AbstractDependencyResolver;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
@@ -38,10 +38,10 @@ import java.io.File;
 public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor {
 
     /**
-     * <p>Represents the instance of {@link SpringExtensionConfiguration}.</p>
+     * <p>Represents the instance of {@link SpringDeployerConfiguration}.</p>
      */
     @Inject
-    private Instance<SpringExtensionConfiguration> configuration;
+    private Instance<SpringDeployerConfiguration> configuration;
 
     /**
      * <p>Represents the instance of {@link AbstractDependencyResolver}.</p>
@@ -115,7 +115,7 @@ public class SpringProtocolArchiveProcessor implements ProtocolArchiveProcessor 
      *
      * @return the extension configuration
      */
-    public SpringExtensionConfiguration getConfiguration() {
+    public SpringDeployerConfiguration getConfiguration() {
 
         return configuration.get();
     }

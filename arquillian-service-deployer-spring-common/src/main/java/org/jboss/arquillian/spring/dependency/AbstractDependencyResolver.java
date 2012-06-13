@@ -16,7 +16,7 @@
  */
 package org.jboss.arquillian.spring.dependency;
 
-import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringDeployerConfiguration;
 
 import java.io.File;
 
@@ -29,16 +29,16 @@ import java.io.File;
 public abstract class AbstractDependencyResolver {
 
     /**
-     * <p>Represents the instance of {@link SpringExtensionConfiguration}.</p>
+     * <p>Represents the instance of {@link SpringDeployerConfiguration}.</p>
      */
-    private SpringExtensionConfiguration configuration;
+    private final SpringDeployerConfiguration configuration;
 
     /**
      * <p>Creates new instance of {@link AbstractDependencyResolver} class with given configuration.</p>
      *
      * @param configuration the extension configuration
      */
-    protected AbstractDependencyResolver(SpringExtensionConfiguration configuration) {
+    protected AbstractDependencyResolver(SpringDeployerConfiguration configuration) {
         this.configuration = configuration;
     }
 
@@ -47,7 +47,7 @@ public abstract class AbstractDependencyResolver {
      *
      * @return the extension configuration
      */
-    public SpringExtensionConfiguration getConfiguration() {
+    public SpringDeployerConfiguration getConfiguration() {
         return configuration;
     }
 

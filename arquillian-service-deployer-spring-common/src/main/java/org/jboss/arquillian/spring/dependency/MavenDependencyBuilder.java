@@ -16,7 +16,7 @@
  */
 package org.jboss.arquillian.spring.dependency;
 
-import org.jboss.arquillian.spring.SpringExtensionConstants;
+import org.jboss.arquillian.spring.SpringDeployerConstants;
 import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 
@@ -37,7 +37,7 @@ public class MavenDependencyBuilder {
     /**
      * <p>The dependencies map.</p>
      */
-    private Map<String, File> dependenciesMap;
+    private final Map<String, File> dependenciesMap;
 
     /**
      * <p>Creates new instance of {@link MavenDependencyBuilder}.</p>
@@ -141,7 +141,7 @@ public class MavenDependencyBuilder {
         MavenDependencyResolver mvnDependencyResolver = DependencyResolvers.use(MavenDependencyResolver.class);
 
         if (isMavenUsed()) {
-            mvnDependencyResolver.loadMetadataFromPom(SpringExtensionConstants.POM_XML);
+            mvnDependencyResolver.loadMetadataFromPom(SpringDeployerConstants.POM_XML);
         }
 
         return mvnDependencyResolver.artifacts(artifact).exclusions(exclusions).resolveAsFiles();
@@ -153,6 +153,6 @@ public class MavenDependencyBuilder {
      * @return true if maven is being used in project, false otherwise
      */
     private boolean isMavenUsed() {
-        return new File(SpringExtensionConstants.POM_XML).exists();
+        return new File(SpringDeployerConstants.POM_XML).exists();
     }
 }
