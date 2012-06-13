@@ -16,7 +16,7 @@
  */
 package org.jboss.arquillian.spring.dependency;
 
-import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringDeployerConfiguration;
 import org.junit.Test;
 
 import java.io.File;
@@ -41,10 +41,10 @@ public class Spring25DependencyResolverTestCase {
     @Test
     public void testResolveDependencies() {
 
-        SpringExtensionConfiguration springExtensionConfiguration = createConfiguration();
-        springExtensionConfiguration.setIncludeSnowdrop(false);
+        SpringDeployerConfiguration springDeployerConfiguration = createConfiguration();
+        springDeployerConfiguration.setIncludeSnowdrop(false);
 
-        instance = new Spring25DependencyResolver(springExtensionConfiguration);
+        instance = new Spring25DependencyResolver(springDeployerConfiguration);
 
         File[] files = instance.resolveDependencies();
 
@@ -57,9 +57,9 @@ public class Spring25DependencyResolverTestCase {
     @Test
     public void testResolveDependenciesIncludeSnowdrop() {
 
-        SpringExtensionConfiguration springExtensionConfiguration = createConfiguration();
+        SpringDeployerConfiguration springDeployerConfiguration = createConfiguration();
 
-        instance = new Spring25DependencyResolver(springExtensionConfiguration);
+        instance = new Spring25DependencyResolver(springDeployerConfiguration);
 
         File[] files = instance.resolveDependencies();
 
@@ -102,16 +102,16 @@ public class Spring25DependencyResolverTestCase {
     }
 
     /**
-     * <p>Creates new instance of {@link SpringExtensionConfiguration}.</p>
+     * <p>Creates new instance of {@link SpringDeployerConfiguration}.</p>
      *
-     * @return the create instance of {@link SpringExtensionConfiguration}
+     * @return the create instance of {@link SpringDeployerConfiguration}
      */
-    private SpringExtensionConfiguration createConfiguration() {
-        SpringExtensionConfiguration springExtensionConfiguration = new SpringExtensionConfiguration();
-        springExtensionConfiguration.setAutoPackaging(true);
-        springExtensionConfiguration.setSpringVersion("3.1.1.RELEASE");
-        springExtensionConfiguration.setCglibVersion("2.2.2");
-        springExtensionConfiguration.setIncludeSnowdrop(true);
-        return springExtensionConfiguration;
+    private SpringDeployerConfiguration createConfiguration() {
+        SpringDeployerConfiguration springDeployerConfiguration = new SpringDeployerConfiguration();
+        springDeployerConfiguration.setAutoPackaging(true);
+        springDeployerConfiguration.setSpringVersion("3.1.1.RELEASE");
+        springDeployerConfiguration.setCglibVersion("2.2.2");
+        springDeployerConfiguration.setIncludeSnowdrop(true);
+        return springDeployerConfiguration;
     }
 }

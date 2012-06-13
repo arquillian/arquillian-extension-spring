@@ -16,7 +16,7 @@
  */
 package org.jboss.arquillian.spring.dependency;
 
-import org.jboss.arquillian.spring.configuration.SpringExtensionConfiguration;
+import org.jboss.arquillian.spring.configuration.SpringDeployerConfiguration;
 import org.junit.Test;
 
 import java.io.File;
@@ -42,9 +42,9 @@ public class AbstractDependencyResolverTestCase {
     @Test
     public void testCtor() {
 
-        SpringExtensionConfiguration extensionConfiguration = new SpringExtensionConfiguration();
+        SpringDeployerConfiguration deployerConfiguration = new SpringDeployerConfiguration();
 
-        instance = new MockDependencyResolver(extensionConfiguration);
+        instance = new MockDependencyResolver(deployerConfiguration);
     }
 
     /**
@@ -53,11 +53,11 @@ public class AbstractDependencyResolverTestCase {
     @Test
     public void testGetConfiguration() {
 
-        SpringExtensionConfiguration extensionConfiguration = new SpringExtensionConfiguration();
+        SpringDeployerConfiguration deployerConfiguration = new SpringDeployerConfiguration();
 
-        instance = new MockDependencyResolver(extensionConfiguration);
+        instance = new MockDependencyResolver(deployerConfiguration);
 
-        assertEquals("Invalid result has been returned.", extensionConfiguration, instance.getConfiguration());
+        assertEquals("Invalid result has been returned.", deployerConfiguration, instance.getConfiguration());
     }
 
     /**
@@ -83,7 +83,7 @@ public class AbstractDependencyResolverTestCase {
          *
          * @param configuration the extension configuration
          */
-        protected MockDependencyResolver(SpringExtensionConfiguration configuration) {
+        protected MockDependencyResolver(SpringDeployerConfiguration configuration) {
             super(configuration);
         }
 

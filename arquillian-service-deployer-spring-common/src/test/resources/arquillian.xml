@@ -5,13 +5,11 @@
         http://jboss.org/schema/arquillian
         http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
-    <extension qualifier="spring">
+    <extension qualifier="spring-deployer">
         <property name="springVersion">3.1.1.RELEASE</property>
         <property name="cglibVersion">2.2.2</property>
         <property name="autoPackage">false</property>
         <property name="includeSnowdrop">true</property>
         <property name="snowdropVersion">2.0.3.Final</property>
-        <property name="customContextClass">org.springframework.context.support.ClassPathXmlApplicationContext</property>
-        <property name="customAnnotationContextClass">org.springframework.context.annotation.AnnotationConfigApplicationContext</property>
     </extension>
 </arquillian>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <!-- Parent -->
     <parent>
         <groupId>org.jboss</groupId>
         <artifactId>jboss-parent</artifactId>
         <version>8</version>
-        <relativePath />
+        <relativePath/>
     </parent>
 
     <!-- Model Version -->
@@ -25,9 +26,13 @@
     <modules>
         <module>arquillian-service-deployer-spring-common</module>
         <module>arquillian-service-deployer-spring-2.5</module>
-        <module>arquillian-service-deployer-spring-2.5-int-tests</module>
         <module>arquillian-service-deployer-spring-3</module>
-        <module>arquillian-service-deployer-spring-3-int-tests</module>
+
+        <module>arquillian-service-integration-spring</module>
+        <module>arquillian-service-integration-spring-inject</module>
+        <module>arquillian-service-integration-spring-javaconfig</module>
+        <module>arquillian-service-integration-spring-2.5-int-tests</module>
+        <module>arquillian-service-integration-spring-3-int-tests</module>
     </modules>
 
     <!-- Properties -->
@@ -81,6 +86,24 @@
             </dependency>
 
             <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-service-integration-spring</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-service-integration-spring-inject</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-service-integration-spring-javaconfig</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
                 <version>${version.arquillian_core}</version>
@@ -128,10 +151,10 @@
                 <type>pom</type>
                 <scope>provided</scope>
                 <exclusions>
-                  <exclusion>
-                    <groupId>xalan</groupId>
-                    <artifactId>xalan</artifactId>
-                  </exclusion>
+                    <exclusion>
+                        <groupId>xalan</groupId>
+                        <artifactId>xalan</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
 
@@ -145,6 +168,13 @@
             <dependency>
                 <groupId>org.jboss.as</groupId>
                 <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                <version>7.1.1.Final</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-arquillian-container-remote</artifactId>
                 <version>7.1.1.Final</version>
                 <scope>test</scope>
             </dependency>
