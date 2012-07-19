@@ -17,7 +17,7 @@
 
 package org.jboss.arquillian.spring.integration.inject.model;
 
-import org.jboss.arquillian.spring.integration.annotation.test.SpringWebConfiguration;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringWebConfiguration;
 
 /**
  * <p>Simple class used for testing the enricher.</p>

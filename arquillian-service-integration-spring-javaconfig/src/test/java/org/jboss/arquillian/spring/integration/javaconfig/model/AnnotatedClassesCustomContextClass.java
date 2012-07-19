@@ -17,7 +17,7 @@
 
 package org.jboss.arquillian.spring.integration.javaconfig.model;
 
-import org.jboss.arquillian.spring.integration.annotation.test.SpringAnnotationConfiguration;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationConfiguration;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**

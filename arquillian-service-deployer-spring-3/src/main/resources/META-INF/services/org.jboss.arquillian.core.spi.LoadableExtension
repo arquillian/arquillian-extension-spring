@@ -1,1 +1,1 @@
-org.jboss.arquillian.spring.client.Spring3DeployerExtension
+org.jboss.arquillian.spring.deployer.client.Spring3DeployerExtension

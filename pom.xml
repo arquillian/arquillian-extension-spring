@@ -71,6 +71,29 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <name>Jakub Narloch</name>
+            <email>jmnarloch@gmail.com</email>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>JIRA</system>
+        <url>https://issues.jboss.org/browse/ARQ/component/12313437</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:git:git://git@github.com:arquillian/arquillian-extension-spring.git</connection>
+        <developerConnection>scm:git:ssh://github.com/arquillian/arquillian-extension-spring.git</developerConnection>
+        <url>git://github.com/arquillian/arquillian-extension-spring.git</url>
+    </scm>
+
+    <ciManagement>
+        <system>CloudBess</system>
+        <url>https://arquillian.ci.cloudbees.com/job/Arquillian-Extension-Spring/</url>
+    </ciManagement>
+
     <!-- Dependency Management -->
     <dependencyManagement>
         <dependencies>
