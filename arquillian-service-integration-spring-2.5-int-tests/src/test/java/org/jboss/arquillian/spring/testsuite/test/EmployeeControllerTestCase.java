@@ -41,9 +41,9 @@ import static org.mockito.Mockito.verify;
  */
 @RunWith(Arquillian.class)
 @SpringWebConfiguration(servletName = "employee")
-public class EmployeeControlerTestCase {
+public class EmployeeControllerTestCase {
 
-    /**
+         /**
      * <p>Creates the test deployment.</p>
      *
      * @return the test deployment
@@ -52,7 +52,7 @@ public class EmployeeControlerTestCase {
     @OverProtocol("Servlet 3.0")
     public static Archive createTestArchive() {
         return Deployments.createWebApplication()
-                .addAsWebInfResource("mvc/web.xml", "web.xml")
+                .addAsWebInfResource("mvc/web-servlet.xml", "web.xml")
                 .addAsWebInfResource("mvc/mvc-applicationContext.xml", "employee-servlet.xml")
                 .addAsWebInfResource("mvc/empty.xml", "applicationContext.xml");
     }

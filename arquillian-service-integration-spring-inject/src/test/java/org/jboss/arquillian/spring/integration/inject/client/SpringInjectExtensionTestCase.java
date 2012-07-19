@@ -19,6 +19,9 @@ package org.jboss.arquillian.spring.integration.inject.client;
 
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.core.spi.LoadableExtension;
+import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.inject.container.WebApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.inject.container.XmlApplicationContextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -61,6 +64,8 @@ public class SpringInjectExtensionTestCase {
         instance.register(mockExtensionBuilder);
 
         verify(mockExtensionBuilder).service(AuxiliaryArchiveAppender.class, SpringInjectArchiveAppender.class);
+        verify(mockExtensionBuilder).service(ApplicationContextProducer.class, XmlApplicationContextProducer.class);
+        verify(mockExtensionBuilder).service(ApplicationContextProducer.class, WebApplicationContextProducer.class);
 
         verifyNoMoreInteractions(mockExtensionBuilder);
     }

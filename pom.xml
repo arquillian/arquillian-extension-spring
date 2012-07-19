@@ -28,6 +28,7 @@
         <module>arquillian-service-deployer-spring-2.5</module>
         <module>arquillian-service-deployer-spring-3</module>
         <module>arquillian-service-integration-spring</module>
+        <module>arquillian-container-spring</module>
         <module>arquillian-service-integration-spring-inject</module>
         <module>arquillian-service-integration-spring-javaconfig</module>
         <module>arquillian-service-integration-spring-2.5-int-tests</module>
@@ -107,6 +108,12 @@
             <dependency>
                 <groupId>org.jboss.arquillian.extension</groupId>
                 <artifactId>arquillian-service-integration-spring-javaconfig</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-container-spring</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
