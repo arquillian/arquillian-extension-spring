@@ -31,7 +31,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class SpringExtension implements LoadableExtension, WarpLifecycleExtension {
+public class SpringWarpExtension implements LoadableExtension, WarpLifecycleExtension {
 
     /**
      * {@inheritDoc}
