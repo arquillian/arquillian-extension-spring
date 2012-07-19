@@ -495,3 +495,4 @@ Available profiles (for running the integration tests in the container):
 
 * jbossas-managed
 * glassfish-embedded
+* spring-embedded

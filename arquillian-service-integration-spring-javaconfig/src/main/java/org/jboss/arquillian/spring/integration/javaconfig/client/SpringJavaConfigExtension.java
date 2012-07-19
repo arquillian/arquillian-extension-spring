@@ -20,6 +20,8 @@ package org.jboss.arquillian.spring.integration.javaconfig.client;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.spring.integration.SpringIntegrationConstants;
+import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.javaconfig.container.AnnotationApplicationContextProducer;
 
 /**
  * <p>The Spring java config extension.</p>
@@ -40,6 +42,9 @@ public class SpringJavaConfigExtension implements LoadableExtension {
         // loads the extension only if Spring Application Context is in Classpath
         if (Validate.classExists(SpringIntegrationConstants.APPLICATION_CONTEXT)) {
             builder.service(AuxiliaryArchiveAppender.class, SpringJavaConfigArchiveAppender.class);
+
+            // registers the application context producer for local protocol
+            builder.service(ApplicationContextProducer.class, AnnotationApplicationContextProducer.class);
         }
     }
 }

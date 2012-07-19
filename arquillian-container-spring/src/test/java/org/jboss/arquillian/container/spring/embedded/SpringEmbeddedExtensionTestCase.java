@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-package org.jboss.arquillian.spring.integration.javaconfig.client;
+package org.jboss.arquillian.container.spring.embedded;
 
-import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
+import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.core.spi.LoadableExtension;
-import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.javaconfig.container.AnnotationApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.client.SpringIntegrationConfigurationProducer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,16 +30,16 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 /**
- * <p>Tests {@link SpringJavaConfigExtension} class.</p>
+ * <p>Tests {@link SpringEmbeddedExtension} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class SpringJavaConfigExtensionTestCase {
+public class SpringEmbeddedExtensionTestCase {
 
     /**
      * <p>Represents the instance of tested class.</p>
      */
-    private SpringJavaConfigExtension instance;
+    private SpringEmbeddedExtension instance;
 
     /**
      * <p>Sets up the test environment.</p>
@@ -48,23 +47,24 @@ public class SpringJavaConfigExtensionTestCase {
     @Before
     public void setUp() {
 
-        instance = new SpringJavaConfigExtension();
+        instance = new SpringEmbeddedExtension();
     }
 
     /**
-     * <p>Tests the {@link SpringJavaConfigExtension#register(LoadableExtension.ExtensionBuilder)} method.</p>
+     * <p>Tests the {@link SpringEmbeddedExtension#register(LoadableExtension.ExtensionBuilder)} method.</p>
      */
     @Test
     public void testRegister() {
 
         LoadableExtension.ExtensionBuilder mockExtensionBuilder = mock(LoadableExtension.ExtensionBuilder.class);
         when(mockExtensionBuilder.service(any(Class.class), any(Class.class))).thenReturn(mockExtensionBuilder);
+        when(mockExtensionBuilder.observer(any(Class.class))).thenReturn(mockExtensionBuilder);
 
         instance.register(mockExtensionBuilder);
 
-        verify(mockExtensionBuilder).service(AuxiliaryArchiveAppender.class, SpringJavaConfigArchiveAppender.class);
-        verify(mockExtensionBuilder).service(ApplicationContextProducer.class,
-                AnnotationApplicationContextProducer.class);
+        verify(mockExtensionBuilder).service(DeployableContainer.class, SpringEmbeddedContainer.class);
+        verify(mockExtensionBuilder).observer(SpringEmbeddedApplicationContextProducer.class);
+
 
         verifyNoMoreInteractions(mockExtensionBuilder);
     }
