@@ -34,6 +34,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class WarpDispatcherServlet extends DispatcherServlet {
 
+    /**
+     * <p>Serial version uid</p.>
+     */
     private static final long serialVersionUID = 1L;
 
     /**
