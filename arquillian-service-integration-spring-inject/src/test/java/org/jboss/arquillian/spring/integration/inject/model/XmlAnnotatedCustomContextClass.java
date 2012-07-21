@@ -17,7 +17,7 @@
 
 package org.jboss.arquillian.spring.integration.inject.model;
 
-import org.jboss.arquillian.spring.integration.annotation.test.SpringConfiguration;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**

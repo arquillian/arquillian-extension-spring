@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.arquillian.spring.integration.annotation.test;
+package org.jboss.arquillian.spring.integration.test.annotation;
 
 import org.springframework.context.ApplicationContext;
 
@@ -28,7 +28,7 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * <p>Defines the locations from where the xml config should be loaded.</p>
+ * <p>Defines classes and packages to be scan for configured {@link ApplicationContext}.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -37,15 +37,17 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target(TYPE)
 @Inherited
-public @interface SpringConfiguration {
+public @interface SpringAnnotationConfiguration {
 
     /**
-     * <p>The locations from where the xml config should be loaded.</p>
-     *
-     * <p>If no location is specified the test extension will try to load the configuration from
-     * applicationContext.xml</p>
+     * <p>The annotated class that should be loaded by the application context.</p>
      */
-    String[] value() default {};
+    Class<?>[] classes() default {};
+
+    /**
+     * <p>The packages that will scanned for annotated classes.</p>
+     */
+    String[] packages() default {};
 
     /**
      * <p>The custom context class to be used when instantiating the application context.</p>

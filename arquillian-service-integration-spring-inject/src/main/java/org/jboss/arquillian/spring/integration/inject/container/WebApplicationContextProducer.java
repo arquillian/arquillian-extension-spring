@@ -18,7 +18,7 @@
 package org.jboss.arquillian.spring.integration.inject.container;
 
 import org.jboss.arquillian.spring.integration.SpringInjectConstants;
-import org.jboss.arquillian.spring.integration.annotation.test.SpringWebConfiguration;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringWebConfiguration;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.test.spi.TestClass;

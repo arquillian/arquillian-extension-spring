@@ -18,7 +18,7 @@
 package org.jboss.arquillian.spring.integration.javaconfig.client;
 
 import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.spring.integration.annotation.test.SpringAnnotationConfiguration;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationConfiguration;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
 import org.jboss.arquillian.spring.integration.javaconfig.container.AnnotationApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.javaconfig.container.SpringJavaConfigRemoteExtension;

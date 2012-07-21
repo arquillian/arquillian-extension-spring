@@ -19,7 +19,7 @@ package org.jboss.arquillian.spring.testsuite.test;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.spring.integration.annotation.test.SpringWebConfiguration;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringWebConfiguration;
 import org.jboss.arquillian.spring.testsuite.beans.controller.EmployeeController;
 import org.jboss.arquillian.spring.testsuite.beans.web.EmployeeWebInitializer;
 import org.jboss.shrinkwrap.api.Archive;

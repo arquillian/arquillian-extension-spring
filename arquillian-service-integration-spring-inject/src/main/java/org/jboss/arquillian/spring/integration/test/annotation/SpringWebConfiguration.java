@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.arquillian.spring.integration.annotation.test;
-
-import org.springframework.context.ApplicationContext;
+package org.jboss.arquillian.spring.integration.test.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Inherited;
@@ -28,7 +26,8 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * <p>Defines classes and packages to be scan for configured {@link ApplicationContext}.</p>
+ * <p>Allows to retrieve the {@link org.springframework.context.ApplicationContext} of specific Springs FrameworkServlet
+ * or the root web application context in general.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
@@ -37,20 +36,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target(TYPE)
 @Inherited
-public @interface SpringAnnotationConfiguration {
+public @interface SpringWebConfiguration {
 
     /**
-     * <p>The annotated class that should be loaded by the application context.</p>
+     * <p>Represents the name of the servlet which the {@link org.springframework.context.ApplicationContext} will be
+     * used.</p>
+     *
+     * <p>Not specifying the servlet name will cause the extension to use the Root Web Application Context.</p>
      */
-    Class<?>[] classes() default {};
-
-    /**
-     * <p>The packages that will scanned for annotated classes.</p>
-     */
-    String[] packages() default {};
-
-    /**
-     * <p>The custom context class to be used when instantiating the application context.</p>
-     */
-    Class<? extends ApplicationContext> contextClass() default ApplicationContext.class;
+    String servletName() default "";
 }
