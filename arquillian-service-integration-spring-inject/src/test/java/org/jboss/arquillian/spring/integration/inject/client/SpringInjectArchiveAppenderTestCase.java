@@ -19,8 +19,8 @@ package org.jboss.arquillian.spring.integration.inject.client;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.spring.integration.SpringInjectConstants;
-import org.jboss.arquillian.spring.integration.annotation.test.SpringConfiguration;
-import org.jboss.arquillian.spring.integration.annotation.test.SpringWebConfiguration;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringWebConfiguration;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
 import org.jboss.arquillian.spring.integration.inject.container.SpringInjectRemoteExtension;
 import org.jboss.arquillian.spring.integration.inject.container.WebApplicationContextProducer;

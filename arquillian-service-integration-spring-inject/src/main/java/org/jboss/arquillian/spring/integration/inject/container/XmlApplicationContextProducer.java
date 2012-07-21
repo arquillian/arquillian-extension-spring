@@ -18,7 +18,7 @@
 package org.jboss.arquillian.spring.integration.inject.container;
 
 import org.jboss.arquillian.spring.integration.SpringInjectConstants;
-import org.jboss.arquillian.spring.integration.annotation.test.SpringConfiguration;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
 import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;

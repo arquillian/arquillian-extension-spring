@@ -18,7 +18,7 @@
 package org.jboss.arquillian.spring.integration.javaconfig.client;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.spring.integration.annotation.test.SpringAnnotationConfiguration;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationConfiguration;
 import org.jboss.arquillian.spring.integration.client.AbstractSpringEnricherArchiveAppender;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
