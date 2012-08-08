@@ -18,10 +18,10 @@
 package org.jboss.arquillian.spring.integration.javaconfig.container;
 
 import org.jboss.arquillian.spring.integration.SpringJavaConfigConstants;
-import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationConfiguration;
 import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -36,7 +36,7 @@ import java.lang.reflect.InvocationTargetException;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class AnnotationApplicationContextProducer extends AbstractApplicationContextProducer {
+public class AnnotationRemoteApplicationContextProducer extends AbstractApplicationContextProducer {
 
     /**
      * {@inheritDoc}
@@ -50,9 +50,9 @@ public class AnnotationApplicationContextProducer extends AbstractApplicationCon
      * {@inheritDoc}
      */
     @Override
-    public TestScopeApplicationContext createApplicationContext(TestClass testClass) {
+    public RemoteTestScopeApplicationContext createApplicationContext(TestClass testClass) {
 
-        return new TestScopeApplicationContext(getApplicationContext(testClass), true);
+        return new RemoteTestScopeApplicationContext(getApplicationContext(testClass), true);
     }
 
     /**
@@ -94,7 +94,7 @@ public class AnnotationApplicationContextProducer extends AbstractApplicationCon
 
         String customAnnotationContextClass = getRemoteConfiguration().getProperty(
                 SpringJavaConfigConstants.CONFIGURATION_CUSTOM_ANNOTATION_CONTEXT_CLASS);
-        
+
         if (customAnnotationContextClass != null
                 && customAnnotationContextClass.trim().length() > 0) {
             return (Class<? extends ApplicationContext>)

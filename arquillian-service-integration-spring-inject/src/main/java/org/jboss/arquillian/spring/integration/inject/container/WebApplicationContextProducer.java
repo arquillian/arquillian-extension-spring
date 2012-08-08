@@ -18,9 +18,9 @@
 package org.jboss.arquillian.spring.integration.inject.container;
 
 import org.jboss.arquillian.spring.integration.SpringInjectConstants;
-import org.jboss.arquillian.spring.integration.test.annotation.SpringWebConfiguration;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringWebConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoader;
@@ -51,9 +51,9 @@ public class WebApplicationContextProducer extends AbstractApplicationContextPro
      * {@inheritDoc}
      */
     @Override
-    public TestScopeApplicationContext createApplicationContext(TestClass testClass) {
+    public RemoteTestScopeApplicationContext createApplicationContext(TestClass testClass) {
 
-        return new TestScopeApplicationContext(getWebApplicationContext(testClass), false);
+        return new RemoteTestScopeApplicationContext(getWebApplicationContext(testClass), false);
     }
 
     /**

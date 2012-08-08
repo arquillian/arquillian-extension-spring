@@ -14,7 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.container.spring.embedded;
+
+package org.jboss.arquillian.spring.integration.container;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
@@ -22,6 +23,7 @@ import org.jboss.arquillian.core.spi.ServiceLoader;
 import org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.utils.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.junit.Before;
@@ -36,16 +38,16 @@ import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.*;
 
 /**
- * <p>Tests {@link SpringEmbeddedApplicationContextProducer} class.</p>
+ * <p>Tests {@link SpringContainerApplicationContextProducer} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class SpringEmbeddedApplicationContextProducerTestCase {
+public class SpringContainerApplicationContextProducerTestCase {
 
     /**
      * <p>Represents the instance of tested class.</p>
      */
-    private SpringEmbeddedApplicationContextProducer instance;
+    private SpringContainerApplicationContextProducer instance;
 
     /**
      * <p>Represents an instance of {@link RemoteApplicationContextProducer} that will always support the test
@@ -65,7 +67,7 @@ public class SpringEmbeddedApplicationContextProducerTestCase {
     @Before
     public void setUp() {
 
-        instance = new SpringEmbeddedApplicationContextProducer();
+        instance = new SpringContainerApplicationContextProducer();
 
         supportedApplicationContextProducer = mock(RemoteApplicationContextProducer.class);
         when(supportedApplicationContextProducer.supports(any(TestClass.class))).thenReturn(true);
@@ -77,7 +79,7 @@ public class SpringEmbeddedApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests {@link SpringEmbeddedApplicationContextProducer#initApplicationContext(BeforeClass)} method, when the
+     * <p>Tests {@link SpringContainerApplicationContextProducer#initApplicationContext(BeforeClass)} method, when the
      * test class is supported.</p>
      *
      * @throws Exception if any error occurs
@@ -106,7 +108,7 @@ public class SpringEmbeddedApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests {@link SpringEmbeddedApplicationContextProducer#initApplicationContext(BeforeClass)} method, when the
+     * <p>Tests {@link SpringContainerApplicationContextProducer#initApplicationContext(BeforeClass)} method, when the
      * test class is not supported.</p>
      *
      * @throws Exception if any error occurs
@@ -133,3 +135,4 @@ public class SpringEmbeddedApplicationContextProducerTestCase {
         verifyZeroInteractions(mockApplicationContext);
     }
 }
+

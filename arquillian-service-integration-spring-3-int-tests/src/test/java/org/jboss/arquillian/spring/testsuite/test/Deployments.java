@@ -19,6 +19,7 @@ package org.jboss.arquillian.spring.testsuite.test;
 import org.jboss.arquillian.spring.testsuite.beans.config.AppConfig;
 import org.jboss.arquillian.spring.testsuite.beans.config.WebAppConfig;
 import org.jboss.arquillian.spring.testsuite.beans.controller.EmployeeController;
+import org.jboss.arquillian.spring.testsuite.beans.controller.EmployeeRestController;
 import org.jboss.arquillian.spring.testsuite.beans.model.Employee;
 import org.jboss.arquillian.spring.testsuite.beans.repository.EmployeeRepository;
 import org.jboss.arquillian.spring.testsuite.beans.repository.impl.DefaultEmployeeRepository;
@@ -28,7 +29,6 @@ import org.jboss.arquillian.spring.testsuite.beans.service.EmployeeService;
 import org.jboss.arquillian.spring.testsuite.beans.service.impl.DefaultEmployeeService;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
@@ -44,7 +44,7 @@ public final class Deployments {
 
     /**
      * <p>Creates new instance of {@link Deployments} class.</p>
-     * <p/>
+     *
      * <p>Private constructor prevents from instantiation outside this class.</p>
      */
     private Deployments() {
@@ -94,7 +94,7 @@ public final class Deployments {
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
                         EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class,
-                        EmployeeController.class)
+                        EmployeeController.class, EmployeeRestController.class)
                 .addAsLibraries(getWebDependencies());
     }
 
@@ -109,7 +109,7 @@ public final class Deployments {
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
                         EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class,
-                        EmployeeController.class, WebAppConfig.class)
+                        EmployeeController.class, EmployeeRestController.class, WebAppConfig.class)
                 .addAsLibraries(getWebDependencies());
     }
 
@@ -137,7 +137,8 @@ public final class Deployments {
         return ShrinkWrap.create(WebArchive.class, "spring-test.war")
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
-                        EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class)
+                        EmployeeRepository.class, DefaultEmployeeRepository.class,
+                        NullEmployeeRepository.class)
                 .addAsLibraries(getDependencies());
     }
 
@@ -148,6 +149,7 @@ public final class Deployments {
      */
     public static File[] getDependencies() {
         return resolveArtifact("org.springframework:spring-tx",
+                "org.springframework:spring-tx",
                 "org.springframework:spring-orm",
                 "org.mockito:mockito-all");
     }
@@ -159,6 +161,7 @@ public final class Deployments {
      */
     public static File[] getWebDependencies() {
         return resolveArtifact("org.springframework:spring-webmvc",
+                "org.codehaus.jackson:jackson-mapper-asl",
                 "org.springframework:spring-tx",
                 "org.springframework:spring-orm",
                 "org.mockito:mockito-all");
@@ -168,6 +171,7 @@ public final class Deployments {
      * <p>Resolves the given artifact by it's name with help of maven build system.</p>
      *
      * @param artifacts the fully qualified artifacts names
+     *
      * @return the resolved files
      */
     public static File[] resolveArtifact(String... artifacts) {

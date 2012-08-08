@@ -90,6 +90,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.4.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
             <scope>test</scope>
@@ -218,6 +225,7 @@
                                 <exclude>**/EmployeeControllerContextTestCase.java</exclude>
                                 <exclude>**/EmployeeControllerWebInitTestCase.java</exclude>
                                 <exclude>**/EmployeeControllerContextWebInitTestCase.java</exclude>
+                                <exclude>**/ClientRestServiceTestCase.java</exclude>
                             </excludes>
                         </configuration>
                     </plugin>

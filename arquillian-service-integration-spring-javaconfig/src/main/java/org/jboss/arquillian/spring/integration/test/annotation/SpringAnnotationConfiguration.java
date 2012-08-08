@@ -28,7 +28,8 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * <p>Defines classes and packages to be scan for configured {@link ApplicationContext}.</p>
+ * <p>Defines classes and packages to be scan when configuring
+ * {@link org.jboss.arquillian.core.spi.context.ApplicationContext} on the server side.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $

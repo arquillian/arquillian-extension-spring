@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.arquillian.container.spring.embedded;
+package org.jboss.arquillian.spring.integration.client;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
@@ -23,21 +23,21 @@ import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
-import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.context.ClientApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.context.ClientTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 
 import java.util.List;
 
 /**
- * <p>An application context producer that scans for registered {@link ApplicationContextProducer} and invokes the one
- * that is capable of creating the application context for the test class.</p>
+ * <p>Responsible for creating instances of {@link org.springframework.context.ApplicationContext}, on the client side.
+ * </p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class SpringEmbeddedApplicationContextProducer {
+public class SpringClientApplicationContextProducer {
 
     /**
      * <p>Service loader used for retrieving extensions.</p>
@@ -46,10 +46,11 @@ public class SpringEmbeddedApplicationContextProducer {
     private Instance<ServiceLoader> serviceLoader;
 
     /**
-     * <p>Producer proxy for {@link RemoteTestScopeApplicationContext}.</p>
+     * <p>Producer proxy for {@link TestScopeApplicationContext}.</p>
      */
     @Inject
-    private InstanceProducer<RemoteTestScopeApplicationContext> testApplicationContext;
+    @ApplicationScoped
+    private InstanceProducer<ClientTestScopeApplicationContext> testApplicationContext;
 
     /**
      * <p>Builds the application context before the test suite is being executed.</p>
@@ -61,14 +62,14 @@ public class SpringEmbeddedApplicationContextProducer {
         ServiceLoader loader = serviceLoader.get();
 
         // retrieves the list of all registered application context producers
-        List<RemoteApplicationContextProducer> applicationContextProducers =
-                (List<RemoteApplicationContextProducer>) loader.all(RemoteApplicationContextProducer.class);
+        List<ClientApplicationContextProducer> applicationContextProducers =
+                (List<ClientApplicationContextProducer>) loader.all(ClientApplicationContextProducer.class);
 
-        for (RemoteApplicationContextProducer applicationContextProducer : applicationContextProducers) {
+        for (ClientApplicationContextProducer applicationContextProducer : applicationContextProducers) {
 
             if (applicationContextProducer.supports(beforeClass.getTestClass())) {
 
-                RemoteTestScopeApplicationContext applicationContext =
+                ClientTestScopeApplicationContext applicationContext =
                         applicationContextProducer.createApplicationContext(beforeClass.getTestClass());
 
                 if (applicationContext != null) {

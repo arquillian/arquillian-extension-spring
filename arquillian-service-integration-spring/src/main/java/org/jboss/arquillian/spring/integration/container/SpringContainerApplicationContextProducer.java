@@ -24,7 +24,8 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 
 import java.util.List;
@@ -38,12 +39,12 @@ import java.util.logging.Logger;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class SpringApplicationContextProducer {
+public class SpringContainerApplicationContextProducer {
 
     /**
      * <p>The logger used by this class.</p>
      */
-    private static final Logger log = Logger.getLogger(SpringApplicationContextProducer.class.getName());
+    private static final Logger log = Logger.getLogger(SpringContainerApplicationContextProducer.class.getName());
 
     /**
      * <p>Service loader used for retrieving extensions.</p>
@@ -52,11 +53,11 @@ public class SpringApplicationContextProducer {
     private Instance<ServiceLoader> serviceLoader;
 
     /**
-     * <p>Producer proxy for {@link TestScopeApplicationContext}.</p>
+     * <p>Producer proxy for {@link RemoteTestScopeApplicationContext}.</p>
      */
     @Inject
     @ApplicationScoped
-    private InstanceProducer<TestScopeApplicationContext> testApplicationContext;
+    private InstanceProducer<RemoteTestScopeApplicationContext> testApplicationContext;
 
     /**
      * <p>Builds the application context before the test suite is being executed.</p>
@@ -68,14 +69,14 @@ public class SpringApplicationContextProducer {
         ServiceLoader loader = serviceLoader.get();
 
         // retrieves the list of all registered application context producers
-        List<ApplicationContextProducer> applicationContextProducers =
-                (List<ApplicationContextProducer>) loader.all(ApplicationContextProducer.class);
+        List<RemoteApplicationContextProducer> applicationContextProducers =
+                (List<RemoteApplicationContextProducer>) loader.all(RemoteApplicationContextProducer.class);
 
-        for (ApplicationContextProducer applicationContextProducer : applicationContextProducers) {
+        for (RemoteApplicationContextProducer applicationContextProducer : applicationContextProducers) {
 
             if (applicationContextProducer.supports(beforeClass.getTestClass())) {
 
-                TestScopeApplicationContext applicationContext =
+                RemoteTestScopeApplicationContext applicationContext =
                         applicationContextProducer.createApplicationContext(beforeClass.getTestClass());
 
                 if (applicationContext != null) {

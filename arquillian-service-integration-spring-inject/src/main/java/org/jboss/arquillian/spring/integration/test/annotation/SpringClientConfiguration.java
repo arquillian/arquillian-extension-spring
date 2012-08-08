@@ -15,33 +15,33 @@
  * limitations under the License.
  */
 
-package org.jboss.arquillian.spring.integration.context;
+package org.jboss.arquillian.spring.integration.test.annotation;
 
-import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * <p>Abstract application context producer, the concrete implementation will be responsible for actual creating the
- * application context for the given test case.</p>
+ * <p>Sets the locations from where the xml config should be loaded on the client side.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public abstract class AbstractApplicationContextProducer implements RemoteApplicationContextProducer {
+@Documented
+@Retention(RUNTIME)
+@Target(TYPE)
+@Inherited
+public @interface SpringClientConfiguration {
 
     /**
-     * <p>Instance of {@link SpringIntegrationConfiguration}.</p>
-     */
-    @Inject
-    private Instance<SpringIntegrationConfiguration> remoteConfiguration;
-
-    /**
-     * <p>Retrieves the remote configuration.</p>
+     * <p>The locations from where the xml config should be loaded.</p>
      *
-     * @return the remote configuration
+     * <p>If no location is specified the test extension will try to load the configuration from
+     * applicationContext.xml</p>
      */
-    protected SpringIntegrationConfiguration getRemoteConfiguration() {
-        return remoteConfiguration.get();
-    }
+    String[] value() default {};
 }
