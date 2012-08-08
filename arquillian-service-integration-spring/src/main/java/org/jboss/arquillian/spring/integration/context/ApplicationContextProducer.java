@@ -20,7 +20,7 @@ package org.jboss.arquillian.spring.integration.context;
 import org.jboss.arquillian.test.spi.TestClass;
 
 /**
- * <p>Concrete class that implements this interface will be responsible for creating instance of application
+ * <p>Concrete class that implements this interface will be responsible for creating instance of the application
  * context.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.arquillian.container.spring.embedded;
+package org.jboss.arquillian.spring.integration.container;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
@@ -29,15 +29,22 @@ import org.jboss.arquillian.spring.integration.context.TestScopeApplicationConte
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
- * <p>An application context producer that scans for registered {@link ApplicationContextProducer} and invokes the one
- * that is capable of creating the application context for the test class.</p>
+ * <p>It's responsible for creating instances of {@link org.springframework.context.ApplicationContext}, it handles the
+ * before class event and then search for proper {@link ApplicationContextProducer} that is capable of creating Spring
+ * context for given test case.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class SpringEmbeddedApplicationContextProducer {
+public class SpringContainerApplicationContextProducer {
+
+    /**
+     * <p>The logger used by this class.</p>
+     */
+    private static final Logger log = Logger.getLogger(SpringContainerApplicationContextProducer.class.getName());
 
     /**
      * <p>Service loader used for retrieving extensions.</p>
@@ -75,6 +82,9 @@ public class SpringEmbeddedApplicationContextProducer {
                 if (applicationContext != null) {
 
                     testApplicationContext.set(applicationContext);
+
+                    log.fine("Successfully created application context for test class: "
+                            + beforeClass.getTestClass().getName());
 
                     break;
                 }

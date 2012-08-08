@@ -21,8 +21,10 @@ import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiv
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.spring.integration.SpringIntegrationConstants;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.context.ClientApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.inject.container.WebApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.inject.container.XmlApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.inject.container.XmlRemoteApplicationContextProducer;
 
 /**
  * <p>The Spring inject extension.</p>
@@ -45,8 +47,11 @@ public class SpringInjectExtension implements LoadableExtension {
             builder.service(AuxiliaryArchiveAppender.class, SpringInjectArchiveAppender.class);
 
             // registers the application context producer for local protocol
-            builder.service(ApplicationContextProducer.class, XmlApplicationContextProducer.class);
-            builder.service(ApplicationContextProducer.class, WebApplicationContextProducer.class);
+            builder.service(RemoteApplicationContextProducer.class, XmlRemoteApplicationContextProducer.class);
+            builder.service(RemoteApplicationContextProducer.class, WebApplicationContextProducer.class);
+
+            // registers the application context producer on the client side
+            builder.service(ClientApplicationContextProducer.class, XmlClientApplicationContextProducer.class);
         }
     }
 }

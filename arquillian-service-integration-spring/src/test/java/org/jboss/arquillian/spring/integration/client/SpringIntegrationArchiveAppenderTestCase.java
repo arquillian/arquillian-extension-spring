@@ -21,11 +21,8 @@ import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.spring.integration.SpringIntegrationConstants;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfigurationExporter;
-import org.jboss.arquillian.spring.integration.container.SecurityActions;
-import org.jboss.arquillian.spring.integration.container.SpringApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.container.SpringInjectionEnricher;
-import org.jboss.arquillian.spring.integration.container.SpringIntegrationRemoteExtension;
-import org.jboss.arquillian.spring.integration.container.SpringRemoteIntegrationConfigurationProducer;
+import org.jboss.arquillian.spring.integration.container.*;
+import org.jboss.arquillian.spring.integration.container.SpringContainerApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextDestroyer;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
@@ -63,7 +60,7 @@ public class SpringIntegrationArchiveAppenderTestCase {
      */
     private final static List<Class<?>> REQUIRED_CLASSES = Arrays.asList(
             SpringIntegrationConfiguration.class, SpringIntegrationConfigurationExporter.class,
-            SecurityActions.class, SpringApplicationContextProducer.class, SpringInjectionEnricher.class,
+            SecurityActions.class, SpringContainerApplicationContextProducer.class, SpringInjectionEnricher.class,
             SpringIntegrationRemoteExtension.class, SpringRemoteIntegrationConfigurationProducer.class,
             AbstractApplicationContextProducer.class, ApplicationContextDestroyer.class,
             ApplicationContextProducer.class, TestScopeApplicationContext.class, SpringIntegrationConstants.class);

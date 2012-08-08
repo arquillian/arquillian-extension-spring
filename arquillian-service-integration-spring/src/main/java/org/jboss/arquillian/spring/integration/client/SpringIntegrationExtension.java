@@ -44,6 +44,7 @@ public class SpringIntegrationExtension implements LoadableExtension {
         if (Validate.classExists(SpringIntegrationConstants.APPLICATION_CONTEXT)) {
             builder.service(AuxiliaryArchiveAppender.class, SpringIntegrationArchiveAppender.class)
                     .service(TestEnricher.class, SpringInjectionEnricher.class)
+                    .observer(SpringClientApplicationContextProducer.class)
                     .observer(SpringIntegrationConfigurationProducer.class);
         }
     }

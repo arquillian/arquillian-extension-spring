@@ -36,7 +36,7 @@ import java.lang.reflect.InvocationTargetException;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class XmlApplicationContextProducer extends AbstractApplicationContextProducer {
+public class XmlRemoteApplicationContextProducer extends AbstractApplicationContextProducer {
 
     /**
      * {@inheritDoc}

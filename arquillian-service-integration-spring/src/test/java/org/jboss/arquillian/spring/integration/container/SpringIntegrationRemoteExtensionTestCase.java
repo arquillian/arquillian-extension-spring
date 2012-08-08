@@ -63,7 +63,7 @@ public class SpringIntegrationRemoteExtensionTestCase {
         instance.register(mockExtensionBuilder);
 
         verify(mockExtensionBuilder).service(TestEnricher.class, SpringInjectionEnricher.class);
-        verify(mockExtensionBuilder).observer(SpringApplicationContextProducer.class);
+        verify(mockExtensionBuilder).observer(SpringContainerApplicationContextProducer.class);
         verify(mockExtensionBuilder).observer(SpringRemoteIntegrationConfigurationProducer.class);
         verify(mockExtensionBuilder).observer(ApplicationContextDestroyer.class);
 

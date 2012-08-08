@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-package org.jboss.arquillian.spring.integration.container;
-
-import org.junit.Ignore;
+package org.jboss.arquillian.spring.integration.context;
 
 /**
+ * <p>Concrete class that implements this interface will be responsible for creating instance of the application
+ * context.</p>
  *
+ * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
+ * @version $Revision: $
  */
-@Ignore
-public class SpringApplicationContextProducerTestCase {
-
-    // TODO implement test
+public interface RemoteApplicationContextProducer extends ApplicationContextProducer {
 }

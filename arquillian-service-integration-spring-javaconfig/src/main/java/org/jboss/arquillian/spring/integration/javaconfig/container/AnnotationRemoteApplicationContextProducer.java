@@ -36,7 +36,7 @@ import java.lang.reflect.InvocationTargetException;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class AnnotationApplicationContextProducer extends AbstractApplicationContextProducer {
+public class AnnotationRemoteApplicationContextProducer extends AbstractApplicationContextProducer {
 
     /**
      * {@inheritDoc}
@@ -59,7 +59,6 @@ public class AnnotationApplicationContextProducer extends AbstractApplicationCon
      * <p>Creates the application context.</p>
      *
      * @param testClass the test class
-     *
      * @return created {@link ApplicationContext}
      */
     private ApplicationContext getApplicationContext(TestClass testClass) {
@@ -94,7 +93,7 @@ public class AnnotationApplicationContextProducer extends AbstractApplicationCon
 
         String customAnnotationContextClass = getRemoteConfiguration().getProperty(
                 SpringJavaConfigConstants.CONFIGURATION_CUSTOM_ANNOTATION_CONTEXT_CLASS);
-        
+
         if (customAnnotationContextClass != null
                 && customAnnotationContextClass.trim().length() > 0) {
             return (Class<? extends ApplicationContext>)
@@ -110,7 +109,6 @@ public class AnnotationApplicationContextProducer extends AbstractApplicationCon
      * @param testClass the test class
      * @param classes   the annotated classes to register
      * @param packages  the packages containing the annotated classes
-     *
      * @return the created instance of {@link org.springframework.context.annotation.AnnotationConfigApplicationContext}
      */
     private ApplicationContext createAnnotatedApplicationContext(TestClass testClass, String[] packages, Class<?>[] classes) {
@@ -129,7 +127,6 @@ public class AnnotationApplicationContextProducer extends AbstractApplicationCon
      *
      * @param classes  the annotated classes to register
      * @param packages the packages containing the annotated classes
-     *
      * @return the created instance of {@link org.springframework.context.annotation.AnnotationConfigApplicationContext}
      */
     private ApplicationContext createAnnotatedApplicationContext(Class<?>[] classes, String[] packages) {
@@ -157,7 +154,6 @@ public class AnnotationApplicationContextProducer extends AbstractApplicationCon
      * @param applicationContextClass the application context class
      * @param classes                 the annotated classes to register
      * @param packages                the packages containing the annotated classes
-     *
      * @return the created instance of {@link ApplicationContext}
      */
     private <T extends ApplicationContext> T createCustomAnnotatedApplicationContext(
@@ -193,7 +189,6 @@ public class AnnotationApplicationContextProducer extends AbstractApplicationCon
      * @param ctor                    the constructor to use
      * @param params                  the constructor parameters
      * @param <T>                     the type of the application context
-     *
      * @return the created instance of {@link ApplicationContext}
      */
     private <T extends ApplicationContext> T createInstance(Class<T> applicationContextClass,
@@ -219,7 +214,6 @@ public class AnnotationApplicationContextProducer extends AbstractApplicationCon
      * @param type           the class type for which the constructor will be retrieved
      * @param parameterTypes the types of the parameters
      * @param <T>            the type of the application context
-     *
      * @return the retrieved constructor
      */
     private <T extends ApplicationContext> Constructor<T> getConstructor(Class<T> type, Class... parameterTypes) {

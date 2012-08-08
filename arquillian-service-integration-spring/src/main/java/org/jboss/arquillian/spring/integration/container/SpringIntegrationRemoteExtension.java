@@ -40,7 +40,7 @@ public class SpringIntegrationRemoteExtension implements RemoteLoadableExtension
         // loads the extension only if Spring Application Context is in ClassPath
         if (LoadableExtension.Validate.classExists(SpringIntegrationConstants.APPLICATION_CONTEXT)) {
             builder.service(TestEnricher.class, SpringInjectionEnricher.class)
-                    .observer(SpringApplicationContextProducer.class)
+                    .observer(SpringContainerApplicationContextProducer.class)
                     .observer(SpringRemoteIntegrationConfigurationProducer.class)
                     .observer(ApplicationContextDestroyer.class);
         }

@@ -66,6 +66,7 @@ public class SpringIntegrationExtensionTestCase {
         verify(mockExtensionBuilder).service(TestEnricher.class, SpringInjectionEnricher.class);
         verify(mockExtensionBuilder).service(AuxiliaryArchiveAppender.class, SpringIntegrationArchiveAppender.class);
         verify(mockExtensionBuilder).observer(SpringIntegrationConfigurationProducer.class);
+        verify(mockExtensionBuilder).observer(SpringClientApplicationContextProducer.class);
 
 
         verifyNoMoreInteractions(mockExtensionBuilder);

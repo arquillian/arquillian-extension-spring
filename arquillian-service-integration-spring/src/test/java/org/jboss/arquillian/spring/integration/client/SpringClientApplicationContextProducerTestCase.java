@@ -1,27 +1,13 @@
-/*
- * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat Middleware LLC, and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package org.jboss.arquillian.container.spring.embedded;
+package org.jboss.arquillian.spring.integration.client;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.spi.ServiceLoader;
-import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.container.SpringContainerApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.context.ClientApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.utils.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.junit.Before;
@@ -33,32 +19,30 @@ import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.notNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
- * <p>Tests {@link SpringEmbeddedApplicationContextProducer} class.</p>
+ * <p>Tests {@link SpringClientApplicationContextProducer} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class SpringEmbeddedApplicationContextProducerTestCase {
+public class SpringClientApplicationContextProducerTestCase {
 
     /**
      * <p>Represents the instance of tested class.</p>
      */
-    private SpringEmbeddedApplicationContextProducer instance;
+    private SpringClientApplicationContextProducer instance;
 
     /**
-     * <p>Represents an instance of {@link RemoteApplicationContextProducer} that will always support the test class.</p>
+     * <p>Represents an instance of {@link ClientApplicationContextProducer} that will always support the test
+     * class.</p>
      */
-    private RemoteApplicationContextProducer supportedApplicationContextProducer;
+    private ClientApplicationContextProducer supportedApplicationContextProducer;
 
     /**
-     * <p>Represents an instance of {@link RemoteApplicationContextProducer} that will never support the test class.</p>
+     * <p>Represents an instance of {@link ClientApplicationContextProducer} that will never support the test class.</p>
      */
-    private RemoteApplicationContextProducer notSupportedApplicationContextProducer;
+    private ClientApplicationContextProducer notSupportedApplicationContextProducer;
 
     /**
      * <p>Sets up the test environment.</p>
@@ -66,19 +50,19 @@ public class SpringEmbeddedApplicationContextProducerTestCase {
     @Before
     public void setUp() {
 
-        instance = new SpringEmbeddedApplicationContextProducer();
+        instance = new SpringClientApplicationContextProducer();
 
-        supportedApplicationContextProducer = mock(RemoteApplicationContextProducer.class);
+        supportedApplicationContextProducer = mock(ClientApplicationContextProducer.class);
         when(supportedApplicationContextProducer.supports(any(TestClass.class))).thenReturn(true);
         when(supportedApplicationContextProducer.createApplicationContext(any(TestClass.class)))
                 .thenReturn(new TestScopeApplicationContext(new GenericApplicationContext(), true));
 
-        notSupportedApplicationContextProducer = mock(RemoteApplicationContextProducer.class);
+        notSupportedApplicationContextProducer = mock(ClientApplicationContextProducer.class);
         when(notSupportedApplicationContextProducer.supports(any(TestClass.class))).thenReturn(false);
     }
 
     /**
-     * <p>Tests {@link SpringEmbeddedApplicationContextProducer#initApplicationContext(BeforeClass)} method, when the
+     * <p>Tests {@link SpringContainerApplicationContextProducer#initApplicationContext(org.jboss.arquillian.test.spi.event.suite.BeforeClass)} method, when the
      * test class is supported.</p>
      *
      * @throws Exception if any error occurs
@@ -87,12 +71,12 @@ public class SpringEmbeddedApplicationContextProducerTestCase {
     @SuppressWarnings("unchecked")
     public void testInitApplicationContextSupported() throws Exception {
 
-        List<RemoteApplicationContextProducer> producers = new ArrayList<RemoteApplicationContextProducer>();
+        List<ClientApplicationContextProducer> producers = new ArrayList<ClientApplicationContextProducer>();
         producers.add(notSupportedApplicationContextProducer);
         producers.add(supportedApplicationContextProducer);
 
         ServiceLoader serviceLoader = mock(ServiceLoader.class);
-        when(serviceLoader.all(RemoteApplicationContextProducer.class)).thenReturn(producers);
+        when(serviceLoader.all(ClientApplicationContextProducer.class)).thenReturn(producers);
 
         Instance<ServiceLoader> mockServiceLoader = mock(Instance.class);
         when(mockServiceLoader.get()).thenReturn(serviceLoader);
@@ -107,7 +91,7 @@ public class SpringEmbeddedApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests {@link SpringEmbeddedApplicationContextProducer#initApplicationContext(BeforeClass)} method, when the
+     * <p>Tests {@link SpringContainerApplicationContextProducer#initApplicationContext(BeforeClass)} method, when the
      * test class is not supported.</p>
      *
      * @throws Exception if any error occurs
@@ -116,11 +100,11 @@ public class SpringEmbeddedApplicationContextProducerTestCase {
     @SuppressWarnings("unchecked")
     public void testInitApplicationContextNotSupported() throws Exception {
 
-        List<RemoteApplicationContextProducer> producers = new ArrayList<RemoteApplicationContextProducer>();
+        List<ClientApplicationContextProducer> producers = new ArrayList<ClientApplicationContextProducer>();
         producers.add(notSupportedApplicationContextProducer);
 
         ServiceLoader serviceLoader = mock(ServiceLoader.class);
-        when(serviceLoader.all(RemoteApplicationContextProducer.class)).thenReturn(producers);
+        when(serviceLoader.all(ClientApplicationContextProducer.class)).thenReturn(producers);
 
         Instance<ServiceLoader> mockServiceLoader = mock(Instance.class);
         when(mockServiceLoader.get()).thenReturn(serviceLoader);

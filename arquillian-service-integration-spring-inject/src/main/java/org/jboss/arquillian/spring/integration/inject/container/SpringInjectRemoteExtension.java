@@ -20,6 +20,7 @@ package org.jboss.arquillian.spring.integration.inject.container;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.spring.integration.SpringIntegrationConstants;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer;
 
 /**
  * <p>A remote extension that configures the Spring in the container.</p>
@@ -37,8 +38,8 @@ public class SpringInjectRemoteExtension implements RemoteLoadableExtension {
 
         // loads the extension only if Spring Application Context is in ClassPath
         if (Validate.classExists(SpringIntegrationConstants.APPLICATION_CONTEXT)) {
-            builder.service(ApplicationContextProducer.class, XmlApplicationContextProducer.class);
-            builder.service(ApplicationContextProducer.class, WebApplicationContextProducer.class);
+            builder.service(RemoteApplicationContextProducer.class, XmlRemoteApplicationContextProducer.class);
+            builder.service(RemoteApplicationContextProducer.class, WebApplicationContextProducer.class);
         }
     }
 }
