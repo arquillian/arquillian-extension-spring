@@ -16,12 +16,31 @@
  */
 package org.jboss.arquillian.spring.testsuite.beans.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * <p>POJO representing an employee.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
+
+/**
+ * <p>POJO representing an employee.</p>
+ *
+ * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
+ */
+@Entity
 public class Employee {
+
+    /**
+     * <p>Represents the employee id.</p>
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     /**
      * <p>Represents the employee name.</p>
@@ -33,6 +52,24 @@ public class Employee {
      */
     public Employee() {
         // empty constructor
+    }
+
+    /**
+     * <p>Retrieves the employee id.</p>
+     *
+     * @return the employee id
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * <p>Sets the employee id.</p>
+     *
+     * @param id the employee id
+     */
+    public void setId(long id) {
+        this.id = id;
     }
 
     /**

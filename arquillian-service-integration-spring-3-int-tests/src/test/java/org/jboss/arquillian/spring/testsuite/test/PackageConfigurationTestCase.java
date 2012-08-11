@@ -22,6 +22,7 @@ import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationC
 import org.jboss.arquillian.spring.testsuite.beans.model.Employee;
 import org.jboss.arquillian.spring.testsuite.beans.service.EmployeeService;
 import org.jboss.arquillian.spring.testsuite.beans.service.impl.DefaultEmployeeService;
+import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,7 +51,7 @@ public class PackageConfigurationTestCase {
      * @return the test deployment
      */
     @Deployment
-    public static JavaArchive createTestArchive() {
+    public static Archive createTestArchive() {
 
         return Deployments.createJavaConfigDeployment();
     }

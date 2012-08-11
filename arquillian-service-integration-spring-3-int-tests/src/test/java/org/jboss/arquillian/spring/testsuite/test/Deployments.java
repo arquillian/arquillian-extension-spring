@@ -22,9 +22,11 @@ import org.jboss.arquillian.spring.testsuite.beans.controller.EmployeeController
 import org.jboss.arquillian.spring.testsuite.beans.model.Employee;
 import org.jboss.arquillian.spring.testsuite.beans.repository.EmployeeRepository;
 import org.jboss.arquillian.spring.testsuite.beans.repository.impl.DefaultEmployeeRepository;
+import org.jboss.arquillian.spring.testsuite.beans.repository.impl.JpaEmployeeRepository;
 import org.jboss.arquillian.spring.testsuite.beans.repository.impl.NullEmployeeRepository;
 import org.jboss.arquillian.spring.testsuite.beans.service.EmployeeService;
 import org.jboss.arquillian.spring.testsuite.beans.service.impl.DefaultEmployeeService;
+import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -42,7 +44,7 @@ public final class Deployments {
 
     /**
      * <p>Creates new instance of {@link Deployments} class.</p>
-     *
+     * <p/>
      * <p>Private constructor prevents from instantiation outside this class.</p>
      */
     private Deployments() {
@@ -54,7 +56,7 @@ public final class Deployments {
      *
      * @return the test deployment
      */
-    public static JavaArchive createRepositoriesDeployment() {
+    public static Archive createRepositoriesDeployment() {
 
         return createAppDeployment().
                 addAsResource("applicationContext.xml");
@@ -65,7 +67,7 @@ public final class Deployments {
      *
      * @return the test deployment
      */
-    public static JavaArchive createServicesDeployment() {
+    public static Archive createServicesDeployment() {
 
         return createAppDeployment()
                 .addAsResource("applicationContext.xml");
@@ -76,7 +78,7 @@ public final class Deployments {
      *
      * @return the test deployment
      */
-    public static JavaArchive createJavaConfigDeployment() {
+    public static Archive createJavaConfigDeployment() {
 
         return createAppDeployment().addClasses(AppConfig.class);
     }
@@ -93,8 +95,7 @@ public final class Deployments {
                         EmployeeService.class, DefaultEmployeeService.class,
                         EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class,
                         EmployeeController.class)
-                .addAsLibraries(springDependencies())
-                .addAsLibraries(mockitoDependencies());
+                .addAsLibraries(getWebDependencies());
     }
 
     /**
@@ -109,8 +110,7 @@ public final class Deployments {
                         EmployeeService.class, DefaultEmployeeService.class,
                         EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class,
                         EmployeeController.class, WebAppConfig.class)
-                .addAsLibraries(springDependencies())
-                .addAsLibraries(mockitoDependencies());
+                .addAsLibraries(getWebDependencies());
     }
 
     /**
@@ -118,44 +118,63 @@ public final class Deployments {
      *
      * @return the test deployment
      */
-    public static JavaArchive createAppDeployment() {
+    public static Archive createJpaDeployment() {
+        return createAppDeployment()
+                .addClasses(JpaEmployeeRepository.class)
+                .addAsWebInfResource("jbossas-ds.xml")
+                .addAsResource("applicationContext-jpa.xml")
+                .addAsResource("persistence/persitence.xml", "META-INF/persistence.xml")
+                .addAsResource("persistence/insert.sql", "insert.sql");
+    }
 
-        return ShrinkWrap.create(JavaArchive.class, "spring-test.jar")
+    /**
+     * <p>Creates the test deployment.</p>
+     *
+     * @return the test deployment
+     */
+    public static WebArchive createAppDeployment() {
+
+        return ShrinkWrap.create(WebArchive.class, "spring-test.war")
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
-                        EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class);
+                        EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class)
+                .addAsLibraries(getDependencies());
     }
 
     /**
-     * <p>Retrieves spring mvc dependencies.</p>
+     * <p>Retrieves dependencies.</p>
      *
-     * @return spring mvc dependencies
+     * @return spring dependencies
      */
-    public static File[] springDependencies() {
-        return resolveArtifact("org.springframework:spring-webmvc");
+    public static File[] getDependencies() {
+        return resolveArtifact("org.springframework:spring-tx",
+                "org.springframework:spring-orm",
+                "org.mockito:mockito-all");
     }
 
     /**
-     * <p>Retrieves mockito dependencies.</p>
+     * <p>Retrieves dependencies.</p>
      *
-     * @return mockito dependencies
+     * @return spring dependencies
      */
-    public static File[] mockitoDependencies() {
-        return resolveArtifact("org.mockito:mockito-all");
+    public static File[] getWebDependencies() {
+        return resolveArtifact("org.springframework:spring-webmvc",
+                "org.springframework:spring-tx",
+                "org.springframework:spring-orm",
+                "org.mockito:mockito-all");
     }
 
     /**
      * <p>Resolves the given artifact by it's name with help of maven build system.</p>
      *
-     * @param artifact the fully qualified artifact name
-     *
+     * @param artifacts the fully qualified artifacts names
      * @return the resolved files
      */
-    public static File[] resolveArtifact(String artifact) {
+    public static File[] resolveArtifact(String... artifacts) {
         MavenDependencyResolver mvnResolver = DependencyResolvers.use(MavenDependencyResolver.class);
 
         mvnResolver.loadMetadataFromPom("pom.xml");
 
-        return mvnResolver.artifacts(artifact).resolveAsFiles();
+        return mvnResolver.artifacts(artifacts).resolveAsFiles();
     }
 }

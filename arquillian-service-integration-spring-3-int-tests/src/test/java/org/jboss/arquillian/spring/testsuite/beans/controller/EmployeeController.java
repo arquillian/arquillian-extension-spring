@@ -37,7 +37,6 @@ public class EmployeeController {
      * <p>Handles request to the employee list.</p>
      *
      * @param model the employee list
-     *
      * @return the view name
      */
     @RequestMapping("/Employees.htm")

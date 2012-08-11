@@ -33,7 +33,16 @@ public class NullEmployeeRepository implements EmployeeRepository {
     /**
      * {@inheritDoc}
      */
+    @Override
+    public void save(Employee employee) {
+        // empty method
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public List<Employee> getEmployees() {
         return null;
     }
 }
+

@@ -50,7 +50,7 @@ public class DefaultEmployeeRepositoryTestCase {
     @Deployment
     public static Archive createTestArchive() {
 
-        return Deployments.createServicesDeployment();
+        return Deployments.createRepositoriesDeployment();
     }
 
     /**

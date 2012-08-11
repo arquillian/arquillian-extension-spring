@@ -20,53 +20,40 @@ import org.jboss.arquillian.spring.testsuite.beans.model.Employee;
 import org.jboss.arquillian.spring.testsuite.beans.repository.EmployeeRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * <p>The default implementation of {@link EmployeeRepository}.</p>
+ * <p>A JPA implementation of {@link org.jboss.arquillian.spring.testsuite.beans.repository.EmployeeRepository}.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-@Repository(value = "defaultEmployeeRepository")
-public class DefaultEmployeeRepository implements EmployeeRepository {
+@Repository(value = "jpaEmployeeRepository")
+public class JpaEmployeeRepository implements EmployeeRepository {
 
     /**
-     * <p>Represents the list of employees.</p>
+     * <p>Represents the instance of {@link javax.persistence.EntityManager} used for persistence operation.</p>
      */
-    private List<Employee> employees = new ArrayList<Employee>();
-
-    /**
-     * <p>Initializes the bean.</p>
-     */
-    @PostConstruct
-    private void init() {
-
-        Employee employee;
-
-        employee = new Employee();
-        employee.setName("John Smith");
-        employees.add(employee);
-
-        employee = new Employee();
-        employee.setName("Marty Smith");
-        employees.add(employee);
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void save(Employee employee) {
-        employees.add(employee);
+
+        entityManager.persist(employee);
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
+    @SuppressWarnings("unchecked")
     public List<Employee> getEmployees() {
 
-        return employees;
+        return entityManager.createQuery("from Employee").getResultList();
     }
 }
