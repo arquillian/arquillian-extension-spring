@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <!-- Parent -->
     <parent>
         <groupId>org.jboss</groupId>
         <artifactId>jboss-parent</artifactId>
         <version>8</version>
-        <relativePath />
+        <relativePath/>
     </parent>
 
     <!-- Model Version -->
@@ -30,6 +31,7 @@
         <module>arquillian-container-spring</module>
         <module>arquillian-service-integration-spring-inject</module>
         <module>arquillian-service-integration-spring-javaconfig</module>
+        <module>arquillian-transaction-impl-spring</module>
         <module>arquillian-service-integration-spring-2.5-int-tests</module>
         <module>arquillian-service-integration-spring-3-int-tests</module>
         <module>arquillian-warp-spring</module>
@@ -50,6 +52,9 @@
 
         <!-- Arquillian Warp -->
         <version.arquillian_warp>1.0.0.Alpha1</version.arquillian_warp>
+
+        <!-- Arquillian Transaction -->
+        <version.arquillian_transaction>1.0.0.Alpha1</version.arquillian_transaction>
 
         <!-- Test Dependencies -->
         <version.junit_junit>4.8.1</version.junit_junit>
@@ -135,6 +140,12 @@
 
             <dependency>
                 <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-transaction-impl-spring</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
                 <artifactId>arquillian-container-spring</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -167,6 +178,15 @@
                 <groupId>org.jboss.arquillian.extension</groupId>
                 <artifactId>arquillian-warp-bom</artifactId>
                 <version>${version.arquillian_warp}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!-- Arquillian Transaction -->
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-transaction-bom</artifactId>
+                <version>${version.arquillian_transaction}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>

@@ -14,31 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.spring.testsuite.beans.repository;
 
-import org.jboss.arquillian.spring.testsuite.beans.model.Employee;
+package org.jboss.arquillian.transaction.spring.client;
 
-import java.util.List;
+import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
+import org.jboss.arquillian.core.spi.LoadableExtension;
 
 /**
- * <p>Represents an employee repository.</p>
+ * <p>Registers the transaction extension.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
+ * @version $Revision: $
  */
-public interface EmployeeRepository {
+public class SpringTransactionExtension implements LoadableExtension {
 
     /**
-     * <p>Persists the employee in underlying data source.</p>
-     *
-     * @param employee the employee to save
+     * {@inheritDoc}
      */
-    void save(Employee employee);
+    @Override
+    public void register(ExtensionBuilder builder) {
 
-    /**
-     * <p>Retrieves all employees.</p>
-     *
-     * @return list of employees
-     */
-    List<Employee> getEmployees();
+        builder.service(AuxiliaryArchiveAppender.class, SpringTransactionArchiveAppender.class);
+    }
 }
-
