@@ -20,6 +20,7 @@ package org.jboss.arquillian.spring.integration.javaconfig.client;
 import org.jboss.arquillian.spring.integration.SpringJavaConfigConstants;
 import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.ClientApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.context.ClientTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationConfiguration;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringClientAnnotationConfiguration;
@@ -51,9 +52,9 @@ public class AnnotationClientApplicationContextProducer implements ClientApplica
      * {@inheritDoc}
      */
     @Override
-    public TestScopeApplicationContext createApplicationContext(TestClass testClass) {
+    public ClientTestScopeApplicationContext createApplicationContext(TestClass testClass) {
 
-        return new TestScopeApplicationContext(getApplicationContext(testClass), true);
+        return new ClientTestScopeApplicationContext(getApplicationContext(testClass), true);
     }
 
     /**

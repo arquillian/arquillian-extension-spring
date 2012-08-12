@@ -20,7 +20,8 @@ package org.jboss.arquillian.spring.integration.client;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.spring.integration.SpringIntegrationConstants;
-import org.jboss.arquillian.spring.integration.container.SpringInjectionEnricher;
+import org.jboss.arquillian.spring.integration.container.SpringRemoteInjectionEnricher;
+import org.jboss.arquillian.spring.integration.enricher.AbstractSpringInjectionEnricher;
 import org.jboss.arquillian.test.spi.TestEnricher;
 
 
@@ -43,7 +44,8 @@ public class SpringIntegrationExtension implements LoadableExtension {
         // loads the extension only if Spring Application Context is in Classpath
         if (Validate.classExists(SpringIntegrationConstants.APPLICATION_CONTEXT)) {
             builder.service(AuxiliaryArchiveAppender.class, SpringIntegrationArchiveAppender.class)
-                    .service(TestEnricher.class, SpringInjectionEnricher.class)
+                    .service(TestEnricher.class, SpringClientInjectionEnricher.class)
+                    .service(TestEnricher.class, SpringRemoteInjectionEnricher.class)
                     .observer(SpringClientApplicationContextProducer.class)
                     .observer(SpringIntegrationConfigurationProducer.class);
         }

@@ -18,16 +18,14 @@
 package org.jboss.arquillian.spring.integration.container;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
+import org.jboss.arquillian.spring.integration.client.SpringClientInjectionEnricher;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextDestroyer;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * <p>Tests {@link SpringIntegrationRemoteExtension} class.</p>
@@ -62,7 +60,7 @@ public class SpringIntegrationRemoteExtensionTestCase {
 
         instance.register(mockExtensionBuilder);
 
-        verify(mockExtensionBuilder).service(TestEnricher.class, SpringInjectionEnricher.class);
+        verify(mockExtensionBuilder).service(TestEnricher.class, SpringRemoteInjectionEnricher.class);
         verify(mockExtensionBuilder).observer(SpringContainerApplicationContextProducer.class);
         verify(mockExtensionBuilder).observer(SpringRemoteIntegrationConfigurationProducer.class);
         verify(mockExtensionBuilder).observer(ApplicationContextDestroyer.class);

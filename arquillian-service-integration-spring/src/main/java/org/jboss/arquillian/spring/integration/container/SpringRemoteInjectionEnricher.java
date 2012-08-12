@@ -17,33 +17,31 @@
 
 package org.jboss.arquillian.spring.integration.container;
 
-import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.core.spi.LoadableExtension;
-import org.jboss.arquillian.spring.integration.SpringIntegrationConstants;
-import org.jboss.arquillian.spring.integration.context.ApplicationContextDestroyer;
+import org.jboss.arquillian.core.api.Instance;
+import org.jboss.arquillian.core.api.annotation.Inject;
+import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.enricher.AbstractSpringInjectionEnricher;
-import org.jboss.arquillian.test.spi.TestEnricher;
 
 /**
- * <p>A remote extension that configures required services for running Spring tests.</p>
+ * <p>Spring remote test enricher, injects spring beans into the test class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class SpringIntegrationRemoteExtension implements RemoteLoadableExtension {
+public class SpringRemoteInjectionEnricher extends AbstractSpringInjectionEnricher<RemoteTestScopeApplicationContext> {
+
+    /**
+     * <p>Instance of {@link RemoteTestScopeApplicationContext}.</p>
+     */
+    @Inject
+    private Instance<RemoteTestScopeApplicationContext> testApplicationContext;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void register(LoadableExtension.ExtensionBuilder builder) {
+    public RemoteTestScopeApplicationContext getTestScopeApplicationContext() {
 
-        // loads the extension only if Spring Application Context is in ClassPath
-        if (LoadableExtension.Validate.classExists(SpringIntegrationConstants.APPLICATION_CONTEXT)) {
-            builder.service(TestEnricher.class, SpringRemoteInjectionEnricher.class)
-                    .observer(SpringContainerApplicationContextProducer.class)
-                    .observer(SpringRemoteIntegrationConfigurationProducer.class)
-                    .observer(ApplicationContextDestroyer.class);
-        }
+        return testApplicationContext.get();
     }
 }

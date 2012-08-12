@@ -18,17 +18,12 @@
 package org.jboss.arquillian.spring.integration.inject.client;
 
 import org.jboss.arquillian.spring.integration.SpringInjectConstants;
-import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.ClientApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.context.ClientTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringClientConfiguration;
-import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * <p>The client application context producer.</p>
@@ -50,15 +45,16 @@ public class XmlClientApplicationContextProducer implements ClientApplicationCon
      * {@inheritDoc}
      */
     @Override
-    public TestScopeApplicationContext createApplicationContext(TestClass testClass) {
+    public ClientTestScopeApplicationContext createApplicationContext(TestClass testClass) {
 
-        return new TestScopeApplicationContext(getApplicationContext(testClass), true);
+        return new ClientTestScopeApplicationContext(getApplicationContext(testClass), true);
     }
 
     /**
      * <p>Creates the application context.</p>
      *
      * @param testClass the test class
+     *
      * @return the created {@link ApplicationContext}
      */
     private ApplicationContext getApplicationContext(TestClass testClass) {

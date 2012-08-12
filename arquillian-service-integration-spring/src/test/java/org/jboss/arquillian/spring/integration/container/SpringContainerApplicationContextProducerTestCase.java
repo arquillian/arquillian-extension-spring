@@ -21,12 +21,12 @@ import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.spi.ServiceLoader;
 import org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.utils.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.support.GenericApplicationContext;
 
@@ -56,7 +56,8 @@ public class SpringContainerApplicationContextProducerTestCase {
     private RemoteApplicationContextProducer supportedApplicationContextProducer;
 
     /**
-     * <p>Represents an instance of {@link RemoteApplicationContextProducer} that will never support the test class.</p>
+     * <p>Represents an instance of {@link RemoteApplicationContextProducer} that will never support the test
+     * class.</p>
      */
     private RemoteApplicationContextProducer notSupportedApplicationContextProducer;
 
@@ -71,7 +72,7 @@ public class SpringContainerApplicationContextProducerTestCase {
         supportedApplicationContextProducer = mock(RemoteApplicationContextProducer.class);
         when(supportedApplicationContextProducer.supports(any(TestClass.class))).thenReturn(true);
         when(supportedApplicationContextProducer.createApplicationContext(any(TestClass.class)))
-                .thenReturn(new TestScopeApplicationContext(new GenericApplicationContext(), true));
+                .thenReturn(new RemoteTestScopeApplicationContext(new GenericApplicationContext(), true));
 
         notSupportedApplicationContextProducer = mock(RemoteApplicationContextProducer.class);
         when(notSupportedApplicationContextProducer.supports(any(TestClass.class))).thenReturn(false);

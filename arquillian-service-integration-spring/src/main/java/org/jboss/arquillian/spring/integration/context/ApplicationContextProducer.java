@@ -23,10 +23,12 @@ import org.jboss.arquillian.test.spi.TestClass;
  * <p>Concrete class that implements this interface will be responsible for creating instance of the application
  * context.</p>
  *
+ * @param <T> the type of application context
+ *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public interface ApplicationContextProducer {
+public interface ApplicationContextProducer<T extends TestScopeApplicationContext> {
 
     /**
      * <p>Returns whether the given producer supports the given test class and can be used for creating the application
@@ -45,5 +47,5 @@ public interface ApplicationContextProducer {
      *
      * @return the created instance of {@link TestScopeApplicationContext}
      */
-    TestScopeApplicationContext createApplicationContext(TestClass testClass);
+    T createApplicationContext(TestClass testClass);
 }

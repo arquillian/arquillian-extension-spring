@@ -17,12 +17,26 @@
 
 package org.jboss.arquillian.spring.integration.context;
 
+import org.springframework.context.ApplicationContext;
+
 /**
- * <p>Concrete class that implements this interface will be responsible for creating instance of the application
- * context on the client side.</p>
+ * <p>A client test scope application context.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public interface ClientApplicationContextProducer extends ApplicationContextProducer<ClientTestScopeApplicationContext> {
+public class ClientTestScopeApplicationContext extends TestScopeApplicationContext {
+
+    /**
+     * <p>Creates new instance of {@link ClientTestScopeApplicationContext} class with given application context.</p>
+     *
+     * @param applicationContext the {@link ApplicationContext}
+     * @param closable           whether the application context should be closed after the tests
+     *
+     * @throws IllegalArgumentException is applicationContext is null
+     */
+    public ClientTestScopeApplicationContext(ApplicationContext applicationContext, boolean closable) {
+
+        super(applicationContext, closable);
+    }
 }

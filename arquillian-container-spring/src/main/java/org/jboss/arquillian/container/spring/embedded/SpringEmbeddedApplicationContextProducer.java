@@ -25,7 +25,7 @@ import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 
 import java.util.List;
@@ -46,11 +46,11 @@ public class SpringEmbeddedApplicationContextProducer {
     private Instance<ServiceLoader> serviceLoader;
 
     /**
-     * <p>Producer proxy for {@link TestScopeApplicationContext}.</p>
+     * <p>Producer proxy for {@link RemoteTestScopeApplicationContext}.</p>
      */
     @Inject
     @ApplicationScoped
-    private InstanceProducer<TestScopeApplicationContext> testApplicationContext;
+    private InstanceProducer<RemoteTestScopeApplicationContext> testApplicationContext;
 
     /**
      * <p>Builds the application context before the test suite is being executed.</p>
@@ -69,7 +69,7 @@ public class SpringEmbeddedApplicationContextProducer {
 
             if (applicationContextProducer.supports(beforeClass.getTestClass())) {
 
-                TestScopeApplicationContext applicationContext =
+                RemoteTestScopeApplicationContext applicationContext =
                         applicationContextProducer.createApplicationContext(beforeClass.getTestClass());
 
                 if (applicationContext != null) {

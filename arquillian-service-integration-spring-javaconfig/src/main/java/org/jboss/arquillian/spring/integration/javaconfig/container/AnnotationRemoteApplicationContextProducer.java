@@ -18,10 +18,10 @@
 package org.jboss.arquillian.spring.integration.javaconfig.container;
 
 import org.jboss.arquillian.spring.integration.SpringJavaConfigConstants;
-import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationConfiguration;
 import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -50,15 +50,16 @@ public class AnnotationRemoteApplicationContextProducer extends AbstractApplicat
      * {@inheritDoc}
      */
     @Override
-    public TestScopeApplicationContext createApplicationContext(TestClass testClass) {
+    public RemoteTestScopeApplicationContext createApplicationContext(TestClass testClass) {
 
-        return new TestScopeApplicationContext(getApplicationContext(testClass), true);
+        return new RemoteTestScopeApplicationContext(getApplicationContext(testClass), true);
     }
 
     /**
      * <p>Creates the application context.</p>
      *
      * @param testClass the test class
+     *
      * @return created {@link ApplicationContext}
      */
     private ApplicationContext getApplicationContext(TestClass testClass) {
@@ -109,6 +110,7 @@ public class AnnotationRemoteApplicationContextProducer extends AbstractApplicat
      * @param testClass the test class
      * @param classes   the annotated classes to register
      * @param packages  the packages containing the annotated classes
+     *
      * @return the created instance of {@link org.springframework.context.annotation.AnnotationConfigApplicationContext}
      */
     private ApplicationContext createAnnotatedApplicationContext(TestClass testClass, String[] packages, Class<?>[] classes) {
@@ -127,6 +129,7 @@ public class AnnotationRemoteApplicationContextProducer extends AbstractApplicat
      *
      * @param classes  the annotated classes to register
      * @param packages the packages containing the annotated classes
+     *
      * @return the created instance of {@link org.springframework.context.annotation.AnnotationConfigApplicationContext}
      */
     private ApplicationContext createAnnotatedApplicationContext(Class<?>[] classes, String[] packages) {
@@ -154,6 +157,7 @@ public class AnnotationRemoteApplicationContextProducer extends AbstractApplicat
      * @param applicationContextClass the application context class
      * @param classes                 the annotated classes to register
      * @param packages                the packages containing the annotated classes
+     *
      * @return the created instance of {@link ApplicationContext}
      */
     private <T extends ApplicationContext> T createCustomAnnotatedApplicationContext(
@@ -189,6 +193,7 @@ public class AnnotationRemoteApplicationContextProducer extends AbstractApplicat
      * @param ctor                    the constructor to use
      * @param params                  the constructor parameters
      * @param <T>                     the type of the application context
+     *
      * @return the created instance of {@link ApplicationContext}
      */
     private <T extends ApplicationContext> T createInstance(Class<T> applicationContextClass,
@@ -214,6 +219,7 @@ public class AnnotationRemoteApplicationContextProducer extends AbstractApplicat
      * @param type           the class type for which the constructor will be retrieved
      * @param parameterTypes the types of the parameters
      * @param <T>            the type of the application context
+     *
      * @return the retrieved constructor
      */
     private <T extends ApplicationContext> Constructor<T> getConstructor(Class<T> type, Class... parameterTypes) {

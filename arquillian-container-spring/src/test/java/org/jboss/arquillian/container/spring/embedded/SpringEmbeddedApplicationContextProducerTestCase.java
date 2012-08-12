@@ -19,8 +19,8 @@ package org.jboss.arquillian.container.spring.embedded;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.spi.ServiceLoader;
-import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
@@ -33,10 +33,7 @@ import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.notNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * <p>Tests {@link SpringEmbeddedApplicationContextProducer} class.</p>
@@ -51,12 +48,14 @@ public class SpringEmbeddedApplicationContextProducerTestCase {
     private SpringEmbeddedApplicationContextProducer instance;
 
     /**
-     * <p>Represents an instance of {@link RemoteApplicationContextProducer} that will always support the test class.</p>
+     * <p>Represents an instance of {@link RemoteApplicationContextProducer} that will always support the test
+     * class.</p>
      */
     private RemoteApplicationContextProducer supportedApplicationContextProducer;
 
     /**
-     * <p>Represents an instance of {@link RemoteApplicationContextProducer} that will never support the test class.</p>
+     * <p>Represents an instance of {@link RemoteApplicationContextProducer} that will never support the test
+     * class.</p>
      */
     private RemoteApplicationContextProducer notSupportedApplicationContextProducer;
 
@@ -71,7 +70,7 @@ public class SpringEmbeddedApplicationContextProducerTestCase {
         supportedApplicationContextProducer = mock(RemoteApplicationContextProducer.class);
         when(supportedApplicationContextProducer.supports(any(TestClass.class))).thenReturn(true);
         when(supportedApplicationContextProducer.createApplicationContext(any(TestClass.class)))
-                .thenReturn(new TestScopeApplicationContext(new GenericApplicationContext(), true));
+                .thenReturn(new RemoteTestScopeApplicationContext(new GenericApplicationContext(), true));
 
         notSupportedApplicationContextProducer = mock(RemoteApplicationContextProducer.class);
         when(notSupportedApplicationContextProducer.supports(any(TestClass.class))).thenReturn(false);

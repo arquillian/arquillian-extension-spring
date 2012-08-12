@@ -24,5 +24,5 @@ package org.jboss.arquillian.spring.integration.context;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public interface RemoteApplicationContextProducer extends ApplicationContextProducer {
+public interface RemoteApplicationContextProducer extends ApplicationContextProducer<RemoteTestScopeApplicationContext> {
 }

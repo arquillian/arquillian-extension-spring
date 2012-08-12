@@ -5,7 +5,7 @@ import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.spi.ServiceLoader;
 import org.jboss.arquillian.spring.integration.container.SpringContainerApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.ClientApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.context.ClientTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.utils.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.TestClass;
@@ -40,7 +40,8 @@ public class SpringClientApplicationContextProducerTestCase {
     private ClientApplicationContextProducer supportedApplicationContextProducer;
 
     /**
-     * <p>Represents an instance of {@link ClientApplicationContextProducer} that will never support the test class.</p>
+     * <p>Represents an instance of {@link ClientApplicationContextProducer} that will never support the test
+     * class.</p>
      */
     private ClientApplicationContextProducer notSupportedApplicationContextProducer;
 
@@ -55,14 +56,15 @@ public class SpringClientApplicationContextProducerTestCase {
         supportedApplicationContextProducer = mock(ClientApplicationContextProducer.class);
         when(supportedApplicationContextProducer.supports(any(TestClass.class))).thenReturn(true);
         when(supportedApplicationContextProducer.createApplicationContext(any(TestClass.class)))
-                .thenReturn(new TestScopeApplicationContext(new GenericApplicationContext(), true));
+                .thenReturn(new ClientTestScopeApplicationContext(new GenericApplicationContext(), true));
 
         notSupportedApplicationContextProducer = mock(ClientApplicationContextProducer.class);
         when(notSupportedApplicationContextProducer.supports(any(TestClass.class))).thenReturn(false);
     }
 
     /**
-     * <p>Tests {@link SpringContainerApplicationContextProducer#initApplicationContext(org.jboss.arquillian.test.spi.event.suite.BeforeClass)} method, when the
+     * <p>Tests {@link SpringContainerApplicationContextProducer#initApplicationContext(org.jboss.arquillian.test.spi.event.suite.BeforeClass)}
+     * method, when the
      * test class is supported.</p>
      *
      * @throws Exception if any error occurs
