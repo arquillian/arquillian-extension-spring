@@ -18,6 +18,7 @@ package org.jboss.arquillian.spring.integration.transaction.provider;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.transaction.utils.TestReflectionHelper;
 import org.jboss.arquillian.transaction.api.annotation.Transactional;
@@ -30,7 +31,10 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * <p>Tests {@link org.jboss.arquillian.transaction.spring.provider.SpringTransactionProvider} class.</p>
@@ -47,7 +51,7 @@ public class SpringTransactionProviderTestCase {
     /**
      * <p>Mock instance of {@link TestScopeApplicationContext}.</p>
      */
-    private Instance<TestScopeApplicationContext> mockTestScopeApplicationContextInstance;
+    private Instance<RemoteTestScopeApplicationContext> mockTestScopeApplicationContextInstance;
 
     /**
      * <p>Mock instance of {@link PlatformTransactionManager}.</p>
@@ -95,7 +99,7 @@ public class SpringTransactionProviderTestCase {
 
         mockTestScopeApplicationContextInstance = mock(Instance.class);
         when(mockTestScopeApplicationContextInstance.get())
-                .thenReturn(new TestScopeApplicationContext(mockApplicationContext, false));
+                .thenReturn(new RemoteTestScopeApplicationContext(mockApplicationContext, false));
 
         mockPlatformTransactionManagerInstance = mock(InstanceProducer.class);
         mockTransactionStatusInstance = mock(InstanceProducer.class);
