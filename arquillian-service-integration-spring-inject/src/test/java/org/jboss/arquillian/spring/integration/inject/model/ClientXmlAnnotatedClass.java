@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-package org.jboss.arquillian.spring.integration.container;
+package org.jboss.arquillian.spring.integration.inject.model;
 
-import org.junit.Ignore;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringClientConfiguration;
 
 /**
+ * <p>Simple class used for testing the enricher.</p>
  *
+ * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-@Ignore
-public class SpringApplicationContextProducerTestCase {
-
-    // TODO implement test
+@SpringClientConfiguration
+public class ClientXmlAnnotatedClass {
 }

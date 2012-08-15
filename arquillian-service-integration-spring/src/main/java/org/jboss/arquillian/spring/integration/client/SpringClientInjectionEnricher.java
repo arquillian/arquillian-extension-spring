@@ -15,33 +15,31 @@
  * limitations under the License.
  */
 
-package org.jboss.arquillian.spring.integration.context;
+package org.jboss.arquillian.spring.integration.client;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
+import org.jboss.arquillian.spring.integration.context.ClientTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.enricher.AbstractSpringInjectionEnricher;
 
 /**
- * <p>Abstract application context producer, the concrete implementation will be responsible for actual creating the
- * application context for the given test case.</p>
+ * <p>Spring client test enricher, injects spring beans into the test class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public abstract class AbstractApplicationContextProducer implements RemoteApplicationContextProducer {
+public class SpringClientInjectionEnricher extends AbstractSpringInjectionEnricher<ClientTestScopeApplicationContext> {
 
     /**
-     * <p>Instance of {@link SpringIntegrationConfiguration}.</p>
+     * <p>Instance of {@link ClientTestScopeApplicationContext}.</p>
      */
     @Inject
-    private Instance<SpringIntegrationConfiguration> remoteConfiguration;
+    private Instance<ClientTestScopeApplicationContext> testApplicationContext;
 
-    /**
-     * <p>Retrieves the remote configuration.</p>
-     *
-     * @return the remote configuration
-     */
-    protected SpringIntegrationConfiguration getRemoteConfiguration() {
-        return remoteConfiguration.get();
+    @Override
+    public ClientTestScopeApplicationContext getTestScopeApplicationContext() {
+
+        return testApplicationContext.get();
     }
 }

@@ -17,31 +17,26 @@
 
 package org.jboss.arquillian.spring.integration.context;
 
-import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
+import org.springframework.context.ApplicationContext;
 
 /**
- * <p>Abstract application context producer, the concrete implementation will be responsible for actual creating the
- * application context for the given test case.</p>
+ * <p>A client test scope application context.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public abstract class AbstractApplicationContextProducer implements RemoteApplicationContextProducer {
+public class ClientTestScopeApplicationContext extends TestScopeApplicationContext {
 
     /**
-     * <p>Instance of {@link SpringIntegrationConfiguration}.</p>
-     */
-    @Inject
-    private Instance<SpringIntegrationConfiguration> remoteConfiguration;
-
-    /**
-     * <p>Retrieves the remote configuration.</p>
+     * <p>Creates new instance of {@link ClientTestScopeApplicationContext} class with given application context.</p>
      *
-     * @return the remote configuration
+     * @param applicationContext the {@link ApplicationContext}
+     * @param closable           whether the application context should be closed after the tests
+     *
+     * @throws IllegalArgumentException is applicationContext is null
      */
-    protected SpringIntegrationConfiguration getRemoteConfiguration() {
-        return remoteConfiguration.get();
+    public ClientTestScopeApplicationContext(ApplicationContext applicationContext, boolean closable) {
+
+        super(applicationContext, closable);
     }
 }

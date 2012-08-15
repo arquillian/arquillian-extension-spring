@@ -18,9 +18,9 @@
 package org.jboss.arquillian.spring.integration.javaconfig.client;
 
 import org.jboss.arquillian.core.api.Instance;
+import org.jboss.arquillian.spring.integration.javaconfig.container.AnnotationRemoteApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationConfiguration;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
-import org.jboss.arquillian.spring.integration.javaconfig.container.AnnotationApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.javaconfig.container.SpringJavaConfigRemoteExtension;
 import org.jboss.arquillian.spring.integration.javaconfig.utils.TestReflectionHelper;
 import org.jboss.arquillian.spring.integration.javaconfig.utils.TestResourceHelper;
@@ -54,7 +54,7 @@ public class SpringJavaConfigArchiveAppenderTestCase {
      * <p>Represents the list of required classes.</p>
      */
     private final static List<Class<?>> REQUIRED_CLASSES = Arrays.asList(
-            SpringAnnotationConfiguration.class, AnnotationApplicationContextProducer.class,
+            SpringAnnotationConfiguration.class, AnnotationRemoteApplicationContextProducer.class,
             SpringJavaConfigRemoteExtension.class);
 
     /**

@@ -42,16 +42,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * <p>Tests {@link AnnotationApplicationContextProducer} class.</p>
+ * <p>Tests {@link AnnotationRemoteApplicationContextProducer} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class AnnotationApplicationContextProducerTestCase {
+public class AnnotationRemoteApplicationContextProducerTestCase {
 
     /**
      * <p>Represents the instance of tested class.</p>
      */
-    private AnnotationApplicationContextProducer instance;
+    private AnnotationRemoteApplicationContextProducer instance;
 
     /**
      * <p>Represents the producer configuration.</p>
@@ -66,7 +66,7 @@ public class AnnotationApplicationContextProducerTestCase {
     @Before
     public void setUp() throws Exception {
 
-        instance = new AnnotationApplicationContextProducer();
+        instance = new AnnotationRemoteApplicationContextProducer();
 
         remoteConfiguration = new SpringIntegrationConfiguration(Collections.<String, String>emptyMap());
 
@@ -74,7 +74,7 @@ public class AnnotationApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link AnnotationApplicationContextProducer#supports(TestClass)} method.</p>
+     * <p>Tests the {@link AnnotationRemoteApplicationContextProducer#supports(TestClass)} method.</p>
      */
     @Test
     public void testSupportsFalse() {
@@ -84,7 +84,7 @@ public class AnnotationApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link AnnotationApplicationContextProducer#supports(TestClass)} method.</p>
+     * <p>Tests the {@link AnnotationRemoteApplicationContextProducer#supports(TestClass)} method.</p>
      */
     @Test
     public void testSupportsTrue1() {
@@ -94,7 +94,7 @@ public class AnnotationApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link AnnotationApplicationContextProducer#supports(TestClass)} method.</p>
+     * <p>Tests the {@link AnnotationRemoteApplicationContextProducer#supports(TestClass)} method.</p>
      */
     @Test
     public void testSupportsTrue2() {
@@ -104,7 +104,7 @@ public class AnnotationApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link AnnotationApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link AnnotationRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      *
      * @throws Exception if any error occurs
      */
@@ -125,7 +125,7 @@ public class AnnotationApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link AnnotationApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link AnnotationRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      *
      * <p>{@link RuntimeException} is expected.</p>
      *
@@ -146,7 +146,7 @@ public class AnnotationApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link AnnotationApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link AnnotationRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      *
      * @throws Exception if any error occurs
      */
@@ -169,7 +169,7 @@ public class AnnotationApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link AnnotationApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link AnnotationRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      *
      * <p>{@link RuntimeException} is expected.</p>
      *
@@ -190,7 +190,7 @@ public class AnnotationApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link AnnotationApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link AnnotationRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      */
     @Test
     public void testCreateApplicationContextCustomContextClasses() {
@@ -204,7 +204,7 @@ public class AnnotationApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link AnnotationApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link AnnotationRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      *
      * <p>{@link RuntimeException} is expected.</p>
      *
@@ -229,7 +229,7 @@ public class AnnotationApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link AnnotationApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link AnnotationRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      */
     @Test
     public void testCreateApplicationContextCustomContextPackages() {
@@ -243,7 +243,7 @@ public class AnnotationApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link AnnotationApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link AnnotationRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      *
      * <p>{@link RuntimeException} is expected.</p>
      *
@@ -268,7 +268,7 @@ public class AnnotationApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link AnnotationApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link AnnotationRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      *
      * <p>{@link RuntimeException} is expected.</p>
      */

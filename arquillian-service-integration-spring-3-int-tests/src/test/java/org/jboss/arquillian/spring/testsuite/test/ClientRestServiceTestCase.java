@@ -18,30 +18,39 @@ package org.jboss.arquillian.spring.testsuite.test;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OverProtocol;
+import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringClientConfiguration;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringWebConfiguration;
 import org.jboss.arquillian.spring.testsuite.beans.controller.EmployeeController;
+import org.jboss.arquillian.spring.testsuite.beans.model.Employee;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.URL;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 /**
- * <p>Tests the {@link EmployeeController} class.</p>
+ * <p>Tests REST service.</p>
+ *
+ * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
 @RunWith(Arquillian.class)
-@SpringWebConfiguration
-public class EmployeeControllerContextTestCase {
+@SpringClientConfiguration("applicationContext-rest.xml")
+public class ClientRestServiceTestCase {
 
     /**
      * <p>Creates the test deployment.</p>
@@ -58,30 +67,27 @@ public class EmployeeControllerContextTestCase {
     }
 
     /**
-     * <p>The injected {@link EmployeeController}.</p>
+     * <p>The context path of the deployed application.</p>
      */
-    @Autowired
-    private EmployeeController employeeController;
+    @ArquillianResource
+    private URL contextPath;
 
     /**
-     * <p>Tests {@link EmployeeController#getEmployees(Model)} method.</p>
+     * <p>Autowired {@link RestTemplate}.</p>
+     */
+    @Autowired
+    private RestTemplate restTemplate;
+
+    /**
+     * <p>Tests invocation of a REST service.</p>
      */
     @Test
+    @RunAsClient
     public void testGetEmployees() {
 
-        String result;
-        Model model;
-        ArgumentCaptor<List> argument;
+        Employee result = restTemplate.getForObject(contextPath + "/Employees/1", Employee.class);
 
-        assertNotNull("The controller hasn't been injected.", employeeController);
-
-        model = mock(Model.class);
-        argument = ArgumentCaptor.forClass(List.class);
-
-        result = employeeController.getEmployees(model);
-
-        verify(model).addAttribute(eq("employees"), argument.capture());
-        assertEquals("The controller returned invalid view name, 'employeeList' was expected.", "employeeList", result);
-        assertEquals("Two employees should be returned from model.", 2, argument.getValue().size());
+        assertNotNull("The returned result from REST service was null.", result);
+        assertEquals("The returned employee has invalid name.", "John Smith", result.getName());
     }
 }

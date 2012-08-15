@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-package org.jboss.arquillian.spring.integration.container;
+package org.jboss.arquillian.spring.integration.enricher;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.spring.integration.SpringIntegrationConstants;
+import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -31,21 +32,24 @@ import java.util.logging.Logger;
 /**
  * <p>Spring test enricher, injects spring beans into the test class.</p>
  *
+ * @param <T> the type of application context
+ *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class SpringInjectionEnricher implements TestEnricher {
+public abstract class AbstractSpringInjectionEnricher<T extends TestScopeApplicationContext> implements TestEnricher {
 
     /**
      * <p>Logger used by this class.</p>
      */
-    private static final Logger log = Logger.getLogger(SpringInjectionEnricher.class.getName());
+    private static final Logger log = Logger.getLogger(AbstractSpringInjectionEnricher.class.getName());
 
     /**
-     * <p>Instance of Spring {@link org.springframework.context.ApplicationContext}.</p>
+     * <p>Retrieves the instance of {@link TestScopeApplicationContext}.</p>
+     *
+     * @return the test scope application context
      */
-    @Inject
-    private Instance<TestScopeApplicationContext> testApplicationContext;
+    public abstract T getTestScopeApplicationContext();
 
     /**
      * {@inheritDoc}
@@ -106,9 +110,9 @@ public class SpringInjectionEnricher implements TestEnricher {
      */
     private ApplicationContext getApplicationContext() {
 
-        if (testApplicationContext.get() != null) {
+        if (getTestScopeApplicationContext() != null) {
 
-            return testApplicationContext.get().getApplicationContext();
+            return getTestScopeApplicationContext().getApplicationContext();
         }
 
         return null;
@@ -121,6 +125,6 @@ public class SpringInjectionEnricher implements TestEnricher {
      */
     private boolean getApplicationContextExists() {
 
-        return testApplicationContext.get() != null;
+        return getTestScopeApplicationContext() != null;
     }
 }

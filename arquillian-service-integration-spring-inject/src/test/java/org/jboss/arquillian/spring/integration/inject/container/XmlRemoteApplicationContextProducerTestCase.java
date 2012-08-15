@@ -40,16 +40,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * <p>Tests {@link XmlApplicationContextProducer} class.</p>
+ * <p>Tests {@link XmlRemoteApplicationContextProducer} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class XmlApplicationContextProducerTestCase {
+public class XmlRemoteApplicationContextProducerTestCase {
 
     /**
      * <p>Represents the instance of tested class.</p>
      */
-    private XmlApplicationContextProducer instance;
+    private XmlRemoteApplicationContextProducer instance;
 
     /**
      * <p>The producer configuration.</p>
@@ -64,7 +64,7 @@ public class XmlApplicationContextProducerTestCase {
     @Before
     public void setUp() throws Exception {
 
-        instance = new XmlApplicationContextProducer();
+        instance = new XmlRemoteApplicationContextProducer();
 
         remoteConfiguration = new SpringIntegrationConfiguration(Collections.<String, String>emptyMap());
 
@@ -72,7 +72,7 @@ public class XmlApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link XmlApplicationContextProducer#supports(org.jboss.arquillian.test.spi.TestClass)} method.</p>
+     * <p>Tests the {@link XmlRemoteApplicationContextProducer#supports(org.jboss.arquillian.test.spi.TestClass)} method.</p>
      */
     @Test
     public void testSupportsFalse() {
@@ -82,7 +82,7 @@ public class XmlApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link XmlApplicationContextProducer#supports(TestClass)} method.</p>
+     * <p>Tests the {@link XmlRemoteApplicationContextProducer#supports(TestClass)} method.</p>
      */
     @Test
     public void testSupportsTrue() {
@@ -92,7 +92,7 @@ public class XmlApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link XmlApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link XmlRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      */
     @Test
     public void testCreateApplicationContextDefault() {
@@ -106,7 +106,7 @@ public class XmlApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link XmlApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link XmlRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      *
      * @throws Exception if any error occurs
      */
@@ -128,7 +128,7 @@ public class XmlApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link XmlApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link XmlRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      *
      * <p>{@link RuntimeException} is expected.</p>
      *
@@ -148,7 +148,7 @@ public class XmlApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link XmlApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link XmlRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      */
     @Test
     public void testCreateApplicationContextCustomContext() {
@@ -162,7 +162,7 @@ public class XmlApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link XmlApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link XmlRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      *
      * <p>{@link RuntimeException} is expected.</p>
      *
@@ -186,7 +186,7 @@ public class XmlApplicationContextProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link XmlApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
+     * <p>Tests the {@link XmlRemoteApplicationContextProducer#createApplicationContext(TestClass)} method.</p>
      *
      * <p>{@link RuntimeException} is expected.</p>
      */

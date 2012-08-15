@@ -19,12 +19,12 @@ package org.jboss.arquillian.spring.integration.inject.client;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.spring.integration.SpringInjectConstants;
+import org.jboss.arquillian.spring.integration.inject.container.XmlRemoteApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringWebConfiguration;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
 import org.jboss.arquillian.spring.integration.inject.container.SpringInjectRemoteExtension;
 import org.jboss.arquillian.spring.integration.inject.container.WebApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.inject.container.XmlApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.inject.utils.TestReflectionHelper;
 import org.jboss.arquillian.spring.integration.inject.utils.TestResourceHelper;
 import org.jboss.shrinkwrap.api.Archive;
@@ -58,7 +58,7 @@ public class SpringInjectArchiveAppenderTestCase {
      */
     private final static List<Class<?>> REQUIRED_CLASSES = Arrays.asList(
             SpringConfiguration.class, SpringWebConfiguration.class, SpringInjectConstants.class,
-            XmlApplicationContextProducer.class, WebApplicationContextProducer.class,
+            XmlRemoteApplicationContextProducer.class, WebApplicationContextProducer.class,
             SpringInjectRemoteExtension.class);
 
     /**

@@ -15,33 +15,36 @@
  * limitations under the License.
  */
 
-package org.jboss.arquillian.spring.integration.context;
+package org.jboss.arquillian.spring.integration.test.annotation;
 
-import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * <p>Abstract application context producer, the concrete implementation will be responsible for actual creating the
- * application context for the given test case.</p>
+ * <p>Defines classes and packages to be scan when configuring
+ * {@link org.jboss.arquillian.core.spi.context.ApplicationContext} on the client side.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public abstract class AbstractApplicationContextProducer implements RemoteApplicationContextProducer {
+@Documented
+@Retention(RUNTIME)
+@Target(TYPE)
+@Inherited
+public @interface SpringClientAnnotationConfiguration {
 
     /**
-     * <p>Instance of {@link SpringIntegrationConfiguration}.</p>
+     * <p>The annotated class that should be loaded by the application context.</p>
      */
-    @Inject
-    private Instance<SpringIntegrationConfiguration> remoteConfiguration;
+    Class<?>[] classes() default {};
 
     /**
-     * <p>Retrieves the remote configuration.</p>
-     *
-     * @return the remote configuration
+     * <p>The packages that will scanned for annotated classes.</p>
      */
-    protected SpringIntegrationConfiguration getRemoteConfiguration() {
-        return remoteConfiguration.get();
-    }
+    String[] packages() default {};
 }

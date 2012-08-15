@@ -18,10 +18,10 @@
 package org.jboss.arquillian.spring.integration.inject.container;
 
 import org.jboss.arquillian.spring.integration.SpringInjectConstants;
-import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
 import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -36,7 +36,7 @@ import java.lang.reflect.InvocationTargetException;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class XmlApplicationContextProducer extends AbstractApplicationContextProducer {
+public class XmlRemoteApplicationContextProducer extends AbstractApplicationContextProducer {
 
     /**
      * {@inheritDoc}
@@ -50,9 +50,9 @@ public class XmlApplicationContextProducer extends AbstractApplicationContextPro
      * {@inheritDoc}
      */
     @Override
-    public TestScopeApplicationContext createApplicationContext(TestClass testClass) {
+    public RemoteTestScopeApplicationContext createApplicationContext(TestClass testClass) {
 
-        return new TestScopeApplicationContext(getApplicationContext(testClass), true);
+        return new RemoteTestScopeApplicationContext(getApplicationContext(testClass), true);
     }
 
     /**

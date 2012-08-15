@@ -19,6 +19,7 @@ package org.jboss.arquillian.transaction.spring.provider;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
+import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.transaction.spi.annotation.TransactionScope;
 import org.jboss.arquillian.transaction.spi.provider.TransactionProvider;
@@ -43,7 +44,7 @@ public class SpringTransactionProvider implements TransactionProvider {
      * <p>Instance of application context.</p>
      */
     @Inject
-    Instance<TestScopeApplicationContext> applicationContextInstance;
+    Instance<RemoteTestScopeApplicationContext> applicationContextInstance;
 
     /**
      * <p>Instance of {@link PlatformTransactionManager} to which all the operations are delegated.</p>
