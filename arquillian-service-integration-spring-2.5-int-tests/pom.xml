@@ -183,7 +183,7 @@
 
                 <dependency>
                     <groupId>org.jboss.arquillian.extension</groupId>
-                    <artifactId>arquillian-container-spring</artifactId>
+                    <artifactId>arquillian-service-container-spring</artifactId>
                     <scope>test</scope>
                 </dependency>
             </dependencies>

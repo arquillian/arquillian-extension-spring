@@ -51,7 +51,7 @@
 
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-transaction-impl-spring</artifactId>
+            <artifactId>arquillian-transaction-spring</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -201,7 +201,7 @@
 
                 <dependency>
                     <groupId>org.jboss.arquillian.extension</groupId>
-                    <artifactId>arquillian-container-spring</artifactId>
+                    <artifactId>arquillian-service-container-spring</artifactId>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
