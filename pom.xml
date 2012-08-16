@@ -28,10 +28,10 @@
         <module>arquillian-service-deployer-spring-2.5</module>
         <module>arquillian-service-deployer-spring-3</module>
         <module>arquillian-service-integration-spring</module>
-        <module>arquillian-container-spring</module>
+        <module>arquillian-service-container-spring</module>
         <module>arquillian-service-integration-spring-inject</module>
         <module>arquillian-service-integration-spring-javaconfig</module>
-        <module>arquillian-transaction-impl-spring</module>
+        <module>arquillian-transaction-spring</module>
         <module>arquillian-service-integration-spring-2.5-int-tests</module>
         <module>arquillian-service-integration-spring-3-int-tests</module>
         <module>arquillian-warp-spring</module>
@@ -140,13 +140,13 @@
 
             <dependency>
                 <groupId>org.jboss.arquillian.extension</groupId>
-                <artifactId>arquillian-transaction-impl-spring</artifactId>
+                <artifactId>arquillian-transaction-spring</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.jboss.arquillian.extension</groupId>
-                <artifactId>arquillian-container-spring</artifactId>
+                <artifactId>arquillian-service-container-spring</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

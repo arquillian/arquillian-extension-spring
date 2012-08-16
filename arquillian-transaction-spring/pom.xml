@@ -13,7 +13,7 @@
     <!-- Model Version -->
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>arquillian-transaction-impl-spring</artifactId>
+    <artifactId>arquillian-transaction-spring</artifactId>
     <packaging>jar</packaging>
 
     <name>Arquillian Transaction Extension: Spring</name>
