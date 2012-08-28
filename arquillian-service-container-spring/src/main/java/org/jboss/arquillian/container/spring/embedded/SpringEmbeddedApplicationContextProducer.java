@@ -49,6 +49,7 @@ public class SpringEmbeddedApplicationContextProducer {
      * <p>Producer proxy for {@link RemoteTestScopeApplicationContext}.</p>
      */
     @Inject
+    @ApplicationScoped
     private InstanceProducer<RemoteTestScopeApplicationContext> testApplicationContext;
 
     /**
