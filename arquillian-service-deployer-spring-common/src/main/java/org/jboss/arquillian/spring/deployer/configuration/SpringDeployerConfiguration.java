@@ -61,6 +61,13 @@ public class SpringDeployerConfiguration {
     private boolean enableCache = true;
 
     /**
+     * <p>Represents whether the maven should be run in offline mode.</p>
+     *
+     * <p>Default is {@code false}.</p>
+     */
+    private boolean useMavenOffline = false;
+
+    /**
      * <p>Creates new instance of {@link SpringDeployerConfiguration} class.</p>
      */
     public SpringDeployerConfiguration() {
@@ -177,5 +184,25 @@ public class SpringDeployerConfiguration {
      */
     public void setEnableCache(boolean enableCache) {
         this.enableCache = enableCache;
+    }
+
+    /**
+     * <p>Retrieves whether maven should be run in offline mode.</p>
+     *
+     * <p>Default is {@code false}.</p>
+     *
+     * @return whether to run maven in offline mode
+     */
+    public boolean isUseMavenOffline() {
+        return useMavenOffline;
+    }
+
+    /**
+     * <p>Sets whether maven should be run in offline mode.</p>
+     *
+     * @param useMavenOffline whether to run maven in offline mode
+     */
+    public void setUseMavenOffline(boolean useMavenOffline) {
+        this.useMavenOffline = useMavenOffline;
     }
 }

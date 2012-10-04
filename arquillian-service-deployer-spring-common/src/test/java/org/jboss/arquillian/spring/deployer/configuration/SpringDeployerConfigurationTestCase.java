@@ -73,7 +73,7 @@ public class SpringDeployerConfigurationTestCase {
 
     /**
      * <p>Tests both {@link SpringDeployerConfiguration#isIncludeSnowdrop()}
-     * and {@link SpringDeployerConfiguration#setIncludeSnowdrop(boolean)}
+     * and {@link SpringDeployerConfiguration#setEnableCache(boolean)}
      * method.</p>
      */
     @Test
@@ -89,8 +89,24 @@ public class SpringDeployerConfigurationTestCase {
     }
 
     /**
-     * <p>Tests both {@link SpringDeployerConfiguration#isIncludeSnowdrop()}
-     * and {@link SpringDeployerConfiguration#setIncludeSnowdrop(boolean)}
+     * <p>Tests both {@link SpringDeployerConfiguration#isUseMavenOffline()}
+     * and {@link SpringDeployerConfiguration#setUseMavenOffline(boolean)} method.</p>
+     */
+    @Test
+    public void testUseMavenOffline() {
+
+        boolean value = true;
+
+        assertFalse("The default value is incorrect.", instance.isUseMavenOffline());
+
+        instance.setUseMavenOffline(value);
+
+        assertEquals("Invalid value set.", value, instance.isUseMavenOffline());
+    }
+
+    /**
+     * <p>Tests both {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#isIncludeSnowdrop()}
+     * and {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#setIncludeSnowdrop(boolean)}
      * method.</p>
      */
     @Test
