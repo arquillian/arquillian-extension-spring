@@ -46,16 +46,12 @@ public class Spring3DependencyResolver extends AbstractDependencyResolver {
 
         MavenDependencyBuilder mavenDependencyBuilder = new MavenDependencyBuilder();
 
-        // sets whether to run maven in offline mode
-        mavenDependencyBuilder.setUseMavenOffline(getConfiguration().isUseMavenOffline());
+        for (String artifactId : SpringDeployerConstants_3.SPRING_ARTIFACTS_IDS) {
 
-        // adds the spring-context dependencies
-        mavenDependencyBuilder.addDependency(SpringDeployerConstants_3.SPRING_ARTIFACT_NAME,
-                getConfiguration().getSpringVersion(), SpringDeployerConstants_3.SPRING_ARTIFACT_VERSION);
-
-        // adds spring web dependencies
-        mavenDependencyBuilder.addDependency(SpringDeployerConstants_3.SPRING_ARTIFACT_WEB_NAME,
-                getConfiguration().getSpringVersion(), SpringDeployerConstants_3.SPRING_ARTIFACT_VERSION);
+            mavenDependencyBuilder.addDependency(
+                    String.format("%s:%s", SpringDeployerConstants_3.SPRING_GROUP_ID, artifactId),
+                    getConfiguration().getSpringVersion(), SpringDeployerConstants_3.SPRING_ARTIFACT_VERSION);
+        }
 
         // adds the cglib
         mavenDependencyBuilder.addDependency(SpringDeployerConstants_3.CGLIB_ARTIFACT_NAME,

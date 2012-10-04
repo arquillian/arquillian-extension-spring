@@ -34,14 +34,16 @@ public final class SpringDeployerConstants_2_5 {
     }
 
     /**
-     * <p>Represents the Spring Framework maven artifact name.</p>
+     * <p>Represents the Spring Framework maven group id name.</p>
      */
-    public static final String SPRING_ARTIFACT_NAME = "org.springframework:spring-context";
+    public static final String SPRING_GROUP_ID = "org.springframework";
 
     /**
-     * <p>Represents the Spring Framework Web maven artifact name.</p>
+     * <p>Represents the Spring Framework artifacts ids.</p>
      */
-    public static final String SPRING_ARTIFACT_WEB_NAME = "org.springframework:spring-web";
+    public static final String[] SPRING_ARTIFACTS_IDS = new String[]{"spring-context", "spring-core", "spring-beans",
+            "spring-test", "spring-web", "spring-webmvc", "spring-webmvc-portlet", "spring-aop", "spring-jdbc",
+            "spring-orm", "spring-tx", "spring-jms", "spring-aspects"};
 
     /**
      * <p>Represents the default version of the Spring Framework.</p>

@@ -47,16 +47,12 @@ public class Spring25DependencyResolver extends AbstractDependencyResolver {
 
         MavenDependencyBuilder mavenDependencyBuilder = new MavenDependencyBuilder();
 
-        // sets whether to run maven in offline mode
-        mavenDependencyBuilder.setUseMavenOffline(getConfiguration().isUseMavenOffline());
+        for (String artifactId : SpringDeployerConstants_2_5.SPRING_ARTIFACTS_IDS) {
 
-        // adds the spring-context dependencies
-        mavenDependencyBuilder.addDependency(SpringDeployerConstants_2_5.SPRING_ARTIFACT_NAME,
-                getConfiguration().getSpringVersion(), SpringDeployerConstants_2_5.SPRING_ARTIFACT_VERSION);
-
-        // adds spring web dependencies
-        mavenDependencyBuilder.addDependency(SpringDeployerConstants_2_5.SPRING_ARTIFACT_WEB_NAME,
-                getConfiguration().getSpringVersion(), SpringDeployerConstants_2_5.SPRING_ARTIFACT_VERSION);
+            mavenDependencyBuilder.addDependency(
+                    String.format("%s:%s", SpringDeployerConstants_2_5.SPRING_GROUP_ID, artifactId),
+                    getConfiguration().getSpringVersion(), SpringDeployerConstants_2_5.SPRING_ARTIFACT_VERSION);
+        }
 
         if (getConfiguration().isIncludeSnowdrop()) {
             // adds the snowdrop for testing within JBoss AS
