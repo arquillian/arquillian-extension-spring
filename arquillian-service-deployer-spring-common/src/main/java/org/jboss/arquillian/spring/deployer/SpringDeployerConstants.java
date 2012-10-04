@@ -56,6 +56,11 @@ public final class SpringDeployerConstants {
     /**
      * <p>Represents the extension configuration property name.</p>
      */
+    public static final String CONFIGURATION_USE_MAVEN_OFFLINE= "useMavenOffline";
+
+    /**
+     * <p>Represents the extension configuration property name.</p>
+     */
     public static final String CONFIGURATION_SPRING_VERSION = "springVersion";
 
     /**

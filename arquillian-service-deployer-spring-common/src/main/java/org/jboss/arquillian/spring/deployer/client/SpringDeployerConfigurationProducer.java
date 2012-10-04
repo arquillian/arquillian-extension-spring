@@ -79,6 +79,8 @@ public class SpringDeployerConfigurationProducer {
         SpringDeployerConfiguration result = new SpringDeployerConfiguration();
         result.setAutoPackaging(getBooleanProperty(properties,
                 SpringDeployerConstants.CONFIGURATION_AUTO_PACKAGE, true));
+        result.setUseMavenOffline(getBooleanProperty(properties,
+                SpringDeployerConstants.CONFIGURATION_USE_MAVEN_OFFLINE, false));
         result.setSpringVersion(getStringProperty(properties,
                 SpringDeployerConstants.CONFIGURATION_SPRING_VERSION, null));
         result.setCglibVersion(getStringProperty(properties,

@@ -52,6 +52,23 @@ public class Spring3DependencyResolverTestCase {
     }
 
     /**
+     * <p>Tests {@link Spring3DependencyResolver#resolveDependencies()} method when maven is run in offline mode.</p>
+     */
+    @Test
+    public void testResolveDependenciesOffline() {
+
+        SpringDeployerConfiguration springDeployerConfiguration = createConfiguration();
+        springDeployerConfiguration.setIncludeSnowdrop(false);
+        springDeployerConfiguration.setUseMavenOffline(true);
+
+        instance = new Spring3DependencyResolver(springDeployerConfiguration);
+
+        File[] files = instance.resolveDependencies();
+
+        assertDependencies(files, true, true, true, false);
+    }
+
+    /**
      * <p>Tests {@link Spring3DependencyResolver#resolveDependencies()} method.</p>
      */
     @Test
