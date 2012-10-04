@@ -13,6 +13,9 @@
          default is 2.5.6 -->
         <!--<property name="springVersion">2.5.6</property>-->
 
+        <!-- Disable loading pom dependencies -->
+        <property name="importPomDependencies">false</property>
+
         <!-- Whether to auto package the dependencies, default is true -->
         <!--<property name="autoPackage">true</property>-->
     </extension>

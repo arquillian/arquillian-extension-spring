@@ -14,6 +14,9 @@
         <!-- Whether to auto package the dependencies, default is true -->
         <!--<property name="autoPackage">true</property>-->
 
+        <!-- Disable loading pom dependencies -->
+        <property name="importPomDependencies">false</property>
+
         <!-- Whether to include the snowdrop in test deployment, default is false -->
         <property name="includeSnowdrop">true</property>
 

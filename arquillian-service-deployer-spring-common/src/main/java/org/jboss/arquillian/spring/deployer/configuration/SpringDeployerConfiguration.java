@@ -68,6 +68,25 @@ public class SpringDeployerConfiguration {
     private boolean useMavenOffline = false;
 
     /**
+     * <p>Represents whether dependencies from maven pom.xml should be imported.</p>
+     *
+     * <p>Default is {@code true}.</p>
+     */
+    private boolean importPomDependencies = true;
+
+    /**
+     * <p>Represents the path to the pom file.</p>
+     *
+     * <p>Default is "pom.xml".</p>
+     */
+    private String pomFile = "pom.xml";
+
+    /**
+     * <p>Represents the semicolon separated list of artifacts.</p>
+     */
+    private String excludedArtifacts;
+
+    /**
      * <p>Creates new instance of {@link SpringDeployerConfiguration} class.</p>
      */
     public SpringDeployerConfiguration() {
@@ -204,5 +223,59 @@ public class SpringDeployerConfiguration {
      */
     public void setUseMavenOffline(boolean useMavenOffline) {
         this.useMavenOffline = useMavenOffline;
+    }
+
+    /**
+     * <p>Retrieves whether the dependencies should be loaded from maven pom file.</p>
+     *
+     * @return whether the dependencies should be loaded from maven pom file.
+     */
+    public boolean isImportPomDependencies() {
+        return importPomDependencies;
+    }
+
+    /**
+     * <p>Sets whether the dependencies should be loaded from maven pom file.</p>
+     *
+     * @param importPomDependencies whether the dependencies should be loaded from maven pom file.
+     */
+    public void setImportPomDependencies(boolean importPomDependencies) {
+        this.importPomDependencies = importPomDependencies;
+    }
+
+    /**
+     * <p>Retrieves the path to the pom.xml file.</p>
+     *
+     * @return the path to the pom.xml file
+     */
+    public String getPomFile() {
+        return pomFile;
+    }
+
+    /**
+     * <p>Sets the path to the pom.xml file.</p>
+     *
+     * @param pomFilePath the path to the pom.xml file.
+     */
+    public void setPomFile(String pomFilePath) {
+        this.pomFile = pomFilePath;
+    }
+
+    /**
+     * <p>Represents the list of semicolon separated artifacts.</p>
+     *
+     * @return the list of semicolon separated artifacts
+     */
+    public String getExcludedArtifacts() {
+        return excludedArtifacts;
+    }
+
+    /**
+     * <p>Represents the list of semicolon separated artifacts.</p>
+     *
+     * @param excludedArtifacts the list of semicolon separated artifacts
+     */
+    public void setExcludedArtifacts(String excludedArtifacts) {
+        this.excludedArtifacts = excludedArtifacts;
     }
 }

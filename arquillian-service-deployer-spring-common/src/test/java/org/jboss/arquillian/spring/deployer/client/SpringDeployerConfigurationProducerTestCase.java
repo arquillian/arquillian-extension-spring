@@ -103,8 +103,8 @@ public class SpringDeployerConfigurationProducerTestCase {
 
         BeforeSuite event = new BeforeSuite();
 
-        ArquillianDescriptor descriptor = Descriptors.importAs(ArquillianDescriptor.class).from(
-                new FileInputStream(new File("src/test/resources", "arquillian.xml")));
+        ArquillianDescriptor descriptor = Descriptors.importAs(ArquillianDescriptor.class)
+                .fromFile((new File("src/test/resources", "arquillian.xml")));
 
         injectDescriptor(descriptor);
 

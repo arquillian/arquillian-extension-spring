@@ -66,6 +66,16 @@ public final class SpringDeployerConstants {
     /**
      * <p>Represents the extension configuration property name.</p>
      */
+    public static final String CONFIGURATION_IMPORT_POM_DEPENDENCIES = "importPomDependencies";
+
+    /**
+     * <p>Represents the extension configuration property name.</p>
+     */
+    public static final String CONFIGURATION_POM_FILE = "pomFile";
+
+    /**
+     * <p>Represents the extension configuration property name.</p>
+     */
     public static final String CONFIGURATION_SPRING_VERSION = "springVersion";
 
     /**
