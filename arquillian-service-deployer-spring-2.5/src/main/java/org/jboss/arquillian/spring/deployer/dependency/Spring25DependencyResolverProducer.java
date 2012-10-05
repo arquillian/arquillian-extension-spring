@@ -30,6 +30,14 @@ public class Spring25DependencyResolverProducer extends AbstractDependencyResolv
     @Override
     protected AbstractDependencyResolver createDependencyResolver() {
 
-        return new Spring25DependencyResolver(getConfiguration());
+        AbstractDependencyResolver result = new Spring25DependencyResolver(getConfiguration());
+
+        if(getConfiguration().isEnableCache()) {
+
+            return new CachedDependencyResolver(result);
+        } else {
+
+            return result;
+        }
     }
 }

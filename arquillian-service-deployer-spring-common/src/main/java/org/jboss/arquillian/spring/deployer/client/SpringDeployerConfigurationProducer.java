@@ -79,6 +79,8 @@ public class SpringDeployerConfigurationProducer {
         SpringDeployerConfiguration result = new SpringDeployerConfiguration();
         result.setAutoPackaging(getBooleanProperty(properties,
                 SpringDeployerConstants.CONFIGURATION_AUTO_PACKAGE, true));
+        result.setEnableCache(getBooleanProperty(properties,
+                SpringDeployerConstants.CONFIGURATION_ENABLE_CACHE, true));
         result.setSpringVersion(getStringProperty(properties,
                 SpringDeployerConstants.CONFIGURATION_SPRING_VERSION, null));
         result.setCglibVersion(getStringProperty(properties,

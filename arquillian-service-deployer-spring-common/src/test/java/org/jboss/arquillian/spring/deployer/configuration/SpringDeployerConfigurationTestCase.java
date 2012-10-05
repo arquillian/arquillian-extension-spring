@@ -55,8 +55,8 @@ public class SpringDeployerConfigurationTestCase {
     }
 
     /**
-     * <p>Tests both {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#isAutoPackaging()}
-     * and {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#setAutoPackaging(boolean)}
+     * <p>Tests both {@link SpringDeployerConfiguration#isAutoPackaging()}
+     * and {@link SpringDeployerConfiguration#setAutoPackaging(boolean)}
      * method.</p>
      */
     @Test
@@ -72,8 +72,25 @@ public class SpringDeployerConfigurationTestCase {
     }
 
     /**
-     * <p>Tests both {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#isIncludeSnowdrop()}
-     * and {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#setIncludeSnowdrop(boolean)}
+     * <p>Tests both {@link SpringDeployerConfiguration#isIncludeSnowdrop()}
+     * and {@link SpringDeployerConfiguration#setIncludeSnowdrop(boolean)}
+     * method.</p>
+     */
+    @Test
+    public void testIsEnableCache() {
+
+        boolean value = false;
+
+        assertTrue("The default value is incorrect.", instance.isEnableCache());
+
+        instance.setEnableCache(value);
+
+        assertEquals("Invalid value set.", value, instance.isEnableCache());
+    }
+
+    /**
+     * <p>Tests both {@link SpringDeployerConfiguration#isIncludeSnowdrop()}
+     * and {@link SpringDeployerConfiguration#setIncludeSnowdrop(boolean)}
      * method.</p>
      */
     @Test
@@ -89,8 +106,8 @@ public class SpringDeployerConfigurationTestCase {
     }
 
     /**
-     * <p>Tests both {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#getSpringVersion()}
-     * and {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#setSpringVersion(String)}
+     * <p>Tests both {@link SpringDeployerConfiguration#getSpringVersion()}
+     * and {@link SpringDeployerConfiguration#setSpringVersion(String)}
      * method.</p>
      */
     @Test
@@ -106,8 +123,8 @@ public class SpringDeployerConfigurationTestCase {
     }
 
     /**
-     * <p>Tests both {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#getSpringVersion()}
-     * and {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#setCglibVersion(String)}
+     * <p>Tests both {@link SpringDeployerConfiguration#getSpringVersion()}
+     * and {@link SpringDeployerConfiguration#setCglibVersion(String)}
      * method.</p>
      */
     @Test
@@ -123,8 +140,8 @@ public class SpringDeployerConfigurationTestCase {
     }
 
     /**
-     * <p>Tests both {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#getSnowdropVersion()}
-     * and {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#setSnowdropVersion(String)}
+     * <p>Tests both {@link SpringDeployerConfiguration#getSnowdropVersion()}
+     * and {@link SpringDeployerConfiguration#setSnowdropVersion(String)}
      * method.</p>
      */
     @Test

@@ -29,6 +29,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * <p>Tests {@link Spring3DependencyResolverProducer} class.</p>
@@ -52,8 +53,7 @@ public class Spring3DependencyResolverProducerTestCase {
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.deployer.dependency.Spring3DependencyResolverProducer#initDependencyResolver(BeforeSuite)}
-     * method.</p>
+     * <p>Tests the {@link Spring3DependencyResolverProducer#initDependencyResolver(BeforeSuite)} method.</p>
      *
      * @throws Exception if any error occurs
      */
@@ -61,7 +61,11 @@ public class Spring3DependencyResolverProducerTestCase {
     public void testInitDependencyResolver() throws Exception {
         BeforeSuite event = new BeforeSuite();
 
+        SpringDeployerConfiguration configuration = new SpringDeployerConfiguration();
+        configuration.setEnableCache(false);
+
         Instance<SpringDeployerConfiguration> mockConfigurationInstance = mock(Instance.class);
+        when(mockConfigurationInstance.get()).thenReturn(configuration);
         TestReflectionHelper.setFieldValue(instance, "configuration", mockConfigurationInstance);
 
         InstanceProducer<AbstractDependencyResolver> mockProducer = mock(InstanceProducer.class);
@@ -76,5 +80,35 @@ public class Spring3DependencyResolverProducerTestCase {
         assertNotNull("The crated dependency resolver was null.", dependencyResolver.getValue());
         assertTrue("The producer created incorrect type.",
                 dependencyResolver.getValue() instanceof Spring3DependencyResolver);
+    }
+
+    /**
+     * <p>Tests the {@link Spring3DependencyResolverProducer#initDependencyResolver(BeforeSuite)} method.</p>
+     *
+     * @throws Exception if any error occurs
+     */
+    @Test
+    public void testInitDependencyResolverCached() throws Exception {
+        BeforeSuite event = new BeforeSuite();
+
+        SpringDeployerConfiguration configuration = new SpringDeployerConfiguration();
+        configuration.setEnableCache(true);
+
+        Instance<SpringDeployerConfiguration> mockConfigurationInstance = mock(Instance.class);
+        when(mockConfigurationInstance.get()).thenReturn(configuration);
+        TestReflectionHelper.setFieldValue(instance, "configuration", mockConfigurationInstance);
+
+        InstanceProducer<AbstractDependencyResolver> mockProducer = mock(InstanceProducer.class);
+        TestReflectionHelper.setFieldValue(instance, "dependencyResolver", mockProducer);
+
+        instance.initDependencyResolver(event);
+
+        ArgumentCaptor<AbstractDependencyResolver> dependencyResolver =
+                ArgumentCaptor.forClass(AbstractDependencyResolver.class);
+        verify(mockProducer).set(dependencyResolver.capture());
+
+        assertNotNull("The crated dependency resolver was null.", dependencyResolver.getValue());
+        assertTrue("The producer created incorrect type.",
+                dependencyResolver.getValue() instanceof CachedDependencyResolver);
     }
 }

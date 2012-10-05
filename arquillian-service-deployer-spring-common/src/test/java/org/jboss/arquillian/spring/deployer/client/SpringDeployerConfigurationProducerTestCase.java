@@ -61,7 +61,7 @@ public class SpringDeployerConfigurationProducerTestCase {
     }
 
     /**
-     * <p>Tests {@link org.jboss.arquillian.spring.deployer.client.SpringDeployerConfigurationProducer#initConfiguration(BeforeSuite)}
+     * <p>Tests {@link SpringDeployerConfigurationProducer#initConfiguration(BeforeSuite)}
      * method.</p>
      *
      * @throws Exception if any error occurs
@@ -86,6 +86,7 @@ public class SpringDeployerConfigurationProducerTestCase {
 
         assertNotNull("The result was null.", argument.getValue());
         assertTrue("Invalid autopackage property.", argument.getValue().isAutoPackaging());
+        assertTrue("Invalid enableCache property.", argument.getValue().isEnableCache());
         assertFalse("Invalid includeSnowdrop property.", argument.getValue().isIncludeSnowdrop());
         assertNull("Invalid springVersion property.", argument.getValue().getSpringVersion());
         assertNull("Invalid cglibVersion property.", argument.getValue().getCglibVersion());
@@ -93,7 +94,7 @@ public class SpringDeployerConfigurationProducerTestCase {
     }
 
     /**
-     * <p>Tests {@link org.jboss.arquillian.spring.deployer.client.SpringDeployerConfigurationProducer#initConfiguration(BeforeSuite)}
+     * <p>Tests {@link SpringDeployerConfigurationProducer#initConfiguration(BeforeSuite)}
      * method.</p>
      *
      * @throws Exception if any error occurs
@@ -119,6 +120,7 @@ public class SpringDeployerConfigurationProducerTestCase {
 
         assertNotNull("The result was null.", argument.getValue());
         assertFalse("Invalid autopackage property.", argument.getValue().isAutoPackaging());
+        assertFalse("Invalid enableCache property.", argument.getValue().isEnableCache());
         assertTrue("Invalid includeSnowdrop property.", argument.getValue().isIncludeSnowdrop());
         assertEquals("Invalid springVersion property.", "3.1.1.RELEASE", argument.getValue().getSpringVersion());
         assertEquals("Invalid cglibVersion property.", "2.2.2", argument.getValue().getCglibVersion());

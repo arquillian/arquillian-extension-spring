@@ -30,6 +30,14 @@ public class Spring3DependencyResolverProducer extends AbstractDependencyResolve
     @Override
     protected AbstractDependencyResolver createDependencyResolver() {
 
-        return new Spring3DependencyResolver(getConfiguration());
+        AbstractDependencyResolver result = new Spring3DependencyResolver(getConfiguration());
+
+        if (getConfiguration().isEnableCache()) {
+
+            return new CachedDependencyResolver(result);
+        } else {
+
+            return result;
+        }
     }
 }
