@@ -55,9 +55,8 @@ public class SpringDeployerConfigurationTestCase {
     }
 
     /**
-     * <p>Tests both {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#isAutoPackaging()}
-     * and {@link org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfiguration#setAutoPackaging(boolean)}
-     * method.</p>
+     * <p>Tests both {@link SpringDeployerConfiguration#isAutoPackaging()}
+     * and {@link SpringDeployerConfiguration#setAutoPackaging(boolean)} method.</p>
      */
     @Test
     public void testIsAutoPackaging() {
@@ -69,6 +68,22 @@ public class SpringDeployerConfigurationTestCase {
         instance.setAutoPackaging(value);
 
         assertEquals("Invalid value set.", value, instance.isAutoPackaging());
+    }
+
+    /**
+     * <p>Tests both {@link SpringDeployerConfiguration#isUseMavenOffline()}
+     * and {@link SpringDeployerConfiguration#setUseMavenOffline(boolean)} method.</p>
+     */
+    @Test
+    public void testUseMavenOffline() {
+
+        boolean value = true;
+
+        assertFalse("The default value is incorrect.", instance.isUseMavenOffline());
+
+        instance.setUseMavenOffline(value);
+
+        assertEquals("Invalid value set.", value, instance.isUseMavenOffline());
     }
 
     /**

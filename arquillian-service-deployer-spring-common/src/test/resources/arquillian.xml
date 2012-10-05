@@ -9,6 +9,7 @@
         <property name="springVersion">3.1.1.RELEASE</property>
         <property name="cglibVersion">2.2.2</property>
         <property name="autoPackage">false</property>
+        <property name="useMavenOffline">true</property>
         <property name="includeSnowdrop">true</property>
         <property name="snowdropVersion">2.0.3.Final</property>
     </extension>

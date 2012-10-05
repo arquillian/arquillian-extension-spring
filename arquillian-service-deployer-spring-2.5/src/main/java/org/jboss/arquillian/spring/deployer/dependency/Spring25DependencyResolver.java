@@ -47,6 +47,9 @@ public class Spring25DependencyResolver extends AbstractDependencyResolver {
 
         MavenDependencyBuilder mavenDependencyBuilder = new MavenDependencyBuilder();
 
+        // sets whether to run maven in offline mode
+        mavenDependencyBuilder.setUseMavenOffline(getConfiguration().isUseMavenOffline());
+
         // adds the spring-context dependencies
         mavenDependencyBuilder.addDependency(SpringDeployerConstants_2_5.SPRING_ARTIFACT_NAME,
                 getConfiguration().getSpringVersion(), SpringDeployerConstants_2_5.SPRING_ARTIFACT_VERSION);

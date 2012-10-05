@@ -40,11 +40,34 @@ public class MavenDependencyBuilder {
     private final Map<String, File> dependenciesMap;
 
     /**
+     * <p>Represents whether maven should be run in offline mode.</p>
+     */
+    private boolean useMavenOffline;
+
+    /**
      * <p>Creates new instance of {@link MavenDependencyBuilder}.</p>
      */
     public MavenDependencyBuilder() {
 
         dependenciesMap = new HashMap<String, File>();
+    }
+
+    /**
+     * <p>Retrieves whether maven should run in offline mode.</p>
+     *
+     * @return whether maven should run in offline mode
+     */
+    public boolean isUseMavenOffline() {
+        return useMavenOffline;
+    }
+
+    /**
+     * <p>Sets whether maven should run in offline mode.</p>
+     *
+     * @param useMavenOffline whether maven should run in offline mode
+     */
+    public void setUseMavenOffline(boolean useMavenOffline) {
+        this.useMavenOffline = useMavenOffline;
     }
 
     /**
@@ -144,7 +167,13 @@ public class MavenDependencyBuilder {
             mvnDependencyResolver.loadMetadataFromPom(SpringDeployerConstants.POM_XML);
         }
 
-        return mvnDependencyResolver.artifacts(artifact).exclusions(exclusions).resolveAsFiles();
+        mvnDependencyResolver.artifacts(artifact).exclusions(exclusions);
+
+        if(useMavenOffline) {
+            mvnDependencyResolver.goOffline();
+        }
+
+        return mvnDependencyResolver.resolveAsFiles();
     }
 
     /**
