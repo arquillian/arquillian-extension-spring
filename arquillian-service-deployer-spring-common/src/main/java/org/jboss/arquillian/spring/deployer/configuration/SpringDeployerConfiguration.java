@@ -54,6 +54,13 @@ public class SpringDeployerConfiguration {
     private boolean autoPackaging = true;
 
     /**
+     * <p>Represents whether cache should be enabled.</p>
+     *
+     * <p>Default is {@code true}.</p>
+     */
+    private boolean enableCache = true;
+
+    /**
      * <p>Creates new instance of {@link SpringDeployerConfiguration} class.</p>
      */
     public SpringDeployerConfiguration() {
@@ -152,5 +159,23 @@ public class SpringDeployerConfiguration {
      */
     public void setAutoPackaging(boolean autoPackaging) {
         this.autoPackaging = autoPackaging;
+    }
+
+    /**
+     * <p>Retrieves whether the cache should be enabled.</p>
+     *
+     * @return whether the cache should be enabled
+     */
+    public boolean isEnableCache() {
+        return enableCache;
+    }
+
+    /**
+     * <p>Sets whether the cache should be enabled.</p>
+     *
+     * @param enableCache whether the cache should be enabled
+     */
+    public void setEnableCache(boolean enableCache) {
+        this.enableCache = enableCache;
     }
 }
