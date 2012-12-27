@@ -46,6 +46,7 @@ public class MavenDependencyBuilderTestCase {
     public void setUp() {
 
         instance = new MavenDependencyBuilder();
+        instance.setSkipError(true);
     }
 
     /**
@@ -75,7 +76,7 @@ public class MavenDependencyBuilderTestCase {
         assertNotNull("Invalid value was returned.", result);
         // the result of this test depends if it's run with a pom, the pom content overwrites the version
         // specified by the argument
-        assertDependencyExists(result, "spring-context", "2.5.6");
+        assertDependencyExists(result, "spring-context", "3.0.0.RELEASE");
     }
 
     /**
@@ -107,7 +108,7 @@ public class MavenDependencyBuilderTestCase {
         assertNotNull("Invalid value was returned.", result);
         // the result of this test depends if it's run with a pom, the pom content overwrites the version
         // specified by the argument
-        assertDependencyExists(result, "spring-context", "2.5.6");
+        assertDependencyExists(result, "spring-context", "3.1.1.RELEASE");
     }
 
     /**

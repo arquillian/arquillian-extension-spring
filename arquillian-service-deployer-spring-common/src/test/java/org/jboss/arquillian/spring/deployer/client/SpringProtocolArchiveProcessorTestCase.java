@@ -175,6 +175,7 @@ public class SpringProtocolArchiveProcessorTestCase {
         TestReflectionHelper.setFieldValue(instance, "configuration", mockExtensionConfigurationInstance);
 
         MavenDependencyBuilder mavenDependencyBuilder = new MavenDependencyBuilder();
+        mavenDependencyBuilder.setSkipError(true);
         mavenDependencyBuilder.addDependency("org.springframework:spring-context", "3.1.1.RELEASE", "3.1.1.RELEASE");
         mavenDependencyBuilder.addDependency("org.springframework:spring-web", "3.1.1.RELEASE", "3.1.1.RELEASE");
         mavenDependencyBuilder.addDependency("cglib:cglib", "2.2.2", "2.2.2");

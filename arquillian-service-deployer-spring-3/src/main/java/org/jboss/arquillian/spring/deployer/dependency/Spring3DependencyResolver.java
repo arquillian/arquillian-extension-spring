@@ -45,6 +45,10 @@ public class Spring3DependencyResolver extends AbstractDependencyResolver {
     public File[] resolveDependencies() {
 
         MavenDependencyBuilder mavenDependencyBuilder = new MavenDependencyBuilder();
+        mavenDependencyBuilder.setUseMavenOffline(getConfiguration().isUseMavenOffline());
+        mavenDependencyBuilder.setUsePom(getConfiguration().isUsePomFile());
+        mavenDependencyBuilder.setPomFile(getConfiguration().getPomFile());
+        mavenDependencyBuilder.setSkipError(true);
 
         for (String artifactId : SpringDeployerConstants_3.SPRING_ARTIFACTS_IDS) {
 

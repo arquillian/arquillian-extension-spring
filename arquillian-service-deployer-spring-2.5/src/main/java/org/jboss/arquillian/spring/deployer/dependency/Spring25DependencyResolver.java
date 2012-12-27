@@ -46,6 +46,10 @@ public class Spring25DependencyResolver extends AbstractDependencyResolver {
     public File[] resolveDependencies() {
 
         MavenDependencyBuilder mavenDependencyBuilder = new MavenDependencyBuilder();
+        mavenDependencyBuilder.setUseMavenOffline(getConfiguration().isUseMavenOffline());
+        mavenDependencyBuilder.setUsePom(getConfiguration().isUsePomFile());
+        mavenDependencyBuilder.setPomFile(getConfiguration().getPomFile());
+        mavenDependencyBuilder.setSkipError(true);
 
         for (String artifactId : SpringDeployerConstants_2_5.SPRING_ARTIFACTS_IDS) {
 

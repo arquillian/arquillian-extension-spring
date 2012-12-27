@@ -68,6 +68,20 @@ public class SpringDeployerConfiguration {
     private boolean useMavenOffline = false;
 
     /**
+     * <p>Represents whether dependencies from maven pom.xml should be imported.</p>
+     *
+     * <p>Default is {@code false}.</p>
+     */
+    private boolean usePomFile = false;
+
+    /**
+     * <p>Represents the path to the pom file.</p>
+     *
+     * <p>Default is "pom.xml".</p>
+     */
+    private String pomFile = "pom.xml";
+
+    /**
      * <p>Creates new instance of {@link SpringDeployerConfiguration} class.</p>
      */
     public SpringDeployerConfiguration() {
@@ -204,5 +218,41 @@ public class SpringDeployerConfiguration {
      */
     public void setUseMavenOffline(boolean useMavenOffline) {
         this.useMavenOffline = useMavenOffline;
+    }
+
+    /**
+     * <p>Retrieves whether the dependencies should be loaded from maven pom file.</p>
+     *
+     * @return whether the dependencies should be loaded from maven pom file.
+     */
+    public boolean isUsePomFile() {
+        return usePomFile;
+    }
+
+    /**
+     * <p>Sets whether the dependencies should be loaded from maven pom file.</p>
+     *
+     * @param usePomFile whether the dependencies should be loaded from maven pom file.
+     */
+    public void usePomFile(boolean usePomFile) {
+        this.usePomFile = usePomFile;
+    }
+
+    /**
+     * <p>Retrieves the path to the pom.xml file.</p>
+     *
+     * @return the path to the pom.xml file
+     */
+    public String getPomFile() {
+        return pomFile;
+    }
+
+    /**
+     * <p>Sets the path to the pom.xml file.</p>
+     *
+     * @param pomFilePath the path to the pom.xml file.
+     */
+    public void setPomFile(String pomFilePath) {
+        this.pomFile = pomFilePath;
     }
 }

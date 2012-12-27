@@ -16,8 +16,8 @@
  */
 package org.jboss.arquillian.spring.deployer.dependency;
 
-import org.jboss.arquillian.spring.deployer.SpringDeployerConstants;
 import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
+import org.jboss.shrinkwrap.resolver.api.ResolutionException;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 
 import java.io.File;
@@ -45,6 +45,21 @@ public class MavenDependencyBuilder {
     private boolean useMavenOffline;
 
     /**
+     * <p>Represents whether the maven resolver should ignore error when trying to resolve dependencies.</p>
+     */
+    private boolean skipError = false;
+
+    /**
+     * <p>Represents whether to load the pom.xml content.</p>
+     */
+    private boolean usePom = false;
+
+    /**
+     * <p>Represents the path to the pom file.</p>
+     */
+    private String pomFile;
+
+    /**
      * <p>Creates new instance of {@link MavenDependencyBuilder}.</p>
      */
     public MavenDependencyBuilder() {
@@ -68,6 +83,60 @@ public class MavenDependencyBuilder {
      */
     public void setUseMavenOffline(boolean useMavenOffline) {
         this.useMavenOffline = useMavenOffline;
+    }
+
+    /**
+     * <p>Retrieves whether the errors during the artifact resolving should be skipped.</p>
+     *
+     * @return whether the error should be skipped
+     */
+    public boolean isSkipError() {
+        return skipError;
+    }
+
+    /**
+     * <p>Sets whether the errors during the artifact resolving should be skipped.</p>
+     *
+     * @param skipError whether the errors should be skipped
+     */
+    public void setSkipError(boolean skipError) {
+        this.skipError = skipError;
+    }
+
+    /**
+     * <p>Retrieves whether to load the pom.xml file.</p>
+     *
+     * @return whether to load the pom.xml file
+     */
+    public boolean isUsePom() {
+        return usePom;
+    }
+
+    /**
+     * <p>Sets whether to load the pom.xml file.</p>
+     *
+     * @param usePom whether to load the pom.xml file
+     */
+    public void setUsePom(boolean usePom) {
+        this.usePom = usePom;
+    }
+
+    /**
+     * <p>Retirees the path to the pom.xml file.</p>
+     *
+     * @return the path to the pom.xml file
+     */
+    public String getPomFile() {
+        return pomFile;
+    }
+
+    /**
+     * <p>Sets the path to the pom.xml file.</p>
+     *
+     * @param pomFile the path to the pom.xml file
+     */
+    public void setPomFile(String pomFile) {
+        this.pomFile = pomFile;
     }
 
     /**
@@ -124,8 +193,10 @@ public class MavenDependencyBuilder {
         String artifactVersion;
 
         if (version != null && version.length() > 0) {
+
             artifactVersion = version;
         } else {
+
             artifactVersion = defaultVersion;
         }
 
@@ -142,12 +213,29 @@ public class MavenDependencyBuilder {
      * @return the resolved files
      */
     private File[] resolveArtifact(String artifact, String version, String... exclusions) {
-        File[] artifacts;
+        File[] artifacts = null;
+
         try {
+
             artifacts = resolveArtifact(artifact, exclusions);
-        } catch (Exception e) {
-            artifacts = resolveArtifact(artifact + ":" + version, exclusions);
+        } catch (ResolutionException e) {
+
+            if (!skipError) {
+                throw e;
+            }
         }
+
+        // if the no artifact has been resolved, retrieves with concrete artifact version
+        if (artifacts == null) {
+            try {
+
+                artifacts = resolveArtifact(artifact + ":" + version, exclusions);
+            } catch (ResolutionException e) {
+                // ignores the exception
+            }
+        }
+
+        // returns the resolved artifacts
         return artifacts;
     }
 
@@ -163,25 +251,18 @@ public class MavenDependencyBuilder {
 
         MavenDependencyResolver mvnDependencyResolver = DependencyResolvers.use(MavenDependencyResolver.class);
 
-        if (isMavenUsed()) {
-            mvnDependencyResolver.loadMetadataFromPom(SpringDeployerConstants.POM_XML);
+        if (usePom) {
+
+            mvnDependencyResolver.loadMetadataFromPom(pomFile);
         }
 
         mvnDependencyResolver.artifacts(artifact).exclusions(exclusions);
 
-        if(useMavenOffline) {
+        if (useMavenOffline) {
+
             mvnDependencyResolver.goOffline();
         }
 
         return mvnDependencyResolver.resolveAsFiles();
-    }
-
-    /**
-     * <p>Returns whether maven is being used in project.</p>
-     *
-     * @return true if maven is being used in project, false otherwise
-     */
-    private boolean isMavenUsed() {
-        return new File(SpringDeployerConstants.POM_XML).exists();
     }
 }

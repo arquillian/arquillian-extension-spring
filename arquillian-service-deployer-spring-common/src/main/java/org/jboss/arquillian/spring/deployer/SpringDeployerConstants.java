@@ -66,6 +66,16 @@ public final class SpringDeployerConstants {
     /**
      * <p>Represents the extension configuration property name.</p>
      */
+    public static final String CONFIGURATION_USE_MAVEN_POM_FILE = "usePomFile";
+
+    /**
+     * <p>Represents the extension configuration property name.</p>
+     */
+    public static final String CONFIGURATION_MAVEN_POM_FILE = "pomFile";
+
+    /**
+     * <p>Represents the extension configuration property name.</p>
+     */
     public static final String CONFIGURATION_SPRING_VERSION = "springVersion";
 
     /**
