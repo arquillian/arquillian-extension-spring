@@ -84,10 +84,10 @@ public class SpringDeployerConfigurationProducer {
                 SpringDeployerConstants.CONFIGURATION_ENABLE_CACHE, true));
         result.setUseMavenOffline(getBooleanProperty(properties,
                 SpringDeployerConstants.CONFIGURATION_USE_MAVEN_OFFLINE, false));
-        result.usePomFile(getBooleanProperty(properties,
-                SpringDeployerConstants.CONFIGURATION_USE_MAVEN_POM_FILE, false));
+        result.setImportPomDependencies(getBooleanProperty(properties,
+                SpringDeployerConstants.CONFIGURATION_IMPORT_POM_DEPENDENCIES, true));
         result.setPomFile(getStringProperty(properties,
-                SpringDeployerConstants.CONFIGURATION_MAVEN_POM_FILE,
+                SpringDeployerConstants.CONFIGURATION_POM_FILE,
                 SpringDeployerConstants.POM_XML));
         result.setSpringVersion(getStringProperty(properties,
                 SpringDeployerConstants.CONFIGURATION_SPRING_VERSION, null));

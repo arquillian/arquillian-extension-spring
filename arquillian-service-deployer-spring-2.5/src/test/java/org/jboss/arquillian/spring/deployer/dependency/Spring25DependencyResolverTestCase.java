@@ -42,6 +42,7 @@ public class Spring25DependencyResolverTestCase {
     public void testResolveDependencies() {
 
         SpringDeployerConfiguration springDeployerConfiguration = createConfiguration();
+        springDeployerConfiguration.setImportPomDependencies(false);
         springDeployerConfiguration.setIncludeSnowdrop(false);
 
         instance = new Spring25DependencyResolver(springDeployerConfiguration);
@@ -58,6 +59,7 @@ public class Spring25DependencyResolverTestCase {
     public void testResolveDependenciesOffline() {
 
         SpringDeployerConfiguration springDeployerConfiguration = createConfiguration();
+        springDeployerConfiguration.setImportPomDependencies(false);
         springDeployerConfiguration.setIncludeSnowdrop(false);
         springDeployerConfiguration.setUseMavenOffline(true);
 

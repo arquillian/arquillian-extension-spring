@@ -17,14 +17,9 @@
 package org.jboss.arquillian.spring.deployer.dependency;
 
 import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
-import org.jboss.shrinkwrap.resolver.api.ResolutionException;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>A helper class for resolving dependency using maven.</p>
@@ -35,234 +30,70 @@ import java.util.Map;
 public class MavenDependencyBuilder {
 
     /**
-     * <p>The dependencies map.</p>
+     * <p>Represents the maven dependency resolver.</p>
      */
-    private final Map<String, File> dependenciesMap;
+    private MavenDependencyResolver mavenDependencyResolver;
 
     /**
      * <p>Represents whether maven should be run in offline mode.</p>
      */
-    private boolean useMavenOffline;
+    private boolean useMavenOffline = false;
 
     /**
-     * <p>Represents whether the maven resolver should ignore error when trying to resolve dependencies.</p>
-     */
-    private boolean skipError = false;
-
-    /**
-     * <p>Represents whether to load the pom.xml content.</p>
-     */
-    private boolean usePom = false;
-
-    /**
-     * <p>Represents the path to the pom file.</p>
-     */
-    private String pomFile;
-
-    /**
-     * <p>Creates new instance of {@link MavenDependencyBuilder}.</p>
+     * <p>Creates new instance of {@link MavenDependencyBuilder} class.</p>
      */
     public MavenDependencyBuilder() {
 
-        dependenciesMap = new HashMap<String, File>();
+        mavenDependencyResolver = DependencyResolvers.use(MavenDependencyResolver.class);
     }
 
     /**
-     * <p>Retrieves whether maven should run in offline mode.</p>
+     * <p>Sets whether to use maven in offline mode.</p>
      *
-     * @return whether maven should run in offline mode
-     */
-    public boolean isUseMavenOffline() {
-        return useMavenOffline;
-    }
-
-    /**
-     * <p>Sets whether maven should run in offline mode.</p>
-     *
-     * @param useMavenOffline whether maven should run in offline mode
+     * @param useMavenOffline whether to use maven in offline mode
      */
     public void setUseMavenOffline(boolean useMavenOffline) {
         this.useMavenOffline = useMavenOffline;
     }
 
     /**
-     * <p>Retrieves whether the errors during the artifact resolving should be skipped.</p>
+     * <p>Adds the dependency to the builder.</p>
      *
-     * @return whether the error should be skipped
+     * @param artifactName    the name of maven artifact
+     * @param artifactVersion the version of maven artifact
+     * @param exclusions      the list of excluded maven artifacts
      */
-    public boolean isSkipError() {
-        return skipError;
+    public void addDependency(String artifactName, String artifactVersion, String... exclusions) {
+
+        mavenDependencyResolver.artifact(String.format("%s:%s", artifactName, artifactVersion)).exclusions(exclusions);
     }
 
     /**
-     * <p>Sets whether the errors during the artifact resolving should be skipped.</p>
-     *
-     * @param skipError whether the errors should be skipped
+     * <p>Loads the project dependencies from given pom file.</p>
      */
-    public void setSkipError(boolean skipError) {
-        this.skipError = skipError;
+    public void importPomDependencies(String pomFile, String[] exclusions) {
+
+        mavenDependencyResolver.includeDependenciesFromPom(pomFile);
+
+        if(exclusions != null) {
+
+            mavenDependencyResolver.exclusions(exclusions);
+        }
     }
 
     /**
-     * <p>Retrieves whether to load the pom.xml file.</p>
+     * <p>Retrieves the list of resolved artifacts.</p>
      *
-     * @return whether to load the pom.xml file
-     */
-    public boolean isUsePom() {
-        return usePom;
-    }
-
-    /**
-     * <p>Sets whether to load the pom.xml file.</p>
-     *
-     * @param usePom whether to load the pom.xml file
-     */
-    public void setUsePom(boolean usePom) {
-        this.usePom = usePom;
-    }
-
-    /**
-     * <p>Retirees the path to the pom.xml file.</p>
-     *
-     * @return the path to the pom.xml file
-     */
-    public String getPomFile() {
-        return pomFile;
-    }
-
-    /**
-     * <p>Sets the path to the pom.xml file.</p>
-     *
-     * @param pomFile the path to the pom.xml file
-     */
-    public void setPomFile(String pomFile) {
-        this.pomFile = pomFile;
-    }
-
-    /**
-     * <p>Adds the dependency.</p>
-     *
-     * @param artifactName    the artifact name
-     * @param artifactVersion the artifact version
-     * @param defaultVersion  the artifact default version
-     * @param exclusions      the names of the artifact which need to excluded during artifact resolving
-     */
-    public void addDependency(String artifactName, String artifactVersion, String defaultVersion, String... exclusions) {
-
-        mergeDependencies(resolveArtifact(artifactName, artifactVersion, defaultVersion, exclusions));
-    }
-
-    /**
-     * <p>Retrieves the dependencies.</p>
-     *
-     * @return the list of dependencies
+     * @return the list of resolved artifacts
      */
     public File[] getDependencies() {
-        List<File> result = new ArrayList<File>(dependenciesMap.values());
-
-        return result.toArray(new File[result.size()]);
-    }
-
-    /**
-     * <p>Merges the dependencies.</p>
-     *
-     * @param files the dependencies
-     */
-    private void mergeDependencies(File[] files) {
-
-        if (files != null) {
-            for (File file : files) {
-
-                dependenciesMap.put(file.getAbsolutePath(), file);
-            }
-        }
-    }
-
-    /**
-     * <p>Resolves the artifact using the given version, if the version hasn't been specified than the default artifact
-     * version will be used.</p>
-     *
-     * @param artifact       the artifact name
-     * @param version        the artifact version
-     * @param defaultVersion the default artifact version to be used
-     * @param exclusions     the names of the artifact which need to excluded during artifact resolving
-     *
-     * @return the resolved artifacts
-     */
-    private File[] resolveArtifact(String artifact, String version, String defaultVersion, String... exclusions) {
-        String artifactVersion;
-
-        if (version != null && version.length() > 0) {
-
-            artifactVersion = version;
-        } else {
-
-            artifactVersion = defaultVersion;
-        }
-
-        return resolveArtifact(artifact, artifactVersion, exclusions);
-    }
-
-    /**
-     * <p>Resolves the given artifact in specified version using maven.</p>
-     *
-     * @param artifact   the artifact name
-     * @param version    the artifact version
-     * @param exclusions the names of the artifact which need to excluded during artifact resolving
-     *
-     * @return the resolved files
-     */
-    private File[] resolveArtifact(String artifact, String version, String... exclusions) {
-        File[] artifacts = null;
-
-        try {
-
-            artifacts = resolveArtifact(artifact, exclusions);
-        } catch (ResolutionException e) {
-
-            if (!skipError) {
-                throw e;
-            }
-        }
-
-        // if the no artifact has been resolved, retrieves with concrete artifact version
-        if (artifacts == null) {
-            try {
-
-                artifacts = resolveArtifact(artifact + ":" + version, exclusions);
-            } catch (ResolutionException e) {
-                // ignores the exception
-            }
-        }
-
-        // returns the resolved artifacts
-        return artifacts;
-    }
-
-    /**
-     * <p>Resolves the given artifact in specified version using maven.</p>
-     *
-     * @param artifact   the artifact name
-     * @param exclusions the names of the artifact which need to excluded during artifact resolving
-     *
-     * @return the resolved files
-     */
-    private File[] resolveArtifact(String artifact, String... exclusions) {
-
-        MavenDependencyResolver mvnDependencyResolver = DependencyResolvers.use(MavenDependencyResolver.class);
-
-        if (usePom) {
-
-            mvnDependencyResolver.loadMetadataFromPom(pomFile);
-        }
-
-        mvnDependencyResolver.artifacts(artifact).exclusions(exclusions);
 
         if (useMavenOffline) {
 
-            mvnDependencyResolver.goOffline();
+            mavenDependencyResolver.goOffline();
         }
 
-        return mvnDependencyResolver.resolveAsFiles();
+        return mavenDependencyResolver.resolveAsFiles();
     }
 }
+

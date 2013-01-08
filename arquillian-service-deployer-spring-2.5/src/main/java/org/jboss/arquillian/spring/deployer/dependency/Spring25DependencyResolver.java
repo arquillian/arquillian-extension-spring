@@ -47,25 +47,63 @@ public class Spring25DependencyResolver extends AbstractDependencyResolver {
 
         MavenDependencyBuilder mavenDependencyBuilder = new MavenDependencyBuilder();
         mavenDependencyBuilder.setUseMavenOffline(getConfiguration().isUseMavenOffline());
-        mavenDependencyBuilder.setUsePom(getConfiguration().isUsePomFile());
-        mavenDependencyBuilder.setPomFile(getConfiguration().getPomFile());
-        mavenDependencyBuilder.setSkipError(true);
 
-        for (String artifactId : SpringDeployerConstants_2_5.SPRING_ARTIFACTS_IDS) {
+        if (getConfiguration().isImportPomDependencies()) {
 
-            mavenDependencyBuilder.addDependency(
-                    String.format("%s:%s", SpringDeployerConstants_2_5.SPRING_GROUP_ID, artifactId),
-                    getConfiguration().getSpringVersion(), SpringDeployerConstants_2_5.SPRING_ARTIFACT_VERSION);
+            // imports all dependencies loaded from pom file
+            mavenDependencyBuilder.importPomDependencies(getConfiguration().getPomFile(),
+                    splitExcludedArtifacts(getConfiguration().getExcludedArtifacts()));
+        } else {
+
+
+            for (String artifactId : SpringDeployerConstants_2_5.SPRING_ARTIFACTS_IDS) {
+
+                mavenDependencyBuilder.addDependency(
+                        String.format("%s:%s", SpringDeployerConstants_2_5.SPRING_GROUP_ID, artifactId),
+                        getArtifactVersion(getConfiguration().getSpringVersion(),
+                                SpringDeployerConstants_2_5.SPRING_ARTIFACT_VERSION));
+            }
+
         }
 
         if (getConfiguration().isIncludeSnowdrop()) {
             // adds the snowdrop for testing within JBoss AS
             mavenDependencyBuilder.addDependency(SpringDeployerConstants_2_5.SNOWDROP_ARTIFACT_NAME,
-                    getConfiguration().getSnowdropVersion(), SpringDeployerConstants_2_5.SNOWDROP_ARTIFACT_VERSION,
+                    getArtifactVersion(getConfiguration().getSnowdropVersion(),
+                            SpringDeployerConstants_2_5.SNOWDROP_ARTIFACT_VERSION),
                     SpringDeployerConstants_2_5.SNOWDROP_EXCLUDED_ARTIFACT);
         }
 
         // returns the resolved files
         return mavenDependencyBuilder.getDependencies();
+    }
+
+    /**
+     * <p>Spits the semicolon separated list of excluded artifacts.</p>
+     *
+     * @param excludedArtifacts the semicolon separated list of excluded artifacts
+     *
+     * @return list of excluded artifacts
+     */
+    private String[] splitExcludedArtifacts(String excludedArtifacts) {
+
+        if (excludedArtifacts == null) {
+            return null;
+        }
+
+        return excludedArtifacts.split(";");
+    }
+
+    /**
+     * <p>Returns the artifact version, if the passed artifact version is null then default is being returned.</p>
+     *
+     * @param artifactVersion the artifact version
+     * @param defaultVersion  the default version to use
+     *
+     * @return the artifact version
+     */
+    private String getArtifactVersion(String artifactVersion, String defaultVersion) {
+
+        return artifactVersion != null ? artifactVersion : defaultVersion;
     }
 }
