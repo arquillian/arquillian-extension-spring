@@ -26,24 +26,53 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 
 /**
+ * <p>Controller for handling user login.</p>
  *
+ * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
 @Controller
 @RequestMapping("login.do")
 public class LoginController {
 
+    /**
+     * <p>Handles GET request to the login page.</p>
+     *
+     * @param model the page model
+     *
+     * @return the view name
+     */
     @RequestMapping(method = RequestMethod.GET)
     public String loginForm(Model model) {
+
         model.addAttribute(new UserCredentials());
         return "login";
     }
 
+    /**
+     * <p>Handles the POST request with user credentials.</p>
+     *
+     * @param userCredentials the user credentials
+     * @param result          the binding result
+     *
+     * @return the view name
+     */
     @RequestMapping(method = RequestMethod.POST)
     public String login(@Valid UserCredentials userCredentials, BindingResult result) {
+
         if (result.hasErrors()) {
+
             return "login";
         }
 
-        return "welcome";
+        // checks if login is valid
+        if ("warp".equals(userCredentials.getLogin()) && "warp".equals(userCredentials.getLogin())) {
+
+            // redirects the user to the welcome page
+            return "redirect:welcome.do";
+        }
+
+        // otherwise the user provided incorrect credentials
+        // TODO add message?
+        return "login";
     }
 }

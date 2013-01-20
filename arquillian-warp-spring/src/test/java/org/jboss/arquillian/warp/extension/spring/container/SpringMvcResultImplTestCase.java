@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
@@ -84,7 +85,7 @@ public class SpringMvcResultImplTestCase {
 
         instance.setInterceptors(interceptors);
 
-        assertEquals("The property value is invalid.", interceptors, instance.getInterceptors());
+        assertArrayEquals("The property value is invalid.", interceptors, instance.getInterceptors());
     }
 
     /**

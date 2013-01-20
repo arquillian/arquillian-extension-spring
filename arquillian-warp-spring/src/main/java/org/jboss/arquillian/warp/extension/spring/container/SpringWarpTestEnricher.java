@@ -25,6 +25,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletRequest;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -37,10 +38,10 @@ import java.util.List;
 public class SpringWarpTestEnricher implements TestEnricher {
 
     /**
-     * <p>Represents the {@link SpringMvcResult} captured during request execution.</p>
+     * <p>Instance of {@link javax.servlet.ServletRequest}.</p>
      */
     @Inject
-    private Instance<SpringMvcResult> springMvcResult;
+    private Instance<ServletRequest> servletRequest;
 
     /**
      * {@inheritDoc}
@@ -48,10 +49,12 @@ public class SpringWarpTestEnricher implements TestEnricher {
     @Override
     public void enrich(Object testCase) {
 
+        // gets the collection of the annotated attributes
         List<Field> annotatedFields = SecurityActions.getFieldsWithAnnotation(testCase.getClass(),
                 SpringMvcResource.class);
 
-        SpringMvcResult mvcResult = springMvcResult.get();
+        // retrieves the captured execution context
+        SpringMvcResult mvcResult = getSpringMvcResult();
 
         try {
             for (Field field : annotatedFields) {
@@ -89,5 +92,14 @@ public class SpringWarpTestEnricher implements TestEnricher {
     public Object[] resolve(Method method) {
 
         return new Object[method.getParameterTypes().length];
+    }
+
+    /**
+     * <p>Retrieves the {@link SpringMvcResult}, if any, stored in the request.</p>
+     *
+     * @return the {@link SpringMvcResult}
+     */
+    private SpringMvcResult getSpringMvcResult() {
+        return (SpringMvcResult) servletRequest.get().getAttribute(Commons.SPRING_MVC_RESULT_ATTRIBUTE_NAME);
     }
 }

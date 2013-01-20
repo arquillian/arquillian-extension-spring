@@ -19,13 +19,12 @@ package org.jboss.arquillian.warp.extension.spring.extension;
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.warp.extension.spring.SpringMvcResource;
 import org.jboss.arquillian.warp.extension.spring.SpringMvcResult;
-import org.jboss.arquillian.warp.extension.spring.container.AfterDispatcherServlet;
 import org.jboss.arquillian.warp.extension.spring.container.Commons;
 import org.jboss.arquillian.warp.extension.spring.container.SpringMvcResultImpl;
 import org.jboss.arquillian.warp.extension.spring.container.SpringWarpRemoteExtension;
 import org.jboss.arquillian.warp.extension.spring.container.SpringWarpTestEnricher;
 import org.jboss.arquillian.warp.extension.spring.utils.TestResourceHelper;
-import org.jboss.arquillian.warp.spi.WarpLifecycleExtension;
+import org.jboss.arquillian.warp.spi.WarpDeploymentEnrichmentExtension;
 import org.jboss.shrinkwrap.api.Archive;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +54,7 @@ public class SpringWarpExtensionTestCase {
     /**
      * <p>Represents the list of required classes.</p>
      */
-    private final static List<Class<?>> REQUIRED_CLASSES = Arrays.asList(AfterDispatcherServlet.class, Commons.class,
+    private final static List<Class<?>> REQUIRED_CLASSES = Arrays.asList(Commons.class,
             SpringMvcResultImpl.class, SpringWarpRemoteExtension.class, SpringWarpTestEnricher.class,
             SpringMvcResource.class, SpringMvcResult.class);
 
@@ -78,7 +77,7 @@ public class SpringWarpExtensionTestCase {
 
         instance.register(mockExtensionBuilder);
 
-        verify(mockExtensionBuilder).service(WarpLifecycleExtension.class, SpringWarpExtension.class);
+        verify(mockExtensionBuilder).service(WarpDeploymentEnrichmentExtension.class, SpringWarpExtension.class);
         verifyNoMoreInteractions(mockExtensionBuilder);
     }
 

@@ -18,8 +18,6 @@ package org.jboss.arquillian.warp.extension.spring.container;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.test.spi.TestEnricher;
-import org.jboss.arquillian.warp.extension.spring.extension.SpringWarpExtension;
-import org.jboss.arquillian.warp.spi.WarpLifecycleExtension;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -64,7 +62,6 @@ public class SpringWarpRemoteExtensionTestCase {
         instance.register(mockExtensionBuilder);
 
         verify(mockExtensionBuilder).service(TestEnricher.class, SpringWarpTestEnricher.class);
-        verify(mockExtensionBuilder).observer(AfterDispatcherServlet.class);
         verifyNoMoreInteractions(mockExtensionBuilder);
     }
 }

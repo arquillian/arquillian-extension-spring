@@ -31,7 +31,6 @@ public class SpringWarpRemoteExtension implements RemoteLoadableExtension {
      */
     @Override
     public void register(ExtensionBuilder builder) {
-        builder.service(TestEnricher.class, SpringWarpTestEnricher.class)
-                .observer(AfterDispatcherServlet.class);
+        builder.service(TestEnricher.class, SpringWarpTestEnricher.class);
     }
 }

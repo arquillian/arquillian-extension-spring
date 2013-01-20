@@ -50,7 +50,7 @@
         <version.arquillian_drone>1.0.0.Final</version.arquillian_drone>
 
         <!-- Arquillian Warp -->
-        <version.arquillian_warp>1.0.0.Alpha1</version.arquillian_warp>
+        <version.arquillian_warp>1.0.0.Alpha2</version.arquillian_warp>
 
         <!-- Arquillian Transaction -->
         <version.arquillian_transaction>1.0.0.Alpha1</version.arquillian_transaction>
