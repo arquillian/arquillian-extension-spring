@@ -21,24 +21,24 @@ import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.warp.extension.spring.SpringMvcResult;
 import org.jboss.arquillian.warp.extension.spring.container.SpringWarpRemoteExtension;
 import org.jboss.arquillian.warp.extension.spring.servlet.WarpDispatcherServlet;
-import org.jboss.arquillian.warp.spi.WarpLifecycleExtension;
+import org.jboss.arquillian.warp.spi.WarpDeploymentEnrichmentExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 /**
- * <p>Register Spring extension in Arquillian.</p>
+ * <p>Registers Spring extension in Arquillian.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class SpringWarpExtension implements LoadableExtension, WarpLifecycleExtension {
+public class SpringWarpExtension implements LoadableExtension, WarpDeploymentEnrichmentExtension {
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void register(ExtensionBuilder builder) {
-        builder.service(WarpLifecycleExtension.class, this.getClass());
+        builder.service(WarpDeploymentEnrichmentExtension.class, this.getClass());
     }
 
     /**
