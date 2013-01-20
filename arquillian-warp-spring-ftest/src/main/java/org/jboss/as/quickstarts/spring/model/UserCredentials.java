@@ -20,34 +20,65 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
+ * <p>Represents the user credentials.</p>
  *
+ * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
 public class UserCredentials {
 
+    /**
+     * <p>Represents the user login.</p>
+     */
     @NotNull
     @Size(min = 1)
     private String login;
 
+    /**
+     * <p>Represents the user password.</p>
+     */
     @NotNull
     @Size(min = 1)
     private String password;
 
+    /**
+     * <p>Creates new instance of {@link UserCredentials}.</p>
+     */
     public UserCredentials() {
         // empty constructor
     }
 
+    /**
+     * <p>Retrieves the user login.</p>
+     *
+     * @return the user login
+     */
     public String getLogin() {
         return login;
     }
 
+    /**
+     * <p>Sets the user login.</p>
+     *
+     * @param login the user login
+     */
     public void setLogin(String login) {
         this.login = login;
     }
 
+    /**
+     * <p>Retrieves the user password.</p>
+     *
+     * @return the user password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * <p>Sets the user login.</p>
+     *
+     * @param password the user password
+     */
     public void setPassword(String password) {
         this.password = password;
     }

@@ -21,12 +21,12 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.arquillian.warp.ClientAction;
-import org.jboss.arquillian.warp.ServerAssertion;
+import org.jboss.arquillian.warp.Activity;
+import org.jboss.arquillian.warp.Inspection;
 import org.jboss.arquillian.warp.Warp;
 import org.jboss.arquillian.warp.WarpTest;
-import org.jboss.arquillian.warp.extension.servlet.AfterServlet;
 import org.jboss.arquillian.warp.extension.spring.SpringMvcResource;
+import org.jboss.arquillian.warp.servlet.AfterServlet;
 import org.jboss.as.quickstarts.spring.model.UserCredentials;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -51,12 +51,23 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Arquillian.class)
 public class WelcomeControllerTestCase {
 
+    /**
+     * <p>The selenium driver.</p>
+     */
     @Drone
     WebDriver browser;
 
+    /**
+     * <p>The deployment url.</p>
+     */
     @ArquillianResource
     URL contextPath;
 
+    /**
+     * <p>Creates the test deployment.</p>
+     *
+     * @return the test deployment
+     */
     @Deployment
     public static WebArchive createDeployment() {
 
@@ -77,30 +88,32 @@ public class WelcomeControllerTestCase {
                 .addAsLibraries(libs);
     }
 
+    /**
+     * Tests the welcome page.
+     */
     @Test
     @RunAsClient
     public void test() {
-        Warp.execute(new ClientAction() {
+
+        Warp.initiate(new Activity() {
 
             @Override
-            public void action() {
+            public void perform() {
                 browser.navigate().to(contextPath + "welcome.do");
             }
-        }).verify(new WelcomeControllerVerification());
-    }
+        }).inspect(new Inspection() {
 
-    public static class WelcomeControllerVerification extends ServerAssertion {
+            private static final long serialVersionUID = 1L;
 
-        private static final long serialVersionUID = 1L;
+            @SpringMvcResource
+            private ModelAndView modelAndView;
 
-        @SpringMvcResource
-        private ModelAndView modelAndView;
+            @AfterServlet
+            public void testWelcome() {
 
-        @AfterServlet
-        public void testWelcome() {
-
-            assertEquals("welcome", modelAndView.getViewName());
-            assertEquals("Warp welcomes!", modelAndView.getModel().get("message"));
-        }
+                assertEquals("welcome", modelAndView.getViewName());
+                assertEquals("Warp welcomes!", modelAndView.getModel().get("message"));
+            }
+        });
     }
 }

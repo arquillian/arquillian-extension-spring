@@ -19,14 +19,25 @@ package org.jboss.as.quickstarts.spring.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * <p>Plain controller that just handles the view.</p>
  *
+ * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
 @Controller
+@RequestMapping("welcome.do")
 public class WelcomeController {
 
-    @RequestMapping("welcome.do")
+    /**
+     * <p>Handles GET request to the welcome page.</p>
+     *
+     * @param model the page model
+     *
+     * @return the view name
+     */
+    @RequestMapping(method = RequestMethod.GET)
     public String welcome(Model model) {
 
         model.addAttribute("message", "Warp welcomes!");

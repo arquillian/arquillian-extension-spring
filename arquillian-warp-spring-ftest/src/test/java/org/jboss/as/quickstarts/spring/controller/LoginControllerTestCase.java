@@ -21,12 +21,12 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.arquillian.warp.ClientAction;
-import org.jboss.arquillian.warp.ServerAssertion;
+import org.jboss.arquillian.warp.Activity;
+import org.jboss.arquillian.warp.Inspection;
 import org.jboss.arquillian.warp.Warp;
 import org.jboss.arquillian.warp.WarpTest;
-import org.jboss.arquillian.warp.extension.servlet.AfterServlet;
 import org.jboss.arquillian.warp.extension.spring.SpringMvcResource;
+import org.jboss.arquillian.warp.servlet.AfterServlet;
 import org.jboss.as.quickstarts.spring.model.UserCredentials;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -56,12 +56,23 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Arquillian.class)
 public class LoginControllerTestCase {
 
+    /**
+     * <p>The selenium driver.</p>
+     */
     @Drone
     WebDriver browser;
 
+    /**
+     * <p>The deployment url.</p>
+     */
     @ArquillianResource
     URL contextPath;
 
+    /**
+     * <p>Creates the test deployment.</p>
+     *
+     * @return the test deployment
+     */
     @Deployment
     public static WebArchive createDeployment() {
 
@@ -82,33 +93,44 @@ public class LoginControllerTestCase {
                 .addAsLibraries(libs);
     }
 
+    /**
+     * <p>Tests retrieving the login page.</p>
+     */
     @Test
     @RunAsClient
     public void testGetLogin() {
-        Warp.execute(new ClientAction() {
+        Warp.initiate(new Activity() {
 
             @Override
-            public void action() {
+            public void perform() {
                 browser.navigate().to(contextPath + "login.do");
             }
-        }).verify(new LoginControllerGetVerification());
+        }).inspect(new LoginControllerGetVerification());
     }
 
+    /**
+     * <p>Verifies that login page validates the client input.</p>
+     */
     @Test
     @RunAsClient
     public void testLoginValidationErrors() {
         browser.navigate().to(contextPath + "login.do");
+        browser.findElement(By.id("login")).clear();
+        browser.findElement(By.id("password")).clear();
 
-        Warp.execute(new ClientAction() {
+        Warp.initiate(new Activity() {
 
             @Override
-            public void action() {
+            public void perform() {
 
                 browser.findElement(By.id("loginForm")).submit();
             }
-        }).verify(new LoginControllerValidationErrorsVerification());
+        }).inspect(new LoginControllerValidationErrorsVerification());
     }
 
+    /**
+     * <p>Verifies the default login behaviour on successful user login.</p>
+     */
     @Test
     @RunAsClient
     public void testLoginSuccess() {
@@ -116,17 +138,17 @@ public class LoginControllerTestCase {
         browser.findElement(By.id("login")).sendKeys("warp");
         browser.findElement(By.id("password")).sendKeys("warp");
 
-        Warp.execute(new ClientAction() {
+        Warp.initiate(new Activity() {
 
             @Override
-            public void action() {
+            public void perform() {
 
                 browser.findElement(By.id("loginForm")).submit();
             }
-        }).verify(new LoginSuccessVerification());
+        }).inspect(new LoginSuccessVerification());
     }
 
-    public static class LoginControllerGetVerification extends ServerAssertion {
+    public static class LoginControllerGetVerification extends Inspection {
 
         private static final long serialVersionUID = 1L;
 
@@ -141,7 +163,7 @@ public class LoginControllerTestCase {
         }
     }
 
-    public static class LoginControllerValidationErrorsVerification extends ServerAssertion {
+    public static class LoginControllerValidationErrorsVerification extends Inspection {
 
         private static final long serialVersionUID = 1L;
 
@@ -162,7 +184,7 @@ public class LoginControllerTestCase {
         }
     }
 
-    public static class LoginSuccessVerification extends ServerAssertion {
+    public static class LoginSuccessVerification extends Inspection {
 
         private static final long serialVersionUID = 1L;
 
@@ -175,7 +197,7 @@ public class LoginControllerTestCase {
         @AfterServlet
         public void testGetLogin() {
 
-            assertEquals("welcome", modelAndView.getViewName());
+            assertEquals("redirect:welcome.do", modelAndView.getViewName());
             assertFalse(errors.hasErrors());
         }
     }
