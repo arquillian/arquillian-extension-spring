@@ -64,8 +64,8 @@ public class SpringProtocolArchiveProcessorTestCase {
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.deployer.client.SpringProtocolArchiveProcessor#process(TestDeployment,
-     * Archive)} method when the test deployment is a JAR archive.</p>
+     * <p>Tests the {@link SpringProtocolArchiveProcessor#process(TestDeployment, Archive)}
+     * method when the test deployment is a JAR archive.</p>
      *
      * @throws Exception if any error occurs
      */

@@ -16,11 +16,8 @@
  */
 package org.jboss.arquillian.transaction.spring.provider;
 
-import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
-import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.transaction.spi.annotation.TransactionScope;
 import org.jboss.arquillian.transaction.spi.provider.TransactionProvider;
 import org.jboss.arquillian.transaction.spi.test.TransactionalTest;
@@ -35,16 +32,13 @@ import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
  *
  * <p>It delegates all the transaction specific handling to the configured {@link PlatformTransactionManager}.</p>
  *
+ * <p>This class is abstract, the concrete implementation provide means for retrieving the transaction manager from
+ * specific application context.</p>
+ *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
-public class SpringTransactionProvider implements TransactionProvider {
-
-    /**
-     * <p>Instance of application context.</p>
-     */
-    @Inject
-    Instance<RemoteTestScopeApplicationContext> applicationContextInstance;
+public abstract class AbstractSpringTransactionProvider implements TransactionProvider {
 
     /**
      * <p>Instance of {@link PlatformTransactionManager} to which all the operations are delegated.</p>
@@ -136,9 +130,5 @@ public class SpringTransactionProvider implements TransactionProvider {
      *
      * @return the application context
      */
-    private ApplicationContext getApplicationContext() {
-
-        TestScopeApplicationContext testScopeApplicationContext = applicationContextInstance.get();
-        return testScopeApplicationContext.getApplicationContext();
-    }
+    protected abstract ApplicationContext getApplicationContext();
 }

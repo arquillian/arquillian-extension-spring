@@ -3,20 +3,20 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
 
-    <!-- Creates local entity manager factory -->
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="ArquillianTestUnit"/>
-    </bean>
+    <!-- Lookups the entity manager factory -->
+    <jee:jndi-lookup id="entityManagerFactory" jndi-name="persistence/ArquillianTestUnit"/>
 
     <!-- Enables the declarative transaction support -->
     <tx:annotation-driven transaction-manager="txManager"/>
 
     <!-- Creates transaction manager -->
-    <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
-    </bean>
+    <bean id="txManager" class="org.springframework.transaction.jta.JtaTransactionManager"/>
 
     <!-- Scans for the beans definitions -->
     <context:component-scan base-package="org.jboss.arquillian.spring.testsuite.beans.repository.impl"/>

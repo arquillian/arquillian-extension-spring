@@ -18,7 +18,6 @@
 package org.jboss.arquillian.transaction.spring.container;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.transaction.spring.provider.SpringTransactionProvider;
 import org.jboss.arquillian.transaction.spi.provider.TransactionProvider;
 
 /**
@@ -35,6 +34,6 @@ public class SpringTransactionRemoteExtension implements RemoteLoadableExtension
     @Override
     public void register(ExtensionBuilder builder) {
 
-        builder.service(TransactionProvider.class, SpringTransactionProvider.class);
+        builder.service(TransactionProvider.class, ContainerSpringTransactionProvider.class);
     }
 }

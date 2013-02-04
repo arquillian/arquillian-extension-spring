@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.arquillian.spring.integration.transaction.utils;
+package org.jboss.arquillian.transaction.spring.utils;
 
 import java.lang.reflect.Field;
 
