@@ -21,6 +21,7 @@ import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.inject.model.PlainClass;
+import org.jboss.arquillian.spring.integration.inject.model.StaticSpringContext;
 import org.jboss.arquillian.spring.integration.inject.model.XmlAnnotatedClass;
 import org.jboss.arquillian.spring.integration.inject.model.XmlAnnotatedCustomContextClass;
 import org.jboss.arquillian.spring.integration.inject.model.XmlAnnotatedMissingResourceClass;
@@ -208,4 +209,16 @@ public class XmlRemoteApplicationContextProducerTestCase {
         when(mockRemoteConfigurationInstance.get()).thenReturn(remoteConfiguration);
         TestReflectionHelper.setFieldValue(instance, "remoteConfiguration", mockRemoteConfigurationInstance);
     }
+    
+    @Test
+    public void testCreateStaticApplicationContextDefault() {
+        TestClass testClass = new TestClass(StaticSpringContext.class);
+
+        TestScopeApplicationContext result = instance.createApplicationContext(testClass);
+
+        assertNotNull("The result was null.", result);
+        assertTrue("The application context should be marked as closable.", result.isClosable());
+        assertNotNull("The application context hasn't been created.", result.getApplicationContext());
+    }
+    
 }
