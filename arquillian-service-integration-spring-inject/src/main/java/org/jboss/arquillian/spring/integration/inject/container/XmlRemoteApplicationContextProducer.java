@@ -21,13 +21,18 @@ import org.jboss.arquillian.spring.integration.SpringInjectConstants;
 import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.test.annotation.ClassToScan;
+import org.jboss.arquillian.spring.integration.test.annotation.PackageToScan;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringStaticContext;
 import org.jboss.arquillian.test.spi.TestClass;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.StaticApplicationContext;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -92,7 +97,28 @@ public class XmlRemoteApplicationContextProducer extends AbstractApplicationCont
             applicationContextClass = ClassPathXmlApplicationContext.class;
         }
 
+        if (isStaticContext(applicationContextClass)) {
+            StaticApplicationContext appCtx = (StaticApplicationContext) createInstance(applicationContextClass, locations);
+            processAnnotations(testClass, appCtx);
+            return appCtx;
+        }
+
         return createInstance(applicationContextClass, locations);
+    }
+
+    private void processAnnotations(TestClass testClass, StaticApplicationContext ctx)
+    {
+        ClassToScan classToScan = testClass.getAnnotation(ClassToScan.class);
+        if (classToScan != null && classToScan.value().length > 0) {
+            for (Class clz : classToScan.value()) {
+                ctx.registerSingleton(clz.getSimpleName(), clz);
+            }
+        }
+        PackageToScan packageToScan = testClass.getAnnotation(PackageToScan.class);
+        if (packageToScan != null && packageToScan.value().length > 0) {
+            throw new UnsupportedOperationException("not implemented");
+        }
+
     }
 
     /**
@@ -131,7 +157,7 @@ public class XmlRemoteApplicationContextProducer extends AbstractApplicationCont
     {
 
         try {
-            if (applicationContextClass.equals(StaticApplicationContext.class)) {
+            if (isStaticContext(applicationContextClass)) {
                 return applicationContextClass.newInstance();
             }
             Constructor<T> ctor = applicationContextClass.getConstructor(String[].class);
@@ -152,4 +178,10 @@ public class XmlRemoteApplicationContextProducer extends AbstractApplicationCont
             throw new RuntimeException("Could not create instance of " + applicationContextClass.getName(), e);
         }
     }
+
+    private <T extends ApplicationContext> boolean isStaticContext(Class<T> applicationContextClass)
+    {
+        return applicationContextClass.equals(StaticApplicationContext.class);
+    }
+
 }

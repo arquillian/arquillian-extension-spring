@@ -20,7 +20,10 @@ package org.jboss.arquillian.spring.integration.inject.client;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.spring.integration.SpringInjectConstants;
 import org.jboss.arquillian.spring.integration.inject.container.XmlRemoteApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.test.annotation.ClassToScan;
+import org.jboss.arquillian.spring.integration.test.annotation.PackageToScan;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringStaticContext;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringWebConfiguration;
 import org.jboss.arquillian.spring.integration.client.AbstractSpringEnricherArchiveAppender;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
@@ -44,7 +47,7 @@ public class SpringInjectArchiveAppender extends AbstractSpringEnricherArchiveAp
     @Override
     protected void appendResources(JavaArchive archive) {
 
-        archive.addClasses(SpringConfiguration.class, SpringWebConfiguration.class)
+        archive.addClasses(SpringConfiguration.class, SpringWebConfiguration.class, ClassToScan.class, PackageToScan.class, SpringStaticContext.class)
                 .addClasses(SpringInjectConstants.class,
                         XmlRemoteApplicationContextProducer.class, WebApplicationContextProducer.class,
                         SpringInjectRemoteExtension.class)
