@@ -17,36 +17,44 @@
 
 package org.jboss.arquillian.spring.integration.enricher;
 
-import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.api.annotation.Inject;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.logging.Logger;
+
 import org.jboss.arquillian.spring.integration.SpringIntegrationConstants;
 import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.test.spi.TestEnricher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
-
-import java.lang.reflect.Method;
-import java.util.logging.Logger;
+import org.springframework.context.support.StaticApplicationContext;
+import org.springframework.util.ReflectionUtils;
 
 /**
- * <p>Spring test enricher, injects spring beans into the test class.</p>
- *
+ * <p>
+ * Spring test enricher, injects spring beans into the test class.
+ * </p>
+ * 
  * @param <T> the type of application context
- *
+ * 
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
 public abstract class AbstractSpringInjectionEnricher<T extends TestScopeApplicationContext> implements TestEnricher {
 
     /**
-     * <p>Logger used by this class.</p>
+     * <p>
+     * Logger used by this class.
+     * </p>
      */
     private static final Logger log = Logger.getLogger(AbstractSpringInjectionEnricher.class.getName());
 
     /**
-     * <p>Retrieves the instance of {@link TestScopeApplicationContext}.</p>
-     *
+     * <p>
+     * Retrieves the instance of {@link TestScopeApplicationContext}.
+     * </p>
+     * 
      * @return the test scope application context
      */
     public abstract T getTestScopeApplicationContext();
@@ -55,10 +63,10 @@ public abstract class AbstractSpringInjectionEnricher<T extends TestScopeApplica
      * {@inheritDoc}
      */
     @Override
-    public void enrich(Object testCase) {
+    public void enrich(Object testCase)
+    {
 
-        if (SecurityActions.isClassPresent(SpringIntegrationConstants.APPLICATION_CONTEXT)
-                && getApplicationContextExists()) {
+        if (SecurityActions.isClassPresent(SpringIntegrationConstants.APPLICATION_CONTEXT) && getApplicationContextExists()) {
             injectClass(testCase);
         }
     }
@@ -67,17 +75,21 @@ public abstract class AbstractSpringInjectionEnricher<T extends TestScopeApplica
      * {@inheritDoc}
      */
     @Override
-    public Object[] resolve(Method method) {
+    public Object[] resolve(Method method)
+    {
 
         return new Object[method.getParameterTypes().length];
     }
 
     /**
-     * <p>Injects beans into the tests case.</p>
-     *
+     * <p>
+     * Injects beans into the tests case.
+     * </p>
+     * 
      * @param testCase the test case
      */
-    private void injectClass(Object testCase) {
+    private void injectClass(Object testCase)
+    {
 
         ApplicationContext applicationContext = getApplicationContext();
 
@@ -88,13 +100,19 @@ public abstract class AbstractSpringInjectionEnricher<T extends TestScopeApplica
     }
 
     /**
-     * <p>Injects dependencies into the test case.</p>
-     *
+     * <p>
+     * Injects dependencies into the test case.
+     * </p>
+     * 
      * @param applicationContext the {@link org.springframework.context.ApplicationContext}
-     * @param testCase           the test case for which the beans will be injected
+     * @param testCase the test case for which the beans will be injected
      */
-    private void injectDependencies(ApplicationContext applicationContext, Object testCase) {
-
+    private void injectDependencies(ApplicationContext applicationContext, Object testCase)
+    {
+        if (applicationContext.getClass().equals(StaticApplicationContext.class)) {
+            StaticApplicationContext ctx = (StaticApplicationContext) applicationContext;
+            registerBean(ctx, testCase);
+        }
         // retrieves the bean factory
         AutowireCapableBeanFactory beanFactory = applicationContext.getAutowireCapableBeanFactory();
         // injects all the members
@@ -103,12 +121,37 @@ public abstract class AbstractSpringInjectionEnricher<T extends TestScopeApplica
         beanFactory.initializeBean(testCase, testCase.getClass().getName());
     }
 
+    private void registerBean(StaticApplicationContext applicationContext, Object testCase)
+    {
+        try {
+            Field[] fields = testCase.getClass().getDeclaredFields();
+            for (int i = 0; i < fields.length; i++) {
+                Field field = fields[i];
+                field.setAccessible(true);
+                if (field.isAnnotationPresent(SpringStaticContext.class)) {
+                    field.set(testCase, applicationContext);
+                }
+                if (field.isAnnotationPresent(Autowired.class)) {
+                    ReflectionUtils.setField(field, testCase, applicationContext.getBean(field.getType().getSimpleName(), field.getType()));
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     /**
-     * <p>Retrieves the {@link org.springframework.context.ApplicationContext}.</p>
-     *
+     * <p>
+     * Retrieves the {@link org.springframework.context.ApplicationContext}.
+     * </p>
+     * 
      * @return the {@link org.springframework.context.ApplicationContext}
      */
-    private ApplicationContext getApplicationContext() {
+    private ApplicationContext getApplicationContext()
+    {
 
         if (getTestScopeApplicationContext() != null) {
 
@@ -119,11 +162,14 @@ public abstract class AbstractSpringInjectionEnricher<T extends TestScopeApplica
     }
 
     /**
-     * <p>Returns whether the application context for the test has been created.</p>
-     *
+     * <p>
+     * Returns whether the application context for the test has been created.
+     * </p>
+     * 
      * @return true if the application context exists, false otherwise
      */
-    private boolean getApplicationContextExists() {
+    private boolean getApplicationContextExists()
+    {
 
         return getTestScopeApplicationContext() != null;
     }

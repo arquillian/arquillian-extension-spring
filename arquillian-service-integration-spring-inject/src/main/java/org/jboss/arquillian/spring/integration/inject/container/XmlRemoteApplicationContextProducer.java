@@ -17,6 +17,9 @@
 
 package org.jboss.arquillian.spring.integration.inject.container;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import org.jboss.arquillian.spring.integration.SpringInjectConstants;
 import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
@@ -24,16 +27,10 @@ import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicatio
 import org.jboss.arquillian.spring.integration.test.annotation.ClassToScan;
 import org.jboss.arquillian.spring.integration.test.annotation.PackageToScan;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
-import org.jboss.arquillian.spring.integration.test.annotation.SpringStaticContext;
 import org.jboss.arquillian.test.spi.TestClass;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.StaticApplicationContext;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * <p>

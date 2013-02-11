@@ -23,12 +23,12 @@ import org.jboss.arquillian.spring.integration.inject.container.XmlRemoteApplica
 import org.jboss.arquillian.spring.integration.test.annotation.ClassToScan;
 import org.jboss.arquillian.spring.integration.test.annotation.PackageToScan;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
-import org.jboss.arquillian.spring.integration.test.annotation.SpringStaticContext;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringWebConfiguration;
 import org.jboss.arquillian.spring.integration.client.AbstractSpringEnricherArchiveAppender;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.enricher.SpringStaticContext;
 import org.jboss.arquillian.spring.integration.inject.container.SpringInjectRemoteExtension;
 import org.jboss.arquillian.spring.integration.inject.container.WebApplicationContextProducer;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
