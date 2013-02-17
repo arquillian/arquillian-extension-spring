@@ -26,7 +26,9 @@ import org.jboss.arquillian.test.spi.TestClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * <p>Tests {@link  AnnotationClientApplicationContextProducer} class.</p>

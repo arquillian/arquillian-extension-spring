@@ -101,19 +101,21 @@ public class WelcomeControllerTestCase {
             public void perform() {
                 browser.navigate().to(contextPath + "welcome.do");
             }
-        }).inspect(new Inspection() {
+        }).inspect(new WelcomeControllerVerification());
+    }
 
-            private static final long serialVersionUID = 1L;
+    public static class WelcomeControllerVerification extends Inspection {
 
-            @SpringMvcResource
-            private ModelAndView modelAndView;
+        private static final long serialVersionUID = 1L;
 
-            @AfterServlet
-            public void testWelcome() {
+        @SpringMvcResource
+        private ModelAndView modelAndView;
 
-                assertEquals("welcome", modelAndView.getViewName());
-                assertEquals("Warp welcomes!", modelAndView.getModel().get("message"));
-            }
-        });
+        @AfterServlet
+        public void testWelcome() {
+
+            assertEquals("welcome", modelAndView.getViewName());
+            assertEquals("Warp welcomes!", modelAndView.getModel().get("message"));
+        }
     }
 }

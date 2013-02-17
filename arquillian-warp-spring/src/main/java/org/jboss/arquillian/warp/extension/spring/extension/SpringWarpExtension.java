@@ -20,6 +20,7 @@ import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.warp.extension.spring.SpringMvcResult;
 import org.jboss.arquillian.warp.extension.spring.container.SpringWarpRemoteExtension;
+import org.jboss.arquillian.warp.extension.spring.container.provider.AbstractWarpGenericResourceProvider;
 import org.jboss.arquillian.warp.extension.spring.servlet.WarpDispatcherServlet;
 import org.jboss.arquillian.warp.spi.WarpDeploymentEnrichmentExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -50,6 +51,7 @@ public class SpringWarpExtension implements LoadableExtension, WarpDeploymentEnr
                 .addPackage(WarpDispatcherServlet.class.getPackage())
                 .addPackage(SpringMvcResult.class.getPackage())
                 .addPackage(SpringWarpRemoteExtension.class.getPackage())
+                .addPackage(AbstractWarpGenericResourceProvider.class.getPackage())
                 .addAsServiceProvider(RemoteLoadableExtension.class, SpringWarpRemoteExtension.class);
     }
 
