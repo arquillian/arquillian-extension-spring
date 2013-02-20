@@ -58,6 +58,7 @@
         <!-- Test Dependencies -->
         <version.junit_junit>4.8.1</version.junit_junit>
         <version.mockito_all>1.8.3</version.mockito_all>
+        <version.fest_assert>1.4</version.fest_assert>
 
         <!-- Spring Framework dependencies -->
         <version.spring_framework_2_5>2.5.6</version.spring_framework_2_5>
