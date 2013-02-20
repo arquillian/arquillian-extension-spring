@@ -17,13 +17,13 @@
 
 package org.jboss.arquillian.spring.integration.inject.client;
 
-import org.jboss.arquillian.spring.integration.SpringInjectConstants;
 import org.jboss.arquillian.spring.integration.context.ClientApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.ClientTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringClientConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.ClassPathResource;
 
 /**
  * <p>The client application context producer.</p>
@@ -32,6 +32,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @version $Revision: $
  */
 public class XmlClientApplicationContextProducer implements ClientApplicationContextProducer {
+
+    private static final String[] EMPTY_STRING_ARRAY = new String[0];
+
+    static final String DEFAULT_LOCATION_SUFFIX = "-context.xml";
+    private final String CLASSPATH_PREFIX = "classpath:";
+    private final String SLASH = "/";
 
     /**
      * {@inheritDoc}
@@ -62,12 +68,32 @@ public class XmlClientApplicationContextProducer implements ClientApplicationCon
         SpringClientConfiguration springConfiguration =
                 testClass.getAnnotation(SpringClientConfiguration.class);
 
-        String[] locations = new String[]{SpringInjectConstants.DEFAULT_LOCATION};
-        if (springConfiguration.value().length > 0) {
-
-            locations = springConfiguration.value();
-        }
+        String [] locations = processLocations(springConfiguration, testClass.getJavaClass());
 
         return new ClassPathXmlApplicationContext(locations);
+    }
+
+    String[] processLocations(SpringClientConfiguration springConfiguration, Class wrappedClass) {
+        if (customLocationsWereSpecified(springConfiguration)) {
+            return springConfiguration.value();
+        }
+        return defaultLocationForGivenTestClass(wrappedClass);
+    }
+
+    private boolean customLocationsWereSpecified(SpringClientConfiguration springConfiguration) {
+        return springConfiguration.value().length > 0;
+    }
+
+    String[] defaultLocationForGivenTestClass(Class testClass) {
+        String fullyQualifiedTestClassName = testClass.getName();
+        String defaultConfigResourcePath = SLASH + fullyQualifiedTestClassName.replace('.', '/') + DEFAULT_LOCATION_SUFFIX;
+        String prefixedResourcePath = CLASSPATH_PREFIX + defaultConfigResourcePath;
+        ClassPathResource classPathResource = new ClassPathResource(defaultConfigResourcePath, testClass);
+
+        if (classPathResource.exists()) {
+            return new String[] {prefixedResourcePath};
+        }
+
+        return EMPTY_STRING_ARRAY;
     }
 }
