@@ -33,12 +33,6 @@ import org.springframework.core.io.ClassPathResource;
  */
 public class XmlClientApplicationContextProducer implements ClientApplicationContextProducer {
 
-    private static final String[] EMPTY_STRING_ARRAY = new String[0];
-
-    static final String DEFAULT_LOCATION_SUFFIX = "-context.xml";
-    private final String CLASSPATH_PREFIX = "classpath:";
-    private final String SLASH = "/";
-
     /**
      * Array returned when no custom and default locations were specified for test class.
      */
