@@ -40,6 +40,18 @@ public class XmlClientApplicationContextProducer implements ClientApplicationCon
     private final String SLASH = "/";
 
     /**
+     * Array returned when no custom and default locations were specified for test class.
+     */
+    private static final String[] EMPTY_STRING_ARRAY = new String[0];
+
+    /**
+     * Suffix required for default location matching.
+     */
+    static final String DEFAULT_LOCATION_SUFFIX = "-context.xml";
+    private final String CLASSPATH_PREFIX = "classpath:";
+    private final String SLASH = "/";
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -73,6 +85,13 @@ public class XmlClientApplicationContextProducer implements ClientApplicationCon
         return new ClassPathXmlApplicationContext(locations);
     }
 
+    /**
+     * <p> Searches for XML resources for {@param wrappedClass} test case.</p>
+     *
+     * @param springConfiguration - context configuration for TestClass instance.
+     * @param wrappedClass - test class wrapped by TestClass instance.
+     * @return array which contains set of test resource locations.
+     */
     String[] processLocations(SpringClientConfiguration springConfiguration, Class wrappedClass) {
         if (customLocationsWereSpecified(springConfiguration)) {
             return springConfiguration.value();
@@ -80,10 +99,21 @@ public class XmlClientApplicationContextProducer implements ClientApplicationCon
         return defaultLocationForGivenTestClass(wrappedClass);
     }
 
+    /**
+     * Checks whether custom XML resource location was provided in {@param springConfiguration}
+     *
+     * @param springConfiguration context configuration for TestClass instance.
+     * @return true if custom location was specified, false otherwise.
+     */
     private boolean customLocationsWereSpecified(SpringClientConfiguration springConfiguration) {
         return springConfiguration.value().length > 0;
     }
 
+    /**
+     * Builds array with default locations for {@param testClass} test instance.
+     * @param testClass - test class wrapped by TestClass instance.
+     * @return array with default location (in form testClassName-context.xml) or empty array otherwise.
+     */
     String[] defaultLocationForGivenTestClass(Class testClass) {
         String fullyQualifiedTestClassName = testClass.getName();
         String defaultConfigResourcePath = SLASH + fullyQualifiedTestClassName.replace('.', '/') + DEFAULT_LOCATION_SUFFIX;
