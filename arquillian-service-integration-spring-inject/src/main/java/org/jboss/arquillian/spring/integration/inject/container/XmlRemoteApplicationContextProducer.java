@@ -39,6 +39,8 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class XmlRemoteApplicationContextProducer extends AbstractApplicationContextProducer {
 
+    private ClassPathResourceLocationsProcessor locationsProcessor = new ClassPathResourceLocationsProcessor();
+
     /**
      * {@inheritDoc}
      */
@@ -67,11 +69,7 @@ public class XmlRemoteApplicationContextProducer extends AbstractApplicationCont
 
         SpringConfiguration springConfiguration = testClass.getAnnotation(SpringConfiguration.class);
 
-        String[] locations = new String[]{SpringInjectConstants.DEFAULT_LOCATION};
-        if (springConfiguration.value().length > 0) {
-
-            locations = springConfiguration.value();
-        }
+        String[] locations = locationsProcessor.processLocations(springConfiguration, testClass.getJavaClass());
 
         Class<? extends ApplicationContext> applicationContextClass = getCustomContextClass();
         if (springConfiguration.contextClass() != ApplicationContext.class) {

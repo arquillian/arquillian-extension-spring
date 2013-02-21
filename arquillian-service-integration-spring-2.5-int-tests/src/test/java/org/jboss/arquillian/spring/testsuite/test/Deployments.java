@@ -16,6 +16,7 @@
  */
 package org.jboss.arquillian.spring.testsuite.test;
 
+import org.jboss.arquillian.spring.integration.inject.ClassPathResourceLocationsProcessor;
 import org.jboss.arquillian.spring.testsuite.beans.controller.EmployeeController;
 import org.jboss.arquillian.spring.testsuite.beans.model.Employee;
 import org.jboss.arquillian.spring.testsuite.beans.repository.EmployeeRepository;
@@ -81,7 +82,7 @@ public final class Deployments {
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
                         EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class,
-                        EmployeeController.class)
+                        EmployeeController.class, ClassPathResourceLocationsProcessor.class)
                 .addAsLibraries(springDependencies())
                 .addAsLibraries(mockitoDependencies());
     }
@@ -96,7 +97,7 @@ public final class Deployments {
         return ShrinkWrap.create(JavaArchive.class, "spring-test.jar")
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
-                        EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class);
+                        EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class, ClassPathResourceLocationsProcessor.class);
     }
 
     /**

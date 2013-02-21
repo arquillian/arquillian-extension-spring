@@ -43,7 +43,7 @@ public @interface SpringConfiguration {
      * <p>The locations from where the xml config should be loaded.</p>
      *
      * <p>If no location is specified the test extension will try to load the configuration from
-     * applicationContext.xml</p>
+     * {testClassName}-context.xml file</p>
      */
     String[] value() default {};
 
