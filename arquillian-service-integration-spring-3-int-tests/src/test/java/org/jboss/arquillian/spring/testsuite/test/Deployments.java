@@ -16,6 +16,7 @@
  */
 package org.jboss.arquillian.spring.testsuite.test;
 
+import org.jboss.arquillian.spring.integration.inject.ClassPathResourceLocationsProcessor;
 import org.jboss.arquillian.spring.testsuite.beans.config.AppConfig;
 import org.jboss.arquillian.spring.testsuite.beans.config.WebAppConfig;
 import org.jboss.arquillian.spring.testsuite.beans.controller.EmployeeController;
@@ -94,7 +95,7 @@ public final class Deployments {
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
                         EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class,
-                        EmployeeController.class, EmployeeRestController.class)
+                        EmployeeController.class, EmployeeRestController.class, ClassPathResourceLocationsProcessor.class)
                 .addAsLibraries(getWebDependencies());
     }
 
@@ -109,7 +110,7 @@ public final class Deployments {
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
                         EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class,
-                        EmployeeController.class, EmployeeRestController.class, WebAppConfig.class)
+                        EmployeeController.class, EmployeeRestController.class, WebAppConfig.class, ClassPathResourceLocationsProcessor.class)
                 .addAsLibraries(getWebDependencies());
     }
 
@@ -138,7 +139,7 @@ public final class Deployments {
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
                         EmployeeRepository.class, DefaultEmployeeRepository.class,
-                        NullEmployeeRepository.class)
+                        NullEmployeeRepository.class,ClassPathResourceLocationsProcessor.class)
                 .addAsLibraries(getDependencies());
     }
 
