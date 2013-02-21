@@ -42,11 +42,6 @@ public final class SpringInjectConstants {
             "org.springframework.web.servlet.FrameworkServlet.CONTEXT.{0}";
 
     /**
-     * <p>Represents the default location where to look for Spring application context.</p>
-     */
-    public static final String DEFAULT_LOCATION = "classpath:applicationContext.xml";
-
-    /**
      * <p>Represents the extension configuration property name.</p>
      */
     public static final String CONFIGURATION_CUSTOM_CONTEXT_CLASS = "customContextClass";

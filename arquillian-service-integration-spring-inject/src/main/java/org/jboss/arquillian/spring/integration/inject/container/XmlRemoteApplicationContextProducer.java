@@ -21,6 +21,7 @@ import org.jboss.arquillian.spring.integration.SpringInjectConstants;
 import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.inject.ClassPathResourceLocationsProcessor;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
@@ -37,6 +38,8 @@ import java.lang.reflect.InvocationTargetException;
  * @version $Revision: $
  */
 public class XmlRemoteApplicationContextProducer extends AbstractApplicationContextProducer {
+
+    private ClassPathResourceLocationsProcessor locationsProcessor = new ClassPathResourceLocationsProcessor();
 
     /**
      * {@inheritDoc}
@@ -66,11 +69,7 @@ public class XmlRemoteApplicationContextProducer extends AbstractApplicationCont
 
         SpringConfiguration springConfiguration = testClass.getAnnotation(SpringConfiguration.class);
 
-        String[] locations = new String[]{SpringInjectConstants.DEFAULT_LOCATION};
-        if (springConfiguration.value().length > 0) {
-
-            locations = springConfiguration.value();
-        }
+        String[] locations = locationsProcessor.processLocations(springConfiguration, testClass.getJavaClass());
 
         Class<? extends ApplicationContext> applicationContextClass = getCustomContextClass();
         if (springConfiguration.contextClass() != ApplicationContext.class) {
