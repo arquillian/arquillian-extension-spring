@@ -20,14 +20,15 @@ package org.jboss.arquillian.spring.integration.inject.client;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
 import org.jboss.arquillian.spring.integration.context.ClientTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
-import org.jboss.arquillian.spring.integration.inject.model.*;
-import org.jboss.arquillian.spring.integration.test.annotation.SpringClientConfiguration;
+import org.jboss.arquillian.spring.integration.inject.model.ClientXmlAnnotatedClass;
+import org.jboss.arquillian.spring.integration.inject.model.ClientXmlAnnotatedClassWithBothCustomAndDefaultLocations;
+import org.jboss.arquillian.spring.integration.inject.model.PlainClass;
+import org.jboss.arquillian.spring.integration.inject.model.XmlAnnotatedMissingResourceClass;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.jboss.arquillian.spring.integration.inject.client.XmlClientApplicationContextProducer.DEFAULT_LOCATION_SUFFIX;
 import static org.junit.Assert.*;
 
 
@@ -103,48 +104,6 @@ public class XmlClientApplicationContextProducerTestCase {
         TestClass testClass = new TestClass(XmlAnnotatedMissingResourceClass.class);
 
         instance.createApplicationContext(testClass);
-    }
-
-    @Test
-    public void emptyArrayShouldBeReturnedWhenDefaultTestResourceDoesNotExist() {
-        // given
-        Class testClass = ClientXmlAnnotatedClassWithNotExistingDefaultLocation.class;
-
-        // when
-        String[] defaultLocations = instance.defaultLocationForGivenTestClass(testClass);
-
-        // then
-        assertThat(defaultLocations).isEmpty();
-    }
-
-    @Test
-    public void arrayWithDefaultLocationShouldBeReturnedWhenDefaultResourceExists() {
-        // given
-        Class testClass = ClientXmlAnnotatedClass.class;
-        String expectedLocationName = testClass.getClass().getSimpleName() + DEFAULT_LOCATION_SUFFIX;
-
-        // when
-        String[] defaultLocations = instance.defaultLocationForGivenTestClass(testClass);
-
-        // then
-        assertThat(defaultLocations).hasSize(1);
-        assertThat(defaultLocations[0]).contains(expectedLocationName);
-    }
-
-    @Test
-    public void arrayWithCustomLocationShouldBeReturnedWhenBothDefaultAndCustomResourcesExist() {
-        // given
-        Class<ClientXmlAnnotatedClassWithBothCustomAndDefaultLocations> wrappedClass = ClientXmlAnnotatedClassWithBothCustomAndDefaultLocations.class;
-
-        SpringClientConfiguration testClassAnnotation = wrappedClass.getAnnotation(SpringClientConfiguration.class);
-        String [] expectedLocationNames = testClassAnnotation.value();
-
-        // when
-        String[] defaultLocations = instance.processLocations(testClassAnnotation, wrappedClass);
-
-        // then
-        assertThat(defaultLocations).hasSize(expectedLocationNames.length);
-        assertThat(defaultLocations).containsOnly(expectedLocationNames);
     }
 
     @Test
