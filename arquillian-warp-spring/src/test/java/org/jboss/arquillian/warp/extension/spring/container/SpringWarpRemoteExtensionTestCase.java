@@ -18,6 +18,13 @@ package org.jboss.arquillian.warp.extension.spring.container;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.test.spi.TestEnricher;
+import org.jboss.arquillian.test.spi.enricher.resource.ResourceProvider;
+import org.jboss.arquillian.warp.extension.spring.container.provider.ErrorsProvider;
+import org.jboss.arquillian.warp.extension.spring.container.provider.ExceptionProvider;
+import org.jboss.arquillian.warp.extension.spring.container.provider.HandlerInterceptorsProvider;
+import org.jboss.arquillian.warp.extension.spring.container.provider.HandlerProvider;
+import org.jboss.arquillian.warp.extension.spring.container.provider.ModelAndViewProvider;
+import org.jboss.arquillian.warp.extension.spring.container.provider.SpringMvcResultProvider;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,6 +69,12 @@ public class SpringWarpRemoteExtensionTestCase {
         instance.register(mockExtensionBuilder);
 
         verify(mockExtensionBuilder).service(TestEnricher.class, SpringWarpTestEnricher.class);
+        verify(mockExtensionBuilder).service(ResourceProvider.class, SpringMvcResultProvider.class);
+        verify(mockExtensionBuilder).service(ResourceProvider.class, ModelAndViewProvider.class);
+        verify(mockExtensionBuilder).service(ResourceProvider.class, ErrorsProvider.class);
+        verify(mockExtensionBuilder).service(ResourceProvider.class, ExceptionProvider.class);
+        verify(mockExtensionBuilder).service(ResourceProvider.class, HandlerInterceptorsProvider.class);
+        verify(mockExtensionBuilder).service(ResourceProvider.class, HandlerProvider.class);
         verifyNoMoreInteractions(mockExtensionBuilder);
     }
 }

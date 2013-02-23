@@ -31,12 +31,6 @@
 
     <extension qualifier="webdriver">
         <property name="useJavaScript">true</property>
-
-        <!--
-        <property name="implementationClass">org.openqa.selenium.remote.RemoteWebDriver</property>
-        <property name="browserCapabilities">firefox</property>
-        <property name="reusable">true</property>
-        -->
     </extension>
 
 </arquillian>

@@ -35,13 +35,17 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <p>It is also possible to inject handler into the test case, but only if the type of the field declared in the test
  * case is exactly the same as the type of handler that was intercepted during request processing.</p>
  *
+ * @deprecated Please use {@link org.jboss.arquillian.test.api.ArquillianResource} instead.
+ *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @see SpringMvcResult
+ * @see org.jboss.arquillian.test.api.ArquillianResource
  */
 @Inherited
 @Documented
 @Retention(RUNTIME)
 @Target(ElementType.FIELD)
+@Deprecated
 public @interface SpringMvcResource {
 
 }

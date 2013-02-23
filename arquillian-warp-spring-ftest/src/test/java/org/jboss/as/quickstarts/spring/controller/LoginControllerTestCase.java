@@ -25,7 +25,6 @@ import org.jboss.arquillian.warp.Activity;
 import org.jboss.arquillian.warp.Inspection;
 import org.jboss.arquillian.warp.Warp;
 import org.jboss.arquillian.warp.WarpTest;
-import org.jboss.arquillian.warp.extension.spring.SpringMvcResource;
 import org.jboss.arquillian.warp.servlet.AfterServlet;
 import org.jboss.as.quickstarts.spring.model.UserCredentials;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -152,7 +151,7 @@ public class LoginControllerTestCase {
 
         private static final long serialVersionUID = 1L;
 
-        @SpringMvcResource
+        @ArquillianResource
         private ModelAndView modelAndView;
 
         @AfterServlet
@@ -167,10 +166,10 @@ public class LoginControllerTestCase {
 
         private static final long serialVersionUID = 1L;
 
-        @SpringMvcResource
+        @ArquillianResource
         private ModelAndView modelAndView;
 
-        @SpringMvcResource
+        @ArquillianResource
         private Errors errors;
 
         @AfterServlet
@@ -188,10 +187,10 @@ public class LoginControllerTestCase {
 
         private static final long serialVersionUID = 1L;
 
-        @SpringMvcResource
+        @ArquillianResource
         private ModelAndView modelAndView;
 
-        @SpringMvcResource
+        @ArquillianResource
         private Errors errors;
 
         @AfterServlet

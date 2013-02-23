@@ -19,7 +19,10 @@ import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.notNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * <p>Tests {@link SpringClientApplicationContextProducer} class.</p>
@@ -64,8 +67,7 @@ public class SpringClientApplicationContextProducerTestCase {
 
     /**
      * <p>Tests {@link SpringContainerApplicationContextProducer#initApplicationContext(org.jboss.arquillian.test.spi.event.suite.BeforeClass)}
-     * method, when the
-     * test class is supported.</p>
+     * method, when the test class is supported.</p>
      *
      * @throws Exception if any error occurs
      */
