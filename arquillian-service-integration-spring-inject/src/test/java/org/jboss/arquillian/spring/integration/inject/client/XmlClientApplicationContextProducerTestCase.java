@@ -107,7 +107,7 @@ public class XmlClientApplicationContextProducerTestCase {
     }
 
     @Test
-    public void customContextWithZeroDefinedBeansShouldBeChosenWhenBothDefaultAndCustomResourcesExist() {
+    public void customContextShouldBeChosenWhenBothDefaultAndCustomResourcesExist() {
         // given
         TestClass testClass = new TestClass(ClientXmlAnnotatedClassWithBothCustomAndDefaultLocations.class);
 
