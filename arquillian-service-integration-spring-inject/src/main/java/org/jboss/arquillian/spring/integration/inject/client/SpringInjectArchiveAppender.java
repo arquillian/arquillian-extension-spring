@@ -19,6 +19,7 @@ package org.jboss.arquillian.spring.integration.inject.client;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.spring.integration.SpringInjectConstants;
+import org.jboss.arquillian.spring.integration.inject.ClassPathResourceLocationsProcessor;
 import org.jboss.arquillian.spring.integration.inject.container.XmlRemoteApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringWebConfiguration;
@@ -47,7 +48,7 @@ public class SpringInjectArchiveAppender extends AbstractSpringEnricherArchiveAp
         archive.addClasses(SpringConfiguration.class, SpringWebConfiguration.class)
                 .addClasses(SpringInjectConstants.class,
                         XmlRemoteApplicationContextProducer.class, WebApplicationContextProducer.class,
-                        SpringInjectRemoteExtension.class)
+                        SpringInjectRemoteExtension.class, ClassPathResourceLocationsProcessor.class)
                 .addClasses(ApplicationContextProducer.class, AbstractApplicationContextProducer.class,
                         SpringIntegrationConfiguration.class)
                 .addAsServiceProvider(RemoteLoadableExtension.class, SpringInjectRemoteExtension.class);
