@@ -496,3 +496,40 @@ Available profiles (for running the integration tests in the container):
 * jbossas-managed
 * glassfish-embedded
 * spring-embedded
+
+## Support for StaticApplicationContext
+```java
+@RunWith(Arquillian.class)
+@SpringConfiguration(contextClass = StaticApplicationContext.class)
+@ClassToScan(Greeter.class)
+@PackagedToScan("") // not Implemented yet
+public class SpringInjectionTest {
+
+    @Deployment
+    public static JavaArchive createDeployment()
+    {
+        return ShrinkWrap.create(JavaArchive.class, "omidp.jar").addClasses(Greeter.class);
+    }
+
+    @Autowired
+    Greeter greeter;
+    
+    @SpringStaticContext
+    ApplicationContext ctx; // or StaticApplicationContext
+
+    @Test
+    public void testBean()
+    {
+        Assert.assertNotNull(greeter);
+    }
+    
+    @Test
+    public void testContext()
+    {
+        Assert.assertNotNull(ctx);
+    }
+}
+
+
+```
+

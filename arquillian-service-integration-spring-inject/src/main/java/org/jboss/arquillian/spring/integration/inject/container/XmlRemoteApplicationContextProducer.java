@@ -17,22 +17,28 @@
 
 package org.jboss.arquillian.spring.integration.inject.container;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import org.jboss.arquillian.spring.integration.SpringInjectConstants;
 import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.test.annotation.ClassToScan;
+import org.jboss.arquillian.spring.integration.test.annotation.PackageToScan;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import org.springframework.context.support.StaticApplicationContext;
 
 /**
- * <p>The {@link AbstractApplicationContextProducer} that creates the {@link org.springframework.context.support.ClassPathXmlApplicationContext}
- * with configuration loaded from locations specified by the test..</p>
- *
+ * <p>
+ * The {@link AbstractApplicationContextProducer} that creates the
+ * {@link org.springframework.context.support.ClassPathXmlApplicationContext} with configuration loaded from locations specified
+ * by the test..
+ * </p>
+ * 
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
  */
@@ -42,7 +48,8 @@ public class XmlRemoteApplicationContextProducer extends AbstractApplicationCont
      * {@inheritDoc}
      */
     @Override
-    public boolean supports(TestClass testClass) {
+    public boolean supports(TestClass testClass)
+    {
         return testClass.isAnnotationPresent(SpringConfiguration.class);
     }
 
@@ -50,23 +57,27 @@ public class XmlRemoteApplicationContextProducer extends AbstractApplicationCont
      * {@inheritDoc}
      */
     @Override
-    public RemoteTestScopeApplicationContext createApplicationContext(TestClass testClass) {
+    public RemoteTestScopeApplicationContext createApplicationContext(TestClass testClass)
+    {
 
         return new RemoteTestScopeApplicationContext(getApplicationContext(testClass), true);
     }
 
     /**
-     * <p>Creates the application context.</p>
-     *
+     * <p>
+     * Creates the application context.
+     * </p>
+     * 
      * @param testClass the test class
-     *
+     * 
      * @return created {@link org.springframework.context.ApplicationContext}
      */
-    private ApplicationContext getApplicationContext(TestClass testClass) {
+    private ApplicationContext getApplicationContext(TestClass testClass)
+    {
 
         SpringConfiguration springConfiguration = testClass.getAnnotation(SpringConfiguration.class);
 
-        String[] locations = new String[]{SpringInjectConstants.DEFAULT_LOCATION};
+        String[] locations = new String[] { SpringInjectConstants.DEFAULT_LOCATION };
         if (springConfiguration.value().length > 0) {
 
             locations = springConfiguration.value();
@@ -83,41 +94,69 @@ public class XmlRemoteApplicationContextProducer extends AbstractApplicationCont
             applicationContextClass = ClassPathXmlApplicationContext.class;
         }
 
+        if (isStaticContext(applicationContextClass)) {
+            StaticApplicationContext appCtx = (StaticApplicationContext) createInstance(applicationContextClass, locations);
+            processAnnotations(testClass, appCtx);
+            return appCtx;
+        }
+
         return createInstance(applicationContextClass, locations);
     }
 
+    private void processAnnotations(TestClass testClass, StaticApplicationContext ctx)
+    {
+        ClassToScan classToScan = testClass.getAnnotation(ClassToScan.class);
+        if (classToScan != null && classToScan.value().length > 0) {
+            for (Class clz : classToScan.value()) {
+                ctx.registerSingleton(clz.getSimpleName(), clz);
+            }
+        }
+        PackageToScan packageToScan = testClass.getAnnotation(PackageToScan.class);
+        if (packageToScan != null && packageToScan.value().length > 0) {
+            throw new UnsupportedOperationException("not implemented");
+        }
+
+    }
+
     /**
-     * <p>Retrieves the custom context class.</p>
-     *
+     * <p>
+     * Retrieves the custom context class.
+     * </p>
+     * 
      * @return the custom context class
      */
-    private Class<? extends ApplicationContext> getCustomContextClass() {
+    private Class<? extends ApplicationContext> getCustomContextClass()
+    {
 
-        String customContextClass =
-                getRemoteConfiguration().getProperty(SpringInjectConstants.CONFIGURATION_CUSTOM_CONTEXT_CLASS);
+        String customContextClass = getRemoteConfiguration().getProperty(
+                SpringInjectConstants.CONFIGURATION_CUSTOM_CONTEXT_CLASS);
 
-        if (customContextClass != null
-                && customContextClass.trim().length() > 0) {
+        if (customContextClass != null && customContextClass.trim().length() > 0) {
 
-            return (Class<? extends ApplicationContext>)
-                    SecurityActions.classForName(customContextClass);
+            return (Class<? extends ApplicationContext>) SecurityActions.classForName(customContextClass);
         }
 
         return null;
     }
 
     /**
-     * <p>Creates new instance of {@link org.springframework.context.ApplicationContext}.</p>
-     *
+     * <p>
+     * Creates new instance of {@link org.springframework.context.ApplicationContext}.
+     * </p>
+     * 
      * @param applicationContextClass the class of application context
-     * @param locations               the locations from which load the configuration files
-     *
+     * @param locations the locations from which load the configuration files
+     * 
      * @return the created {@link org.springframework.context.ApplicationContext} instance
      */
     private <T extends ApplicationContext> ApplicationContext createInstance(Class<T> applicationContextClass,
-                                                                             String[] locations) {
+            String[] locations)
+    {
 
         try {
+            if (isStaticContext(applicationContextClass)) {
+                return applicationContextClass.newInstance();
+            }
             Constructor<T> ctor = applicationContextClass.getConstructor(String[].class);
 
             return ctor.newInstance((Object) locations);
@@ -136,4 +175,10 @@ public class XmlRemoteApplicationContextProducer extends AbstractApplicationCont
             throw new RuntimeException("Could not create instance of " + applicationContextClass.getName(), e);
         }
     }
+
+    private <T extends ApplicationContext> boolean isStaticContext(Class<T> applicationContextClass)
+    {
+        return applicationContextClass.equals(StaticApplicationContext.class);
+    }
+
 }
