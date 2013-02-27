@@ -1,6 +1,6 @@
 /**
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2013, Red Hat Middleware LLC, and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -25,26 +25,25 @@ import org.jboss.arquillian.warp.Activity;
 import org.jboss.arquillian.warp.Inspection;
 import org.jboss.arquillian.warp.Warp;
 import org.jboss.arquillian.warp.WarpTest;
-import org.jboss.arquillian.warp.extension.spring.SpringMvcResource;
 import org.jboss.arquillian.warp.servlet.AfterServlet;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.net.URL;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 /**
- * <p>Tests the {@link WelcomeController}.</p>
+ * <p>Tests {@link ErrorController} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
 @WarpTest
 @RunWith(Arquillian.class)
-public class WelcomeControllerTestCase {
+public class ErrorControllerTestCase {
 
     /**
      * <p>The selenium driver.</p>
@@ -80,23 +79,23 @@ public class WelcomeControllerTestCase {
 
             @Override
             public void perform() {
-                browser.navigate().to(contextPath + "welcome.do");
+
+                browser.navigate().to(contextPath + "error.do");
             }
-        }).inspect(new WelcomeControllerVerification());
+        }).inspect(new ErrorControllerVerification());
     }
 
-    public static class WelcomeControllerVerification extends Inspection {
+    public static class ErrorControllerVerification extends Inspection {
 
         private static final long serialVersionUID = 1L;
 
-        @SpringMvcResource
-        private ModelAndView modelAndView;
+        @ArquillianResource
+        private Exception exception;
 
         @AfterServlet
-        public void testWelcome() {
+        public void testError() {
 
-            assertEquals("welcome", modelAndView.getViewName());
-            assertEquals("Warp welcomes!", modelAndView.getModel().get("message"));
+            assertNotNull("The exception was expected.", exception);
         }
     }
 }

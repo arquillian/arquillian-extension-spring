@@ -26,11 +26,7 @@ import org.jboss.arquillian.warp.Inspection;
 import org.jboss.arquillian.warp.Warp;
 import org.jboss.arquillian.warp.WarpTest;
 import org.jboss.arquillian.warp.servlet.AfterServlet;
-import org.jboss.as.quickstarts.spring.model.UserCredentials;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
-import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
@@ -38,7 +34,6 @@ import org.openqa.selenium.WebDriver;
 import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
 import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
@@ -75,21 +70,7 @@ public class LoginControllerTestCase {
     @Deployment
     public static WebArchive createDeployment() {
 
-        File[] libs = DependencyResolvers.use(MavenDependencyResolver.class)
-                .loadMetadataFromPom("pom.xml")
-                .artifacts("org.springframework:spring-webmvc:3.1.1.RELEASE")
-                .artifacts("javax.validation:validation-api:1.0.0.GA")
-                .artifacts("org.hibernate:hibernate-validator:4.1.0.Final")
-                .resolveAsFiles();
-
-        return ShrinkWrap.create(WebArchive.class, "spring-test.war")
-                .addPackage(LoginController.class.getPackage())
-                .addPackage(UserCredentials.class.getPackage())
-                .addAsWebInfResource("WEB-INF/web.xml", "web.xml")
-                .addAsWebInfResource("WEB-INF/welcome-servlet.xml", "welcome-servlet.xml")
-                .addAsWebInfResource("WEB-INF/jsp/welcome.jsp", "jsp/welcome.jsp")
-                .addAsWebInfResource("WEB-INF/jsp/login.jsp", "jsp/login.jsp")
-                .addAsLibraries(libs);
+        return Deployments.createDeployment();
     }
 
     /**
