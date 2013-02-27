@@ -23,6 +23,8 @@ import org.jboss.arquillian.warp.extension.spring.container.Commons;
 import org.jboss.arquillian.warp.extension.spring.container.SpringMvcResultImpl;
 import org.jboss.arquillian.warp.extension.spring.container.SpringWarpRemoteExtension;
 import org.jboss.arquillian.warp.extension.spring.container.SpringWarpTestEnricher;
+import org.jboss.arquillian.warp.extension.spring.interceptor.WarpInterceptor;
+import org.jboss.arquillian.warp.extension.spring.servlet.WarpDispatcherServlet;
 import org.jboss.arquillian.warp.extension.spring.utils.TestResourceHelper;
 import org.jboss.arquillian.warp.spi.WarpDeploymentEnrichmentExtension;
 import org.jboss.shrinkwrap.api.Archive;
@@ -56,7 +58,7 @@ public class SpringWarpExtensionTestCase {
      */
     private final static List<Class<?>> REQUIRED_CLASSES = Arrays.asList(Commons.class,
             SpringMvcResultImpl.class, SpringWarpRemoteExtension.class, SpringWarpTestEnricher.class,
-            SpringMvcResource.class, SpringMvcResult.class);
+            SpringMvcResource.class, SpringMvcResult.class, WarpDispatcherServlet.class, WarpInterceptor.class);
 
     /**
      * <p>Sets up the test environment.</p>

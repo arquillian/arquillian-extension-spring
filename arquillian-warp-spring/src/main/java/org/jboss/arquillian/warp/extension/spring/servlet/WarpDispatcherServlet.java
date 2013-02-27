@@ -17,8 +17,6 @@
 package org.jboss.arquillian.warp.extension.spring.servlet;
 
 import org.jboss.arquillian.warp.extension.spring.SpringMvcResult;
-import org.jboss.arquillian.warp.extension.spring.container.Commons;
-import org.jboss.arquillian.warp.extension.spring.container.SpringMvcResultImpl;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,11 +24,14 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static org.jboss.arquillian.warp.extension.spring.container.SpringMvcResultBuilder.buildMvc;
+
 /**
  * <p>A implementation of {@link DispatcherServlet} that captures it internal state during request processing.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @see SpringMvcResult
+ * @see org.jboss.arquillian.warp.extension.spring.interceptor.WarpInterceptor
  */
 public class WarpDispatcherServlet extends DispatcherServlet {
 
@@ -52,7 +53,7 @@ public class WarpDispatcherServlet extends DispatcherServlet {
     @Override
     protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        saveMvcResult(request, new SpringMvcResultImpl());
+        buildMvc(request);
 
         super.doService(request, response);
     }
@@ -65,9 +66,10 @@ public class WarpDispatcherServlet extends DispatcherServlet {
         HandlerExecutionChain handlerExecutionChain = super.getHandler(request, cache);
 
         if (handlerExecutionChain != null) {
-            SpringMvcResultImpl mvcResult = getMvcResult(request);
-            mvcResult.setHandler(handlerExecutionChain.getHandler());
-            mvcResult.setInterceptors(handlerExecutionChain.getInterceptors());
+
+            buildMvc(request)
+                    .setHandler(handlerExecutionChain.getHandler())
+                    .setInterceptors(handlerExecutionChain.getInterceptors());
         }
 
         return handlerExecutionChain;
@@ -79,8 +81,7 @@ public class WarpDispatcherServlet extends DispatcherServlet {
     @Override
     protected void render(ModelAndView mv, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        SpringMvcResultImpl mvcResult = getMvcResult(request);
-        mvcResult.setModelAndView(mv);
+        buildMvc(request).setModelAndView(mv);
 
         super.render(mv, request, response);
     }
@@ -89,36 +90,15 @@ public class WarpDispatcherServlet extends DispatcherServlet {
      * {@inheritDoc}
      */
     @Override
-    protected ModelAndView processHandlerException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    protected ModelAndView processHandlerException(HttpServletRequest request, HttpServletResponse response,
+                                                   Object handler, Exception ex) throws Exception {
 
         ModelAndView mv = super.processHandlerException(request, response, handler, ex);
 
-        SpringMvcResultImpl mvcResult = getMvcResult(request);
-        mvcResult.setModelAndView(mv);
-        mvcResult.setException(ex);
+        buildMvc(request)
+                .setModelAndView(mv)
+                .setException(ex);
 
         return mv;
-    }
-
-    /**
-     * <p>Stores the execution result.</p>
-     *
-     * @param mvcResult the mvc result
-     */
-    private void saveMvcResult(HttpServletRequest request, SpringMvcResult mvcResult) {
-
-        request.setAttribute(Commons.SPRING_MVC_RESULT_ATTRIBUTE_NAME, mvcResult);
-    }
-
-    /**
-     * <p>Retrieves the {@link SpringMvcResult} class.</p>
-     *
-     * @param request the request
-     *
-     * @return the retrieved {@link SpringMvcResult}
-     */
-    private SpringMvcResultImpl getMvcResult(HttpServletRequest request) {
-
-        return (SpringMvcResultImpl) request.getAttribute(Commons.SPRING_MVC_RESULT_ATTRIBUTE_NAME);
     }
 }
