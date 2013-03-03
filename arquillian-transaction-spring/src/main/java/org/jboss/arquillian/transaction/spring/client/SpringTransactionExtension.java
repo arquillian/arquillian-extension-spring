@@ -19,6 +19,8 @@ package org.jboss.arquillian.transaction.spring.client;
 
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.core.spi.LoadableExtension;
+import org.jboss.arquillian.transaction.spi.provider.TransactionProvider;
+import org.jboss.arquillian.transaction.spring.container.ContainerSpringTransactionProvider;
 
 /**
  * <p>Registers the transaction extension.</p>
@@ -34,6 +36,10 @@ public class SpringTransactionExtension implements LoadableExtension {
     @Override
     public void register(ExtensionBuilder builder) {
 
+        // registers the spring archive appender
         builder.service(AuxiliaryArchiveAppender.class, SpringTransactionArchiveAppender.class);
+
+        // registers the transaction provider on the client side for local protocol, embedded containers and so on
+        builder.service(TransactionProvider.class, ContainerSpringTransactionProvider.class);
     }
 }

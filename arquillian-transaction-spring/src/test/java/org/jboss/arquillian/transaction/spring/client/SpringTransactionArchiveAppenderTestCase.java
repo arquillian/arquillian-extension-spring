@@ -14,11 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.spring.integration.transaction.client;
+package org.jboss.arquillian.transaction.spring.client;
 
 import org.jboss.arquillian.transaction.spring.container.SpringTransactionRemoteExtension;
-import org.jboss.arquillian.transaction.spring.provider.SpringTransactionProvider;
-import org.jboss.arquillian.transaction.spring.client.SpringTransactionArchiveAppender;
+import org.jboss.arquillian.transaction.spring.provider.AbstractSpringTransactionProvider;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePath;
 import org.jboss.shrinkwrap.api.ArchivePaths;
@@ -48,7 +47,7 @@ public class SpringTransactionArchiveAppenderTestCase {
      * <p>Represents the list of required classes.</p>
      */
     private final static List<Class<?>> REQUIRED_CLASSES = Arrays.asList(SpringTransactionRemoteExtension.class,
-            SpringTransactionProvider.class);
+            AbstractSpringTransactionProvider.class);
 
     /**
      * <p>Sets up the test environment.</p>

@@ -122,8 +122,9 @@ public final class Deployments {
         return createAppDeployment()
                 .addClasses(JpaEmployeeRepository.class)
                 .addAsWebInfResource("jbossas-ds.xml")
+                .addAsWebInfResource("web.xml")
                 .addAsResource("applicationContext-jpa.xml")
-                .addAsResource("persistence/persitence.xml", "META-INF/persistence.xml")
+                .addAsResource("persistence/persistence.xml", "META-INF/persistence.xml")
                 .addAsResource("persistence/insert.sql", "insert.sql");
     }
 

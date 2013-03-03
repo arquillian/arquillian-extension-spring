@@ -20,7 +20,7 @@ package org.jboss.arquillian.transaction.spring.client;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.transaction.spring.container.SpringTransactionRemoteExtension;
-import org.jboss.arquillian.transaction.spring.provider.SpringTransactionProvider;
+import org.jboss.arquillian.transaction.spring.provider.AbstractSpringTransactionProvider;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -42,7 +42,7 @@ public class SpringTransactionArchiveAppender implements AuxiliaryArchiveAppende
         JavaArchive archive = ShrinkWrap.create(JavaArchive.class, "arquillian-transaction-spring.jar");
 
         archive.addPackage(SpringTransactionRemoteExtension.class.getPackage());
-        archive.addPackage(SpringTransactionProvider.class.getPackage());
+        archive.addPackage(AbstractSpringTransactionProvider.class.getPackage());
 
         archive.addAsServiceProvider(RemoteLoadableExtension.class, SpringTransactionRemoteExtension.class);
 

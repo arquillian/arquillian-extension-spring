@@ -14,30 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.spring.integration.transaction.client;
+package org.jboss.arquillian.transaction.spring.container;
 
-import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.core.spi.LoadableExtension;
-import org.jboss.arquillian.transaction.spring.client.SpringTransactionArchiveAppender;
-import org.jboss.arquillian.transaction.spring.client.SpringTransactionExtension;
+import org.jboss.arquillian.transaction.spi.provider.TransactionProvider;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 /**
- * <p>Tests {@link org.jboss.arquillian.transaction.spring.client.SpringTransactionExtension} class.</p>
+ * <p>Tests {@link org.jboss.arquillian.transaction.spring.container.SpringTransactionRemoteExtension} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class SpringTransactionExtensionTestCase {
+public class SpringTransactionRemoteExtensionTestCase {
 
     /**
      * <p>Represents the instance of tested class.</p>
      */
-    private SpringTransactionExtension instance;
+    private SpringTransactionRemoteExtension instance;
 
     /**
      * <p>Sets up the test environment.</p>
@@ -45,11 +41,11 @@ public class SpringTransactionExtensionTestCase {
     @Before
     public void setUp() {
 
-        instance = new SpringTransactionExtension();
+        instance = new SpringTransactionRemoteExtension();
     }
 
     /**
-     * <p>Tests the {@link SpringTransactionExtension#register(LoadableExtension.ExtensionBuilder)} method.</p>
+     * <p>Tests the {@link SpringTransactionRemoteExtension#register(LoadableExtension.ExtensionBuilder)} method.</p>
      */
     @Test
     public void testRegister() {
@@ -58,7 +54,7 @@ public class SpringTransactionExtensionTestCase {
 
         instance.register(mockExtensionBuilder);
 
-        verify(mockExtensionBuilder).service(AuxiliaryArchiveAppender.class, SpringTransactionArchiveAppender.class);
+        verify(mockExtensionBuilder).service(TransactionProvider.class, ContainerSpringTransactionProvider.class);
         verifyNoMoreInteractions(mockExtensionBuilder);
     }
 }
