@@ -1,6 +1,7 @@
 package org.jboss.arquillian.spring.testsuite.test;
 
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringClientAnnotationConfiguration;
 import org.jboss.arquillian.spring.testsuite.beans.model.Employee;
@@ -23,7 +24,8 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(Arquillian.class)
 @SpringClientAnnotationConfiguration
-public class AnnotatedConfigurationDefaultConfigTestCase {
+@RunAsClient
+public class AnnotatedClientConfigurationDefaultConfigTestCase {
 
     @Autowired
     EmployeeService employeeService;

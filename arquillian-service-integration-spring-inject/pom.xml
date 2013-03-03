@@ -42,6 +42,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-service-integration-spring-javaconfig</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${version.spring_framework_2_5}</version>
