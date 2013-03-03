@@ -17,6 +17,8 @@
 package org.jboss.arquillian.spring.testsuite.test;
 
 import org.jboss.arquillian.spring.integration.inject.ClassPathResourceLocationsProcessor;
+import org.jboss.arquillian.spring.integration.javaconfig.AnnotatedApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.javaconfig.client.DefaultConfigurationClassesProcessor;
 import org.jboss.arquillian.spring.testsuite.beans.controller.EmployeeController;
 import org.jboss.arquillian.spring.testsuite.beans.model.Employee;
 import org.jboss.arquillian.spring.testsuite.beans.repository.EmployeeRepository;
@@ -53,17 +55,6 @@ public final class Deployments {
      *
      * @return the test deployment
      */
-    public static JavaArchive createRepositoriesDeployment() {
-
-        return createAppDeployment().
-                addAsResource("applicationContext.xml");
-    }
-
-    /**
-     * <p>Creates the test deployment.</p>
-     *
-     * @return the test deployment
-     */
     public static JavaArchive createServicesDeployment() {
 
         return createAppDeployment().
@@ -82,7 +73,7 @@ public final class Deployments {
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
                         EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class,
-                        EmployeeController.class, ClassPathResourceLocationsProcessor.class)
+                        EmployeeController.class)
                 .addAsLibraries(springDependencies())
                 .addAsLibraries(mockitoDependencies());
     }
@@ -97,7 +88,8 @@ public final class Deployments {
         return ShrinkWrap.create(JavaArchive.class, "spring-test.jar")
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
-                        EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class, ClassPathResourceLocationsProcessor.class);
+                        EmployeeRepository.class, DefaultEmployeeRepository.class,
+                        NullEmployeeRepository.class);
     }
 
     /**

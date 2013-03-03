@@ -17,6 +17,8 @@
 package org.jboss.arquillian.spring.testsuite.test;
 
 import org.jboss.arquillian.spring.integration.inject.ClassPathResourceLocationsProcessor;
+import org.jboss.arquillian.spring.integration.javaconfig.AnnotatedApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.javaconfig.client.DefaultConfigurationClassesProcessor;
 import org.jboss.arquillian.spring.testsuite.beans.config.AppConfig;
 import org.jboss.arquillian.spring.testsuite.beans.config.WebAppConfig;
 import org.jboss.arquillian.spring.testsuite.beans.controller.EmployeeController;
@@ -95,7 +97,10 @@ public final class Deployments {
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
                         EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class,
-                        EmployeeController.class, EmployeeRestController.class, ClassPathResourceLocationsProcessor.class)
+                        EmployeeController.class, EmployeeRestController.class,
+                        ClassPathResourceLocationsProcessor.class,
+                        AnnotatedApplicationContextProducer.class,
+                        DefaultConfigurationClassesProcessor.class)
                 .addAsLibraries(getWebDependencies());
     }
 
@@ -110,7 +115,10 @@ public final class Deployments {
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
                         EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class,
-                        EmployeeController.class, EmployeeRestController.class, WebAppConfig.class, ClassPathResourceLocationsProcessor.class)
+                        EmployeeController.class, EmployeeRestController.class, WebAppConfig.class,
+                        ClassPathResourceLocationsProcessor.class,
+                        AnnotatedApplicationContextProducer.class,
+                        DefaultConfigurationClassesProcessor.class)
                 .addAsLibraries(getWebDependencies());
     }
 
@@ -139,7 +147,10 @@ public final class Deployments {
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
                         EmployeeRepository.class, DefaultEmployeeRepository.class,
-                        NullEmployeeRepository.class,ClassPathResourceLocationsProcessor.class)
+                        NullEmployeeRepository.class,
+                        ClassPathResourceLocationsProcessor.class,
+                        AnnotatedApplicationContextProducer.class,
+                        DefaultConfigurationClassesProcessor.class)
                 .addAsLibraries(getDependencies());
     }
 

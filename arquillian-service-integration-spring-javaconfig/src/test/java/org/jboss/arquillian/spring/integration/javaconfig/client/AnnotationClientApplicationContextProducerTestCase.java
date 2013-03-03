@@ -20,6 +20,7 @@ package org.jboss.arquillian.spring.integration.javaconfig.client;
 import org.jboss.arquillian.spring.integration.context.ClientTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.javaconfig.model.*;
+import org.jboss.arquillian.spring.integration.javaconfig.model.testpackage.ClassFromTestPackage;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.junit.Before;
 import org.junit.Rule;
@@ -138,7 +139,8 @@ public class AnnotationClientApplicationContextProducerTestCase {
 
         // then
         assertThat(applicationContext).isNotNull();
-        assertThat(applicationContext.getApplicationContext().getBean("plainClass", PlainClass.class)).isNotNull();
+        assertThat(applicationContext.getApplicationContext().getBeanNamesForType(PlainClass.class)).isNotNull();
+        assertThat(applicationContext.getApplicationContext().getBeanNamesForType(ClassFromTestPackage.class)).isEmpty();
     }
 
     @Test
@@ -150,6 +152,20 @@ public class AnnotationClientApplicationContextProducerTestCase {
         thrownException.expect(RuntimeException.class);
         thrownException.expectMessage(DefaultConfigurationClassesProcessor.VALIDATION_MESSAGE_SUFFIX_INNER_CLASS_DECLARED_NOT_STATIC);
         instance.createApplicationContext(testClass);
+    }
+
+    @Test
+    public void shouldInjectClassesFromPackagesIncludedInDefaultConfiguration() {
+        // given
+        TestClass testClass = new TestClass(ClientClassesAnnotatedClassWithStaticDefaultConfigurationInnerClassAndPackages.class);
+
+        // when
+        ClientTestScopeApplicationContext applicationContext = instance.createApplicationContext(testClass);
+
+        // then
+        assertThat(applicationContext.getApplicationContext().getBeanNamesForType(PlainClass.class)).isNotNull();
+        assertThat(applicationContext.getApplicationContext().getBeanNamesForType(ClassFromTestPackage.class)).isNotEmpty();
+
     }
 
     @Test

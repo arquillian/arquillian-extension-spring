@@ -21,6 +21,8 @@ import org.jboss.arquillian.spring.integration.SpringJavaConfigConstants;
 import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.javaconfig.AnnotatedApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.javaconfig.client.DefaultConfigurationClassesProcessor;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
@@ -37,6 +39,10 @@ import java.lang.reflect.InvocationTargetException;
  * @version $Revision: $
  */
 public class AnnotationRemoteApplicationContextProducer extends AbstractApplicationContextProducer {
+
+    private final DefaultConfigurationClassesProcessor configurationClassesProcessor = new DefaultConfigurationClassesProcessor();
+
+    private final AnnotatedApplicationContextProducer annotatedApplicationContextProducer = new AnnotatedApplicationContextProducer();
 
     /**
      * {@inheritDoc}
@@ -66,8 +72,10 @@ public class AnnotationRemoteApplicationContextProducer extends AbstractApplicat
 
         SpringAnnotationConfiguration springConfiguration = testClass.getAnnotation(SpringAnnotationConfiguration.class);
 
-        String[] packages = springConfiguration.packages();
-        Class<?>[] classes = springConfiguration.classes();
+        Class<?> wrappedTestClass = testClass.getJavaClass();
+
+        String[] packages = configurationClassesProcessor.findPackages(springConfiguration, wrappedTestClass);
+        Class<?>[] classes = configurationClassesProcessor.findConfigurationClasses(springConfiguration, wrappedTestClass);
         Class<? extends ApplicationContext> customAnnotationContextClass;
 
         customAnnotationContextClass = getCustomAnnotationContextClass();
@@ -82,7 +90,7 @@ public class AnnotationRemoteApplicationContextProducer extends AbstractApplicat
         }
 
         // creates standard spring annotated application context
-        return createAnnotatedApplicationContext(testClass, packages, classes);
+        return annotatedApplicationContextProducer.createAnnotatedApplicationContext(testClass, packages, classes);
     }
 
     /**
@@ -104,51 +112,6 @@ public class AnnotationRemoteApplicationContextProducer extends AbstractApplicat
         return null;
     }
 
-    /**
-     * <p>Creates the instance of {@link AnnotationConfigApplicationContext}.</p>
-     *
-     * @param testClass the test class
-     * @param classes   the annotated classes to register
-     * @param packages  the packages containing the annotated classes
-     *
-     * @return the created instance of {@link org.springframework.context.annotation.AnnotationConfigApplicationContext}
-     */
-    private ApplicationContext createAnnotatedApplicationContext(TestClass testClass, String[] packages, Class<?>[] classes) {
-
-        if (packages.length > 0 || classes.length > 0) {
-
-            return createAnnotatedApplicationContext(classes, packages);
-        }
-
-        throw new RuntimeException("The test: " + testClass.getName()
-                + " annotated with SpringAnnotationConfiguration must specify the configuration classes or packages.");
-    }
-
-    /**
-     * <p>Creates instance of {@link AnnotationConfigApplicationContext} class.</p>
-     *
-     * @param classes  the annotated classes to register
-     * @param packages the packages containing the annotated classes
-     *
-     * @return the created instance of {@link org.springframework.context.annotation.AnnotationConfigApplicationContext}
-     */
-    private ApplicationContext createAnnotatedApplicationContext(Class<?>[] classes, String[] packages) {
-
-        if (classes.length > 0) {
-            AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(classes);
-
-            if (packages.length > 0) {
-                applicationContext.scan(packages);
-                applicationContext.refresh();
-            }
-
-            return applicationContext;
-
-        } else {
-
-            return new AnnotationConfigApplicationContext(packages);
-        }
-    }
 
     /**
      * <p>Creates new instance of custom application context.</p>
