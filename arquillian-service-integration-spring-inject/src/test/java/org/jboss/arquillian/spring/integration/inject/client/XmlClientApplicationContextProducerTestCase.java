@@ -18,17 +18,19 @@
 package org.jboss.arquillian.spring.integration.inject.client;
 
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
+import org.jboss.arquillian.spring.integration.context.ClientTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.inject.model.ClientXmlAnnotatedClass;
+import org.jboss.arquillian.spring.integration.inject.model.ClientXmlAnnotatedClassWithBothCustomAndDefaultLocations;
 import org.jboss.arquillian.spring.integration.inject.model.PlainClass;
 import org.jboss.arquillian.spring.integration.inject.model.XmlAnnotatedMissingResourceClass;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.*;
+
 
 /**
  * <p>Tests {@link  XmlClientApplicationContextProducer} class.</p>
@@ -102,5 +104,33 @@ public class XmlClientApplicationContextProducerTestCase {
         TestClass testClass = new TestClass(XmlAnnotatedMissingResourceClass.class);
 
         instance.createApplicationContext(testClass);
+    }
+
+    @Test
+    public void customContextShouldBeChosenWhenBothDefaultAndCustomResourcesExist() {
+        // given
+        TestClass testClass = new TestClass(ClientXmlAnnotatedClassWithBothCustomAndDefaultLocations.class);
+
+        // when
+
+        ClientTestScopeApplicationContext applicationContext = instance.createApplicationContext(testClass);
+
+        // then
+        assertThat(applicationContext.getApplicationContext().getBeanDefinitionNames()).isEmpty();
+        assertThat(applicationContext.getApplicationContext().getBeanDefinitionCount()).isEqualTo(0);
+    }
+
+    @Test
+    public void createdApplicationContextCreatedFromDefaultResourceShouldContainSingleBean() {
+        // given
+        TestClass testClass = new TestClass(ClientXmlAnnotatedClass.class);
+
+        // when
+        ClientTestScopeApplicationContext applicationContext = instance.createApplicationContext(testClass);
+
+        // then
+        assertThat(applicationContext.getApplicationContext().getBeanDefinitionNames()).isNotEmpty();
+        assertThat(applicationContext.getApplicationContext().getBeanDefinitionCount()).isEqualTo(1);
+        assertThat(applicationContext.getApplicationContext().getBeanDefinitionNames()[0]).contains(PlainClass.class.getName());
     }
 }

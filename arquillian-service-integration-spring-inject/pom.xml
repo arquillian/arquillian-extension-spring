@@ -42,6 +42,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-service-integration-spring-javaconfig</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${version.spring_framework_2_5}</version>
@@ -69,6 +74,13 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+            <version>${version.fest_assert}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
