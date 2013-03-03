@@ -21,7 +21,7 @@ import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
 import org.jboss.arquillian.spring.integration.inject.model.PlainClass;
 import org.jboss.arquillian.spring.integration.inject.model.WebAnnotatedClass;
-import org.jboss.arquillian.spring.integration.inject.utils.TestReflectionHelper;
+import org.jboss.arquillian.spring.integration.inject.test.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.junit.Before;
 import org.junit.Test;

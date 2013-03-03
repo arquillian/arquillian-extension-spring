@@ -19,6 +19,8 @@ package org.jboss.arquillian.spring.integration.javaconfig.client;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.spring.integration.javaconfig.container.AnnotationRemoteApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.javaconfig.utils.AnnotationApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.javaconfig.utils.DefaultConfigurationClassesProcessor;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationConfiguration;
 import org.jboss.arquillian.spring.integration.client.AbstractSpringEnricherArchiveAppender;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
@@ -44,7 +46,8 @@ public class SpringJavaConfigArchiveAppender extends AbstractSpringEnricherArchi
         archive.addClasses(SpringAnnotationConfiguration.class)
                 .addClasses(AnnotationRemoteApplicationContextProducer.class, SpringJavaConfigRemoteExtension.class)
                 .addClasses(ApplicationContextProducer.class, AbstractApplicationContextProducer.class,
-                        SpringIntegrationConfiguration.class)
+                        SpringIntegrationConfiguration.class, AnnotationApplicationContextProducer.class,
+                        DefaultConfigurationClassesProcessor.class)
                 .addAsServiceProvider(RemoteLoadableExtension.class, SpringJavaConfigRemoteExtension.class);
     }
 }

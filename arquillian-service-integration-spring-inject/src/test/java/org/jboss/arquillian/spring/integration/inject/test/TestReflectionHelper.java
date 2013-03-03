@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.arquillian.spring.integration.inject.utils;
+package org.jboss.arquillian.spring.integration.inject.test;
 
 import java.lang.reflect.Field;
 

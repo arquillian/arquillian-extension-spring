@@ -17,9 +17,9 @@
 
 package org.jboss.arquillian.spring.integration.inject.client;
 
-import org.jboss.arquillian.spring.integration.SpringInjectConstants;
 import org.jboss.arquillian.spring.integration.context.ClientApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.ClientTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.inject.utils.ClassPathResourceLocationsProcessor;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringClientConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
@@ -32,6 +32,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @version $Revision: $
  */
 public class XmlClientApplicationContextProducer implements ClientApplicationContextProducer {
+
+    /**
+     * The resource location processor.
+     */
+    private final ClassPathResourceLocationsProcessor locationsProcessor = new ClassPathResourceLocationsProcessor();
 
     /**
      * {@inheritDoc}
@@ -62,11 +67,7 @@ public class XmlClientApplicationContextProducer implements ClientApplicationCon
         SpringClientConfiguration springConfiguration =
                 testClass.getAnnotation(SpringClientConfiguration.class);
 
-        String[] locations = new String[]{SpringInjectConstants.DEFAULT_LOCATION};
-        if (springConfiguration.value().length > 0) {
-
-            locations = springConfiguration.value();
-        }
+        String [] locations = locationsProcessor.processLocations(springConfiguration.value(), testClass.getJavaClass());
 
         return new ClassPathXmlApplicationContext(locations);
     }

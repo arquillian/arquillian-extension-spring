@@ -19,12 +19,10 @@ package org.jboss.arquillian.spring.integration.inject.container;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
+import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
-import org.jboss.arquillian.spring.integration.inject.model.PlainClass;
-import org.jboss.arquillian.spring.integration.inject.model.XmlAnnotatedClass;
-import org.jboss.arquillian.spring.integration.inject.model.XmlAnnotatedCustomContextClass;
-import org.jboss.arquillian.spring.integration.inject.model.XmlAnnotatedMissingResourceClass;
-import org.jboss.arquillian.spring.integration.inject.utils.TestReflectionHelper;
+import org.jboss.arquillian.spring.integration.inject.model.*;
+import org.jboss.arquillian.spring.integration.inject.test.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +31,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -197,6 +196,31 @@ public class XmlRemoteApplicationContextProducerTestCase {
         instance.createApplicationContext(testClass);
     }
 
+    @Test
+    public void shouldCreateApplicationContextFromDefaultLocation() {
+        // given
+        TestClass testClass = new TestClass(XmlAnnotatedClassWithDefaultContextLocationDefined.class);
+
+        // when
+        RemoteTestScopeApplicationContext applicationContext = instance.createApplicationContext(testClass);
+
+        // then
+        assertNotNull("Created context was null", applicationContext);
+        assertThat(applicationContext.getApplicationContext().getBeanDefinitionCount()).isEqualTo(1);
+    }
+
+    @Test
+    public void shouldUseCustomResourceLocationsFileInsteadOfDefaultLocation() {
+        // given
+        TestClass testClass = new TestClass(XmlAnnotatedClassWithBothCustomAndDefaultContextLocationsDefined.class);
+
+        // when
+        RemoteTestScopeApplicationContext applicationContext = instance.createApplicationContext(testClass);
+
+        // then
+        assertNotNull("Created context was null", applicationContext);
+        assertThat(applicationContext.getApplicationContext().getBeanDefinitionNames()).isEmpty();
+    }
 
     /**
      * <p>Sets up the remote configuration for the instance of the tested class.</p>

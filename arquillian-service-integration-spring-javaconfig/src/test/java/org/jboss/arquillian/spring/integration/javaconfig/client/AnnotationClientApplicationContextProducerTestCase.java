@@ -17,18 +17,19 @@
 
 package org.jboss.arquillian.spring.integration.javaconfig.client;
 
+import org.jboss.arquillian.spring.integration.context.ClientTestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
-import org.jboss.arquillian.spring.integration.javaconfig.model.ClientClassesAnnotatedClass;
-import org.jboss.arquillian.spring.integration.javaconfig.model.ClientPackagesAnnotatedClass;
-import org.jboss.arquillian.spring.integration.javaconfig.model.NoConfigAnnotatedClass;
-import org.jboss.arquillian.spring.integration.javaconfig.model.PlainClass;
+import org.jboss.arquillian.spring.integration.javaconfig.model.*;
+import org.jboss.arquillian.spring.integration.javaconfig.model.testpackage.ClassFromTestPackage;
+import org.jboss.arquillian.spring.integration.javaconfig.utils.DefaultConfigurationClassesProcessor;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * <p>Tests {@link  AnnotationClientApplicationContextProducer} class.</p>
@@ -41,6 +42,12 @@ public class AnnotationClientApplicationContextProducerTestCase {
      * <p>Represents the instance of tested class.</p>
      */
     private AnnotationClientApplicationContextProducer instance;
+
+    /**
+     * The expected exception rule.
+     */
+    @Rule
+    public ExpectedException thrownException = ExpectedException.none();
 
     /**
      * <p>Sets up the test environment.</p>
@@ -113,6 +120,68 @@ public class AnnotationClientApplicationContextProducerTestCase {
         assertNotNull("The result was null.", result);
         assertTrue("The application context should be marked as closable.", result.isClosable());
         assertNotNull("The application context hasn't been created.", result.getApplicationContext());
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenAnnotatedClassDoesNotContainConfigurationClasses() {
+        // given
+        TestClass testClass = new TestClass(ClientClassesAnnotatedClassWithoutConfigurationClassesSpecified.class);
+
+        // when
+        thrownException.expect(RuntimeException.class);
+        instance.createApplicationContext(testClass);
+
+        // then
+    }
+
+    @Test
+    public void shouldCreateApplicationContextUsingDefaultJavaConfig() {
+        // given
+        TestClass testClass = new TestClass(ClientClassesAnnotatedClassWithDefaultConfigurationClassSpecified.class);
+
+        // when
+        ClientTestScopeApplicationContext applicationContext = instance.createApplicationContext(testClass);
+
+        // then
+        assertThat(applicationContext).isNotNull();
+        assertThat(applicationContext.getApplicationContext().getBeanNamesForType(PlainClass.class)).isNotNull();
+        assertThat(applicationContext.getApplicationContext().getBeanNamesForType(ClassFromTestPackage.class)).isEmpty();
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenDefaultConfigurationClassNotDeclaredStatic() {
+        // given
+        TestClass testClass = new TestClass(ClientClassesAnnotatedClassWithNotStaticDefaultConfigurationInnerClass.class);
+
+        // when
+        thrownException.expect(RuntimeException.class);
+        thrownException.expectMessage(DefaultConfigurationClassesProcessor.VALIDATION_MESSAGE_SUFFIX_INNER_CLASS_DECLARED_NOT_STATIC);
+        instance.createApplicationContext(testClass);
+    }
+
+    @Test
+    public void shouldInjectClassesFromPackagesIncludedInDefaultConfiguration() {
+        // given
+        TestClass testClass = new TestClass(ClientClassesAnnotatedClassWithStaticDefaultConfigurationInnerClassAndPackages.class);
+
+        // when
+        ClientTestScopeApplicationContext applicationContext = instance.createApplicationContext(testClass);
+
+        // then
+        assertThat(applicationContext.getApplicationContext().getBeanNamesForType(PlainClass.class)).isNotNull();
+        assertThat(applicationContext.getApplicationContext().getBeanNamesForType(ClassFromTestPackage.class)).isNotEmpty();
+
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenDefaultConfigurationClassDeclaredFinal() {
+        // given
+        TestClass testClass = new TestClass(ClientClassesAnnotatedClassWithFinalDefaultConfigurationInnerClass.class);
+
+        // when
+        thrownException.expect(RuntimeException.class);
+        thrownException.expectMessage(DefaultConfigurationClassesProcessor.VALIDATION_MESSAGE_SUFFIX_INNER_CONFIGURATION_CLASS_DECLARED_FINAL);
+        instance.createApplicationContext(testClass);
     }
 
     /**

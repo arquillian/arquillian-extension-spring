@@ -52,17 +52,6 @@ public final class Deployments {
      *
      * @return the test deployment
      */
-    public static JavaArchive createRepositoriesDeployment() {
-
-        return createAppDeployment().
-                addAsResource("applicationContext.xml");
-    }
-
-    /**
-     * <p>Creates the test deployment.</p>
-     *
-     * @return the test deployment
-     */
     public static JavaArchive createServicesDeployment() {
 
         return createAppDeployment().
@@ -96,7 +85,8 @@ public final class Deployments {
         return ShrinkWrap.create(JavaArchive.class, "spring-test.jar")
                 .addClasses(Employee.class,
                         EmployeeService.class, DefaultEmployeeService.class,
-                        EmployeeRepository.class, DefaultEmployeeRepository.class, NullEmployeeRepository.class);
+                        EmployeeRepository.class, DefaultEmployeeRepository.class,
+                        NullEmployeeRepository.class);
     }
 
     /**

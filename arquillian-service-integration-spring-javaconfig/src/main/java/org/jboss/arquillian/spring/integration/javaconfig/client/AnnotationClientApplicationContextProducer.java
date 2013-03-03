@@ -17,19 +17,14 @@
 
 package org.jboss.arquillian.spring.integration.javaconfig.client;
 
-import org.jboss.arquillian.spring.integration.SpringJavaConfigConstants;
-import org.jboss.arquillian.spring.integration.container.SecurityActions;
 import org.jboss.arquillian.spring.integration.context.ClientApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.ClientTestScopeApplicationContext;
-import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
-import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationConfiguration;
+import org.jboss.arquillian.spring.integration.javaconfig.utils.AnnotationApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.javaconfig.utils.DefaultConfigurationClassesProcessor;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringClientAnnotationConfiguration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * <p>The {@link ClientApplicationContextProducer} implementation that creates the
@@ -39,6 +34,16 @@ import java.lang.reflect.InvocationTargetException;
  * @version $Revision: $
  */
 public class AnnotationClientApplicationContextProducer implements ClientApplicationContextProducer {
+
+    /**
+     * The default configuration processor.
+     */
+    private final DefaultConfigurationClassesProcessor configurationClassesProcessor = new DefaultConfigurationClassesProcessor();
+
+    /**
+     * The annotation configuration producer.
+     */
+    private final AnnotationApplicationContextProducer annotationApplicationContextProducer = new AnnotationApplicationContextProducer();
 
     /**
      * {@inheritDoc}
@@ -61,63 +66,19 @@ public class AnnotationClientApplicationContextProducer implements ClientApplica
      * <p>Creates the application context.</p>
      *
      * @param testClass the test class
-     * @return created {@link org.springframework.context.ApplicationContext}
+     * @return created {@link ApplicationContext}
      */
     private ApplicationContext getApplicationContext(TestClass testClass) {
 
         SpringClientAnnotationConfiguration springConfiguration =
                 testClass.getAnnotation(SpringClientAnnotationConfiguration.class);
 
-        String[] packages = springConfiguration.packages();
-        Class<?>[] classes = springConfiguration.classes();
+        Class<?> wrappedTestClass = testClass.getJavaClass();
+
+        Class<?>[] classes = configurationClassesProcessor.findConfigurationClasses(springConfiguration, wrappedTestClass);
+        String[] packages = configurationClassesProcessor.findPackages(springConfiguration, wrappedTestClass);
 
         // creates standard spring annotated application context
-        return createAnnotatedApplicationContext(testClass, packages, classes);
-    }
-
-    /**
-     * <p>Creates the instance of {@link AnnotationConfigApplicationContext}.</p>
-     *
-     * @param testClass the test class
-     * @param classes   the annotated classes to register
-     * @param packages  the packages containing the annotated classes
-     * @return the created instance of {@link AnnotationConfigApplicationContext}
-     */
-    private ApplicationContext createAnnotatedApplicationContext(TestClass testClass, String[] packages,
-                                                                 Class<?>[] classes) {
-
-        if (packages.length > 0 || classes.length > 0) {
-
-            return createAnnotatedApplicationContext(classes, packages);
-        }
-
-        throw new RuntimeException("The test: " + testClass.getName()
-                + " annotated with SpringClientAnnotationConfiguration must specify the configuration"
-                + " classes or packages.");
-    }
-
-    /**
-     * <p>Creates instance of {@link AnnotationConfigApplicationContext} class.</p>
-     *
-     * @param classes  the annotated classes to register
-     * @param packages the packages containing the annotated classes
-     * @return the created instance of {@link AnnotationConfigApplicationContext}
-     */
-    private ApplicationContext createAnnotatedApplicationContext(Class<?>[] classes, String[] packages) {
-
-        if (classes.length > 0) {
-            AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(classes);
-
-            if (packages.length > 0) {
-                applicationContext.scan(packages);
-                applicationContext.refresh();
-            }
-
-            return applicationContext;
-
-        } else {
-
-            return new AnnotationConfigApplicationContext(packages);
-        }
+        return annotationApplicationContextProducer.createAnnotatedApplicationContext(testClass, packages, classes);
     }
 }

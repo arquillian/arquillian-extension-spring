@@ -25,8 +25,8 @@ import org.jboss.arquillian.spring.integration.test.annotation.SpringWebConfigur
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
 import org.jboss.arquillian.spring.integration.inject.container.SpringInjectRemoteExtension;
 import org.jboss.arquillian.spring.integration.inject.container.WebApplicationContextProducer;
-import org.jboss.arquillian.spring.integration.inject.utils.TestReflectionHelper;
-import org.jboss.arquillian.spring.integration.inject.utils.TestResourceHelper;
+import org.jboss.arquillian.spring.integration.inject.test.TestReflectionHelper;
+import org.jboss.arquillian.spring.integration.inject.test.TestResourceHelper;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
