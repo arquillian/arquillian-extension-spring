@@ -40,7 +40,6 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(Arquillian.class)
 @SpringAnnotationConfiguration
-@RunAsClient
 public class AnnotatedRemoteConfigurationDefaultConfigTestCase {
     @Autowired
     EmployeeService employeeService;
