@@ -26,6 +26,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -106,10 +107,10 @@ public class SpringWarpTestEnricherTestCase {
      */
     private void setSpringMvcResult(SpringMvcResult springMvcResult) throws Exception {
 
-        ServletRequest mockServletRequest = mock(ServletRequest.class);
+        HttpServletRequest mockServletRequest = mock(HttpServletRequest.class);
         when(mockServletRequest.getAttribute(Commons.SPRING_MVC_RESULT_ATTRIBUTE_NAME)).thenReturn(springMvcResult);
 
-        Instance<ServletRequest> mockServletRequestInstance = mock(Instance.class);
+        Instance<HttpServletRequest> mockServletRequestInstance = mock(Instance.class);
         TestReflectionHelper.setFieldValue(instance, "servletRequest", mockServletRequestInstance);
         when(mockServletRequestInstance.get()).thenReturn(mockServletRequest);
     }
