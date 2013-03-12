@@ -25,7 +25,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -41,7 +41,7 @@ public class SpringWarpTestEnricher implements TestEnricher {
      * <p>Instance of {@link javax.servlet.ServletRequest}.</p>
      */
     @Inject
-    private Instance<ServletRequest> servletRequest;
+    private Instance<HttpServletRequest> servletRequest;
 
     /**
      * {@inheritDoc}

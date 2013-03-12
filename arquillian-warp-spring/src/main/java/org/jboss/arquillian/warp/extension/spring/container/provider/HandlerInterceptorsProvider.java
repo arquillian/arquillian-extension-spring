@@ -26,7 +26,7 @@ import java.lang.annotation.Annotation;
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public class HandlerInterceptorsProvider extends AbstractWarpGenericResourceProvider<HandlerInterceptor[]> {
+public class HandlerInterceptorsProvider extends AbstractWarpResourceProvider<HandlerInterceptor[]> {
 
     /**
      * {@inheritDoc}
@@ -34,7 +34,7 @@ public class HandlerInterceptorsProvider extends AbstractWarpGenericResourceProv
     @Override
     public boolean canProvide(Class<?> aClass) {
 
-        return getProvidedResourceClass().equals(aClass)
+        return HandlerInterceptor[].class.isAssignableFrom(aClass)
                 && getSpringMvcResult().getInterceptors() != null;
     }
 

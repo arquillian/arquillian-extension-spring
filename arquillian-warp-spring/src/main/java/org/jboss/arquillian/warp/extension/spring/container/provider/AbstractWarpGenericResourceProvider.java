@@ -23,34 +23,19 @@ import org.jboss.arquillian.test.spi.enricher.resource.ResourceProvider;
 import org.jboss.arquillian.warp.extension.spring.SpringMvcResult;
 import org.jboss.arquillian.warp.extension.spring.container.Commons;
 
-import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 
 /**
  * <p>A base resource provider that adds generic capabilities for all concrete providers.</p>
  *
+ * <p>This class defines {@link #getProvidedResourceClass()} that is able to retrieve the class of the provided class
+ * directly from the class hierarchy. The implementing class must specify the concrete class.</p>
+ *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-public abstract class AbstractWarpGenericResourceProvider<T> implements ResourceProvider {
-
-    /**
-     * <p>The injected {@link SpringMvcResult} class.</p>
-     */
-    @Inject
-    private Instance<ServletRequest> servletRequestInstance;
-
-    /**
-     * <p>Retrieves the {@link SpringMvcResult} class.</p>
-     *
-     * <p>The default implementation retrieves the generic type from the class hierarchy.</p>
-     *
-     * @return the {@link SpringMvcResult}
-     */
-    protected SpringMvcResult getSpringMvcResult() {
-
-        return (SpringMvcResult) servletRequestInstance.get().getAttribute(Commons.SPRING_MVC_RESULT_ATTRIBUTE_NAME);
-    }
+public abstract class AbstractWarpGenericResourceProvider<T> extends AbstractWarpResourceProvider<T> {
 
     /**
      * <p>Retrieves the provided class from the generic base type.</p>
@@ -62,23 +47,4 @@ public abstract class AbstractWarpGenericResourceProvider<T> implements Resource
 
         return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object lookup(ArquillianResource resource, Annotation... qualifiers) {
-
-        return internalLookup(resource, qualifiers);
-    }
-
-    /**
-     * <p>Retrieves the resource instance provided by this class.</p>
-     *
-     * @param resource   the resource information
-     * @param qualifiers the additional qualifiers specified for this type
-     *
-     * @return the resource instance
-     */
-    protected abstract T internalLookup(ArquillianResource resource, Annotation... qualifiers);
 }
