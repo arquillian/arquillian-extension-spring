@@ -21,7 +21,7 @@ import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.spring.integration.SpringIntegrationConstants;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextDestroyer;
-import org.jboss.arquillian.spring.integration.enricher.AbstractSpringInjectionEnricher;
+import org.jboss.arquillian.spring.integration.context.DefaultApplicationContextDestroyer;
 import org.jboss.arquillian.test.spi.TestEnricher;
 
 /**
@@ -41,9 +41,9 @@ public class SpringIntegrationRemoteExtension implements RemoteLoadableExtension
         // loads the extension only if Spring Application Context is in ClassPath
         if (LoadableExtension.Validate.classExists(SpringIntegrationConstants.APPLICATION_CONTEXT)) {
             builder.service(TestEnricher.class, SpringRemoteInjectionEnricher.class)
-                    .observer(SpringContainerApplicationContextProducer.class)
-                    .observer(SpringRemoteIntegrationConfigurationProducer.class)
-                    .observer(ApplicationContextDestroyer.class);
+                    .service(ApplicationContextDestroyer.class, DefaultApplicationContextDestroyer.class)
+                    .observer(ContainerApplicationContextLifecycleHandler.class)
+                    .observer(SpringRemoteIntegrationConfigurationProducer.class);
         }
     }
 }

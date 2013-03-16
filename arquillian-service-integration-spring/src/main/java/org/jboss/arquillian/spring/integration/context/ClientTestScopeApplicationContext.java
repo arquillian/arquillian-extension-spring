@@ -17,6 +17,7 @@
 
 package org.jboss.arquillian.spring.integration.context;
 
+import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -31,12 +32,13 @@ public class ClientTestScopeApplicationContext extends TestScopeApplicationConte
      * <p>Creates new instance of {@link ClientTestScopeApplicationContext} class with given application context.</p>
      *
      * @param applicationContext the {@link ApplicationContext}
+     * @param testClass          the test class wrapper
      * @param closable           whether the application context should be closed after the tests
      *
-     * @throws IllegalArgumentException is applicationContext is null
+     * @throws IllegalArgumentException is {@code applicationContext} is null or {@code TestClass} is null
      */
-    public ClientTestScopeApplicationContext(ApplicationContext applicationContext, boolean closable) {
+    public ClientTestScopeApplicationContext(ApplicationContext applicationContext, TestClass testClass, boolean closable) {
 
-        super(applicationContext, closable);
+        super(applicationContext, testClass, closable);
     }
 }

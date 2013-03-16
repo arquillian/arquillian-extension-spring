@@ -58,7 +58,7 @@ public class XmlRemoteApplicationContextProducer extends AbstractApplicationCont
     @Override
     public RemoteTestScopeApplicationContext createApplicationContext(TestClass testClass) {
 
-        return new RemoteTestScopeApplicationContext(getApplicationContext(testClass), true);
+        return new RemoteTestScopeApplicationContext(getApplicationContext(testClass), testClass, true);
     }
 
     /**

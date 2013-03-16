@@ -19,6 +19,7 @@ package org.jboss.arquillian.spring.integration.container;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextDestroyer;
+import org.jboss.arquillian.spring.integration.context.DefaultApplicationContextDestroyer;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,9 +64,10 @@ public class SpringIntegrationRemoteExtensionTestCase {
         instance.register(mockExtensionBuilder);
 
         verify(mockExtensionBuilder).service(TestEnricher.class, SpringRemoteInjectionEnricher.class);
-        verify(mockExtensionBuilder).observer(SpringContainerApplicationContextProducer.class);
+        verify(mockExtensionBuilder).service(ApplicationContextDestroyer.class,
+                DefaultApplicationContextDestroyer.class);
+        verify(mockExtensionBuilder).observer(ContainerApplicationContextLifecycleHandler.class);
         verify(mockExtensionBuilder).observer(SpringRemoteIntegrationConfigurationProducer.class);
-        verify(mockExtensionBuilder).observer(ApplicationContextDestroyer.class);
 
         verifyNoMoreInteractions(mockExtensionBuilder);
     }

@@ -23,6 +23,8 @@ import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationCo
 import org.jboss.arquillian.spring.integration.container.SpringIntegrationRemoteExtension;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.enricher.AbstractSpringInjectionEnricher;
+import org.jboss.arquillian.spring.integration.event.ApplicationContextEvent;
+import org.jboss.arquillian.spring.integration.lifecycle.AbstractApplicationContextLifecycleHandler;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 /**
@@ -43,6 +45,8 @@ public class SpringIntegrationArchiveAppender extends AbstractSpringEnricherArch
                 .addPackage(AbstractSpringInjectionEnricher.class.getPackage())
                 .addPackage(SpringIntegrationRemoteExtension.class.getPackage())
                 .addPackage(ApplicationContextProducer.class.getPackage())
+                .addPackage(AbstractApplicationContextLifecycleHandler.class.getPackage())
+                .addPackage(ApplicationContextEvent.class.getPackage())
                 .addPackage(SpringIntegrationConstants.class.getPackage())
                 .addAsServiceProvider(RemoteLoadableExtension.class, SpringIntegrationRemoteExtension.class);
     }

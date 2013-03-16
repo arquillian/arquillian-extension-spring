@@ -19,6 +19,7 @@ package org.jboss.arquillian.spring.integration.enricher;
 
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.model.StrategyTest;
+import org.jboss.arquillian.test.spi.TestClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -40,16 +41,30 @@ public class AbstractSpringInjectionEnricherTestCase {
     private AbstractSpringInjectionEnricher instance;
 
     /**
+     * <p>Represents the instance of {@link TestClass}.</p>
+     */
+    private TestClass testClass;
+
+    /**
+     * <p>Represents the test.</p>
+     */
+    private StrategyTest test;
+
+    /**
      * <p>Sets up the test environment.</p>
      */
     @Before
     public void setUp() {
 
+        test = new StrategyTest();
+
+        testClass = new TestClass(StrategyTest.class);
+
         ClassPathXmlApplicationContext applicationContext =
                 new ClassPathXmlApplicationContext("testApplicationContext.xml");
 
         TestScopeApplicationContext testScopeApplicationContext =
-                new TestScopeApplicationContext(applicationContext, true);
+                new TestScopeApplicationContext(applicationContext, testClass, true);
 
         instance = new MockAbstractSpringInjectionEnricher();
         ((MockAbstractSpringInjectionEnricher)instance).setTestScopeApplicationContext(testScopeApplicationContext);
@@ -63,11 +78,9 @@ public class AbstractSpringInjectionEnricherTestCase {
     @Test
     public void testEnrich() throws Exception {
 
-        StrategyTest strategyTest = new StrategyTest();
+        instance.enrich(test);
 
-        instance.enrich(strategyTest);
-
-        assertNotNull("The bean hasn't been autowired.", strategyTest.getStrategy());
+        assertNotNull("The bean hasn't been autowired.", test.getStrategy());
     }
 
     /**

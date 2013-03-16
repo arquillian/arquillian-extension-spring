@@ -21,7 +21,8 @@ import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiv
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.spring.integration.SpringIntegrationConstants;
 import org.jboss.arquillian.spring.integration.container.SpringRemoteInjectionEnricher;
-import org.jboss.arquillian.spring.integration.enricher.AbstractSpringInjectionEnricher;
+import org.jboss.arquillian.spring.integration.context.ApplicationContextDestroyer;
+import org.jboss.arquillian.spring.integration.context.DefaultApplicationContextDestroyer;
 import org.jboss.arquillian.test.spi.TestEnricher;
 
 
@@ -46,7 +47,8 @@ public class SpringIntegrationExtension implements LoadableExtension {
             builder.service(AuxiliaryArchiveAppender.class, SpringIntegrationArchiveAppender.class)
                     .service(TestEnricher.class, SpringClientInjectionEnricher.class)
                     .service(TestEnricher.class, SpringRemoteInjectionEnricher.class)
-                    .observer(SpringClientApplicationContextProducer.class)
+                    .service(ApplicationContextDestroyer.class, DefaultApplicationContextDestroyer.class)
+                    .observer(ClientApplicationContextLifecycleHandler.class)
                     .observer(SpringIntegrationConfigurationProducer.class);
         }
     }

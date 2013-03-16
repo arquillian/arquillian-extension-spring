@@ -20,6 +20,8 @@ package org.jboss.arquillian.spring.integration.client;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.core.spi.LoadableExtension;
 import org.jboss.arquillian.spring.integration.container.SpringRemoteInjectionEnricher;
+import org.jboss.arquillian.spring.integration.context.ApplicationContextDestroyer;
+import org.jboss.arquillian.spring.integration.context.DefaultApplicationContextDestroyer;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,8 +68,10 @@ public class SpringIntegrationExtensionTestCase {
         verify(mockExtensionBuilder).service(TestEnricher.class, SpringClientInjectionEnricher.class);
         verify(mockExtensionBuilder).service(TestEnricher.class, SpringRemoteInjectionEnricher.class);
         verify(mockExtensionBuilder).service(AuxiliaryArchiveAppender.class, SpringIntegrationArchiveAppender.class);
+        verify(mockExtensionBuilder).service(ApplicationContextDestroyer.class,
+                DefaultApplicationContextDestroyer.class);
+        verify(mockExtensionBuilder).observer(ClientApplicationContextLifecycleHandler.class);
         verify(mockExtensionBuilder).observer(SpringIntegrationConfigurationProducer.class);
-        verify(mockExtensionBuilder).observer(SpringClientApplicationContextProducer.class);
 
 
         verifyNoMoreInteractions(mockExtensionBuilder);
