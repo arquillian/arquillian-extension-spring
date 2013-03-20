@@ -63,7 +63,7 @@ public class SpringEmbeddedExtensionTestCase {
         instance.register(mockExtensionBuilder);
 
         verify(mockExtensionBuilder).service(DeployableContainer.class, SpringEmbeddedContainer.class);
-        verify(mockExtensionBuilder).observer(SpringEmbeddedApplicationContextProducer.class);
+        verify(mockExtensionBuilder).observer(SpringEmbeddedApplicationContextLifeCycleHandler.class);
 
 
         verifyNoMoreInteractions(mockExtensionBuilder);

@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2013, Red Hat Middleware LLC, and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -14,26 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.container.spring.embedded;
+package org.jboss.arquillian.spring.integration.event;
 
-import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
-import org.jboss.arquillian.core.spi.LoadableExtension;
+import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 
 /**
- * <p>Registers the embedded container.</p>
+ * <p>Event triggered when the application context is being destroyed for the given test case.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
- * @version $Revision: $
  */
-public class SpringEmbeddedExtension implements LoadableExtension {
+public class ApplicationContextDestroyedEvent extends ApplicationContextEvent {
 
     /**
-     * {@inheritDoc}
+     * <p>Creates new instance of {@link ApplicationContextDestroyedEvent} with given {@link
+     * TestScopeApplicationContext} instance.</p>
+     *
+     * @param applicationContext the application context
+     *
+     * @throws IllegalArgumentException if {@code applicationContext} is null
      */
-    @Override
-    public void register(ExtensionBuilder builder) {
-
-        builder.service(DeployableContainer.class, SpringEmbeddedContainer.class)
-            .observer(SpringEmbeddedApplicationContextLifeCycleHandler.class);
+    public ApplicationContextDestroyedEvent(TestScopeApplicationContext applicationContext) {
+        super(applicationContext);
     }
 }

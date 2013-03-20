@@ -52,7 +52,7 @@ public class XmlClientApplicationContextProducer implements ClientApplicationCon
     @Override
     public ClientTestScopeApplicationContext createApplicationContext(TestClass testClass) {
 
-        return new ClientTestScopeApplicationContext(getApplicationContext(testClass), true);
+        return new ClientTestScopeApplicationContext(getApplicationContext(testClass), testClass, true);
     }
 
     /**

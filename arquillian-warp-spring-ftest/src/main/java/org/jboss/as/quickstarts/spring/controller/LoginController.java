@@ -72,7 +72,6 @@ public class LoginController {
         }
 
         // otherwise the user provided incorrect credentials
-        // TODO add message?
         return "login";
     }
 }

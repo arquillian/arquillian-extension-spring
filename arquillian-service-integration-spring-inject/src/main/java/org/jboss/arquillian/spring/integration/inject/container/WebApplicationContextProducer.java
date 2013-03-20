@@ -53,7 +53,7 @@ public class WebApplicationContextProducer extends AbstractApplicationContextPro
     @Override
     public RemoteTestScopeApplicationContext createApplicationContext(TestClass testClass) {
 
-        return new RemoteTestScopeApplicationContext(getWebApplicationContext(testClass), false);
+        return new RemoteTestScopeApplicationContext(getWebApplicationContext(testClass), testClass, false);
     }
 
     /**

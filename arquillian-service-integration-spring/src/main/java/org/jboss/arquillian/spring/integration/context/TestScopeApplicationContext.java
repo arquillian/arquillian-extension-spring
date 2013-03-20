@@ -17,6 +17,8 @@
 
 package org.jboss.arquillian.spring.integration.context;
 
+import org.jboss.arquillian.core.spi.Validate;
+import org.jboss.arquillian.test.spi.TestClass;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -30,28 +32,34 @@ public class TestScopeApplicationContext {
     /**
      * <p>Represents instance of {@link ApplicationContext}.</p>
      */
-    private ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
+
+    /**
+     * <p>Represents the instance of the test class wrapper.</p>
+     */
+    private final TestClass testClass;
 
     /**
      * <p>Represents whether the application context should be closed after the tests.</p>
      */
-    private boolean closable;
+    private final boolean closable;
 
     /**
      * <p>Creates new instance of {@link TestScopeApplicationContext} class with given application context.</p>
      *
      * @param applicationContext the {@link ApplicationContext}
+     * @param testClass          the test class wrapper
      * @param closable           whether the application context should be closed after the tests
      *
-     * @throws IllegalArgumentException is applicationContext is null
+     * @throws IllegalArgumentException if {@code applicationContext} is null or {@code testClass} is null
      */
-    public TestScopeApplicationContext(ApplicationContext applicationContext, boolean closable) {
+    public TestScopeApplicationContext(ApplicationContext applicationContext, TestClass testClass, boolean closable) {
 
-        if (applicationContext == null) {
-            throw new IllegalArgumentException("The 'applicationContext' must be not null.");
-        }
+        Validate.notNull(applicationContext, "The 'applicationContext' must be not null.");
+        Validate.notNull(testClass, "The 'testClass' must be not null.");
 
         this.applicationContext = applicationContext;
+        this.testClass = testClass;
         this.closable = closable;
     }
 

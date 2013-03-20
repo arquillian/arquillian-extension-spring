@@ -64,7 +64,7 @@ public class AnnotationRemoteApplicationContextProducer extends AbstractApplicat
     @Override
     public RemoteTestScopeApplicationContext createApplicationContext(TestClass testClass) {
 
-        return new RemoteTestScopeApplicationContext(getApplicationContext(testClass), true);
+        return new RemoteTestScopeApplicationContext(getApplicationContext(testClass), testClass, true);
     }
 
     /**

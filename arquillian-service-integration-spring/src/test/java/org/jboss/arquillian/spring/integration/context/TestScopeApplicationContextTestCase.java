@@ -17,6 +17,7 @@
 
 package org.jboss.arquillian.spring.integration.context;
 
+import org.jboss.arquillian.test.spi.TestClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -44,34 +45,53 @@ public class TestScopeApplicationContextTestCase {
     private ApplicationContext applicationContext;
 
     /**
+     * <p>Represents the instance of {@link org.jboss.arquillian.test.spi.TestClass}.</p>
+     */
+    private TestClass testClass;
+
+    /**
      * <p>Sets up the test environment.</p>
      */
     @Before
     public void setUp() {
 
+        testClass = new TestClass(Object.class);
+
         applicationContext = mock(ApplicationContext.class);
     }
 
     /**
-     * <p>Tests {@link TestScopeApplicationContext#TestScopeApplicationContext(ApplicationContext, boolean)}
+     * <p>Tests {@link TestScopeApplicationContext#TestScopeApplicationContext(ApplicationContext, TestClass, boolean)}
      * constructor.</p>
      */
     @Test
     public void testCtor() {
 
-        instance = new TestScopeApplicationContext(applicationContext, false);
+        instance = new TestScopeApplicationContext(applicationContext, testClass, false);
     }
 
     /**
-     * <p>Tests {@link TestScopeApplicationContext#TestScopeApplicationContext(ApplicationContext, boolean)} constructor
-     * when applicationContext is null.</p>
+     * <p>Tests {@link TestScopeApplicationContext#TestScopeApplicationContext(ApplicationContext, TestClass, boolean)}
+     * constructor when applicationContext is null.</p>
      *
      * <p>{@link IllegalArgumentException} is expected.</p>
      */
     @Test(expected = IllegalArgumentException.class)
     public void testCtorNull() {
 
-        instance = new TestScopeApplicationContext(null, false);
+        instance = new TestScopeApplicationContext(null, testClass, false);
+    }
+
+    /**
+     * <p>Tests {@link TestScopeApplicationContext#TestScopeApplicationContext(ApplicationContext, TestClass, boolean)}
+     * constructor when testClass is null.</p>
+     *
+     * <p>{@link IllegalArgumentException} is expected.</p>
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testCtorTestClassNull() {
+
+        instance = new TestScopeApplicationContext(applicationContext, null, false);
     }
 
     /**
@@ -80,7 +100,7 @@ public class TestScopeApplicationContextTestCase {
     @Test
     public void testGetApplicationContext() {
 
-        instance = new TestScopeApplicationContext(applicationContext, false);
+        instance = new TestScopeApplicationContext(applicationContext, testClass, false);
 
         assertNotNull("The applicationContext was null.", instance.getApplicationContext());
     }
@@ -91,10 +111,10 @@ public class TestScopeApplicationContextTestCase {
     @Test
     public void testGetClosable() {
 
-        instance = new TestScopeApplicationContext(applicationContext, false);
+        instance = new TestScopeApplicationContext(applicationContext, testClass, false);
         assertFalse("Closable property has invalid value.", instance.isClosable());
 
-        instance = new TestScopeApplicationContext(applicationContext, true);
+        instance = new TestScopeApplicationContext(applicationContext, testClass, true);
         assertTrue("Closable property has invalid value.", instance.isClosable());
     }
 }

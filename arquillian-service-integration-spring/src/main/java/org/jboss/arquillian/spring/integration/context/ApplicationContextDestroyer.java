@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2013, Red Hat Middleware LLC, and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -14,53 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.jboss.arquillian.spring.integration.context;
 
-import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.test.spi.event.suite.AfterClass;
-import org.springframework.context.ConfigurableApplicationContext;
-
-import java.util.logging.Logger;
-
 /**
- * <p>Closes {@link org.springframework.context.ApplicationContext} after execution of test case.</p>
+ * Destroyers the application context when it is not needed any longer by the test.
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
- * @version $Revision: $
  */
-public class ApplicationContextDestroyer {
+public interface ApplicationContextDestroyer {
 
     /**
-     * <p>The logger used by this class.</p>
-     */
-    private static final Logger log = Logger.getLogger(ApplicationContextDestroyer.class.getName());
-
-    /**
-     * <p>Instance of {@link org.springframework.context.ApplicationContext}.</p>
-     */
-    @Inject
-    private Instance<TestScopeApplicationContext> testApplicationContext;
-
-    /**
-     * <p>Destroys the application context after execution of test case.</p>
+     * Destroys the application context.
      *
-     * @param afterClass the event fired after execution of test case
+     * @param applicationContext the application context to be destroyed.
      */
-    public void destroyApplicationContext(@Observes AfterClass afterClass) {
-
-        if (testApplicationContext.get() != null) {
-            TestScopeApplicationContext testContext = testApplicationContext.get();
-
-            if (testContext.isClosable()
-                    && testContext.getApplicationContext() instanceof ConfigurableApplicationContext) {
-
-                // closes the application context, freeing all resources
-                ((ConfigurableApplicationContext) testContext.getApplicationContext()).close();
-                log.fine("Closing the application context.");
-            }
-        }
-    }
+    void destroyApplicationContext(TestScopeApplicationContext applicationContext);
 }
