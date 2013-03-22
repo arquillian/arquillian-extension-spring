@@ -56,7 +56,6 @@ public class ContainerApplicationContextLifecycleHandler extends
     @Override
     protected void setApplicationContext(RemoteTestScopeApplicationContext applicationContext) {
 
-
         applicationContextInstance.set(applicationContext);
     }
 

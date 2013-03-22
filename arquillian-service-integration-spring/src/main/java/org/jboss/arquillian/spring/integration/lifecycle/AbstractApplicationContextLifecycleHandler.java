@@ -26,23 +26,41 @@ import org.jboss.arquillian.spring.integration.context.ApplicationContextProduce
 import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.event.ApplicationContextCreatedEvent;
 import org.jboss.arquillian.spring.integration.event.ApplicationContextDestroyedEvent;
+import org.jboss.arquillian.spring.integration.event.ApplicationContextEvent;
+import org.jboss.arquillian.spring.integration.test.annotation.ContextLifeCycle;
+import org.jboss.arquillian.spring.integration.test.annotation.ContextLifeCycleMode;
 import org.jboss.arquillian.test.spi.TestClass;
-import org.jboss.arquillian.test.spi.event.suite.AfterClass;
+import org.jboss.arquillian.test.spi.event.suite.After;
+import org.jboss.arquillian.test.spi.event.suite.AfterSuite;
+import org.jboss.arquillian.test.spi.event.suite.Before;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
- * <p>The application context destroyer, which is responsible for </p>
+ * <p>The application context lifecycle handler, which is responsible for instantiating the application context prior
+ * the test and destroying it as soon as it's not needed any longer.</p>
+ *
+ * <p>Currently the application context can be created once for whole test case or separately for each individual test.
+ * The strategy on how the application context is being instantiated is being determined from the {@link
+ * ContextLifeCycle} annotation defined on the test class. By default all the tests in the same test case share the same
+ * instance of application context.</p>
  *
  * @param <TProd> the type of {@link ApplicationContextProducer} that can provide specific type
  * @param <T>     the type of application context instance
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
+ * @see ApplicationContextProducer
+ * @see ContextLifeCycle
+ * @see ContextLifeCycleMode
  */
 public abstract class AbstractApplicationContextLifecycleHandler<TProd extends ApplicationContextProducer<T>,
         T extends TestScopeApplicationContext> {
+
+    /**
+     * <p>Represents the default ApplicationContext life cycle mode.</p>
+     */
+    private static final ContextLifeCycleMode DEFAULT_LIFE_CYCLE_MODE = ContextLifeCycleMode.TEST_CASE;
 
     /**
      * <p>Represents the instance of {@link ServiceLoader}.</p>
@@ -54,75 +72,115 @@ public abstract class AbstractApplicationContextLifecycleHandler<TProd extends A
      * <p>Represents the application context created event.</p>
      */
     @Inject
-    private Event<ApplicationContextCreatedEvent> applicationContextCreatedEvent;
+    private Event<ApplicationContextEvent> applicationContextEvent;
 
     /**
-     * <p>Represents the application context created event.</p>
-     */
-    @Inject
-    private Event<ApplicationContextDestroyedEvent> applicationContextDestroyedEvent;
-
-    /**
-     * <p>The before class event handler.</p>
-     *
-     * <p>This method delegates to the registered {@link ApplicationContextProducer} instances in order to create the
-     * application context.</p>
-     */
-    public void beforeClass(@Observes BeforeClass event) {
-
-        // creates the application context instance
-        T applicationContext = createApplicationContext(event.getTestClass());
-
-        if (applicationContext != null) {
-
-            // triggers the application context created event
-            applicationContextCreatedEvent.fire(new ApplicationContextCreatedEvent(applicationContext));
-
-            setApplicationContext(applicationContext);
-        }
-    }
-
-    /**
-     * <p>The after class event handler.</p>
-     *
-     * <p>This method delegates to the registered {@link ApplicationContextDestroyer} instances in order to destroy the
-     * application context.</p>
-     */
-    public void afterClass(@Observes AfterClass event) {
-
-        T applicationContext = getApplicationContext();
-
-        if (applicationContext != null) {
-            destroyApplicationContext(applicationContext);
-
-            // triggers the application context destroyed event
-            applicationContextDestroyedEvent.fire(new ApplicationContextDestroyedEvent(applicationContext));
-        }
-    }
-
-    /**
-     * Retrieves the application context.
+     * <p>Retrieves the application context.</p>
      *
      * @return the application context
      */
     protected abstract T getApplicationContext();
 
     /**
-     * Sets the application context instance.
+     * <p>Sets the application context instance.</p>
      *
      * @param applicationContext the application context instance
      */
     protected abstract void setApplicationContext(T applicationContext);
 
     /**
-     * Retrieves the {@link ApplicationContextProducer} instance.
+     * <p>Retrieves the {@link ApplicationContextProducer} instance.</p>
      *
      * @return the {@link ApplicationContextProducer} instance
      */
     protected abstract Class<TProd> getProducerClass();
 
     /**
-     * Creates the application context.
+     * <p>The before class event handler.</p>
+     *
+     * <p>Delegates to the registered {@link ApplicationContextProducer} instances in order to create the application
+     * context.</p>
+     *
+     * @param event the before class event
+     */
+    public void beforeClass(@Observes BeforeClass event) {
+
+        createTestApplicationContext(event.getTestClass());
+    }
+
+    /**
+     * <p>The before test event handler.</p>
+     *
+     * <p>Delegates to the registered {@link ApplicationContextProducer} instances in order to create the application
+     * context.</p>
+     *
+     * @param event the before test event
+     */
+    public void beforeTest(@Observes Before event) {
+
+        createTestApplicationContext(event.getTestClass());
+    }
+
+    /**
+     * <p>The after test event handler.</p>
+     *
+     * <p>Delegates to the registered {@link ApplicationContextProducer} instances in order to create the application
+     * context.</p>
+     *
+     * @param event the after test event
+     */
+    public void afterTest(@Observes After event) {
+
+        ContextLifeCycleMode mode = getContextLifeCycleMode(event.getTestClass());
+        if (mode == ContextLifeCycleMode.TEST) {
+
+            destroyTestApplicationContext();
+        }
+    }
+
+    /**
+     * <p>The before test event handler.</p>
+     *
+     * <p>Delegates to the registered {@link ApplicationContextProducer} instances in order to create the application
+     * context.</p>
+     *
+     * @param event the after suite event
+     */
+    public void afterSuite(@Observes AfterSuite event) {
+
+        destroyTestApplicationContext();
+    }
+
+    /**
+     * <p>Instantiates the application context if needed base on the meta data provided on the test class.</p>
+     *
+     * <p>The actual instances creation is being delegated to the registered </p>
+     *
+     * @param testClass the instance of the test class
+     */
+    private void createTestApplicationContext(TestClass testClass) {
+
+        if (getApplicationContext() != null &&
+                getApplicationContext().getTestClass().getJavaClass().equals(testClass.getJavaClass())) {
+
+            return;
+        }
+
+        // creates the application context instance
+        T applicationContext = createApplicationContext(testClass);
+
+        if (applicationContext != null) {
+
+            // triggers the application context created event
+            applicationContextEvent.fire(new ApplicationContextCreatedEvent(applicationContext));
+
+            setApplicationContext(applicationContext);
+        }
+    }
+
+    /**
+     * <p>Creates the application context. The application context creation is being delegates to the registered
+     * instances of {@link ApplicationContextProducer}.</p>
      *
      * @param testClass the test class
      *
@@ -148,7 +206,24 @@ public abstract class AbstractApplicationContextLifecycleHandler<TProd extends A
     }
 
     /**
-     * Destroys the application context.
+     * <p>Destroys the application context if it exists.</p>
+     */
+    private void destroyTestApplicationContext() {
+        T applicationContext = getApplicationContext();
+
+        if (applicationContext != null) {
+            destroyApplicationContext(applicationContext);
+
+            // triggers the application context destroyed event
+            applicationContextEvent.fire(new ApplicationContextDestroyedEvent(applicationContext));
+        }
+    }
+
+    /**
+     * <p>Destroys the application context.</p>
+     *
+     * <p>The implementation by default delegates to the registered {@link ApplicationContextDestroyer} to perform the
+     * application context clean up.</p>
      *
      * @param applicationContext the application context to be destroyed
      */
@@ -159,8 +234,27 @@ public abstract class AbstractApplicationContextLifecycleHandler<TProd extends A
     }
 
     /**
-     * Retrieves the service by it's type. <p/> The implementation uses {@link ServiceLoader} in order to retrieve first
-     * instance of specified kind. Any other registered instance in given scope is being discarded.
+     * <p>Retrieves the context life cycle mode.</p>
+     *
+     * @param testClass the test class
+     *
+     * @return the {@link ContextLifeCycleMode} defined for the test
+     */
+    private ContextLifeCycleMode getContextLifeCycleMode(TestClass testClass) {
+
+        ContextLifeCycle contextLifeCycle = testClass.getAnnotation(ContextLifeCycle.class);
+
+        if (contextLifeCycle != null) {
+
+            return contextLifeCycle.value();
+        }
+
+        return DEFAULT_LIFE_CYCLE_MODE;
+    }
+
+    /**
+     * <p>Retrieves the service by it's type. <p/> The implementation uses {@link ServiceLoader} in order to retrieve
+     * first instance of specified kind. Any other registered instance in given scope is being discarded.</p>
      *
      * @param clazz the class of the service
      * @param <T>   the service type

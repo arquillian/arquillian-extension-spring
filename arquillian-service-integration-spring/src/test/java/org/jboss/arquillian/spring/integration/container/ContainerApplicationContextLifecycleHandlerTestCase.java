@@ -23,17 +23,22 @@ import org.jboss.arquillian.core.spi.ServiceLoader;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextDestroyer;
 import org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.event.ApplicationContextCreatedEvent;
 import org.jboss.arquillian.spring.integration.event.ApplicationContextDestroyedEvent;
+import org.jboss.arquillian.spring.integration.model.TestCaseTest;
+import org.jboss.arquillian.spring.integration.model.TestMethodTest;
 import org.jboss.arquillian.spring.integration.utils.TestReflectionHelper;
 import org.jboss.arquillian.test.spi.TestClass;
-import org.jboss.arquillian.test.spi.event.suite.AfterClass;
+import org.jboss.arquillian.test.spi.event.suite.After;
+import org.jboss.arquillian.test.spi.event.suite.AfterSuite;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +56,11 @@ import static org.mockito.Mockito.when;
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
 public class ContainerApplicationContextLifecycleHandlerTestCase {
+
+    /**
+     * Represents the test class used for testing.
+     */
+    private static final Object TEST_OBJECT = new TestCaseTest();
 
     /**
      * <p>Represents the instance of tested class.</p>
@@ -91,6 +101,11 @@ public class ContainerApplicationContextLifecycleHandlerTestCase {
     private Event<ApplicationContextDestroyedEvent> mockApplicationContextDestroyedEvent;
 
     /**
+     * Represents the test method used for testing.
+     */
+    private Method testMethod;
+
+    /**
      * <p>Sets up the test environment.</p>
      *
      * @throws Exception if any error occurs
@@ -98,7 +113,8 @@ public class ContainerApplicationContextLifecycleHandlerTestCase {
     @Before
     public void setUp() throws Exception {
 
-        testClass = new TestClass(Object.class);
+        testClass = new TestClass(TEST_OBJECT.getClass());
+        testMethod = TEST_OBJECT.getClass().getMethod("testMethod");
 
         instance = new ContainerApplicationContextLifecycleHandler();
 
@@ -113,10 +129,7 @@ public class ContainerApplicationContextLifecycleHandlerTestCase {
         applicationContextDestroyer = mock(ApplicationContextDestroyer.class);
 
         mockApplicationContextCreatedEvent = mock(Event.class);
-        TestReflectionHelper.setFieldValue(instance, "applicationContextCreatedEvent", mockApplicationContextCreatedEvent);
-
-        mockApplicationContextDestroyedEvent = mock(Event.class);
-        TestReflectionHelper.setFieldValue(instance, "applicationContextDestroyedEvent", mockApplicationContextDestroyedEvent);
+        TestReflectionHelper.setFieldValue(instance, "applicationContextEvent", mockApplicationContextCreatedEvent);
     }
 
     /**
@@ -127,7 +140,7 @@ public class ContainerApplicationContextLifecycleHandlerTestCase {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testInitApplicationContextSupported() throws Exception {
+    public void testInitApplicationContextSupportedBeforeClass() throws Exception {
 
         List<RemoteApplicationContextProducer> producers = new ArrayList<RemoteApplicationContextProducer>();
         producers.add(notSupportedApplicationContextProducer);
@@ -143,7 +156,68 @@ public class ContainerApplicationContextLifecycleHandlerTestCase {
         InstanceProducer<RemoteTestScopeApplicationContext> mockApplicationContext = mock(InstanceProducer.class);
         TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
 
-        instance.beforeClass(new BeforeClass(Object.class));
+        instance.beforeClass(new BeforeClass(TEST_OBJECT.getClass()));
+
+        verify(mockApplicationContextCreatedEvent).fire(any(ApplicationContextCreatedEvent.class));
+        verify(mockApplicationContext).set((RemoteTestScopeApplicationContext) notNull());
+    }
+
+    /**
+     * <p>Tests {@link  ContainerApplicationContextLifecycleHandler#beforeTest(
+     * org.jboss.arquillian.test.spi.event.suite.Before)} method, when the test class is supported.</p>
+     *
+     * @throws Exception if any error occurs
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testInitApplicationContextSupportedTestCase() throws Exception {
+
+        List<RemoteApplicationContextProducer> producers = new ArrayList<RemoteApplicationContextProducer>();
+        producers.add(notSupportedApplicationContextProducer);
+        producers.add(supportedApplicationContextProducer);
+
+        ServiceLoader serviceLoader = mock(ServiceLoader.class);
+        when(serviceLoader.all(RemoteApplicationContextProducer.class)).thenReturn(producers);
+
+        Instance<ServiceLoader> mockServiceLoader = mock(Instance.class);
+        when(mockServiceLoader.get()).thenReturn(serviceLoader);
+        TestReflectionHelper.setFieldValue(instance, "serviceLoaderInstance", mockServiceLoader);
+
+        InstanceProducer<RemoteTestScopeApplicationContext> mockApplicationContext = mock(InstanceProducer.class);
+        TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
+
+        instance.beforeTest(new org.jboss.arquillian.test.spi.event.suite.Before(TEST_OBJECT, testMethod));
+
+        verify(mockApplicationContextCreatedEvent).fire(any(ApplicationContextCreatedEvent.class));
+        verify(mockApplicationContext).set((RemoteTestScopeApplicationContext) notNull());
+    }
+
+    /**
+     * <p>Tests {@link  ContainerApplicationContextLifecycleHandler#beforeTest(
+     * org.jboss.arquillian.test.spi.event.suite.Before)} method, when the test class is supported.</p>
+     *
+     * @throws Exception if any error occurs
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testInitApplicationContextSupportedTestMethod() throws Exception {
+
+        List<RemoteApplicationContextProducer> producers = new ArrayList<RemoteApplicationContextProducer>();
+        producers.add(notSupportedApplicationContextProducer);
+        producers.add(supportedApplicationContextProducer);
+
+        ServiceLoader serviceLoader = mock(ServiceLoader.class);
+        when(serviceLoader.all(RemoteApplicationContextProducer.class)).thenReturn(producers);
+
+        Instance<ServiceLoader> mockServiceLoader = mock(Instance.class);
+        when(mockServiceLoader.get()).thenReturn(serviceLoader);
+        TestReflectionHelper.setFieldValue(instance, "serviceLoaderInstance", mockServiceLoader);
+
+        InstanceProducer<RemoteTestScopeApplicationContext> mockApplicationContext = mock(InstanceProducer.class);
+        TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
+
+        instance.beforeTest(new org.jboss.arquillian.test.spi.event.suite.Before(new TestMethodTest(),
+                TestMethodTest.class.getMethod("testMethod")));
 
         verify(mockApplicationContextCreatedEvent).fire(any(ApplicationContextCreatedEvent.class));
         verify(mockApplicationContext).set((RemoteTestScopeApplicationContext) notNull());
@@ -170,17 +244,17 @@ public class ContainerApplicationContextLifecycleHandlerTestCase {
         TestReflectionHelper.setFieldValue(instance, "serviceLoaderInstance", mockServiceLoader);
 
         InstanceProducer<RemoteTestScopeApplicationContext> mockApplicationContext = mock(InstanceProducer.class);
+        when(mockApplicationContext.get()).thenReturn(null);
         TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
 
-        instance.beforeClass(new BeforeClass(Object.class));
+        instance.beforeClass(new BeforeClass(TEST_OBJECT.getClass()));
 
         verifyNoMoreInteractions(mockApplicationContextCreatedEvent);
-        verifyZeroInteractions(mockApplicationContext);
     }
 
     /**
-     * <p>Tests {@link  ContainerApplicationContextLifecycleHandler#afterClass(org.jboss.arquillian.test.spi.event.suite.AfterClass)}
-     * method when there is no application context created.</p>
+     * <p>Tests {@link  ContainerApplicationContextLifecycleHandler#afterTest(After)} method when there is no
+     * application context created.</p>
      *
      * @throws Exception if any error occurs
      */
@@ -202,19 +276,19 @@ public class ContainerApplicationContextLifecycleHandlerTestCase {
         when(mockApplicationContext.get()).thenReturn(null);
         TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
 
-        instance.afterClass(new AfterClass(Object.class));
+        instance.afterTest(new After(TEST_OBJECT, testMethod));
 
         verifyZeroInteractions(applicationContextDestroyer);
     }
 
     /**
-     * <p>Tests {@link  ContainerApplicationContextLifecycleHandler#afterClass(AfterClass)} method.</p>
+     * <p>Tests {@link  ContainerApplicationContextLifecycleHandler#afterTest(After)} method.</p>
      *
      * @throws Exception if any error occurs
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testDestroyApplicationContext() throws Exception {
+    public void testDestroyApplicationContextForTestCase() throws Exception {
 
         List<ApplicationContextDestroyer> destroyers = new ArrayList<ApplicationContextDestroyer>();
         destroyers.add(applicationContextDestroyer);
@@ -234,8 +308,72 @@ public class ContainerApplicationContextLifecycleHandlerTestCase {
         when(mockApplicationContext.get()).thenReturn(containerTestScopeApplicationContext);
         TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
 
-        instance.afterClass(new AfterClass(Object.class));
+        instance.afterTest(new After(TEST_OBJECT, testMethod));
 
-        verify(applicationContextDestroyer).destroyApplicationContext(containerTestScopeApplicationContext);
+        verifyZeroInteractions(applicationContextDestroyer);
+    }
+
+    /**
+     * <p>Tests {@link ContainerApplicationContextLifecycleHandler#afterTest(After)} method.</p>
+     *
+     * @throws Exception if any error occurs
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testDestroyApplicationContextForTestMethod() throws Exception {
+
+        List<ApplicationContextDestroyer> destroyers = new ArrayList<ApplicationContextDestroyer>();
+        destroyers.add(applicationContextDestroyer);
+
+        ServiceLoader serviceLoader = mock(ServiceLoader.class);
+        when(serviceLoader.all(ApplicationContextDestroyer.class)).thenReturn(destroyers);
+
+        Instance<ServiceLoader> mockServiceLoader = mock(Instance.class);
+        when(mockServiceLoader.get()).thenReturn(serviceLoader);
+        TestReflectionHelper.setFieldValue(instance, "serviceLoaderInstance", mockServiceLoader);
+
+        ApplicationContext applicationContext = mock(ApplicationContext.class);
+        RemoteTestScopeApplicationContext containerTestScopeApplicationContext =
+                new RemoteTestScopeApplicationContext(applicationContext, new TestClass(Object.class), true);
+
+        InstanceProducer<RemoteTestScopeApplicationContext> mockApplicationContext = mock(InstanceProducer.class);
+        when(mockApplicationContext.get()).thenReturn(containerTestScopeApplicationContext);
+        TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
+
+        instance.afterTest(new After(new TestMethodTest(), TestMethodTest.class.getMethod("testMethod")));
+
+        verify(applicationContextDestroyer).destroyApplicationContext(any(TestScopeApplicationContext.class));
+    }
+
+    /**
+     * <p>Tests {@link ContainerApplicationContextLifecycleHandler#afterSuite(AfterSuite)} method.</p>
+     *
+     * @throws Exception if any error occurs
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testDestroyApplicationContextAfterSuite() throws Exception {
+
+        List<ApplicationContextDestroyer> destroyers = new ArrayList<ApplicationContextDestroyer>();
+        destroyers.add(applicationContextDestroyer);
+
+        ServiceLoader serviceLoader = mock(ServiceLoader.class);
+        when(serviceLoader.all(ApplicationContextDestroyer.class)).thenReturn(destroyers);
+
+        Instance<ServiceLoader> mockServiceLoader = mock(Instance.class);
+        when(mockServiceLoader.get()).thenReturn(serviceLoader);
+        TestReflectionHelper.setFieldValue(instance, "serviceLoaderInstance", mockServiceLoader);
+
+        ApplicationContext applicationContext = mock(ApplicationContext.class);
+        RemoteTestScopeApplicationContext containerTestScopeApplicationContext =
+                new RemoteTestScopeApplicationContext(applicationContext, new TestClass(Object.class), true);
+
+        InstanceProducer<RemoteTestScopeApplicationContext> mockApplicationContext = mock(InstanceProducer.class);
+        when(mockApplicationContext.get()).thenReturn(containerTestScopeApplicationContext);
+        TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
+
+        instance.afterSuite(new AfterSuite());
+
+        verify(applicationContextDestroyer).destroyApplicationContext(any(TestScopeApplicationContext.class));
     }
 }
