@@ -19,8 +19,7 @@ package org.jboss.as.quickstarts.spring.controller;
 import org.jboss.as.quickstarts.spring.model.UserCredentials;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
-import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 import java.io.File;
 
@@ -47,12 +46,10 @@ public final class Deployments {
      */
     public static WebArchive createDeployment() {
 
-        File[] libs = DependencyResolvers.use(MavenDependencyResolver.class)
-                .loadMetadataFromPom("pom.xml")
-                .artifacts("org.springframework:spring-webmvc:3.1.1.RELEASE")
-                .artifacts("javax.validation:validation-api:1.0.0.GA")
-                .artifacts("org.hibernate:hibernate-validator:4.1.0.Final")
-                .resolveAsFiles();
+        File[] libs = Maven.resolver().loadPomFromFile("pom.xml").resolve(
+                "org.springframework:spring-webmvc:3.1.1.RELEASE",
+                "javax.validation:validation-api:1.0.0.GA",
+                "org.hibernate:hibernate-validator:4.1.0.Final").withTransitivity().asFile();
 
         return ShrinkWrap.create(WebArchive.class, "spring-test.war")
                 .addPackage(LoginController.class.getPackage())

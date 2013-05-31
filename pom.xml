@@ -44,7 +44,7 @@
         <maven.compiler.argument.source>1.5</maven.compiler.argument.source>
 
         <!-- Arquillian Core -->
-        <version.arquillian_core>1.0.3.Final</version.arquillian_core>
+        <version.arquillian_core>1.0.4.Final-SNAPSHOT</version.arquillian_core>
 
         <!-- Arquillian Drone -->
         <version.arquillian_drone>1.0.0.Final</version.arquillian_drone>
