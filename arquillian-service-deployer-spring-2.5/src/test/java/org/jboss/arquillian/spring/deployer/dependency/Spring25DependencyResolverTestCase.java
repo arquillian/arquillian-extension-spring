@@ -20,6 +20,7 @@ import org.jboss.arquillian.spring.deployer.configuration.SpringDeployerConfigur
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -37,9 +38,11 @@ public class Spring25DependencyResolverTestCase {
 
     /**
      * <p>Tests {@link Spring25DependencyResolver#resolveDependencies()} method.</p>
+     *
+     * @throws IOException if any error occurs
      */
     @Test
-    public void testResolveDependencies() {
+    public void testResolveDependencies() throws IOException {
 
         SpringDeployerConfiguration springDeployerConfiguration = createConfiguration();
         springDeployerConfiguration.setImportPomDependencies(false);
@@ -54,9 +57,11 @@ public class Spring25DependencyResolverTestCase {
 
     /**
      * <p>Tests {@link Spring25DependencyResolver#resolveDependencies()} method when maven is run in offline mode.</p>
+     *
+     * @throws IOException if any error occurs
      */
     @Test
-    public void testResolveDependenciesOffline() {
+    public void testResolveDependenciesOffline() throws IOException {
 
         SpringDeployerConfiguration springDeployerConfiguration = createConfiguration();
         springDeployerConfiguration.setImportPomDependencies(false);
@@ -72,9 +77,11 @@ public class Spring25DependencyResolverTestCase {
 
     /**
      * <p>Tests {@link Spring25DependencyResolver#resolveDependencies()} method.</p>
+     *
+     * @throws IOException if any error occurs
      */
     @Test
-    public void testResolveDependenciesIncludeSnowdrop() {
+    public void testResolveDependenciesIncludeSnowdrop() throws IOException {
 
         SpringDeployerConfiguration springDeployerConfiguration = createConfiguration();
 
@@ -125,8 +132,11 @@ public class Spring25DependencyResolverTestCase {
      *
      * @return the create instance of {@link SpringDeployerConfiguration}
      */
-    private SpringDeployerConfiguration createConfiguration() {
+    private SpringDeployerConfiguration createConfiguration() throws IOException {
+        File pomFile = new File(".", "src/test/resources/pom.xml");
+
         SpringDeployerConfiguration springDeployerConfiguration = new SpringDeployerConfiguration();
+        springDeployerConfiguration.setPomFile(pomFile.getAbsolutePath());
         springDeployerConfiguration.setAutoPackaging(true);
         springDeployerConfiguration.setSpringVersion("3.1.1.RELEASE");
         springDeployerConfiguration.setCglibVersion("2.2.2");

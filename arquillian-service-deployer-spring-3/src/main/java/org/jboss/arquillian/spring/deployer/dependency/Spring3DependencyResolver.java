@@ -50,8 +50,7 @@ public class Spring3DependencyResolver extends AbstractDependencyResolver {
         if (getConfiguration().isImportPomDependencies()) {
 
             // imports all dependencies loaded from pom file
-            mavenDependencyBuilder.importPomDependencies(getConfiguration().getPomFile(),
-                   splitExcludedArtifacts(getConfiguration().getExcludedArtifacts()));
+            mavenDependencyBuilder.importPomDependencies(getConfiguration().getPomFile());
         } else {
 
             for (String artifactId : SpringDeployerConstants_3.SPRING_ARTIFACTS_IDS) {

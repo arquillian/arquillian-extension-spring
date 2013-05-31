@@ -51,8 +51,7 @@ public class Spring25DependencyResolver extends AbstractDependencyResolver {
         if (getConfiguration().isImportPomDependencies()) {
 
             // imports all dependencies loaded from pom file
-            mavenDependencyBuilder.importPomDependencies(getConfiguration().getPomFile(),
-                    splitExcludedArtifacts(getConfiguration().getExcludedArtifacts()));
+            mavenDependencyBuilder.importPomDependencies(getConfiguration().getPomFile());
         } else {
 
 

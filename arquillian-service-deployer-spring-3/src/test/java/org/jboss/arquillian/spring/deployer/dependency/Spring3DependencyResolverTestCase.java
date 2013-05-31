@@ -133,7 +133,10 @@ public class Spring3DependencyResolverTestCase {
      * @return the create instance of {@link SpringDeployerConfiguration}
      */
     private SpringDeployerConfiguration createConfiguration() {
+        File pomFile = new File(".", "src/test/resources/pom.xml");
+
         SpringDeployerConfiguration springDeployerConfiguration = new SpringDeployerConfiguration();
+        springDeployerConfiguration.setPomFile(pomFile.getAbsolutePath());
         springDeployerConfiguration.setAutoPackaging(true);
         springDeployerConfiguration.setSpringVersion("3.1.1.RELEASE");
         springDeployerConfiguration.setCglibVersion("2.2.2");

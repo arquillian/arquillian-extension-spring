@@ -16,8 +16,12 @@
  */
 package org.jboss.arquillian.spring.deployer.dependency;
 
-import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
-import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;
+import org.jboss.shrinkwrap.resolver.api.maven.ScopeType;
+import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependencies;
+import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependency;
+import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependencyExclusion;
 
 import java.io.File;
 
@@ -32,7 +36,7 @@ public class MavenDependencyBuilder {
     /**
      * <p>Represents the maven dependency resolver.</p>
      */
-    private MavenDependencyResolver mavenDependencyResolver;
+    private MavenResolverSystem mavenDependencyResolver;
 
     /**
      * <p>Represents whether maven should be run in offline mode.</p>
@@ -44,7 +48,7 @@ public class MavenDependencyBuilder {
      */
     public MavenDependencyBuilder() {
 
-        mavenDependencyResolver = DependencyResolvers.use(MavenDependencyResolver.class);
+        mavenDependencyResolver = Maven.resolver();
     }
 
     /**
@@ -63,22 +67,21 @@ public class MavenDependencyBuilder {
      * @param artifactVersion the version of maven artifact
      * @param exclusions      the list of excluded maven artifacts
      */
-    public void addDependency(String artifactName, String artifactVersion, String... exclusions) {
+    public void addDependency(final String artifactName, final String artifactVersion, final String... exclusions) {
 
-        mavenDependencyResolver.artifact(String.format("%s:%s", artifactName, artifactVersion)).exclusions(exclusions);
+        final MavenDependencyExclusion[] depExclusions = getMavenDependencyExclusions(exclusions);
+        final String canonicalForm = String.format("%s:%s", artifactName, artifactVersion);
+        final MavenDependency dep = MavenDependencies
+                .createDependency(canonicalForm, ScopeType.COMPILE, false, depExclusions);
+        mavenDependencyResolver.addDependency(dep);
     }
 
     /**
      * <p>Loads the project dependencies from given pom file.</p>
      */
-    public void importPomDependencies(String pomFile, String[] exclusions) {
+    public void importPomDependencies(String pomFile) {
 
-        mavenDependencyResolver.includeDependenciesFromPom(pomFile);
-
-        if(exclusions != null) {
-
-            mavenDependencyResolver.exclusions(exclusions);
-        }
+        mavenDependencyResolver.loadPomFromFile(pomFile).importRuntimeAndTestDependencies();
     }
 
     /**
@@ -89,11 +92,27 @@ public class MavenDependencyBuilder {
     public File[] getDependencies() {
 
         if (useMavenOffline) {
-
-            mavenDependencyResolver.goOffline();
+            mavenDependencyResolver.offline(true);
         }
 
-        return mavenDependencyResolver.resolveAsFiles();
+        return mavenDependencyResolver.resolve().withTransitivity().asFile();
+    }
+
+    /**
+     * Retrieves the dependency exclusions.
+     *
+     * @param exclusions the names of the excluded maven artifacts.
+     *
+     * @return the excluded maven artifacts
+     */
+    private MavenDependencyExclusion[] getMavenDependencyExclusions(String[] exclusions) {
+        final int numExclusions = exclusions.length;
+        final MavenDependencyExclusion[] depExclusions = new MavenDependencyExclusion[numExclusions];
+        for (int i = 0; i < numExclusions; i++) {
+            final MavenDependencyExclusion depExclusion = MavenDependencies.createExclusion(exclusions[i]);
+            depExclusions[i] = depExclusion;
+        }
+        return depExclusions;
     }
 }
 
