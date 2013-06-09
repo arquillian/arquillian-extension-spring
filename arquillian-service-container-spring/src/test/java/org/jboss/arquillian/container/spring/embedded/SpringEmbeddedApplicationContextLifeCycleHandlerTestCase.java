@@ -20,20 +20,24 @@ import org.jboss.arquillian.core.api.Event;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.spi.ServiceLoader;
-import org.jboss.arquillian.spring.integration.container.ContainerApplicationContextLifecycleHandler;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextDestroyer;
 import org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.RemoteTestScopeApplicationContext;
+import org.jboss.arquillian.spring.integration.context.TestScopeApplicationContext;
 import org.jboss.arquillian.spring.integration.event.ApplicationContextCreatedEvent;
 import org.jboss.arquillian.spring.integration.event.ApplicationContextDestroyedEvent;
+import org.jboss.arquillian.spring.integration.test.annotation.ContextLifeCycle;
+import org.jboss.arquillian.spring.integration.test.annotation.ContextLifeCycleMode;
 import org.jboss.arquillian.test.spi.TestClass;
-import org.jboss.arquillian.test.spi.event.suite.AfterClass;
+import org.jboss.arquillian.test.spi.event.suite.After;
+import org.jboss.arquillian.test.spi.event.suite.AfterSuite;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,13 +57,18 @@ import static org.mockito.Mockito.when;
 public class SpringEmbeddedApplicationContextLifeCycleHandlerTestCase {
 
     /**
+     * Represents the test class used for testing.
+     */
+    private static final Object TEST_OBJECT = new TestCaseTest();
+
+    /**
      * <p>Represents the instance of tested class.</p>
      */
     private SpringEmbeddedApplicationContextLifeCycleHandler instance;
 
     /**
-     * <p>Represents an instance of {@link org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer}
-     * that will always support the test class.</p>
+     * <p>Represents an instance of {@link RemoteApplicationContextProducer} that will always support the test
+     * class.</p>
      */
     private RemoteApplicationContextProducer supportedApplicationContextProducer;
 
@@ -91,6 +100,11 @@ public class SpringEmbeddedApplicationContextLifeCycleHandlerTestCase {
     private Event<ApplicationContextDestroyedEvent> mockApplicationContextDestroyedEvent;
 
     /**
+     * Represents the test method used for testing.
+     */
+    private Method testMethod;
+
+    /**
      * <p>Sets up the test environment.</p>
      *
      * @throws Exception if any error occurs
@@ -98,7 +112,8 @@ public class SpringEmbeddedApplicationContextLifeCycleHandlerTestCase {
     @Before
     public void setUp() throws Exception {
 
-        testClass = new TestClass(Object.class);
+        testClass = new TestClass(TEST_OBJECT.getClass());
+        testMethod = TEST_OBJECT.getClass().getMethod("testMethod");
 
         instance = new SpringEmbeddedApplicationContextLifeCycleHandler();
 
@@ -113,21 +128,18 @@ public class SpringEmbeddedApplicationContextLifeCycleHandlerTestCase {
         applicationContextDestroyer = mock(ApplicationContextDestroyer.class);
 
         mockApplicationContextCreatedEvent = mock(Event.class);
-        TestReflectionHelper.setFieldValue(instance, "applicationContextCreatedEvent", mockApplicationContextCreatedEvent);
-
-        mockApplicationContextDestroyedEvent = mock(Event.class);
-        TestReflectionHelper.setFieldValue(instance, "applicationContextDestroyedEvent", mockApplicationContextDestroyedEvent);
+        TestReflectionHelper.setFieldValue(instance, "applicationContextEvent", mockApplicationContextCreatedEvent);
     }
 
     /**
-     * <p>Tests {@link  ContainerApplicationContextLifecycleHandler#beforeClass(org.jboss.arquillian.test.spi.event.suite.BeforeClass)}
+     * <p>Tests {@link  SpringEmbeddedApplicationContextLifeCycleHandler#beforeClass(org.jboss.arquillian.test.spi.event.suite.BeforeClass)}
      * method, when the test class is supported.</p>
      *
      * @throws Exception if any error occurs
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testInitApplicationContextSupported() throws Exception {
+    public void testInitApplicationContextSupportedBeforeClass() throws Exception {
 
         List<RemoteApplicationContextProducer> producers = new ArrayList<RemoteApplicationContextProducer>();
         producers.add(notSupportedApplicationContextProducer);
@@ -143,14 +155,75 @@ public class SpringEmbeddedApplicationContextLifeCycleHandlerTestCase {
         InstanceProducer<RemoteTestScopeApplicationContext> mockApplicationContext = mock(InstanceProducer.class);
         TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
 
-        instance.beforeClass(new BeforeClass(Object.class));
+        instance.beforeClass(new BeforeClass(TEST_OBJECT.getClass()));
 
         verify(mockApplicationContextCreatedEvent).fire(any(ApplicationContextCreatedEvent.class));
         verify(mockApplicationContext).set((RemoteTestScopeApplicationContext) notNull());
     }
 
     /**
-     * <p>Tests {@link  ContainerApplicationContextLifecycleHandler#beforeClass(BeforeClass)} method, when the test
+     * <p>Tests {@link  SpringEmbeddedApplicationContextLifeCycleHandler#beforeTest(
+     *org.jboss.arquillian.test.spi.event.suite.Before)} method, when the test class is supported.</p>
+     *
+     * @throws Exception if any error occurs
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testInitApplicationContextSupportedTestCase() throws Exception {
+
+        List<RemoteApplicationContextProducer> producers = new ArrayList<RemoteApplicationContextProducer>();
+        producers.add(notSupportedApplicationContextProducer);
+        producers.add(supportedApplicationContextProducer);
+
+        ServiceLoader serviceLoader = mock(ServiceLoader.class);
+        when(serviceLoader.all(RemoteApplicationContextProducer.class)).thenReturn(producers);
+
+        Instance<ServiceLoader> mockServiceLoader = mock(Instance.class);
+        when(mockServiceLoader.get()).thenReturn(serviceLoader);
+        TestReflectionHelper.setFieldValue(instance, "serviceLoaderInstance", mockServiceLoader);
+
+        InstanceProducer<RemoteTestScopeApplicationContext> mockApplicationContext = mock(InstanceProducer.class);
+        TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
+
+        instance.beforeTest(new org.jboss.arquillian.test.spi.event.suite.Before(TEST_OBJECT, testMethod));
+
+        verify(mockApplicationContextCreatedEvent).fire(any(ApplicationContextCreatedEvent.class));
+        verify(mockApplicationContext).set((RemoteTestScopeApplicationContext) notNull());
+    }
+
+    /**
+     * <p>Tests {@link  SpringEmbeddedApplicationContextLifeCycleHandler#beforeTest(
+     *org.jboss.arquillian.test.spi.event.suite.Before)} method, when the test class is supported.</p>
+     *
+     * @throws Exception if any error occurs
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testInitApplicationContextSupportedTestMethod() throws Exception {
+
+        List<RemoteApplicationContextProducer> producers = new ArrayList<RemoteApplicationContextProducer>();
+        producers.add(notSupportedApplicationContextProducer);
+        producers.add(supportedApplicationContextProducer);
+
+        ServiceLoader serviceLoader = mock(ServiceLoader.class);
+        when(serviceLoader.all(RemoteApplicationContextProducer.class)).thenReturn(producers);
+
+        Instance<ServiceLoader> mockServiceLoader = mock(Instance.class);
+        when(mockServiceLoader.get()).thenReturn(serviceLoader);
+        TestReflectionHelper.setFieldValue(instance, "serviceLoaderInstance", mockServiceLoader);
+
+        InstanceProducer<RemoteTestScopeApplicationContext> mockApplicationContext = mock(InstanceProducer.class);
+        TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
+
+        instance.beforeTest(new org.jboss.arquillian.test.spi.event.suite.Before(new TestMethodTest(),
+                TestMethodTest.class.getMethod("testMethod")));
+
+        verify(mockApplicationContextCreatedEvent).fire(any(ApplicationContextCreatedEvent.class));
+        verify(mockApplicationContext).set((RemoteTestScopeApplicationContext) notNull());
+    }
+
+    /**
+     * <p>Tests {@link  SpringEmbeddedApplicationContextLifeCycleHandler#beforeClass(BeforeClass)} method, when the test
      * class is not supported.</p>
      *
      * @throws Exception if any error occurs
@@ -170,16 +243,16 @@ public class SpringEmbeddedApplicationContextLifeCycleHandlerTestCase {
         TestReflectionHelper.setFieldValue(instance, "serviceLoaderInstance", mockServiceLoader);
 
         InstanceProducer<RemoteTestScopeApplicationContext> mockApplicationContext = mock(InstanceProducer.class);
+        when(mockApplicationContext.get()).thenReturn(null);
         TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
 
-        instance.beforeClass(new BeforeClass(Object.class));
+        instance.beforeClass(new BeforeClass(TEST_OBJECT.getClass()));
 
         verifyNoMoreInteractions(mockApplicationContextCreatedEvent);
-        verifyZeroInteractions(mockApplicationContext);
     }
 
     /**
-     * <p>Tests {@link  ContainerApplicationContextLifecycleHandler#afterClass(org.jboss.arquillian.test.spi.event.suite.AfterClass)}
+     * <p>Tests {@link  SpringEmbeddedApplicationContextLifeCycleHandler#afterTest(org.jboss.arquillian.test.spi.event.suite.After)}
      * method when there is no application context created.</p>
      *
      * @throws Exception if any error occurs
@@ -202,19 +275,19 @@ public class SpringEmbeddedApplicationContextLifeCycleHandlerTestCase {
         when(mockApplicationContext.get()).thenReturn(null);
         TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
 
-        instance.afterClass(new AfterClass(Object.class));
+        instance.afterTest(new After(TEST_OBJECT, testMethod));
 
         verifyZeroInteractions(applicationContextDestroyer);
     }
 
     /**
-     * <p>Tests {@link  ContainerApplicationContextLifecycleHandler#afterClass(AfterClass)} method.</p>
+     * <p>Tests {@link  SpringEmbeddedApplicationContextLifeCycleHandler#afterTest(After)} method.</p>
      *
      * @throws Exception if any error occurs
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testDestroyApplicationContext() throws Exception {
+    public void testDestroyApplicationContextForTestCase() throws Exception {
 
         List<ApplicationContextDestroyer> destroyers = new ArrayList<ApplicationContextDestroyer>();
         destroyers.add(applicationContextDestroyer);
@@ -234,8 +307,107 @@ public class SpringEmbeddedApplicationContextLifeCycleHandlerTestCase {
         when(mockApplicationContext.get()).thenReturn(containerTestScopeApplicationContext);
         TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
 
-        instance.afterClass(new AfterClass(Object.class));
+        instance.afterTest(new After(TEST_OBJECT, testMethod));
 
-        verify(applicationContextDestroyer).destroyApplicationContext(containerTestScopeApplicationContext);
+        verifyZeroInteractions(applicationContextDestroyer);
+    }
+
+    /**
+     * <p>Tests {@link SpringEmbeddedApplicationContextLifeCycleHandler#afterTest(After)} method.</p>
+     *
+     * @throws Exception if any error occurs
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testDestroyApplicationContextForTestMethod() throws Exception {
+
+        List<ApplicationContextDestroyer> destroyers = new ArrayList<ApplicationContextDestroyer>();
+        destroyers.add(applicationContextDestroyer);
+
+        ServiceLoader serviceLoader = mock(ServiceLoader.class);
+        when(serviceLoader.all(ApplicationContextDestroyer.class)).thenReturn(destroyers);
+
+        Instance<ServiceLoader> mockServiceLoader = mock(Instance.class);
+        when(mockServiceLoader.get()).thenReturn(serviceLoader);
+        TestReflectionHelper.setFieldValue(instance, "serviceLoaderInstance", mockServiceLoader);
+
+        ApplicationContext applicationContext = mock(ApplicationContext.class);
+        RemoteTestScopeApplicationContext containerTestScopeApplicationContext =
+                new RemoteTestScopeApplicationContext(applicationContext, new TestClass(Object.class), true);
+
+        InstanceProducer<RemoteTestScopeApplicationContext> mockApplicationContext = mock(InstanceProducer.class);
+        when(mockApplicationContext.get()).thenReturn(containerTestScopeApplicationContext);
+        TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
+
+        instance.afterTest(new After(new TestMethodTest(), TestMethodTest.class.getMethod("testMethod")));
+
+        verify(applicationContextDestroyer).destroyApplicationContext(any(TestScopeApplicationContext.class));
+    }
+
+    /**
+     * <p>Tests {@link SpringEmbeddedApplicationContextLifeCycleHandler#afterSuite(org.jboss.arquillian.test.spi.event.suite.AfterSuite)}
+     * method.</p>
+     *
+     * @throws Exception if any error occurs
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testDestroyApplicationContextAfterSuite() throws Exception {
+
+        List<ApplicationContextDestroyer> destroyers = new ArrayList<ApplicationContextDestroyer>();
+        destroyers.add(applicationContextDestroyer);
+
+        ServiceLoader serviceLoader = mock(ServiceLoader.class);
+        when(serviceLoader.all(ApplicationContextDestroyer.class)).thenReturn(destroyers);
+
+        Instance<ServiceLoader> mockServiceLoader = mock(Instance.class);
+        when(mockServiceLoader.get()).thenReturn(serviceLoader);
+        TestReflectionHelper.setFieldValue(instance, "serviceLoaderInstance", mockServiceLoader);
+
+        ApplicationContext applicationContext = mock(ApplicationContext.class);
+        RemoteTestScopeApplicationContext containerTestScopeApplicationContext =
+                new RemoteTestScopeApplicationContext(applicationContext, new TestClass(Object.class), true);
+
+        InstanceProducer<RemoteTestScopeApplicationContext> mockApplicationContext = mock(InstanceProducer.class);
+        when(mockApplicationContext.get()).thenReturn(containerTestScopeApplicationContext);
+        TestReflectionHelper.setFieldValue(instance, "applicationContextInstance", mockApplicationContext);
+
+        instance.afterSuite(new AfterSuite());
+
+        verify(applicationContextDestroyer).destroyApplicationContext(any(TestScopeApplicationContext.class));
+    }
+
+    /**
+     * <p>A dummy test class used for testing instantiation of Spring's application within the extension.</p>
+     *
+     * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
+     */
+    @ContextLifeCycle(ContextLifeCycleMode.TEST_CASE)
+    private static class TestCaseTest {
+
+        /**
+         * A empty test method, used only for indicating as a test method for execution.
+         */
+        @Test
+        public void testMethod() {
+            // empty method
+        }
+    }
+
+    /**
+     * <p>A dummy test class used for testing instantiation of Spring's application within the extension.</p>
+     *
+     * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
+     */
+    @ContextLifeCycle(ContextLifeCycleMode.TEST)
+    private static class TestMethodTest {
+
+        /**
+         * A empty test method, used only for indicating as a test method for execution.
+         */
+        @Test
+        public void testMethod() {
+            // empty method
+        }
     }
 }
