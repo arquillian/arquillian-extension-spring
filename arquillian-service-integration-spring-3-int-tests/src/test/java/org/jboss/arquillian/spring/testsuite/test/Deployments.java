@@ -30,8 +30,7 @@ import org.jboss.arquillian.spring.testsuite.beans.service.impl.DefaultEmployeeS
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
-import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 import java.io.File;
 
@@ -176,10 +175,8 @@ public final class Deployments {
      * @return the resolved files
      */
     public static File[] resolveArtifact(String... artifacts) {
-        MavenDependencyResolver mvnResolver = DependencyResolvers.use(MavenDependencyResolver.class);
 
-        mvnResolver.loadMetadataFromPom("pom.xml");
+        return Maven.resolver().loadPomFromFile("pom.xml").resolve(artifacts).withTransitivity().asFile();
 
-        return mvnResolver.artifacts(artifacts).resolveAsFiles();
     }
 }
