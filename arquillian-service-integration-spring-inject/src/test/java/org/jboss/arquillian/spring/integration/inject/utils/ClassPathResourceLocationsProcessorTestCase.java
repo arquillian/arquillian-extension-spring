@@ -19,7 +19,6 @@ package org.jboss.arquillian.spring.integration.inject.utils;
 import org.jboss.arquillian.spring.integration.inject.model.ClientXmlAnnotatedClass;
 import org.jboss.arquillian.spring.integration.inject.model.ClientXmlAnnotatedClassWithBothCustomAndDefaultLocations;
 import org.jboss.arquillian.spring.integration.inject.model.ClientXmlAnnotatedClassWithNotExistingDefaultLocation;
-import org.jboss.arquillian.spring.integration.inject.utils.ClassPathResourceLocationsProcessor;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringClientConfiguration;
 import org.junit.Test;
 
@@ -68,13 +67,13 @@ public class ClassPathResourceLocationsProcessorTestCase {
         Class<ClientXmlAnnotatedClassWithBothCustomAndDefaultLocations> wrappedClass = ClientXmlAnnotatedClassWithBothCustomAndDefaultLocations.class;
 
         SpringClientConfiguration testClassAnnotation = wrappedClass.getAnnotation(SpringClientConfiguration.class);
-        String [] expectedLocationNames = testClassAnnotation.value();
+        String[] expectedLocationNames = testClassAnnotation.value();
 
         // when
         String[] defaultLocations = locationsProcessor.processLocations(testClassAnnotation.value(), wrappedClass);
 
         // then
         assertThat(defaultLocations).hasSize(expectedLocationNames.length);
-        assertThat(defaultLocations).containsOnly(expectedLocationNames);
+        assertThat(defaultLocations).containsOnly((Object[]) expectedLocationNames);
     }
 }

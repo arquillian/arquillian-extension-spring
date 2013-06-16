@@ -98,7 +98,7 @@ public class SpringIntegrationConfigurationProducerTestCase {
 
         BeforeSuite event = new BeforeSuite();
 
-        ArquillianDescriptor descriptor = Descriptors.importAs(ArquillianDescriptor.class).from(
+        ArquillianDescriptor descriptor = Descriptors.importAs(ArquillianDescriptor.class).fromStream(
                 new FileInputStream(new File("src/test/resources", "arquillian.xml")));
 
         injectDescriptor(descriptor);
