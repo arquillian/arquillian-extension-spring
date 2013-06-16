@@ -23,11 +23,13 @@ import org.jboss.arquillian.spring.integration.client.AbstractSpringEnricherArch
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
 import org.jboss.arquillian.spring.integration.context.AbstractApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
+import org.jboss.arquillian.spring.integration.inject.container.CustomRemoteApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.inject.container.SpringInjectRemoteExtension;
 import org.jboss.arquillian.spring.integration.inject.container.WebApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.inject.container.XmlRemoteApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.inject.utils.ClassPathResourceLocationsProcessor;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
+import org.jboss.arquillian.spring.integration.test.annotation.SpringContextConfiguration;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringWebConfiguration;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
@@ -45,10 +47,11 @@ public class SpringInjectArchiveAppender extends AbstractSpringEnricherArchiveAp
     @Override
     protected void appendResources(JavaArchive archive) {
 
-        archive.addClasses(SpringConfiguration.class, SpringWebConfiguration.class)
+        archive.addClasses(SpringConfiguration.class, SpringContextConfiguration.class, SpringWebConfiguration.class)
                 .addClasses(SpringInjectConstants.class,
                         XmlRemoteApplicationContextProducer.class, WebApplicationContextProducer.class,
-                        SpringInjectRemoteExtension.class, ClassPathResourceLocationsProcessor.class)
+                        CustomRemoteApplicationContextProducer.class, SpringInjectRemoteExtension.class,
+                        ClassPathResourceLocationsProcessor.class)
                 .addClasses(ApplicationContextProducer.class, AbstractApplicationContextProducer.class,
                         SpringIntegrationConfiguration.class)
                 .addAsServiceProvider(RemoteLoadableExtension.class, SpringInjectRemoteExtension.class);

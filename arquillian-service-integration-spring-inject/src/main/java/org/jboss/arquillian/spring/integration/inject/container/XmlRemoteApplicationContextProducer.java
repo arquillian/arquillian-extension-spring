@@ -32,10 +32,11 @@ import java.lang.reflect.InvocationTargetException;
 
 /**
  * <p>The {@link AbstractApplicationContextProducer} that creates the {@link org.springframework.context.support.ClassPathXmlApplicationContext}
- * with configuration loaded from locations specified by the test..</p>
+ * with configuration loaded from locations specified by the test.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
+ * @see SpringConfiguration
  */
 public class XmlRemoteApplicationContextProducer extends AbstractApplicationContextProducer {
 
@@ -93,6 +94,7 @@ public class XmlRemoteApplicationContextProducer extends AbstractApplicationCont
      *
      * @return the custom context class
      */
+    @SuppressWarnings("unchecked")
     private Class<? extends ApplicationContext> getCustomContextClass() {
 
         String customContextClass =
@@ -101,8 +103,7 @@ public class XmlRemoteApplicationContextProducer extends AbstractApplicationCont
         if (customContextClass != null
                 && customContextClass.trim().length() > 0) {
 
-            return (Class<? extends ApplicationContext>)
-                    SecurityActions.classForName(customContextClass);
+            return (Class<? extends ApplicationContext>) SecurityActions.classForName(customContextClass);
         }
 
         return null;

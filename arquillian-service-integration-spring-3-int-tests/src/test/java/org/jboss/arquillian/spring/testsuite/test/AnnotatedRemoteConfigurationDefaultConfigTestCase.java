@@ -17,7 +17,6 @@
 package org.jboss.arquillian.spring.testsuite.test;
 
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringAnnotationConfiguration;
 import org.jboss.arquillian.spring.testsuite.beans.model.Employee;
@@ -38,9 +37,18 @@ import static org.jboss.arquillian.spring.testsuite.test.Deployments.createAppDe
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * <p>Tests the {@link DefaultEmployeeService} class.</p>
+ *
+ * @author <a href="mailto:kurlenda@gmail.com">Jakub Kurlenda</a>
+ */
 @RunWith(Arquillian.class)
 @SpringAnnotationConfiguration
 public class AnnotatedRemoteConfigurationDefaultConfigTestCase {
+
+    /**
+     * <p>The injected {@link EmployeeService}.</p>
+     */
     @Autowired
     EmployeeService employeeService;
 
@@ -54,6 +62,9 @@ public class AnnotatedRemoteConfigurationDefaultConfigTestCase {
         return createAppDeployment().addClass(DefaultConfiguration.class);
     }
 
+    /**
+     * <p>Tests the {@link EmployeeService#getEmployees()}</p>
+     */
     @Test
     public void testGetEmployees() {
         List<Employee> result = employeeService.getEmployees();

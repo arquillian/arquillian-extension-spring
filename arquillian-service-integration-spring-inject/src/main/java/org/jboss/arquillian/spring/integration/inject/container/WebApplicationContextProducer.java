@@ -36,6 +36,7 @@ import java.text.MessageFormat;
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  * @version $Revision: $
+ * @see SpringWebConfiguration
  */
 public class WebApplicationContextProducer extends AbstractApplicationContextProducer {
 

@@ -104,6 +104,7 @@ public class AnnotationRemoteApplicationContextProducer extends AbstractApplicat
      *
      * @return the custom context class
      */
+    @SuppressWarnings("unchecked")
     private Class<? extends ApplicationContext> getCustomAnnotationContextClass() {
 
         String customAnnotationContextClass = getRemoteConfiguration().getProperty(

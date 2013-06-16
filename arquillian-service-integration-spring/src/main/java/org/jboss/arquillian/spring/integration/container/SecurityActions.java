@@ -18,8 +18,13 @@
 package org.jboss.arquillian.spring.integration.container;
 
 import java.io.InputStream;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>Defines a set of operations that are meant to be executed within security context.</p>
@@ -83,6 +88,38 @@ public final class SecurityActions {
 
             throw new RuntimeException("Could not load class by name " + name, e);
         }
+    }
+
+    /**
+     * Retrieves the list of methods that were annotated with given annotation.
+     *
+     * @param source          the class to scan for classes
+     * @param annotationClass the annotation
+     *
+     * @return list of the methods of the given class that were annotated with specified annotation
+     */
+    public static Method[] getStaticMethodsWithAnnotation(final Class<?> source, final Class<? extends Annotation> annotationClass) {
+
+        return AccessController.doPrivileged(new PrivilegedAction<Method[]>() {
+            public Method[] run() {
+
+                List<Method> foundMethods = new ArrayList<Method>();
+                Class<?> nextSource = source;
+                while (nextSource != Object.class) {
+                    for (Method method : nextSource.getDeclaredMethods()) {
+                        if (Modifier.isStatic(method.getModifiers()) && method.isAnnotationPresent(annotationClass)) {
+                            if (!method.isAccessible()) {
+                                method.setAccessible(true);
+                            }
+                            foundMethods.add(method);
+                        }
+                    }
+                    nextSource = nextSource.getSuperclass();
+                }
+
+                return foundMethods.toArray(new Method[foundMethods.size()]);
+            }
+        });
     }
 
     /**

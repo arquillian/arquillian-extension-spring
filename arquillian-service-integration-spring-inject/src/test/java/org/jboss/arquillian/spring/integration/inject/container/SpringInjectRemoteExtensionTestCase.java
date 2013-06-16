@@ -18,7 +18,6 @@
 package org.jboss.arquillian.spring.integration.inject.container;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
-import org.jboss.arquillian.spring.integration.context.ApplicationContextProducer;
 import org.jboss.arquillian.spring.integration.context.RemoteApplicationContextProducer;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,6 +61,7 @@ public class SpringInjectRemoteExtensionTestCase {
         instance.register(mockExtensionBuilder);
 
         verify(mockExtensionBuilder).service(RemoteApplicationContextProducer.class, XmlRemoteApplicationContextProducer.class);
+        verify(mockExtensionBuilder).service(RemoteApplicationContextProducer.class, CustomRemoteApplicationContextProducer.class);
         verify(mockExtensionBuilder).service(RemoteApplicationContextProducer.class, WebApplicationContextProducer.class);
 
         verifyNoMoreInteractions(mockExtensionBuilder);
