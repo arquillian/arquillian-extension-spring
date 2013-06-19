@@ -14,7 +14,7 @@
 
     <groupId>org.jboss.arquillian.extension</groupId>
     <artifactId>arquillian-spring-parent</artifactId>
-    <version>1.0.0.Final-SNAPSHOT</version>
+    <version>1.0.0.Beta2</version>
     <packaging>pom</packaging>
 
     <name>Arquillian Spring Framework Extension Parent</name>
