@@ -31,6 +31,7 @@
         <module>arquillian-service-integration-spring-inject</module>
         <module>arquillian-service-integration-spring-javaconfig</module>
         <module>arquillian-transaction-spring</module>
+        <module>arquillian-persistence-spring</module>
         <module>arquillian-service-integration-spring-2.5-int-tests</module>
         <module>arquillian-service-integration-spring-3-int-tests</module>
         <module>arquillian-warp-spring</module>
@@ -54,6 +55,9 @@
 
         <!-- Arquillian Transaction -->
         <version.arquillian_transaction>1.0.1.Final</version.arquillian_transaction>
+
+        <!-- Arquillian Persistence -->
+        <version.arquillian_persistence>1.0.0.Alpha7</version.arquillian_persistence>
 
         <!-- Test Dependencies -->
         <version.junit_junit>4.8.1</version.junit_junit>
@@ -154,6 +158,12 @@
 
             <dependency>
                 <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-persistence-spring</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
                 <artifactId>arquillian-service-container-spring</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -189,6 +199,34 @@
                 <version>${version.arquillian_transaction}</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-persistence-spi</artifactId>
+                <version>${version.arquillian_persistence}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-persistence-dbunit</artifactId>
+                <version>${version.arquillian_persistence}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian.core</groupId>
+                <artifactId>arquillian-core-impl-base</artifactId>
+                <version>${version.arquillian_core}</version>
+                <scope>test</scope>
+                <classifier>tests</classifier>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian.test</groupId>
+                <artifactId>arquillian-test-impl-base</artifactId>
+                <version>${version.arquillian_core}</version>
+                <scope>test</scope>
+                <classifier>tests</classifier>
             </dependency>
 
             <dependency>
