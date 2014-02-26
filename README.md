@@ -16,7 +16,7 @@
 
 ## Test setup
 The extension is splitted into couple modules. In order to enable the Spring IOC for the Arquillian Tests it
-is required to add the fallowing dependency into the project POM.
+is required to add the following dependency into the project POM.
 
 ```
         <dependency>
@@ -27,7 +27,7 @@ is required to add the fallowing dependency into the project POM.
         </dependency>
 ```
 
-Java config is also supported and it requires fallowing dependency:
+Java config is also supported and it requires following dependency:
 
 ```
         <dependency>
@@ -39,7 +39,7 @@ Java config is also supported and it requires fallowing dependency:
 ```
 
 Each Arquillian test which relies on Spring framework and requires dependency injection of configured beans has to be
-annotated with one of the fallowing:
+annotated with one of the following:
 ``@SpringConfiguration`` - for xml configuration, ``@SpringAnnotationConfiguration`` - for Java-based configuration
 and ``@SpringWebConfiguration`` - for web applications.
 The annotation will instruct the test enricher how to initialize the application context, the first two will cause that
@@ -49,7 +49,7 @@ specific Spring FrameworkServlet (e.g. DispatcherServlet) or the root web applic
 Note: The annotations may not be mixed with each other, each test will use only one application context.
 
 ### Configuration
-It's posible to modify the default behaviour of the extension and set the fallowing settings through arquillian.xml.
+It's posible to modify the default behaviour of the extension and set the following settings through arquillian.xml.
 
 * Name of custom context classes to be used instead of Spring's ClassPathXmlApplicationContext and AnnotationConfigApplicationContext.
 
@@ -96,7 +96,7 @@ When added into the project POM it will from now on enrich each deployment.
 Note: In order to auto package Spring 2.5 please use arquillian-service-integration-deployer-spring-2.5 instead.
 
 ### Configuration
-The deployer has it own configuration that allows to set the fallowing settings:
+The deployer has it own configuration that allows to set the following settings:
 
 * If the extension should add the spring dependencies by default for each deployment - can be disabled.
 * The version of the maven artifact for the Spring Context and Spring Web.
@@ -239,7 +239,7 @@ public class AnnotatedConfigurationTestCase {
 
 #### XML configuration
 The above examples allowed testing seperate classes injected through Spring without configuring entire web application,
-fallowing example demonstrates how to test a simple MVC application instead.
+following example demonstrates how to test a simple MVC application instead.
 
 *Simple annotated controller*
 
