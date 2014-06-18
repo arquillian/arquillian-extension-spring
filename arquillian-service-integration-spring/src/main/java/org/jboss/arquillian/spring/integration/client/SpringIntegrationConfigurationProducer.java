@@ -17,19 +17,17 @@
 
 package org.jboss.arquillian.spring.integration.client;
 
+import java.util.Collections;
+import java.util.Map;
+
 import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
 import org.jboss.arquillian.config.descriptor.api.ExtensionDef;
-import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.spring.integration.SpringIntegrationConstants;
 import org.jboss.arquillian.spring.integration.configuration.SpringIntegrationConfiguration;
-import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
-
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * <p>Producer that creates the configuration loaded from the arquillian descriptor.</p>
@@ -38,12 +36,6 @@ import java.util.Map;
  * @version $Revision: $
  */
 public class SpringIntegrationConfigurationProducer {
-
-    /**
-     * <p>Represents the application descriptor.</p>
-     */
-    @Inject
-    private Instance<ArquillianDescriptor> descriptor;
 
     /**
      * <p>Represents the configuration for this extension.</p>
@@ -57,7 +49,7 @@ public class SpringIntegrationConfigurationProducer {
      *
      * @param beforeSuiteEvent the event fired before execution of the test suite
      */
-    public void initConfiguration(@Observes BeforeSuite beforeSuiteEvent) {
+    public void initConfiguration(@Observes ArquillianDescriptor descriptor) {
 
         SpringIntegrationConfiguration config = getConfiguration(descriptor);
 
@@ -71,9 +63,9 @@ public class SpringIntegrationConfigurationProducer {
      *
      * @return the created instance of {@link SpringIntegrationConfiguration}
      */
-    private SpringIntegrationConfiguration getConfiguration(Instance<ArquillianDescriptor> descriptor) {
+    private SpringIntegrationConfiguration getConfiguration(ArquillianDescriptor descriptor) {
 
-        Map<String, String> properties = getExtensionProperties(descriptor.get());
+        Map<String, String> properties = getExtensionProperties(descriptor);
 
         return new SpringIntegrationConfiguration(properties);
     }

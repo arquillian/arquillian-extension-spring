@@ -17,6 +17,16 @@
 
 package org.jboss.arquillian.spring.integration.client;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.io.File;
+import java.io.FileInputStream;
+
 import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
@@ -27,16 +37,6 @@ import org.jboss.shrinkwrap.descriptor.api.Descriptors;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-
-import java.io.File;
-import java.io.FileInputStream;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * <p>Tests {@link SpringIntegrationConfigurationProducer} class.</p>
@@ -67,16 +67,12 @@ public class SpringIntegrationConfigurationProducerTestCase {
     @Test
     public void testInitConfigurationDefault() throws Exception {
 
-        BeforeSuite event = new BeforeSuite();
-
         ArquillianDescriptor descriptor = Descriptors.create(ArquillianDescriptor.class);
-
-        injectDescriptor(descriptor);
 
         InstanceProducer<SpringIntegrationConfiguration> mockProducer = mock(InstanceProducer.class);
         TestReflectionHelper.setFieldValue(instance, "extensionConfiguration", mockProducer);
 
-        instance.initConfiguration(event);
+        instance.initConfiguration(descriptor);
 
         ArgumentCaptor<SpringIntegrationConfiguration> argument =
                 ArgumentCaptor.forClass(SpringIntegrationConfiguration.class);
@@ -96,17 +92,13 @@ public class SpringIntegrationConfigurationProducerTestCase {
     @Test
     public void testInitConfiguration() throws Exception {
 
-        BeforeSuite event = new BeforeSuite();
-
         ArquillianDescriptor descriptor = Descriptors.importAs(ArquillianDescriptor.class).fromStream(
                 new FileInputStream(new File("src/test/resources", "arquillian.xml")));
-
-        injectDescriptor(descriptor);
 
         InstanceProducer<SpringIntegrationConfiguration> mockProducer = mock(InstanceProducer.class);
         TestReflectionHelper.setFieldValue(instance, "extensionConfiguration", mockProducer);
 
-        instance.initConfiguration(event);
+        instance.initConfiguration(descriptor);
 
         ArgumentCaptor<SpringIntegrationConfiguration> argument =
                 ArgumentCaptor.forClass(SpringIntegrationConfiguration.class);
@@ -119,19 +111,5 @@ public class SpringIntegrationConfigurationProducerTestCase {
         assertEquals("Invalid customAnnotationContextClass property.",
                 "org.springframework.context.annotation.AnnotationConfigApplicationContext",
                 argument.getValue().getProperty("customAnnotationContextClass"));
-    }
-
-    /**
-     * <p>Initialize the arquillian descriptor.</p>
-     *
-     * @param descriptor the arquillian descriptor
-     *
-     * @throws IllegalAccessException if any error occurs
-     * @throws NoSuchFieldException   if any error occurs
-     */
-    private void injectDescriptor(ArquillianDescriptor descriptor) throws IllegalAccessException, NoSuchFieldException {
-        Instance<ArquillianDescriptor> mockDescriptorInstance = mock(Instance.class);
-        when(mockDescriptorInstance.get()).thenReturn(descriptor);
-        TestReflectionHelper.setFieldValue(instance, "descriptor", mockDescriptorInstance);
     }
 }
