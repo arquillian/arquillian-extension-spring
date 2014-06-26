@@ -1,0 +1,5 @@
+employee:
+    - id: 1
+      name: 'Test employee'
+    - id: 2
+      name: 'New employee'

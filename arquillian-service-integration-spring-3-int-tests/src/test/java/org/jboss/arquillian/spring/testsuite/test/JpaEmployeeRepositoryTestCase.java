@@ -19,24 +19,20 @@ package org.jboss.arquillian.spring.testsuite.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.persistence.Cleanup;
+import org.jboss.arquillian.persistence.CleanupStrategy;
+import org.jboss.arquillian.persistence.DataSource;
+import org.jboss.arquillian.persistence.ShouldMatchDataSet;
+import org.jboss.arquillian.persistence.UsingDataSet;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
 import org.jboss.arquillian.spring.testsuite.beans.model.Employee;
 import org.jboss.arquillian.spring.testsuite.beans.repository.EmployeeRepository;
 import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.jboss.shrinkwrap.api.Archive;
-import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +43,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
-@Ignore  // ARQ-1805 - temp
 @RunWith(Arquillian.class)
 @Transactional(manager = "txManager")
 @SpringConfiguration("applicationContext-jpa.xml")
+@DataSource("springDataSource")
 public class JpaEmployeeRepositoryTestCase {
 
     /**
@@ -72,26 +68,11 @@ public class JpaEmployeeRepositoryTestCase {
     private EmployeeRepository employeeRepository;
 
     /**
-     * <p>{@link javax.persistence.EntityManager} instance used by tests.</p>
-     */
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    /**
-     * <p>Tears down the test environment.</p>
-     */
-    @After
-    public void tearDown() {
-
-        entityManager.createNativeQuery("delete from Employee").executeUpdate();
-    }
-
-    /**
      * <p>Tests the {@link org.jboss.arquillian.spring.testsuite.beans.repository.EmployeeRepository#save(org.jboss.arquillian.spring.testsuite.beans.model.Employee)}
      * method.</p>
      */
     @Test
-    @SuppressWarnings("unchecked")
+    @ShouldMatchDataSet(value = "employee.yml", excludeColumns = "id")
     public void testSave() {
 
         Employee employee = new Employee();
@@ -103,11 +84,6 @@ public class JpaEmployeeRepositoryTestCase {
         employee.setName("New employee");
 
         employeeRepository.save(employee);
-
-        List<Employee> result = entityManager.createQuery("from Employee").getResultList();
-
-        assertNotNull("Method returned null list as result.", result);
-        assertEquals("Two employees were expected.", 2, result.size());
     }
 
     /**
@@ -117,46 +93,13 @@ public class JpaEmployeeRepositoryTestCase {
      * @throws Exception if any error occurs
      */
     @Test
+    @UsingDataSet("employee.yml")
+    @Cleanup(strategy = CleanupStrategy.USED_TABLES_ONLY)
     public void testGetEmployees() throws Exception {
-
-        runScript(entityManager, "insert.sql");
 
         List<Employee> result = employeeRepository.getEmployees();
 
         assertNotNull("Method returned null list as result.", result);
         assertEquals("Two employees were expected.", 2, result.size());
-    }
-
-    /**
-     * <p>Executes a sql script.</p>
-     *
-     * @param entityManager the entity manager
-     * @param fileName      the file name
-     *
-     * @throws java.io.IOException if any error occurs
-     */
-    public static void runScript(EntityManager entityManager, String fileName) throws IOException {
-
-        // retrieves the resource from class path
-        InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
-
-        BufferedReader inputReader = new BufferedReader(new InputStreamReader(input));
-
-        // loads the entire file
-        StringBuilder stringBuilder = new StringBuilder();
-        String line;
-        while ((line = inputReader.readLine()) != null) {
-
-            if (!line.startsWith("--")) {
-                stringBuilder.append(line);
-            }
-        }
-
-        // splits the commands by semicolon
-        String[] commands = stringBuilder.toString().split(";");
-        for (final String command : commands) {
-
-            entityManager.createNativeQuery(command).executeUpdate();
-        }
     }
 }

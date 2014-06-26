@@ -11,6 +11,7 @@
 
     <!-- Lookups the entity manager factory -->
     <jee:jndi-lookup id="entityManagerFactory" jndi-name="persistence/ArquillianTestUnit"/>
+    <jee:jndi-lookup id="springDataSource" jndi-name="jdbc/ArquillianSpringDataSource"/>
 
     <!-- Enables the declarative transaction support -->
     <tx:annotation-driven transaction-manager="txManager"/>
