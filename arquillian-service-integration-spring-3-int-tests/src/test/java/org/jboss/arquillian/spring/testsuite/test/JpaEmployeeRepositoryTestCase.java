@@ -16,6 +16,18 @@
  */
 package org.jboss.arquillian.spring.testsuite.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.spring.integration.test.annotation.SpringConfiguration;
@@ -24,27 +36,18 @@ import org.jboss.arquillian.spring.testsuite.beans.repository.EmployeeRepository
 import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.jboss.shrinkwrap.api.Archive;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * <p>Tests the {@link org.jboss.arquillian.spring.testsuite.beans.repository.impl.JpaEmployeeRepository} class.</p>
  *
  * @author <a href="mailto:jmnarloch@gmail.com">Jakub Narloch</a>
  */
+@Ignore  // ARQ-1805 - temp
 @RunWith(Arquillian.class)
 @Transactional(manager = "txManager")
 @SpringConfiguration("applicationContext-jpa.xml")
