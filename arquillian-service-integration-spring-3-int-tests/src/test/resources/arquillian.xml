@@ -7,21 +7,6 @@
 
     <defaultProtocol type="Servlet 3.0"/>
 
-    <extension qualifier="spring-deployer">
-        <!-- The version of Spring artifact, will be used for auto package the spring-context and spring-web,
-             default is 3.1.1.RELEASE -->
-        <!--<property name="springVersion">3.1.1.RELEASE</property>-->
-
-        <!-- Disable loading pom dependencies -->
-        <property name="importPomDependencies">false</property>
-
-        <!-- The version of CGLIB artifact, required by Java-based config, default is 2.2.2 -->
-        <!--<property name="cglibVersion">2.2.2</property>-->
-
-        <!-- Whether to auto package the dependencies, default is true -->
-        <!--<property name="autoPackage">true</property>-->
-    </extension>
-
     <extension qualifier="spring">
 
     </extension>

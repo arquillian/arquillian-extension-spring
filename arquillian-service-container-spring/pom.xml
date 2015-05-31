@@ -5,7 +5,7 @@
     <parent>
         <artifactId>arquillian-spring-parent</artifactId>
         <groupId>org.jboss.arquillian.extension</groupId>
-        <version>1.0.0.Final-SNAPSHOT</version>
+        <version>1.1.0.Final-SNAPSHOT</version>
     </parent>
 
     <!-- Model Version -->
@@ -54,7 +54,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${version.spring_framework_2_5}</version>
+            <version>${version.spring_framework}</version>
             <scope>test</scope>
         </dependency>
 

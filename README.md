@@ -76,63 +76,6 @@ Example:
 </arquillian>
 ```
 
-## Deployer
-
-Deployer allows to autopackage the Spring Framework artifacts with each test case. By default it adds the
-spring-context and spring-web so they do not need to be added manualy into the test deployments. It comes in two
-different versions for packaging the Spring 3 and 2.5.
-
-When added into the project POM it will from now on enrich each deployment.
-
-```
-        <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-service-integration-deployer-spring-3</artifactId>
-            <version>${arquillian.spring.version}</version>
-            <scope>test</scope>
-        </dependency>
-```
-
-Note: In order to auto package Spring 2.5 please use arquillian-service-integration-deployer-spring-2.5 instead.
-
-### Configuration
-The deployer has it own configuration that allows to set the following settings:
-
-* If the extension should add the spring dependencies by default for each deployment - can be disabled.
-* The version of the maven artifact for the Spring Context and Spring Web.
-* The version of the CGLIB.
-* Whether to include with each test deployment Snowdrop. Snowdrop is required to run Spring prior version 3.0.3
-  in JBoss AS (https://jira.springsource.org/browse/SPR-7197)
-
-Example:
-
-```
-<?xml version="1.0" encoding="UTF-8"?>
-<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns="http://jboss.org/schema/arquillian"
-            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
-
-    <extension qualifier="spring-deployer">
-
-        <!-- The version of Spring artifact, will be used for auto package the spring-context and spring-web, optional
-         default is 3.1.1.RELEASE -->
-        <property name="springVersion">3.0.0.RELEASE</property>
-
-        <!-- The version of CGLIB artifact - required by Java-based config, optional, default is 2.2.2 -->
-        <property name="cglibVersion">2.2</property>
-
-        <!-- Whether to auto package the dependencies, optional, default is true -->
-        <property name="autoPackage">true</property>
-
-        <!-- Whether to include the snowdrop in test deployment, optional, default is false -->
-        <property name="includeSnowdrop">true</property>
-
-        <!-- The version of the Snowdrop artifact, optional, default is 2.0.3.Final -->
-        <property name="snowdropVersion">2.0.3.Final</property>
-    </extension>
-</arquillian>
-```
-
 ## Code Example
 
 The test which requires the dependencies to be injected through Spring should be annotated with @SpringConfiguration.
@@ -495,4 +438,3 @@ Available profiles (for running the integration tests in the container):
 
 * jbossas-managed
 * glassfish-embedded
-* spring-embedded
