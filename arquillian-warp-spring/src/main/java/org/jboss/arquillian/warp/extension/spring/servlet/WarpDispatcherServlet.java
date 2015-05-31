@@ -17,6 +17,7 @@
 package org.jboss.arquillian.warp.extension.spring.servlet;
 
 import org.jboss.arquillian.warp.extension.spring.SpringMvcResult;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,6 +49,15 @@ public class WarpDispatcherServlet extends DispatcherServlet {
     }
 
     /**
+     * <p>Creates new instance of {@link WarpDispatcherServlet} class with specified {@link WebApplicationContext}.</p>
+     *
+     * @param webApplicationContext web application context
+     */
+    public WarpDispatcherServlet(WebApplicationContext webApplicationContext) {
+        super(webApplicationContext);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -62,8 +72,8 @@ public class WarpDispatcherServlet extends DispatcherServlet {
      * {@inheritDoc}
      */
     @Override
-    protected HandlerExecutionChain getHandler(HttpServletRequest request, boolean cache) throws Exception {
-        HandlerExecutionChain handlerExecutionChain = super.getHandler(request, cache);
+    protected HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {
+        HandlerExecutionChain handlerExecutionChain = super.getHandler(request);
 
         if (handlerExecutionChain != null) {
 
