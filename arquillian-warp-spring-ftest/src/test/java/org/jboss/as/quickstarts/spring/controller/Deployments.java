@@ -47,9 +47,11 @@ public final class Deployments {
     public static WebArchive createDeployment() {
 
         File[] libs = Maven.resolver().loadPomFromFile("pom.xml").resolve(
-                "org.springframework:spring-webmvc:3.1.1.RELEASE",
-                "javax.validation:validation-api:1.0.0.GA",
-                "org.hibernate:hibernate-validator:4.1.0.Final").withTransitivity().asFile();
+                "org.springframework:spring-web",
+                "org.springframework:spring-webmvc",
+                "javax.validation:validation-api",
+                "org.jboss.arquillian.extension:arquillian-warp-impl",
+                "org.hibernate:hibernate-validator").withTransitivity().asFile();
 
         return ShrinkWrap.create(WebArchive.class, "spring-test.war")
                 .addPackage(LoginController.class.getPackage())

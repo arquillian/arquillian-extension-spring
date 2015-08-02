@@ -17,14 +17,8 @@
 package org.jboss.arquillian.warp.extension.spring.container;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.test.spi.TestEnricher;
 import org.jboss.arquillian.test.spi.enricher.resource.ResourceProvider;
-import org.jboss.arquillian.warp.extension.spring.container.provider.ErrorsProvider;
-import org.jboss.arquillian.warp.extension.spring.container.provider.ExceptionProvider;
-import org.jboss.arquillian.warp.extension.spring.container.provider.HandlerInterceptorsProvider;
-import org.jboss.arquillian.warp.extension.spring.container.provider.HandlerProvider;
-import org.jboss.arquillian.warp.extension.spring.container.provider.ModelAndViewProvider;
-import org.jboss.arquillian.warp.extension.spring.container.provider.SpringMvcResultProvider;
+import org.jboss.arquillian.warp.extension.spring.container.provider.*;
 
 /**
  * <p>A remote extension that registers the extension in the remote container.</p>
@@ -38,7 +32,6 @@ public class SpringWarpRemoteExtension implements RemoteLoadableExtension {
      */
     @Override
     public void register(ExtensionBuilder builder) {
-        builder.service(TestEnricher.class, SpringWarpTestEnricher.class);
 
         builder.service(ResourceProvider.class, SpringMvcResultProvider.class);
         builder.service(ResourceProvider.class, ModelAndViewProvider.class);

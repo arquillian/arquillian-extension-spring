@@ -17,22 +17,13 @@
 package org.jboss.arquillian.warp.extension.spring.container;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
-import org.jboss.arquillian.test.spi.TestEnricher;
 import org.jboss.arquillian.test.spi.enricher.resource.ResourceProvider;
-import org.jboss.arquillian.warp.extension.spring.container.provider.ErrorsProvider;
-import org.jboss.arquillian.warp.extension.spring.container.provider.ExceptionProvider;
-import org.jboss.arquillian.warp.extension.spring.container.provider.HandlerInterceptorsProvider;
-import org.jboss.arquillian.warp.extension.spring.container.provider.HandlerProvider;
-import org.jboss.arquillian.warp.extension.spring.container.provider.ModelAndViewProvider;
-import org.jboss.arquillian.warp.extension.spring.container.provider.SpringMvcResultProvider;
+import org.jboss.arquillian.warp.extension.spring.container.provider.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * <p>Tests {@link SpringWarpRemoteExtension} class.</p>
@@ -68,7 +59,6 @@ public class SpringWarpRemoteExtensionTestCase {
 
         instance.register(mockExtensionBuilder);
 
-        verify(mockExtensionBuilder).service(TestEnricher.class, SpringWarpTestEnricher.class);
         verify(mockExtensionBuilder).service(ResourceProvider.class, SpringMvcResultProvider.class);
         verify(mockExtensionBuilder).service(ResourceProvider.class, ModelAndViewProvider.class);
         verify(mockExtensionBuilder).service(ResourceProvider.class, ErrorsProvider.class);

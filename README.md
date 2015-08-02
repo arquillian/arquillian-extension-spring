@@ -11,8 +11,7 @@
 
 ## Support for Spring versions
 
-* Spring 3.0 and above
-* Spring 2.5.x
+* Spring 4+
 
 ## Test setup
 The extension is splitted into couple modules. In order to enable the Spring IOC for the Arquillian Tests it

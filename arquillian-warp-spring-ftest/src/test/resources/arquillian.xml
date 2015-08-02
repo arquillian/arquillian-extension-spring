@@ -22,15 +22,16 @@
 
     <defaultProtocol type="Servlet 3.0" />
 
-    <container qualifier="jboss" default="true">
+    <!-- Container settings -->
+    <container qualifier="chameleon" default="true">
         <configuration>
-            <property name="jbossHome">target/jboss-as-7.1.1.Final</property>
-            <property name="outputToConsole">true</property>
+            <property name="chameleonTarget">wildfly:9.0.0.Final:managed</property>
+            <property name="serverConfig">standalone-full.xml</property>
         </configuration>
     </container>
 
     <extension qualifier="webdriver">
-        <property name="useJavaScript">true</property>
+        <property name="javascriptEnabled">true</property>
     </extension>
 
 </arquillian>

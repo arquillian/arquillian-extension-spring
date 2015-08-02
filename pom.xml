@@ -55,6 +55,9 @@
         <!-- Arquillian Persistence -->
         <version.arquillian_persistence>1.0.0.Alpha7</version.arquillian_persistence>
 
+        <!-- Arquillian Chameleon -->
+        <version.arquillian_chameleon>1.0.0.Alpha4</version.arquillian_chameleon>
+
         <!-- Test Dependencies -->
         <version.junit_junit>4.12</version.junit_junit>
         <version.mockito_all>1.10.19</version.mockito_all>
@@ -204,6 +207,12 @@
                 <version>${version.arquillian_core}</version>
                 <scope>test</scope>
                 <classifier>tests</classifier>
+            </dependency>
+
+            <dependency>
+                <groupId>org.arquillian.container</groupId>
+                <artifactId>arquillian-container-chameleon</artifactId>
+                <version>${version.arquillian_chameleon}</version>
             </dependency>
 
             <dependency>

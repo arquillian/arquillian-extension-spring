@@ -17,12 +17,10 @@
 package org.jboss.arquillian.warp.extension.spring.extension;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
-import org.jboss.arquillian.warp.extension.spring.SpringMvcResource;
 import org.jboss.arquillian.warp.extension.spring.SpringMvcResult;
 import org.jboss.arquillian.warp.extension.spring.container.Commons;
 import org.jboss.arquillian.warp.extension.spring.container.SpringMvcResultImpl;
 import org.jboss.arquillian.warp.extension.spring.container.SpringWarpRemoteExtension;
-import org.jboss.arquillian.warp.extension.spring.container.SpringWarpTestEnricher;
 import org.jboss.arquillian.warp.extension.spring.interceptor.WarpInterceptor;
 import org.jboss.arquillian.warp.extension.spring.servlet.WarpDispatcherServlet;
 import org.jboss.arquillian.warp.extension.spring.utils.TestResourceHelper;
@@ -36,9 +34,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 /**
  * <p>Tests {@link SpringWarpExtension} class.</p>
@@ -57,8 +53,8 @@ public class SpringWarpExtensionTestCase {
      * <p>Represents the list of required classes.</p>
      */
     private final static List<Class<?>> REQUIRED_CLASSES = Arrays.asList(Commons.class,
-            SpringMvcResultImpl.class, SpringWarpRemoteExtension.class, SpringWarpTestEnricher.class,
-            SpringMvcResource.class, SpringMvcResult.class, WarpDispatcherServlet.class, WarpInterceptor.class);
+            SpringMvcResultImpl.class, SpringWarpRemoteExtension.class, SpringMvcResult.class,
+            WarpDispatcherServlet.class, WarpInterceptor.class);
 
     /**
      * <p>Sets up the test environment.</p>

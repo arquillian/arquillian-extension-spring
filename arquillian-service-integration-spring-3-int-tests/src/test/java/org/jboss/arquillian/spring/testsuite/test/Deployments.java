@@ -120,7 +120,7 @@ public final class Deployments {
     public static Archive createJpaDeployment() {
         return createAppDeployment()
                 .addClasses(JpaEmployeeRepository.class)
-                .addAsWebInfResource("jbossas-ds.xml")
+                .addAsWebInfResource("wildfly-ds.xml")
                 .addAsWebInfResource("web.xml")
                 .addAsResource("applicationContext-jpa.xml")
                 .addAsResource("persistence/persistence.xml", "META-INF/persistence.xml")
@@ -151,6 +151,9 @@ public final class Deployments {
         return resolveArtifact("org.springframework:spring-tx",
                 "org.springframework:spring-tx",
                 "org.springframework:spring-orm",
+                "org.springframework:spring-context",
+                "org.springframework:spring-webmvc",
+                "org.springframework:spring-web",
                 "org.mockito:mockito-all");
     }
 
@@ -164,6 +167,9 @@ public final class Deployments {
                 "org.codehaus.jackson:jackson-mapper-asl",
                 "org.springframework:spring-tx",
                 "org.springframework:spring-orm",
+                "org.springframework:spring-context",
+                "org.springframework:spring-webmvc",
+                "org.springframework:spring-web",
                 "org.mockito:mockito-all");
     }
 

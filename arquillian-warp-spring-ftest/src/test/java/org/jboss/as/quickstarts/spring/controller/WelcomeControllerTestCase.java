@@ -25,7 +25,6 @@ import org.jboss.arquillian.warp.Activity;
 import org.jboss.arquillian.warp.Inspection;
 import org.jboss.arquillian.warp.Warp;
 import org.jboss.arquillian.warp.WarpTest;
-import org.jboss.arquillian.warp.extension.spring.SpringMvcResource;
 import org.jboss.arquillian.warp.servlet.AfterServlet;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
@@ -89,7 +88,7 @@ public class WelcomeControllerTestCase {
 
         private static final long serialVersionUID = 1L;
 
-        @SpringMvcResource
+        @ArquillianResource
         private ModelAndView modelAndView;
 
         @AfterServlet
