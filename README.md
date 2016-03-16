@@ -7,7 +7,6 @@
 * Injecting beans configured in web application (e.g. DispatcherServlet) for tests annotated with @SpringWebConfiguration
 * Support for both Spring(@Autowired, @Qualifier, @Required) and JSR-330(@Inject, @Named) annotations
 * Bean initialization support (@PostConstruct)
-* Auto packaging the spring-context and spring-web artifacts.
 
 ## Support for Spring versions
 
