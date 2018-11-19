@@ -261,7 +261,7 @@
             <dependency>
                 <groupId>org.jboss.spec</groupId>
                 <artifactId>jboss-javaee-web-6.0</artifactId>
-                <version>3.0.0.Final</version>
+                <version>3.0.3.Final</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -271,7 +271,7 @@
             <dependency>
                 <groupId>org.jboss.spec</groupId>
                 <artifactId>jboss-javaee-web-6.0</artifactId>
-                <version>3.0.0.Final</version>
+                <version>3.0.3.Final</version>
                 <type>pom</type>
                 <scope>provided</scope>
                 <exclusions>
