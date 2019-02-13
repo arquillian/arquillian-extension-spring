@@ -64,7 +64,7 @@
         <version.fest_assert>1.4</version.fest_assert>
 
         <!-- Spring Framework dependencies -->
-        <version.spring_framework>4.0.9.RELEASE</version.spring_framework>
+        <version.spring_framework>5.1.5.RELEASE</version.spring_framework>
 
         <version.cglib>2.2.2</version.cglib>
     </properties>
