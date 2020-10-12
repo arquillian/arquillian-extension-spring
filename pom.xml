@@ -59,7 +59,7 @@
         <version.arquillian_chameleon>1.0.0.Alpha4</version.arquillian_chameleon>
 
         <!-- Test Dependencies -->
-        <version.junit_junit>4.12</version.junit_junit>
+        <version.junit_junit>4.13.1</version.junit_junit>
         <version.mockito_all>1.10.19</version.mockito_all>
         <version.fest_assert>1.4</version.fest_assert>
 
